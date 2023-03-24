@@ -1,5 +1,7 @@
 @echo off
 
+echo run generate project files...
+
 SET visualstudio=%1
 SET premake5=Bin\\premake5.exe
 SET project=FlappyBird2D
@@ -9,7 +11,12 @@ if "%visualstudio%" == "" (
     GOTO:EOF
 )
 
+echo run premake5.exe...
 %premake5% %visualstudio%
+
+echo copy DLL files...
 python Script\\CopyDLL.py
+
+echo start visual studio solution...
 start %project%\\%project%.sln
 PAUSE
