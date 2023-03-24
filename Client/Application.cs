@@ -8,7 +8,7 @@ class ClientApplication
         SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING);
 
         IntPtr window = SDL.SDL_CreateWindow(
-            "PlappyBird2D",
+            "FlappyBird2D",
             SDL.SDL_WINDOWPOS_CENTERED,
             SDL.SDL_WINDOWPOS_CENTERED,
             1000, 800,
