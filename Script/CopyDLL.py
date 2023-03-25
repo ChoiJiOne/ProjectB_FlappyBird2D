@@ -1,6 +1,16 @@
 import os
 import shutil
 
+def get_extension_filenames(folder_path, extension):
+    directory_list = os.listdir(folder_path)
+    extension_files = []
+
+    for filename in directory_list:
+        if filename.endswith(extension):
+            extension_files.append(filename)
+
+    return extension_files
+
 def is_folder_exist(folder_path):
     return os.path.exists(folder_path) and os.path.isdir(folder_path)
 
@@ -24,12 +34,7 @@ if __name__ == "__main__":
         os.path.join(current_directory, "FlappyBird2D\\bin\\Win64\\Shipping"),
     ]
 
-    dlls = [
-        "SDL2.dll",
-        "SDL2_image.dll",
-        "SDL2_mixer.dll",
-        "SDL2_ttf.dll",
-    ]
+    dlls = get_extension_filenames(dll_library_path, ".dll")
 
     for binary_path in binary_paths:
         if not is_folder_exist(binary_path):
