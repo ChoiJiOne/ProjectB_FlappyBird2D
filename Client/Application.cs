@@ -12,7 +12,15 @@ class FlappyBird2D
      */
     public void Setup()
     {
+        SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING);
 
+        Window_ = SDL.SDL_CreateWindow(
+            "FlappyBird2D",
+            SDL.SDL_WINDOWPOS_CENTERED,
+            SDL.SDL_WINDOWPOS_CENTERED,
+            1000, 800,
+            SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN
+        );
     }
 
 
@@ -21,7 +29,17 @@ class FlappyBird2D
      */
     public void Run()
     {
-
+        SDL.SDL_Event e;
+        while (!bIsDone_)
+        {
+            while (SDL.SDL_PollEvent(out e) != 0)
+            {
+                if (e.type == SDL.SDL_EventType.SDL_QUIT)
+                {
+                    bIsDone_ = true;
+                }
+            }
+        }
     }
 
 
@@ -30,14 +48,23 @@ class FlappyBird2D
      */
     public void Cleanup()
     {
-
+        SDL.SDL_DestroyWindow(Window_);
+        SDL.SDL_Quit();
     }
 
 
     /**
-     * 
+     * @brief 루프를 종료할 지 확인합니다.
      */
     private bool bIsDone_ = false;
+
+
+    /**
+     * @brief SDL 윈도우의 포인터 값입니다.
+     * 
+     * @note 반드시 할당 해제 해주어야 합니다.
+     */
+    private IntPtr Window_;
 }
 
 
@@ -48,33 +75,15 @@ class ClientApplication
 {
     /**
      * @brief 클라이언트를 실행합니다.
+     * 
+     * @param Args 명령행 인수입니다.
      */
-    static void Main(string[] args)
+    static void Main(string[] Args)
     {
-        SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING);
+        FlappyBird2D Game = new FlappyBird2D();
 
-        IntPtr window = SDL.SDL_CreateWindow(
-            "FlappyBird2D",
-            SDL.SDL_WINDOWPOS_CENTERED,
-            SDL.SDL_WINDOWPOS_CENTERED,
-            1000, 800,
-            SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN
-        );
-
-        SDL.SDL_Event e;
-        bool quit = false;
-        while (!quit)
-        {
-            while (SDL.SDL_PollEvent(out e) != 0)
-            {
-                if (e.type == SDL.SDL_EventType.SDL_QUIT)
-                {
-                    quit = true;
-                }
-            }
-        }
-
-        SDL.SDL_DestroyWindow(window);
-        SDL.SDL_Quit();
+        Game.Setup();
+        Game.Run();
+        Game.Cleanup();
     }
 }
