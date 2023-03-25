@@ -1,8 +1,54 @@
 using System;
 using SDL2;
 
+
+/**
+ * @brief FlappyBird2D 게임을 초기화 및 실행합니다.
+ */
+class FlappyBird2D
+{
+    /**
+     * @brief FlappyBird2D 게임을 초기화합니다.
+     */
+    public void Setup()
+    {
+
+    }
+
+
+    /**
+     * @brief FlappyBird2D 게임을 실행합니다.
+     */
+    public void Run()
+    {
+
+    }
+
+
+    /**
+     * @brief FlappyBird2D 게임 내의 리소스를 정리합니다.
+     */
+    public void Cleanup()
+    {
+
+    }
+
+
+    /**
+     * 
+     */
+    private bool bIsDone_ = false;
+}
+
+
+/**
+ * @brief 클라이언트 애플리케이션을 실행합니다.
+ */
 class ClientApplication
 {
+    /**
+     * @brief 클라이언트를 실행합니다.
+     */
     static void Main(string[] args)
     {
         SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING);
