@@ -41,17 +41,6 @@ class CrashHandler
 
 
     /**
-     * @brief 크래시 덤프 파일의 경로를 설정합니다.
-     * 
-     * @param CrashDumpPath 설정할 크래시 덤프 파일의 경로입니다.
-     */
-    public static void SetCrashDumpPath(string CrashDumpPath)
-    {
-        CrashDumpPath_ = CrashDumpPath;
-    }
-
-
-    /**
      * @brief 어플리케이션 크래시 발생 시 실행할 메서드
      * 
      * @see https://learn.microsoft.com/en-us/dotnet/api/system.unhandledexceptioneventhandler?view=net-7.0
@@ -61,7 +50,7 @@ class CrashHandler
      */
     public static void DetectApplicationCrash(object Sender, UnhandledExceptionEventArgs ExceptionEvent)
     {
-        string CrashDumpFileName = CrashDumpPath_ + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".dmp";
+        string CrashDumpFileName = CommandLine.GetValue("Crash") + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".dmp";
 
         MINIDUMP_EXCEPTION_INFORMATION ExceptionInfo = new MINIDUMP_EXCEPTION_INFORMATION();
         ExceptionInfo.ClientPointers = 1;
@@ -87,10 +76,4 @@ class CrashHandler
             System.Console.WriteLine("failed to create crash dump file : %s...", CrashDumpFileName);
         }
     }
-
-
-    /**
-     * @brief 크래시 덤프 파일의 경로입니다.
-     */
-    private static string CrashDumpPath_;
 }
