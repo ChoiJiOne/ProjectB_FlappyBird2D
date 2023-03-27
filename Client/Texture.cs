@@ -12,6 +12,10 @@ class Texture
      * 
      * @param Renderer 텍스처를 생성하기 위한 렌더러입니다.
      * @param Path 텍스처 리소스의 경로입니다.
+     * 
+     * @throws
+     * - 텍스처 이미지 로딩에 실패하면 예외를 던집니다.
+     * - 텍스처 리소스 생성에 실패하면 예외를 던집니다.
      */
     public Texture(IntPtr Renderer, string Path)
     {
