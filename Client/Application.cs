@@ -25,6 +25,9 @@ class FlappyBird2D
             }
         }
 
+        CrashHandler.SetCrashDumpPath(Arguments_["Crash"]);
+        AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CrashHandler.DetectApplicationCrash);
+
         SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING);
         SDL_image.IMG_Init(SDL_image.IMG_InitFlags.IMG_INIT_PNG | SDL_image.IMG_InitFlags.IMG_INIT_JPG);
 
@@ -56,6 +59,8 @@ class FlappyBird2D
         FloorObject.Center = new Vector2<float>(500.0f, 700.0f);
         FloorObject.Width = 1000.0f;
         FloorObject.Height = 200.0f;
+        FloorObject.Speed = 3.0f;
+        FloorObject.Movable = true;
         FloorObject.LoadTexture(Renderer_, ContentPath + "Base.png");
 
         GameObjects_.Add(BGObject);
