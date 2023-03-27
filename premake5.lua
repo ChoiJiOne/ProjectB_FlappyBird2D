@@ -63,6 +63,12 @@ workspace "FlappyBird2D"
             "SDL2_ttf.lib", 
         }
 
+        -- 명령행 인수를 설정합니다.
+        debugargs {
+            "Dump=%{wks.location}..\\Game\\Crash\\",
+            "Content=%{wks.location}..\\Game\\Content\\",
+        }
+
         -- 빌드 구성 요소의 속성을 설정합니다.
         filter "configurations:Debug"
             defines { "DEBUG" }
