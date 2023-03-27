@@ -42,12 +42,14 @@ class FlappyBird2D
             SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED | SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC
         );
 
-        string BGImagePath = Arguments_["Content"] + "Background.png";
-        IntPtr BGSurface = SDL_image.IMG_Load(BGImagePath);
-        SDL.SDL_Log(SDL.SDL_GetError());
-        BGTexture_ = SDL.SDL_CreateTextureFromSurface(Renderer_, BGSurface);
+        string ContentPath = Arguments_["Content"];
 
-        SDL.SDL_FreeSurface(BGSurface);
+        Background_ = new Sprite();
+        Background_.Center = new Vector2<float>(500.0f, 400.0f);
+        Background_.Width = 1000.0f;
+        Background_.Height = 800.0f;
+        Background_.Rotate = 0.0f;
+        Background_.LoadTexture(Renderer_, ContentPath + "Background.png");
     }
 
 
@@ -56,12 +58,6 @@ class FlappyBird2D
      */
     public void Run()
     {
-        SDL.SDL_Rect Rect;
-        Rect.x = 0;
-        Rect.y = 0;
-        Rect.w = 1000;
-        Rect.h = 800;
-
         SDL.SDL_Event e;
         while (!bIsDone_)
         {
@@ -76,7 +72,8 @@ class FlappyBird2D
             SDL.SDL_SetRenderDrawColor(Renderer_, 0, 0, 0, 255);
             SDL.SDL_RenderClear(Renderer_);
 
-            SDL.SDL_RenderCopy(Renderer_, BGTexture_, IntPtr.Zero, ref Rect);
+            Background_.Update(0.0f);
+            Background_.Render(Renderer_);
 
             SDL.SDL_RenderPresent(Renderer_);
         }
@@ -88,12 +85,12 @@ class FlappyBird2D
      */
     public void Cleanup()
     {
-        SDL_image.IMG_Quit();
-
-        SDL.SDL_DestroyTexture(BGTexture_);
+        Background_.ReleaseTexture();
 
         SDL.SDL_DestroyRenderer(Renderer_);
         SDL.SDL_DestroyWindow(Window_);
+
+        SDL_image.IMG_Quit();
         SDL.SDL_Quit();
     }
 
@@ -127,9 +124,9 @@ class FlappyBird2D
 
 
     /**
-     * @brief 백그라운드 텍스처 리소스입니다.
+     * @brief 백그라운드 스프라이트입니다.
      */
-    private IntPtr BGTexture_;
+    private Sprite Background_;
 }
 
 
