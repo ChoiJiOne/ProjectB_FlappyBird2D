@@ -42,27 +42,17 @@ class Floor : IGameObject
 
 
     /**
-     * @brief 텍스처를 로딩합니다.
+     * @brief 바닥 텍스처를 설정합니다.
      * 
      * @note 이미 텍스처가 로딩되어 있다면, 기존의 텍스처 리소스를 삭제합니다.
      * 
-     * @param Renderer 텍스처 리소스를 생성할 때 사용할 렌더러입니다.
-     * @param TexturePath 스프라이트 객체의 텍스처 리소스 경로입니다.
+     * @param FloorTexture 설정할 백그라운드 텍스처입니다.
      * 
-     * @return 텍스처 로딩에 성공하면 true, 그렇지 않으면 false를 반환합니다.
+     * @throws 텍스처 리소스 생성에 실패하면 표준 예외를 던집니다.
      */
-    public bool LoadTexture(IntPtr Renderer, string TexturePath)
+    public void SetTexture(Texture FloorTexture)
     {
-        IntPtr TextureSurface = SDL_image.IMG_Load(TexturePath);
-        if (TextureSurface == IntPtr.Zero)
-        {
-            return false;
-        }
-
-        Texture_ = SDL.SDL_CreateTextureFromSurface(Renderer, TextureSurface);
-        SDL.SDL_FreeSurface(TextureSurface);
-        
-        return (Texture_ != IntPtr.Zero);
+        FloorTexture_ = FloorTexture;
     }
 
 
@@ -94,14 +84,14 @@ class Floor : IGameObject
     {
         float Lerp = AccumulateTime_ / Speed_;
 
-        int w, h;
-        SDL.SDL_QueryTexture(Texture_, out uint format, out int access, out w, out h);
+        float Width = FloorTexture_.Width;
+        float Height = FloorTexture_.Height;
 
         SDL.SDL_Rect LeftSrcRect;
-        LeftSrcRect.x = (int)((float)w * Lerp);
+        LeftSrcRect.x = (int)(Width * Lerp);
         LeftSrcRect.y = 0;
-        LeftSrcRect.w = (int)((float)w * (1.0f - Lerp));
-        LeftSrcRect.h = h;
+        LeftSrcRect.w = (int)(Width * (1.0f - Lerp));
+        LeftSrcRect.h = (int)Height;
 
         SDL.SDL_Rect LeftDstRect;
         LeftDstRect.x = (int)(Center_.X - Width_ / 2.0f);
@@ -111,7 +101,7 @@ class Floor : IGameObject
 
         SDL.SDL_RenderCopy(
             Renderer,
-            Texture_,
+            FloorTexture_.Resource,
             ref LeftSrcRect,
             ref LeftDstRect
         );
@@ -119,8 +109,8 @@ class Floor : IGameObject
         SDL.SDL_Rect RightSrcRect;
         RightSrcRect.x = 0;
         RightSrcRect.y = 0;
-        RightSrcRect.w = (int)((float)w * Lerp);
-        RightSrcRect.h = h;
+        RightSrcRect.w = (int)(Width * Lerp);
+        RightSrcRect.h = (int)Height;
 
         SDL.SDL_Rect RightDstRect;
         RightDstRect.x = (int)(Center_.X - Width_ / 2.0f + Width_ * (1.0f - Lerp));
@@ -130,7 +120,7 @@ class Floor : IGameObject
         
         SDL.SDL_RenderCopy(
              Renderer,
-             Texture_,
+             FloorTexture_.Resource,
              ref RightSrcRect,
              ref RightDstRect
          );
@@ -142,10 +132,7 @@ class Floor : IGameObject
      */
     public void Cleanup()
     {
-        if (Texture_ != IntPtr.Zero)
-        {
-            SDL.SDL_DestroyTexture(Texture_);
-        }
+        FloorTexture_.Release();
     }
 
 
@@ -190,5 +177,5 @@ class Floor : IGameObject
     /**
      * @brief 게임의 바닥 오브젝트 텍스처입니다.
      */
-    private IntPtr Texture_;
+    private Texture FloorTexture_;
 }

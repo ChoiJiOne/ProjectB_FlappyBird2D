@@ -30,27 +30,17 @@ class Background : IGameObject
 
 
     /**
-     * @brief 텍스처를 로딩합니다.
+     * @brief 백그라운드 텍스처를 설정합니다.
      * 
      * @note 이미 텍스처가 로딩되어 있다면, 기존의 텍스처 리소스를 삭제합니다.
      * 
-     * @param Renderer 텍스처 리소스를 생성할 때 사용할 렌더러입니다.
-     * @param TexturePath 스프라이트 객체의 텍스처 리소스 경로입니다.
+     * @param BGTexture 설정할 백그라운드 텍스처입니다.
      * 
-     * @return 텍스처 로딩에 성공하면 true, 그렇지 않으면 false를 반환합니다.
+     * @throws 텍스처 리소스 생성에 실패하면 표준 예외를 던집니다.
      */
-    public bool LoadTexture(IntPtr Renderer, string TexturePath)
+    public void SetTexture(Texture BGTexture)
     {
-        IntPtr TextureSurface = SDL_image.IMG_Load(TexturePath);
-        if (TextureSurface == IntPtr.Zero)
-        {
-            return false;
-        }
-
-        BGTexture_ = SDL.SDL_CreateTextureFromSurface(Renderer, TextureSurface);
-        SDL.SDL_FreeSurface(TextureSurface);
-
-        return (BGTexture_ != IntPtr.Zero);
+        BGTexture_ = BGTexture;
     }
 
 
@@ -72,17 +62,17 @@ class Background : IGameObject
      */
     public void Render(IntPtr Renderer)
     {
-        SDL.SDL_Rect SpriteRect;
-        SpriteRect.x = (int)(Center_.X - Width_ / 2.0f);
-        SpriteRect.y = (int)(Center_.Y - Height_ / 2.0f);
-        SpriteRect.w = (int)(Width_);
-        SpriteRect.h = (int)(Height_);
+        SDL.SDL_Rect BGSpriteRect;
+        BGSpriteRect.x = (int)(Center_.X - Width_ / 2.0f);
+        BGSpriteRect.y = (int)(Center_.Y - Height_ / 2.0f);
+        BGSpriteRect.w = (int)(Width_);
+        BGSpriteRect.h = (int)(Height_);
 
         SDL.SDL_RenderCopy(
             Renderer,
-            BGTexture_,
+            BGTexture_.Resource,
             IntPtr.Zero,
-            ref SpriteRect
+            ref BGSpriteRect
         );
     }
 
@@ -92,10 +82,7 @@ class Background : IGameObject
      */
     public void Cleanup()
     {
-        if (BGTexture_ != IntPtr.Zero)
-        {
-            SDL.SDL_DestroyTexture(BGTexture_);
-        }
+        BGTexture_.Release();
     }
 
 
@@ -120,5 +107,5 @@ class Background : IGameObject
     /**
      * @brief 게임의 백그라운드 오브젝트 텍스처입니다.
      */
-    private IntPtr BGTexture_;
+    private Texture BGTexture_;
 }
