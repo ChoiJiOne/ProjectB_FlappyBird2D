@@ -52,7 +52,14 @@ class FlappyBird2D
         BGObject.Height = 800.0f;
         BGObject.LoadTexture(Renderer_, ContentPath + "Background.png");
 
-        Background_ = BGObject;
+        Floor FloorObject = new Floor();
+        FloorObject.Center = new Vector2<float>(500.0f, 700.0f);
+        FloorObject.Width = 1000.0f;
+        FloorObject.Height = 200.0f;
+        FloorObject.LoadTexture(Renderer_, ContentPath + "Base.png");
+
+        GameObjects_.Add(BGObject);
+        GameObjects_.Add(FloorObject);
     }
 
 
@@ -79,8 +86,11 @@ class FlappyBird2D
             SDL.SDL_SetRenderDrawColor(Renderer_, 0, 0, 0, 255);
             SDL.SDL_RenderClear(Renderer_);
 
-            Background_.Update(GameTimer_.GetDeltaSeconds());
-            Background_.Render(Renderer_);
+            foreach (IGameObject GameObject in GameObjects_)
+            {
+                GameObject.Update(GameTimer_.GetDeltaSeconds());
+                GameObject.Render(Renderer_);
+            }
 
             SDL.SDL_RenderPresent(Renderer_);
         }
@@ -92,7 +102,10 @@ class FlappyBird2D
      */
     public void Cleanup()
     {
-        Background_.Cleanup();
+        foreach (IGameObject GameObject in GameObjects_)
+        {
+            GameObject.Cleanup();
+        }
 
         SDL.SDL_DestroyRenderer(Renderer_);
         SDL.SDL_DestroyWindow(Window_);
@@ -137,9 +150,9 @@ class FlappyBird2D
 
 
     /**
-     * @brief 백그라운드 스프라이트입니다.
+     * @brief 게임 내의 오브젝트들입니다.
      */
-    private IGameObject Background_;
+    private List<IGameObject> GameObjects_ = new List<IGameObject>();
 }
 
 
