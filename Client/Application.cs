@@ -42,6 +42,8 @@ class FlappyBird2D
             SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED | SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC
         );
 
+        GameTimer_ = new Timer();
+
         string ContentPath = Arguments_["Content"];
 
         Background_ = new Sprite();
@@ -58,12 +60,16 @@ class FlappyBird2D
      */
     public void Run()
     {
-        SDL.SDL_Event e;
+        GameTimer_.Reset();
+
+        SDL.SDL_Event Event;
         while (!bIsDone_)
         {
-            while (SDL.SDL_PollEvent(out e) != 0)
+            GameTimer_.Tick();
+
+            while (SDL.SDL_PollEvent(out Event) != 0)
             {
-                if (e.type == SDL.SDL_EventType.SDL_QUIT)
+                if (Event.type == SDL.SDL_EventType.SDL_QUIT)
                 {
                     bIsDone_ = true;
                 }
@@ -72,7 +78,7 @@ class FlappyBird2D
             SDL.SDL_SetRenderDrawColor(Renderer_, 0, 0, 0, 255);
             SDL.SDL_RenderClear(Renderer_);
 
-            Background_.Update(0.0f);
+            Background_.Update(GameTimer_.GetDeltaSeconds());
             Background_.Render(Renderer_);
 
             SDL.SDL_RenderPresent(Renderer_);
@@ -121,6 +127,12 @@ class FlappyBird2D
      * @note 반드시 할당 해제 해주어야 합니다.
      */
     private IntPtr Renderer_;
+
+
+    /**
+     * @brief 게임 타이머입니다.
+     */
+    private Timer GameTimer_;
 
 
     /**
