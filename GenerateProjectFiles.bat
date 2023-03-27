@@ -11,6 +11,12 @@ if "%visualstudio%" == "" (
     GOTO:EOF
 )
 
+if not exist Crash (
+    echo can't find Crash directory...
+    echo generate Crash directory...
+    mkdir Crash
+)
+
 echo run premake5.exe...
 %premake5% %visualstudio%
 
