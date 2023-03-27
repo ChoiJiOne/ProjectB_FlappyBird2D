@@ -55,15 +55,6 @@ class Background : IGameObject
 
 
     /**
-     * @brief 백그라운드 게임 오브젝트를 초기화합니다.
-     */
-    public void Setup()
-    {
-
-    }
-
-
-    /**
      * @brief 백그라운드 게임 오브젝트를 업데이트합니다.
      * 
      * @param DeltaSeconds 초단위 델타 시간값입니다.

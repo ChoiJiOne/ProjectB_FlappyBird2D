@@ -7,12 +7,6 @@ using System;
 public interface IGameObject
 {
     /**
-     * @brief 게임 오브젝트를 초기화합니다.
-     */
-    public void Setup();
-
-
-    /**
      * @brief 게임 오브젝트를 업데이트합니다.
      * 
      * @param DeltaSeconds 초단위 델타 시간값입니다.
