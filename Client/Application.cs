@@ -46,12 +46,13 @@ class FlappyBird2D
 
         string ContentPath = Arguments_["Content"];
 
-        Background_ = new Sprite();
-        Background_.Center = new Vector2<float>(500.0f, 400.0f);
-        Background_.Width = 1000.0f;
-        Background_.Height = 800.0f;
-        Background_.Rotate = 0.0f;
-        Background_.LoadTexture(Renderer_, ContentPath + "Background.png");
+        Background BGObject = new Background();
+        BGObject.Center = new Vector2<float>(500.0f, 400.0f);
+        BGObject.Width = 1000.0f;
+        BGObject.Height = 800.0f;
+        BGObject.LoadTexture(Renderer_, ContentPath + "Background.png");
+
+        Background_ = BGObject;
     }
 
 
@@ -91,7 +92,7 @@ class FlappyBird2D
      */
     public void Cleanup()
     {
-        Background_.ReleaseTexture();
+        Background_.Cleanup();
 
         SDL.SDL_DestroyRenderer(Renderer_);
         SDL.SDL_DestroyWindow(Window_);
@@ -138,7 +139,7 @@ class FlappyBird2D
     /**
      * @brief 백그라운드 스프라이트입니다.
      */
-    private Sprite Background_;
+    private IGameObject Background_;
 }
 
 
