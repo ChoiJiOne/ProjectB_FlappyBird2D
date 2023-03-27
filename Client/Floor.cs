@@ -61,7 +61,7 @@ class Floor : IGameObject
 
         Texture_ = SDL.SDL_CreateTextureFromSurface(Renderer, TextureSurface);
         SDL.SDL_FreeSurface(TextureSurface);
-
+        
         return (Texture_ != IntPtr.Zero);
     }
 
@@ -73,7 +73,15 @@ class Floor : IGameObject
      */
     public void Update(float DeltaSeconds)
     {
-        AccumulateTime_ += DeltaSeconds;
+        if (bIsMove_)
+        {
+            AccumulateTime_ += DeltaSeconds;
+        }
+
+        if(AccumulateTime_ > Speed_)
+        {
+            AccumulateTime_ -= Speed_;
+        }
     }
 
 
@@ -84,18 +92,48 @@ class Floor : IGameObject
      */
     public void Render(IntPtr Renderer)
     {
-        SDL.SDL_Rect SpriteRect;
-        SpriteRect.x = (int)(Center_.X - Width_ / 2.0f);
-        SpriteRect.y = (int)(Center_.Y - Height_ / 2.0f);
-        SpriteRect.w = (int)(Width_);
-        SpriteRect.h = (int)(Height_);
+        float Lerp = AccumulateTime_ / Speed_;
+
+        int w, h;
+        SDL.SDL_QueryTexture(Texture_, out uint format, out int access, out w, out h);
+
+        SDL.SDL_Rect LeftSrcRect;
+        LeftSrcRect.x = (int)((float)w * Lerp);
+        LeftSrcRect.y = 0;
+        LeftSrcRect.w = (int)((float)w * (1.0f - Lerp));
+        LeftSrcRect.h = h;
+
+        SDL.SDL_Rect LeftDstRect;
+        LeftDstRect.x = (int)(Center_.X - Width_ / 2.0f);
+        LeftDstRect.y = (int)(Center_.Y - Height_ / 2.0f);
+        LeftDstRect.w = (int)(Width_ * (1.0f - Lerp));
+        LeftDstRect.h = (int)(Height_);
 
         SDL.SDL_RenderCopy(
             Renderer,
             Texture_,
-            IntPtr.Zero,
-            ref SpriteRect
+            ref LeftSrcRect,
+            ref LeftDstRect
         );
+
+        SDL.SDL_Rect RightSrcRect;
+        RightSrcRect.x = 0;
+        RightSrcRect.y = 0;
+        RightSrcRect.w = (int)((float)w * Lerp);
+        RightSrcRect.h = h;
+
+        SDL.SDL_Rect RightDstRect;
+        RightDstRect.x = (int)(Center_.X - Width_ / 2.0f + Width_ * (1.0f - Lerp));
+        RightDstRect.y = (int)(Center_.Y - Height_ / 2.0f);
+        RightDstRect.w = (int)(Width_ * Lerp);
+        RightDstRect.h = (int)(Height_);
+        
+        SDL.SDL_RenderCopy(
+             Renderer,
+             Texture_,
+             ref RightSrcRect,
+             ref RightDstRect
+         );
     }
 
 
