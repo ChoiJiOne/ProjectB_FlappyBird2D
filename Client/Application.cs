@@ -10,22 +10,9 @@ class FlappyBird2D
 {
     /**
      * @brief FlappyBird2D 게임을 초기화합니다.
-     * 
-     * @param Args 명령행 인수입니다.
      */
-    public void Setup(string[] Args)
+    public void Setup()
     {
-        foreach (string Arg in Args)
-        {
-            string[] Tokens = Arg.Split('=');
-
-            if(Tokens.Length == 2)
-            {
-                Arguments_.Add(Tokens[0], Tokens[1]);
-            }
-        }
-
-        CrashHandler.SetCrashDumpPath(Arguments_["Crash"]);
         AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CrashHandler.DetectApplicationCrash);
 
         SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING);
@@ -47,7 +34,7 @@ class FlappyBird2D
 
         GameTimer_ = new Timer();
 
-        string ContentPath = Arguments_["Content"];
+        string ContentPath = CommandLine.GetValue("Content");
 
         Background BGObject = new Background();
         BGObject.Center = new Vector2<float>(500.0f, 400.0f);
@@ -121,12 +108,6 @@ class FlappyBird2D
 
 
     /**
-     * @brief 명령행 인자의 키-값 쌍입니다.
-     */
-    private Dictionary<string, string> Arguments_ = new Dictionary<string, string>();
-
-
-    /**
      * @brief 루프를 종료할 지 확인합니다.
      */
     private bool bIsDone_ = false;
@@ -173,9 +154,10 @@ class ClientApplication
      */
     static void Main(string[] Args)
     {
+        CommandLine.Parse(Args);
         FlappyBird2D Game = new FlappyBird2D();
 
-        Game.Setup(Args);
+        Game.Setup();
         Game.Run();
         Game.Cleanup();
     }
