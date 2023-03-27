@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SDL2;
 
 
@@ -9,9 +10,21 @@ class FlappyBird2D
 {
     /**
      * @brief FlappyBird2D 게임을 초기화합니다.
+     * 
+     * @param Args 명령행 인수입니다.
      */
-    public void Setup()
+    public void Setup(string[] Args)
     {
+        foreach (string Arg in Args)
+        {
+            string[] Tokens = Arg.Split('=');
+
+            if(Tokens.Length == 2)
+            {
+                Arguments_.Add(Tokens[0], Tokens[1]);
+            }
+        }
+
         SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING);
 
         Window_ = SDL.SDL_CreateWindow(
@@ -46,7 +59,7 @@ class FlappyBird2D
                 }
             }
 
-            SDL.SDL_SetRenderDrawColor(Renderer_, 255, 0, 0, 255);
+            SDL.SDL_SetRenderDrawColor(Renderer_, 0, 0, 0, 255);
             SDL.SDL_RenderClear(Renderer_);
 
             SDL.SDL_RenderPresent(Renderer_);
@@ -63,6 +76,12 @@ class FlappyBird2D
         SDL.SDL_DestroyWindow(Window_);
         SDL.SDL_Quit();
     }
+
+
+    /**
+     * @brief 명령행 인자의 키-값 쌍입니다.
+     */
+    private Dictionary<string, string> Arguments_ = new Dictionary<string, string>();
 
 
     /**
@@ -102,7 +121,7 @@ class ClientApplication
     {
         FlappyBird2D Game = new FlappyBird2D();
 
-        Game.Setup();
+        Game.Setup(Args);
         Game.Run();
         Game.Cleanup();
     }
