@@ -1,5 +1,6 @@
 using System;
 using SDL2;
+using System.Numerics;
 
 
 /**
@@ -21,6 +22,12 @@ class FlappyBird2D
             1000, 800,
             SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN
         );
+
+        Renderer_ = SDL.SDL_CreateRenderer(
+            Window_,
+            -1,
+            SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED | SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC
+        );
     }
 
 
@@ -39,6 +46,11 @@ class FlappyBird2D
                     bIsDone_ = true;
                 }
             }
+
+            SDL.SDL_SetRenderDrawColor(Renderer_, 255, 0, 0, 255);
+            SDL.SDL_RenderClear(Renderer_);
+
+            SDL.SDL_RenderPresent(Renderer_);
         }
     }
 
@@ -48,6 +60,7 @@ class FlappyBird2D
      */
     public void Cleanup()
     {
+        SDL.SDL_DestroyRenderer(Renderer_);
         SDL.SDL_DestroyWindow(Window_);
         SDL.SDL_Quit();
     }
@@ -65,6 +78,14 @@ class FlappyBird2D
      * @note 반드시 할당 해제 해주어야 합니다.
      */
     private IntPtr Window_;
+
+
+    /**
+     * @brief SDL 렌더러의 포인터 값입니다.
+     * 
+     * @note 반드시 할당 해제 해주어야 합니다.
+     */
+    private IntPtr Renderer_;
 }
 
 
