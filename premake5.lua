@@ -68,6 +68,7 @@ workspace "FlappyBird2D"
 
         -- 명령행 인수를 설정합니다.
         debugargs {
+            "Crash=%{wks.location}..\\Crash\\",
             "Content=%{wks.location}..\\Content\\",
         }
 
