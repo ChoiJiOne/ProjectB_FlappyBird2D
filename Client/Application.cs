@@ -15,9 +15,19 @@ class FlappyBird2D
     {
         AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CrashHandler.DetectApplicationCrash);
 
-        SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING);
-        SDL_image.IMG_Init(SDL_image.IMG_InitFlags.IMG_INIT_PNG | SDL_image.IMG_InitFlags.IMG_INIT_JPG);
+        if(SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING) != 0)
+        {
+            throw new Exception("failed to initialize SDL...");
+        }
 
+        int Flags = (int)(SDL_image.IMG_InitFlags.IMG_INIT_PNG | SDL_image.IMG_InitFlags.IMG_INIT_JPG);
+        int InitFlag = SDL_image.IMG_Init((SDL_image.IMG_InitFlags)(Flags));
+
+        if((InitFlag & Flags) != Flags)
+        {
+            throw new Exception("failed to initialize SDL_image...");
+        }
+        
         window_ = SDL.SDL_CreateWindow(
             "FlappyBird2D",
             SDL.SDL_WINDOWPOS_CENTERED,
@@ -26,11 +36,21 @@ class FlappyBird2D
             SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN
         );
 
+        if(window_ == IntPtr.Zero)
+        {
+            throw new Exception("failed to create window...");
+        }
+
         renderer_ = SDL.SDL_CreateRenderer(
             window_,
             -1,
             SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED | SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC
         );
+
+        if(renderer_ == IntPtr.Zero)
+        {
+            throw new Exception("failed to create renderer...");
+        }
 
         gameTimer_ = new Timer();
 
