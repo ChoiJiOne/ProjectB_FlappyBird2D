@@ -22,6 +22,12 @@ class Bird : IGameObject
         set => rigidBody_ = value;
     }
 
+    public bool Movable
+    {
+        get => bIsMove_;
+        set => bIsMove_ = value;
+    }
+
 
     /**
      * @brief 게임의 플레이어가 조종하는 새 오브젝트를 업데이트합니다.
@@ -30,6 +36,12 @@ class Bird : IGameObject
      */
     public void Update(float deltaSeconds)
     {
+        if (bIsMove_)
+        {
+            Vector2<float> Center = rigidBody_.Center;
+            Center.y += 10.0f * deltaSeconds;
+            rigidBody_.Center = Center;
+        }
     }
     
 
@@ -57,6 +69,12 @@ class Bird : IGameObject
     {
         texture_.Release();
     }
+
+
+    /**
+     * @brief 게임의 플레이어가 조종하는 새 오브젝트가 움직일 수 있는지 확인합니다.
+     */
+    private bool bIsMove_ = false;
 
 
     /**
