@@ -50,30 +50,30 @@ class CrashHandler
      */
     public static void DetectApplicationCrash(object Sender, UnhandledExceptionEventArgs ExceptionEvent)
     {
-        string CrashDumpFileName = CommandLine.GetValue("Crash") + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".dmp";
+        string crashDumpFileName = CommandLine.GetValue("Crash") + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".dmp";
 
-        MINIDUMP_EXCEPTION_INFORMATION ExceptionInfo = new MINIDUMP_EXCEPTION_INFORMATION();
-        ExceptionInfo.ClientPointers = 1;
-        ExceptionInfo.ExceptionPointers = Marshal.GetExceptionPointers();
-        ExceptionInfo.ThreadId = GetCurrentThreadId();
+        MINIDUMP_EXCEPTION_INFORMATION exceptionInfo = new MINIDUMP_EXCEPTION_INFORMATION();
+        exceptionInfo.ClientPointers = 1;
+        exceptionInfo.ExceptionPointers = Marshal.GetExceptionPointers();
+        exceptionInfo.ThreadId = GetCurrentThreadId();
 
-        FileStream CrashDumpFile = new FileStream(CrashDumpFileName, FileMode.Create);
+        FileStream crashDumpFile = new FileStream(crashDumpFileName, FileMode.Create);
 
         bool bIsSuccess = MiniDumpWriteDump(
             GetCurrentProcess(), 
             GetCurrentProcessId(),
-            CrashDumpFile.SafeFileHandle.DangerousGetHandle(), 
+            crashDumpFile.SafeFileHandle.DangerousGetHandle(), 
             MiniDumpWithFullMemory, 
-            ref ExceptionInfo, 
+            ref exceptionInfo, 
             IntPtr.Zero, 
             IntPtr.Zero
         );
 
-        CrashDumpFile.Close();
+        crashDumpFile.Close();
 
         if(!bIsSuccess)
         {
-            System.Console.WriteLine("failed to create crash dump file : %s...", CrashDumpFileName);
+            System.Console.WriteLine("failed to create crash dump file : %s...", crashDumpFileName);
         }
     }
 }

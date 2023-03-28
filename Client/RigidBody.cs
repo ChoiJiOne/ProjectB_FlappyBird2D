@@ -8,15 +8,15 @@ class RigidBody
     /**
      * @brief 오브젝트 강체의 생성자입니다.
      * 
-     * @param Center 오브젝트 강체의 중심 좌표입니다.
-     * @param Width 오브젝트 강체의 가로 크기입니다.
-     * @param Height 오브젝트 강체의 세로 크기입니다.
+     * @param center 오브젝트 강체의 중심 좌표입니다.
+     * @param width 오브젝트 강체의 가로 크기입니다.
+     * @param height 오브젝트 강체의 세로 크기입니다.
      */
-    public RigidBody(Vector2<float> Center, float Width, float Height)
+    public RigidBody(Vector2<float> center, float width, float height)
     {
-        Center_ = Center;
-        Width_ = Width;
-        Height_ = Height;
+        center_ = center;
+        width_ = width;
+        height_ = height;
     }
 
 
@@ -25,37 +25,37 @@ class RigidBody
      */
     public Vector2<float> Center
     {
-        get => Center_;
-        set => Center_ = value;
+        get => center_;
+        set => center_ = value;
     }
 
     public float Width
     {
-        get => Width_;
-        set => Width_ = value;
+        get => width_;
+        set => width_ = value;
     }
 
     public float Height
     {
-        get => Height_;
-        set => Height_ = value;
+        get => height_;
+        set => height_ = value;
     }
 
 
     /**
      * @brief 강체의 중심 좌표입니다.
      */
-    private Vector2<float> Center_;
+    private Vector2<float> center_;
 
 
     /**
      * @brief 강체의 가로 크기입니다.
      */
-    private float Width_ = 0.0f;
+    private float width_ = 0.0f;
 
 
     /**
      * @brief 강체의 세로 크기입니다.
      */
-    private float Height_ = 0.0f;
+    private float height_ = 0.0f;
 }

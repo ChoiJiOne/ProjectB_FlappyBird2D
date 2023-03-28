@@ -18,7 +18,7 @@ class FlappyBird2D
         SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING);
         SDL_image.IMG_Init(SDL_image.IMG_InitFlags.IMG_INIT_PNG | SDL_image.IMG_InitFlags.IMG_INIT_JPG);
 
-        Window_ = SDL.SDL_CreateWindow(
+        window_ = SDL.SDL_CreateWindow(
             "FlappyBird2D",
             SDL.SDL_WINDOWPOS_CENTERED,
             SDL.SDL_WINDOWPOS_CENTERED,
@@ -26,28 +26,28 @@ class FlappyBird2D
             SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN
         );
 
-        Renderer_ = SDL.SDL_CreateRenderer(
-            Window_,
+        renderer_ = SDL.SDL_CreateRenderer(
+            window_,
             -1,
             SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED | SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC
         );
 
-        GameTimer_ = new Timer();
+        gameTimer_ = new Timer();
 
-        string ContentPath = CommandLine.GetValue("Content");
+        string contentPath = CommandLine.GetValue("Content");
 
-        Background BGObject = new Background();
-        BGObject.SetTexture(new Texture(Renderer_, ContentPath + "Background.png"));
-        BGObject.SetRigidBody(new RigidBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f));
+        Background background = new Background();
+        background.SetTexture(new Texture(renderer_, contentPath + "Background.png"));
+        background.SetRigidBody(new RigidBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f));
 
-        Floor FloorObject = new Floor();
-        FloorObject.Speed = 3.0f;
-        FloorObject.Movable = true;
-        FloorObject.SetTexture(new Texture(Renderer_, ContentPath + "Base.png"));
-        FloorObject.SetRigidBody(new RigidBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f));
+        Floor floor = new Floor();
+        floor.Speed = 3.0f;
+        floor.Movable = true;
+        floor.SetTexture(new Texture(renderer_, contentPath + "Base.png"));
+        floor.SetRigidBody(new RigidBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f));
 
-        GameObjects_.Add(BGObject);
-        GameObjects_.Add(FloorObject);
+        gameObjects_.Add(background);
+        gameObjects_.Add(floor);
     }
 
 
@@ -56,31 +56,31 @@ class FlappyBird2D
      */
     public void Run()
     {
-        GameTimer_.Reset();
+        gameTimer_.Reset();
 
-        SDL.SDL_Event Event;
+        SDL.SDL_Event e;
         while (!bIsDone_)
         {
-            GameTimer_.Tick();
+            gameTimer_.Tick();
 
-            while (SDL.SDL_PollEvent(out Event) != 0)
+            while (SDL.SDL_PollEvent(out e) != 0)
             {
-                if (Event.type == SDL.SDL_EventType.SDL_QUIT)
+                if (e.type == SDL.SDL_EventType.SDL_QUIT)
                 {
                     bIsDone_ = true;
                 }
             }
 
-            SDL.SDL_SetRenderDrawColor(Renderer_, 0, 0, 0, 255);
-            SDL.SDL_RenderClear(Renderer_);
+            SDL.SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+            SDL.SDL_RenderClear(renderer_);
 
-            foreach (IGameObject GameObject in GameObjects_)
+            foreach (IGameObject gameObject in gameObjects_)
             {
-                GameObject.Update(GameTimer_.GetDeltaSeconds());
-                GameObject.Render(Renderer_);
+                gameObject.Update(gameTimer_.GetDeltaSeconds());
+                gameObject.Render(renderer_);
             }
 
-            SDL.SDL_RenderPresent(Renderer_);
+            SDL.SDL_RenderPresent(renderer_);
         }
     }
 
@@ -90,13 +90,13 @@ class FlappyBird2D
      */
     public void Cleanup()
     {
-        foreach (IGameObject GameObject in GameObjects_)
+        foreach (IGameObject gameObject in gameObjects_)
         {
-            GameObject.Cleanup();
+            gameObject.Cleanup();
         }
 
-        SDL.SDL_DestroyRenderer(Renderer_);
-        SDL.SDL_DestroyWindow(Window_);
+        SDL.SDL_DestroyRenderer(renderer_);
+        SDL.SDL_DestroyWindow(window_);
 
         SDL_image.IMG_Quit();
         SDL.SDL_Quit();
@@ -114,7 +114,7 @@ class FlappyBird2D
      * 
      * @note 반드시 할당 해제 해주어야 합니다.
      */
-    private IntPtr Window_;
+    private IntPtr window_;
 
 
     /**
@@ -122,19 +122,19 @@ class FlappyBird2D
      * 
      * @note 반드시 할당 해제 해주어야 합니다.
      */
-    private IntPtr Renderer_;
+    private IntPtr renderer_;
 
 
     /**
      * @brief 게임 타이머입니다.
      */
-    private Timer GameTimer_;
+    private Timer gameTimer_;
 
 
     /**
      * @brief 게임 내의 오브젝트들입니다.
      */
-    private List<IGameObject> GameObjects_ = new List<IGameObject>();
+    private List<IGameObject> gameObjects_ = new List<IGameObject>();
 }
 
 
@@ -146,11 +146,11 @@ class ClientApplication
     /**
      * @brief 클라이언트를 실행합니다.
      * 
-     * @param Args 명령행 인수입니다.
+     * @param args 명령행 인수입니다.
      */
-    static void Main(string[] Args)
+    static void Main(string[] args)
     {
-        CommandLine.Parse(Args);
+        CommandLine.Parse(args);
         FlappyBird2D Game = new FlappyBird2D();
 
         Game.Setup();

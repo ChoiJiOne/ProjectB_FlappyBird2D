@@ -31,7 +31,7 @@ class Timer
         }
         else
         {
-            return (float)(CurrTime_ - PrevTime_);
+            return (float)(currTime_ - prevTime_);
         }
     }
 
@@ -56,11 +56,11 @@ class Timer
     {
         if (bIsStop_)
         {
-            return (float)(StopTime_ - PausedTime_ - BaseTime_);
+            return (float)(stopTime_ - pausedTime_ - baseTime_);
         }
         else
         {
-            return (float)(CurrTime_ - PausedTime_ - BaseTime_);
+            return (float)(currTime_ - pausedTime_ - baseTime_);
         }
     }
 
@@ -70,14 +70,14 @@ class Timer
 	 */
 	public void Reset()
     {
-		ulong TickTime = SDL.SDL_GetTicks64();
+		ulong tick = SDL.SDL_GetTicks64();
 
         bIsStop_ = false;
-        BaseTime_ = TickTime;
-        PausedTime_ = 0UL;
-        StopTime_ = 0UL;
-        PrevTime_ = TickTime;
-        CurrTime_ = TickTime;
+        baseTime_ = tick;
+        pausedTime_ = 0UL;
+        stopTime_ = 0UL;
+        prevTime_ = tick;
+        currTime_ = tick;
     }
 
 
@@ -89,11 +89,11 @@ class Timer
     {
         if (bIsStop_)
         {
-			ulong TickTime = SDL.SDL_GetTicks64();
+			ulong tick = SDL.SDL_GetTicks64();
 
-            PausedTime_ += (TickTime - StopTime_);
-            PrevTime_ = TickTime;
-            StopTime_ = 0UL;
+            pausedTime_ += (tick - stopTime_);
+            prevTime_ = tick;
+            stopTime_ = 0UL;
 
             bIsStop_ = false;
         }
@@ -107,10 +107,10 @@ class Timer
     {
         if (!bIsStop_)
         {
-			ulong TickTime = SDL.SDL_GetTicks64();
+			ulong tick = SDL.SDL_GetTicks64();
 
-			StopTime_ = TickTime;
-
+			stopTime_ = tick;
+			
             bIsStop_ = true;
         }
     }
@@ -121,8 +121,8 @@ class Timer
 	 */
 	public void Tick()
     {
-        PrevTime_ = CurrTime_;
-        CurrTime_ = SDL.SDL_GetTicks64();
+        prevTime_ = currTime_;
+        currTime_ = SDL.SDL_GetTicks64();
     }
 
 
@@ -135,29 +135,29 @@ class Timer
 	/**
 	 * 타이머가 시작된 시간입니다.
 	 */
-	private ulong BaseTime_ = 0UL;
+	private ulong baseTime_ = 0UL;
 
 
 	/**
 	 * 타이머가 중지된 동안의 누적 시간값 입니다.
 	 */
-	private ulong PausedTime_ = 0UL;
+	private ulong pausedTime_ = 0UL;
 
 
 	/**
 	 * 타이머가 중지된 시간입니다.
 	 */
-	private ulong StopTime_ = 0UL;
+	private ulong stopTime_ = 0UL;
 
 
 	/**
 	 * 직전의 Tick 호출 시간입니다.
 	 */
-	private ulong PrevTime_ = 0UL;
+	private ulong prevTime_ = 0UL;
 
 
 	/**
 	 * Tick 호출 시간입니다.
 	 */
-	private ulong CurrTime_ = 0UL;
+	private ulong currTime_ = 0UL;
 }

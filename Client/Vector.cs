@@ -11,21 +11,21 @@ struct Vector2<T>
      */
     public Vector2(T xx, T yy)
     {
-        X = xx;
-        Y = yy;
+        x = xx;
+        y = yy;
     }
 
 
     /**
      * @brief 2차원 벡터의 X성분입니다.
      */
-    public T X;
+    public T x;
 
 
     /**
      * @brief 2차원 벡터의 Y성분입니다.
      */
-    public T Y;
+    public T y;
 }
 
 
@@ -43,28 +43,28 @@ struct Vector3<T>
      */
     public Vector3(T xx, T yy, T zz)
     {
-        X = xx;
-        Y = yy;
-        Z = zz;
+        x = xx;
+        y = yy;
+        z = zz;
     }
 
 
     /**
      * @brief 3차원 벡터의 X성분입니다.
      */
-    public T X;
+    public T x;
 
 
     /**
      * @brief 3차원 벡터의 Y성분입니다.
      */
-    public T Y;
+    public T y;
 
 
     /**
      * @brief 3차원 벡터의 Z성분입니다.
      */
-    public T Z;
+    public T z;
 }
 
 
@@ -83,33 +83,33 @@ struct Vector4<T>
      */
     public Vector4(T xx, T yy, T zz, T ww)
     {
-        X = xx;
-        Y = yy;
-        Z = zz;
-        W = ww;
+        x = xx;
+        y = yy;
+        z = zz;
+        w = ww;
     }
 
 
     /**
      * @brief 4차원 벡터의 X성분입니다.
      */
-    public T X;
+    public T x;
 
 
     /**
      * @brief 4차원 벡터의 Y성분입니다.
      */
-    public T Y;
+    public T y;
 
 
     /**
      * @brief 4차원 벡터의 Z성분입니다.
      */
-    public T Z;
+    public T z;
 
 
     /**
      * @brief 4차원 벡터의 W성분입니다.
      */
-    public T W;
+    public T w;
 }

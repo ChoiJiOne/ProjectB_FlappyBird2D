@@ -9,17 +9,17 @@ public interface IGameObject
     /**
      * @brief 게임 오브젝트를 업데이트합니다.
      * 
-     * @param DeltaSeconds 초단위 델타 시간값입니다.
+     * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public void Update(float DeltaSeconds);
+    public void Update(float deltaSeconds);
 
 
     /**
      * @brief 게임 오브젝트를 화면에 그립니다.
      * 
-     * @param Renderer 오브젝트를 화면에 그리기 위한 렌더러입니다.
+     * @param renderer 오브젝트를 화면에 그리기 위한 렌더러입니다.
      */
-    public void Render(IntPtr Renderer);
+    public void Render(IntPtr renderer);
 
 
     /**
