@@ -57,6 +57,7 @@ class FlappyBird2D
         string contentPath = CommandLine.GetValue("Content");
 
         Background background = new Background();
+        background.Plable = true;
         background.Texture = new Texture(renderer_, contentPath + "Background.png");
         background.RigidBody = new RigidBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 

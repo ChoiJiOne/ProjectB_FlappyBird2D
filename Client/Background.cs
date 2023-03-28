@@ -22,6 +22,18 @@ class Background : IGameObject
         set => rigidBody_ = value;
     }
 
+    public bool Plable
+    {
+        get => bIsPlay_;
+        set => bIsPlay_ = value;
+    }
+
+    public float PlayTime
+    {
+        get => playTime_;
+        set => playTime_ = value;
+    }
+
 
     /**
      * @brief 백그라운드 게임 오브젝트를 업데이트합니다.
@@ -30,7 +42,10 @@ class Background : IGameObject
      */
     public void Update(float deltaSeconds)
     {
-        
+        if(bIsPlay_)
+        {
+            playTime_ += deltaSeconds;
+        }
     }
 
 
@@ -63,6 +78,18 @@ class Background : IGameObject
     {
         texture_.Release();
     }
+
+
+    /**
+     * @brief 현재 게임이 플레이중인지 확인합니다.
+     */
+    private bool bIsPlay_ = false;
+
+
+    /**
+     * @brief 플레이한 시간입니다.
+     */
+    private float playTime_ = 0.0f;
 
 
     /**
