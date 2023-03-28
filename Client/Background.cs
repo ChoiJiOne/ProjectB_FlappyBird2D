@@ -8,28 +8,6 @@ using SDL2;
 class Background : IGameObject
 {
     /**
-     * @brief 게임의 백그라운드 오브젝트 속성에 대한 Getter/Setter 입니다.
-     */
-    public Vector2<float> Center
-    {
-        get => Center_;
-        set => Center_ = value;
-    }
-
-    public float Width
-    {
-        get => Width_;
-        set => Width_ = value;
-    }
-
-    public float Height
-    {
-        get => Height_;
-        set => Height_ = value;
-    }
-
-
-    /**
      * @brief 백그라운드 텍스처를 설정합니다.
      * 
      * @note 이미 텍스처가 로딩되어 있다면, 기존의 텍스처 리소스를 삭제합니다.
@@ -41,6 +19,19 @@ class Background : IGameObject
     public void SetTexture(Texture BGTexture)
     {
         BGTexture_ = BGTexture;
+    }
+
+
+    /**
+     * @brief 백그라운드 오브젝트의 강체를 설정합니다.
+     * 
+     * @note 이미 설정되어 있다면, 기존의 강체를 덮어 씁니다.
+     * 
+     * @param BackgroundRigidBody 설정할 강체입니다.
+     */
+    public void SetRigidBody(RigidBody BackgroundRigidBody)
+    {
+        RigidBody_ = BackgroundRigidBody;
     }
 
 
@@ -63,10 +54,10 @@ class Background : IGameObject
     public void Render(IntPtr Renderer)
     {
         SDL.SDL_Rect BGSpriteRect;
-        BGSpriteRect.x = (int)(Center_.X - Width_ / 2.0f);
-        BGSpriteRect.y = (int)(Center_.Y - Height_ / 2.0f);
-        BGSpriteRect.w = (int)(Width_);
-        BGSpriteRect.h = (int)(Height_);
+        BGSpriteRect.x = (int)(RigidBody_.Center.X - RigidBody_.Width / 2.0f);
+        BGSpriteRect.y = (int)(RigidBody_.Center.Y - RigidBody_.Height / 2.0f);
+        BGSpriteRect.w = (int)(RigidBody_.Width);
+        BGSpriteRect.h = (int)(RigidBody_.Height);
 
         SDL.SDL_RenderCopy(
             Renderer,
@@ -87,21 +78,9 @@ class Background : IGameObject
 
 
     /**
-     * @brief 게임의 백그라운드 오브젝트 중심 좌표입니다.
+     * @brief 게임 백그라운드 오브젝트의 강체입니다.
      */
-    private Vector2<float> Center_;
-
-
-    /**
-     * @brief 게임의 백그라운드 오브젝트 가로 크기입니다.
-     */
-    private float Width_ = 0.0f;
-
-
-    /**
-     * @brief 게임의 백그라운드 오브젝트 세로 크기입니다.
-     */
-    private float Height_ = 0.0f;
+    private RigidBody RigidBody_;
 
 
     /**

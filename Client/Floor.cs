@@ -10,24 +10,6 @@ class Floor : IGameObject
     /**
      * @brief 게임의 바닥 오브젝트 속성에 대한 Getter/Setter 입니다.
      */
-    public Vector2<float> Center
-    {
-        get => Center_;
-        set => Center_ = value;
-    }
-
-    public float Width
-    {
-        get => Width_;
-        set => Width_ = value;
-    }
-
-    public float Height
-    {
-        get => Height_;
-        set => Height_ = value;
-    }
-
     public float Speed
     {
         get => Speed_;
@@ -52,7 +34,20 @@ class Floor : IGameObject
      */
     public void SetTexture(Texture FloorTexture)
     {
-        FloorTexture_ = FloorTexture;
+        Texture_ = FloorTexture;
+    }
+
+
+    /**
+     * @brief 바닥의 강체를 설정합니다.
+     * 
+     * @note 이미 설정되어 있다면, 기존의 강체를 덮어 씁니다.
+     * 
+     * @param FloorRigidBody 설정할 강체입니다.
+     */
+    public void SetRigidBody(RigidBody FloorRigidBody)
+    {
+        RigidBody_ = FloorRigidBody;
     }
 
 
@@ -84,8 +79,8 @@ class Floor : IGameObject
     {
         float Lerp = AccumulateTime_ / Speed_;
 
-        float Width = FloorTexture_.Width;
-        float Height = FloorTexture_.Height;
+        float Width = Texture_.Width;
+        float Height = Texture_.Height;
 
         SDL.SDL_Rect LeftSrcRect;
         LeftSrcRect.x = (int)(Width * Lerp);
@@ -94,14 +89,14 @@ class Floor : IGameObject
         LeftSrcRect.h = (int)Height;
 
         SDL.SDL_Rect LeftDstRect;
-        LeftDstRect.x = (int)(Center_.X - Width_ / 2.0f);
-        LeftDstRect.y = (int)(Center_.Y - Height_ / 2.0f);
-        LeftDstRect.w = (int)(Width_ * (1.0f - Lerp));
-        LeftDstRect.h = (int)(Height_);
+        LeftDstRect.x = (int)(RigidBody_.Center.X - RigidBody_.Width / 2.0f);
+        LeftDstRect.y = (int)(RigidBody_.Center.Y - RigidBody_.Height / 2.0f);
+        LeftDstRect.w = (int)(RigidBody_.Width * (1.0f - Lerp));
+        LeftDstRect.h = (int)(RigidBody_.Height);
 
         SDL.SDL_RenderCopy(
             Renderer,
-            FloorTexture_.Resource,
+            Texture_.Resource,
             ref LeftSrcRect,
             ref LeftDstRect
         );
@@ -113,14 +108,14 @@ class Floor : IGameObject
         RightSrcRect.h = (int)Height;
 
         SDL.SDL_Rect RightDstRect;
-        RightDstRect.x = (int)(Center_.X - Width_ / 2.0f + Width_ * (1.0f - Lerp));
-        RightDstRect.y = (int)(Center_.Y - Height_ / 2.0f);
-        RightDstRect.w = (int)(Width_ * Lerp);
-        RightDstRect.h = (int)(Height_);
+        RightDstRect.x = (int)(RigidBody_.Center.X - RigidBody_.Width / 2.0f + RigidBody_.Width * (1.0f - Lerp));
+        RightDstRect.y = (int)(RigidBody_.Center.Y - RigidBody_.Height / 2.0f);
+        RightDstRect.w = (int)(RigidBody_.Width * Lerp);
+        RightDstRect.h = (int)(RigidBody_.Height);
         
         SDL.SDL_RenderCopy(
              Renderer,
-             FloorTexture_.Resource,
+             Texture_.Resource,
              ref RightSrcRect,
              ref RightDstRect
          );
@@ -132,7 +127,7 @@ class Floor : IGameObject
      */
     public void Cleanup()
     {
-        FloorTexture_.Release();
+        Texture_.Release();
     }
 
 
@@ -140,24 +135,6 @@ class Floor : IGameObject
      * @brief 게임의 바닥이 현재 이동 중인지 확인합니다.
      */
     bool bIsMove_ = false;
-
-
-    /**
-     * @brief 게임의 바닥 오브젝트 중심 좌표입니다.
-     */
-    private Vector2<float> Center_;
-
-
-    /**
-     * @brief 게임의 바닥 오브젝트 가로 크기입니다.
-     */
-    private float Width_ = 0.0f;
-
-
-    /**
-     * @brief 게임의 바닥 오브젝트 세로 크기입니다.
-     */
-    private float Height_ = 0.0f;
 
 
     /**
@@ -175,7 +152,13 @@ class Floor : IGameObject
 
 
     /**
+     * @brief 게임 바닥 오브젝트의 강체입니다.
+     */
+    private RigidBody RigidBody_;
+
+
+    /**
      * @brief 게임의 바닥 오브젝트 텍스처입니다.
      */
-    private Texture FloorTexture_;
+    private Texture Texture_;
 }
