@@ -12,8 +12,8 @@ class Floor : IGameObject
      */
     public float Speed
     {
-        get => Speed_;
-        set => Speed_ = value;
+        get => speed_;
+        set => speed_ = value;
     }
 
     public bool Movable
@@ -22,32 +22,16 @@ class Floor : IGameObject
         set => bIsMove_ = value;
     }
 
-
-    /**
-     * @brief 바닥 텍스처를 설정합니다.
-     * 
-     * @note 이미 텍스처가 로딩되어 있다면, 기존의 텍스처 리소스를 삭제합니다.
-     * 
-     * @param FloorTexture 설정할 백그라운드 텍스처입니다.
-     * 
-     * @throws 텍스처 리소스 생성에 실패하면 표준 예외를 던집니다.
-     */
-    public void SetTexture(Texture FloorTexture)
+    public Texture Texture
     {
-        Texture_ = FloorTexture;
+        get => texture_;
+        set => texture_ = value;
     }
 
-
-    /**
-     * @brief 바닥의 강체를 설정합니다.
-     * 
-     * @note 이미 설정되어 있다면, 기존의 강체를 덮어 씁니다.
-     * 
-     * @param FloorRigidBody 설정할 강체입니다.
-     */
-    public void SetRigidBody(RigidBody FloorRigidBody)
+    public RigidBody RigidBody
     {
-        RigidBody_ = FloorRigidBody;
+        get => rigidBody_;
+        set => rigidBody_ = value;
     }
 
 
@@ -60,12 +44,12 @@ class Floor : IGameObject
     {
         if (bIsMove_)
         {
-            AccumulateTime_ += DeltaSeconds;
+            accumulateTime_ += DeltaSeconds;
         }
 
-        if(AccumulateTime_ > Speed_)
+        if(accumulateTime_ > speed_)
         {
-            AccumulateTime_ -= Speed_;
+            accumulateTime_ -= speed_;
         }
     }
 
@@ -77,47 +61,47 @@ class Floor : IGameObject
      */
     public void Render(IntPtr Renderer)
     {
-        float Lerp = AccumulateTime_ / Speed_;
+        float lerp = accumulateTime_ / speed_;
 
-        float Width = Texture_.Width;
-        float Height = Texture_.Height;
+        float width = texture_.Width;
+        float height = texture_.Height;
 
-        SDL.SDL_Rect LeftSrcRect;
-        LeftSrcRect.x = (int)(Width * Lerp);
-        LeftSrcRect.y = 0;
-        LeftSrcRect.w = (int)(Width * (1.0f - Lerp));
-        LeftSrcRect.h = (int)Height;
+        SDL.SDL_Rect leftSrcRect;
+        leftSrcRect.x = (int)(width * lerp);
+        leftSrcRect.y = 0;
+        leftSrcRect.w = (int)(width * (1.0f - lerp));
+        leftSrcRect.h = (int)height;
 
-        SDL.SDL_Rect LeftDstRect;
-        LeftDstRect.x = (int)(RigidBody_.Center.X - RigidBody_.Width / 2.0f);
-        LeftDstRect.y = (int)(RigidBody_.Center.Y - RigidBody_.Height / 2.0f);
-        LeftDstRect.w = (int)(RigidBody_.Width * (1.0f - Lerp));
-        LeftDstRect.h = (int)(RigidBody_.Height);
+        SDL.SDL_Rect leftDstRect;
+        leftDstRect.x = (int)(rigidBody_.Center.x - rigidBody_.Width / 2.0f);
+        leftDstRect.y = (int)(rigidBody_.Center.y - rigidBody_.Height / 2.0f);
+        leftDstRect.w = (int)(rigidBody_.Width * (1.0f - lerp));
+        leftDstRect.h = (int)(rigidBody_.Height);
 
         SDL.SDL_RenderCopy(
             Renderer,
-            Texture_.Resource,
-            ref LeftSrcRect,
-            ref LeftDstRect
+            texture_.Resource,
+            ref leftSrcRect,
+            ref leftDstRect
         );
 
-        SDL.SDL_Rect RightSrcRect;
-        RightSrcRect.x = 0;
-        RightSrcRect.y = 0;
-        RightSrcRect.w = (int)(Width * Lerp);
-        RightSrcRect.h = (int)Height;
+        SDL.SDL_Rect rightSrcRect;
+        rightSrcRect.x = 0;
+        rightSrcRect.y = 0;
+        rightSrcRect.w = (int)(width * lerp);
+        rightSrcRect.h = (int)height;
 
-        SDL.SDL_Rect RightDstRect;
-        RightDstRect.x = (int)(RigidBody_.Center.X - RigidBody_.Width / 2.0f + RigidBody_.Width * (1.0f - Lerp));
-        RightDstRect.y = (int)(RigidBody_.Center.Y - RigidBody_.Height / 2.0f);
-        RightDstRect.w = (int)(RigidBody_.Width * Lerp);
-        RightDstRect.h = (int)(RigidBody_.Height);
+        SDL.SDL_Rect rightDstRect;
+        rightDstRect.x = (int)(rigidBody_.Center.x - rigidBody_.Width / 2.0f + rigidBody_.Width * (1.0f - lerp));
+        rightDstRect.y = (int)(rigidBody_.Center.y - rigidBody_.Height / 2.0f);
+        rightDstRect.w = (int)(rigidBody_.Width * lerp);
+        rightDstRect.h = (int)(rigidBody_.Height);
         
         SDL.SDL_RenderCopy(
              Renderer,
-             Texture_.Resource,
-             ref RightSrcRect,
-             ref RightDstRect
+             texture_.Resource,
+             ref rightSrcRect,
+             ref rightDstRect
          );
     }
 
@@ -127,7 +111,7 @@ class Floor : IGameObject
      */
     public void Cleanup()
     {
-        Texture_.Release();
+        texture_.Release();
     }
 
 
@@ -142,23 +126,23 @@ class Floor : IGameObject
      * 
      * @note 단위는 초단위입니다.
      */
-    private float AccumulateTime_ = 0.0f;
+    private float accumulateTime_ = 0.0f;
 
 
     /**
      * @brief 게임의 바닥 이동 속도입니다.
      */
-    private float Speed_ = 0.0f;
+    private float speed_ = 0.0f;
 
 
     /**
      * @brief 게임 바닥 오브젝트의 강체입니다.
      */
-    private RigidBody RigidBody_;
+    private RigidBody rigidBody_;
 
 
     /**
      * @brief 게임의 바닥 오브젝트 텍스처입니다.
      */
-    private Texture Texture_;
+    private Texture texture_;
 }

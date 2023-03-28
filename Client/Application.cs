@@ -37,14 +37,14 @@ class FlappyBird2D
         string contentPath = CommandLine.GetValue("Content");
 
         Background background = new Background();
-        background.SetTexture(new Texture(renderer_, contentPath + "Background.png"));
-        background.SetRigidBody(new RigidBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f));
+        background.Texture = new Texture(renderer_, contentPath + "Background.png");
+        background.RigidBody = new RigidBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 
         Floor floor = new Floor();
         floor.Speed = 3.0f;
         floor.Movable = true;
-        floor.SetTexture(new Texture(renderer_, contentPath + "Base.png"));
-        floor.SetRigidBody(new RigidBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f));
+        floor.Texture = new Texture(renderer_, contentPath + "Base.png");
+        floor.RigidBody = new RigidBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f);
 
         gameObjects_.Add(background);
         gameObjects_.Add(floor);
