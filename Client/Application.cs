@@ -67,8 +67,13 @@ class FlappyBird2D
         floor.Texture = new Texture(renderer_, contentPath + "Base.png");
         floor.RigidBody = new RigidBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f);
 
+        Bird bird = new Bird();
+        bird.Texture = new Texture(renderer_, contentPath + "Bird.png");
+        bird.RigidBody = new RigidBody(new Vector2<float>(400.0f, 300.0f), 45.0f, 30.0f);
+
         gameObjects_.Add(background);
         gameObjects_.Add(floor);
+        gameObjects_.Add(bird);
     }
 
 
