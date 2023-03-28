@@ -78,6 +78,9 @@ workspace "FlappyBird2D"
             runtime  "Debug"
             optimize "Off"
             symbols "On"
+
+            -- 디버그 모드의 명령행 인수를 추가합니다.
+            debugargs { "Mode=Debug", }
         
         filter "configurations:Release"
             defines { "NDEBUG", "RELEASE" }
@@ -85,11 +88,18 @@ workspace "FlappyBird2D"
             optimize "On"
             symbols "On"
 
+            -- 릴리즈 모드의 명령행 인수를 추가합니다.
+            debugargs { "Mode=Release", }
+
         filter "configurations:Shipping"
             defines { "NDEBUG", "SHIPPING" }
             runtime "Release"
             optimize "Full"
             symbols "Off"
+
+            -- 쉽핑 모드의 명령행 인수를 추가합니다.
+            debugargs { "Mode=Shipping", }
+
 
     -- 서버 프로젝트입니다.
     project "Server"
