@@ -56,10 +56,8 @@ class Floor : IGameObject
 
     /**
      * @brief 게임의 바닥 오브젝트를 화면에 그립니다.
-     * 
-     * @param renderer 오브젝트를 화면에 그리기 위한 렌더러입니다.
      */
-    public void Render(IntPtr renderer)
+    public void Render()
     {
         float factor = accumulateTime_ / speed_;
         RenderManager.Get().DrawHorizonScrollingTexture(ref texture_, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height, factor);

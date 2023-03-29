@@ -51,10 +51,8 @@ class Background : IGameObject
 
     /**
      * @brief 백그라운드 게임 오브젝트를 화면에 그립니다.
-     * 
-     * @param renderer 오브젝트를 화면에 그리기 위한 렌더러입니다.
      */
-    public void Render(IntPtr renderer)
+    public void Render()
     {
         RenderManager.Get().DrawTexture(ref texture_, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height);
     }

@@ -94,7 +94,7 @@ class FlappyBird2D
             foreach (IGameObject gameObject in gameObjects_)
             {
                 gameObject.Update(gameTimer_.GetDeltaSeconds());
-                gameObject.Render(RenderManager.Get().GetRendererPtr());
+                gameObject.Render();
             }
 
             RenderManager.Get().Present();
