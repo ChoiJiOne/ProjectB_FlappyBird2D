@@ -52,13 +52,13 @@ class FlappyBird2D
         background.Texture = new Texture(contentPath + "Background.png");
         background.RigidBody = new RigidBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 
-        floor = new Floor();
+        Floor floor = new Floor();
         floor.Speed = 3.0f;
         floor.Movable = true;
         floor.Texture = new Texture(contentPath + "Base.png");
         floor.RigidBody = new RigidBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f);
 
-        bird = new Bird();
+        Bird bird = new Bird();
         bird.Movable = true;
         bird.Texture = new Texture(contentPath + "Bird.png");
         bird.RigidBody = new RigidBody(new Vector2<float>(400.0f, 300.0f), 45.0f, 30.0f);
@@ -95,13 +95,6 @@ class FlappyBird2D
             {
                 gameObject.Update(gameTimer_.GetDeltaSeconds());
                 gameObject.Render(RenderManager.Get().GetRendererPtr());
-            }
-
-            RigidBody rigidBody = floor.RigidBody;
-            if (bird.RigidBody.IsCollision(ref rigidBody))
-            {
-                bird.Movable = false;
-                floor.Movable = false;
             }
 
             RenderManager.Get().Present();
@@ -152,9 +145,6 @@ class FlappyBird2D
      * @brief 게임 내의 오브젝트들입니다.
      */
     private List<IGameObject> gameObjects_ = new List<IGameObject>();
-
-    Floor floor;
-    Bird bird;
 }
 
 

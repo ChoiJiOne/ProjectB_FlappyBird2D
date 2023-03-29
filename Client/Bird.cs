@@ -38,9 +38,6 @@ class Bird : IGameObject
     {
         if (bIsMove_)
         {
-            Vector2<float> Center = rigidBody_.Center;
-            Center.y += 10.0f * deltaSeconds;
-            rigidBody_.Center = Center;
         }
     }
     
