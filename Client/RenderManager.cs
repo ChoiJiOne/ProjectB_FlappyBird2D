@@ -10,7 +10,7 @@ class RenderManager
     /**
      * @brief 렌더링을 수행하는 렌더 매니저의 인스턴스를 얻습니다.
      * 
-     * @return 렌더 매니저 인스턴스의 참조자를 반환합니다.
+     * @return 렌더 매니저 인스턴스를 반환합니다.
      */
     public static RenderManager Get()
     {
