@@ -13,8 +13,6 @@ class FlappyBird2D
      */
     public void Setup()
     {
-        AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CrashHandler.DetectApplicationCrash);
-
         if(SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING) != 0)
         {
             throw new Exception("failed to initialize SDL...");
@@ -155,6 +153,8 @@ class ClientApplication
      */
     static void Main(string[] args)
     {
+        AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CrashHandler.DetectApplicationCrash);
+
         CommandLine.Parse(args);
         FlappyBird2D Game = new FlappyBird2D();
 
