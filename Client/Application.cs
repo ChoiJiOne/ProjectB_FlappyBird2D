@@ -41,16 +41,7 @@ class FlappyBird2D
             throw new Exception("failed to create window...");
         }
 
-        renderer_ = SDL.SDL_CreateRenderer(
-            window_,
-            -1,
-            SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED | SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC
-        );
-
-        if(renderer_ == IntPtr.Zero)
-        {
-            throw new Exception("failed to create renderer...");
-        }
+        RenderManager.Get().Setup(window_);
 
         gameTimer_ = new Timer();
 
@@ -58,18 +49,18 @@ class FlappyBird2D
 
         Background background = new Background();
         background.Plable = false;
-        background.Texture = new Texture(renderer_, contentPath + "Background.png");
+        background.Texture = new Texture(contentPath + "Background.png");
         background.RigidBody = new RigidBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 
         floor = new Floor();
         floor.Speed = 3.0f;
         floor.Movable = true;
-        floor.Texture = new Texture(renderer_, contentPath + "Base.png");
+        floor.Texture = new Texture(contentPath + "Base.png");
         floor.RigidBody = new RigidBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f);
 
         bird = new Bird();
         bird.Movable = true;
-        bird.Texture = new Texture(renderer_, contentPath + "Bird.png");
+        bird.Texture = new Texture(contentPath + "Bird.png");
         bird.RigidBody = new RigidBody(new Vector2<float>(400.0f, 300.0f), 45.0f, 30.0f);
 
         gameObjects_.Add(background);
@@ -98,13 +89,12 @@ class FlappyBird2D
                 }
             }
 
-            SDL.SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
-            SDL.SDL_RenderClear(renderer_);
+            RenderManager.Get().Clear(0.0f, 0.0f, 0.0f, 1.0f);
 
             foreach (IGameObject gameObject in gameObjects_)
             {
                 gameObject.Update(gameTimer_.GetDeltaSeconds());
-                gameObject.Render(renderer_);
+                gameObject.Render(RenderManager.Get().GetRendererPtr());
             }
 
             RigidBody rigidBody = floor.RigidBody;
@@ -113,8 +103,8 @@ class FlappyBird2D
                 bird.Movable = false;
                 floor.Movable = false;
             }
-            
-            SDL.SDL_RenderPresent(renderer_);
+
+            RenderManager.Get().Present();
         }
     }
 
@@ -129,7 +119,8 @@ class FlappyBird2D
             gameObject.Cleanup();
         }
 
-        SDL.SDL_DestroyRenderer(renderer_);
+        RenderManager.Get().Cleanup();
+
         SDL.SDL_DestroyWindow(window_);
 
         SDL_image.IMG_Quit();
@@ -149,14 +140,6 @@ class FlappyBird2D
      * @note 반드시 할당 해제 해주어야 합니다.
      */
     private IntPtr window_;
-
-
-    /**
-     * @brief SDL 렌더러의 포인터 값입니다.
-     * 
-     * @note 반드시 할당 해제 해주어야 합니다.
-     */
-    private IntPtr renderer_;
 
 
     /**
