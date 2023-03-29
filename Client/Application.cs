@@ -41,6 +41,9 @@ class FlappyBird2D
             throw new Exception("failed to create window...");
         }
 
+        InputManager.Get().Setup();
+        InputManager.Get().BindWindowEventAction(EWindowEvent.CLOSE, () => { bIsDone_ = true; });
+
         RenderManager.Get().Setup(window_);
 
         gameTimer_ = new Timer();
@@ -59,7 +62,7 @@ class FlappyBird2D
         floor.RigidBody = new RigidBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f);
 
         Bird bird = new Bird();
-        bird.Movable = true;
+        bird.Movable = false;
         bird.Texture = new Texture(contentPath + "Bird.png");
         bird.RigidBody = new RigidBody(new Vector2<float>(400.0f, 300.0f), 45.0f, 30.0f);
 
@@ -76,18 +79,10 @@ class FlappyBird2D
     {
         gameTimer_.Reset();
 
-        SDL.SDL_Event e;
         while (!bIsDone_)
         {
             gameTimer_.Tick();
-
-            while (SDL.SDL_PollEvent(out e) != 0)
-            {
-                if (e.type == SDL.SDL_EventType.SDL_QUIT)
-                {
-                    bIsDone_ = true;
-                }
-            }
+            InputManager.Get().Tick();
 
             RenderManager.Get().Clear(0.0f, 0.0f, 0.0f, 1.0f);
 

@@ -36,8 +36,16 @@ class Bird : IGameObject
      */
     public void Update(float deltaSeconds)
     {
+        if(InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
+        {
+            bIsMove_ = true;
+        }
+
         if (bIsMove_)
         {
+            Vector2<float> center = rigidBody_.Center;
+            center.y += (deltaSeconds * 10.0f);
+            rigidBody_.Center = center;
         }
     }
     
