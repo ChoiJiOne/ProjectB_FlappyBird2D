@@ -108,23 +108,23 @@ class RenderManager
      */
     public void DrawTexture(ref Texture texture, Vector2<float> center, float width, float height, float rotate = 0.0f)
     {
-        SDL.SDL_Rect Rect;
-        Rect.x = (int)(center.x - width / 2.0f);
-        Rect.y = (int)(center.y - height / 2.0f);
-        Rect.w = (int)(width);
-        Rect.h = (int)(height);
+        SDL.SDL_Rect rect;
+        rect.x = (int)(center.x - width / 2.0f);
+        rect.y = (int)(center.y - height / 2.0f);
+        rect.w = (int)(width);
+        rect.h = (int)(height);
 
-        SDL.SDL_Point Point;
-        Point.x = (int)(center.x);
-        Point.y = (int)(center.y);
+        SDL.SDL_Point point;
+        point.x = (int)(center.x);
+        point.y = (int)(center.y);
 
         if (SDL.SDL_RenderCopyEx(
             renderer_, 
             texture.Resource, 
             IntPtr.Zero, 
-            ref Rect, 
+            ref rect, 
             rotate, 
-            ref Point, 
+            ref point, 
             SDL.SDL_RendererFlip.SDL_FLIP_NONE) != 0)
         {
             throw new Exception("failed to draw texture in back buffer...");
