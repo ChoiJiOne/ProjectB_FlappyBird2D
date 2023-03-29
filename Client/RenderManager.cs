@@ -96,6 +96,169 @@ class RenderManager
 
 
     /**
+     * @brief 백버퍼에 텍스처를 그립니다.
+     * 
+     * @param texture 백버퍼에 그릴 텍스처 리소스입니다.
+     * @param center 텍스처의 화면 상 중심 좌표입니다.
+     * @param width 텍스처의 가로 크기입니다.
+     * @param height 텍스처의 세로 크기입니다.
+     * @param rotate 텍스처의 회전 각도 값입니다. 기준은 육십분법이고 기본 값은 0.0입니다.
+     * 
+     * @throws 텍스처를 백버퍼에 그리는 데 실패하면 예외를 던집니다.
+     */
+    public void DrawTexture(ref Texture texture, Vector2<float> center, float width, float height, float rotate = 0.0f)
+    {
+        SDL.SDL_Rect Rect;
+        Rect.x = (int)(center.x - width / 2.0f);
+        Rect.y = (int)(center.y - height / 2.0f);
+        Rect.w = (int)(width);
+        Rect.h = (int)(height);
+
+        SDL.SDL_Point Point;
+        Point.x = (int)(center.x);
+        Point.y = (int)(center.y);
+
+        if (SDL.SDL_RenderCopyEx(
+            renderer_, 
+            texture.Resource, 
+            IntPtr.Zero, 
+            ref Rect, 
+            rotate, 
+            ref Point, 
+            SDL.SDL_RendererFlip.SDL_FLIP_NONE) != 0)
+        {
+            throw new Exception("failed to draw texture in back buffer...");
+        }
+    }
+
+
+    /**
+     * @brief 가로로 움직이는 텍스처를 백버퍼에 그립니다.
+     * 
+     * @note 텍스처 분할 비율은 다음과 같습니다.
+     * 
+     * ┌────────────┬──────────────────┐
+     * │            │                  │
+     * │            │                  │
+     * │            │                  │
+     * │            │                  │
+     * │ 1.0f - rate│       rate       │
+     * │            │                  │
+     * │            │                  │
+     * │            │                  │
+     * └────────────┴──────────────────┘
+     * 
+     * @param texture 백버퍼에 그릴 텍스처 리소스입니다.
+     * @param center 텍스처의 화면 상 중심 좌표입니다.
+     * @param width 텍스처의 가로 크기입니다.
+     * @param height 텍스처의 세로 크기입니다.
+     * @param rate 텍스처 분할 비율입니다.
+     */
+    public void DrawHorizonScrollingTexture(ref Texture texture, Vector2<float> center, float width, float height, float rate)
+    {
+        float texWidth = texture.Width;
+        float texHeight = texture.Height;
+
+        SDL.SDL_Rect leftSrcRect;
+        leftSrcRect.x = (int)(texWidth * rate);
+        leftSrcRect.y = 0;
+        leftSrcRect.w = (int)(texWidth * (1.0f - rate));
+        leftSrcRect.h = (int)texHeight;
+
+        SDL.SDL_Rect leftDstRect;
+        leftDstRect.x = (int)(center.x - width / 2.0f);
+        leftDstRect.y = (int)(center.y - height / 2.0f);
+        leftDstRect.w = (int)(width * (1.0f - rate));
+        leftDstRect.h = (int)(height);
+
+        if(SDL.SDL_RenderCopy(renderer_, texture.Resource, ref leftSrcRect, ref leftDstRect) != 0)
+        {
+            throw new Exception("failed to draw horizon scrolling left texture...");
+        }
+
+        SDL.SDL_Rect rightSrcRect;
+        rightSrcRect.x = 0;
+        rightSrcRect.y = 0;
+        rightSrcRect.w = (int)(texWidth * rate);
+        rightSrcRect.h = (int)texHeight;
+
+        SDL.SDL_Rect rightDstRect;
+        rightDstRect.x = (int)(center.x - width / 2.0f + width * (1.0f - rate));
+        rightDstRect.y = (int)(center.y - height / 2.0f);
+        rightDstRect.w = (int)(width * rate);
+        rightDstRect.h = (int)(height);
+
+        if(SDL.SDL_RenderCopy(renderer_, texture.Resource, ref rightSrcRect, ref rightDstRect) != 0)
+        {
+            throw new Exception("failed to draw horizon scrolling right texture...");
+        }
+    }
+
+
+    /**
+     * @brief 세로로 움직이는 텍스처를 백버퍼에 그립니다.
+     * 
+     * @note 텍스처 분할 비율은 다음과 같습니다.
+     * 
+     * ┌─────────────────────────────┐
+     * │                             │
+     * │                             │
+     * │         1.0f - rate         │
+     * │                             │
+     * ├─────────────────────────────┤
+     * │                             │
+     * │            rate             │
+     * │                             │
+     * └─────────────────────────────┘
+     * 
+     * @param texture 백버퍼에 그릴 텍스처 리소스입니다.
+     * @param center 텍스처의 화면 상 중심 좌표입니다.
+     * @param width 텍스처의 가로 크기입니다.
+     * @param height 텍스처의 세로 크기입니다.
+     * @param rate 텍스처 분할 비율입니다.
+     */
+    public void DrawVerticalScrollingTexture(ref Texture texture, Vector2<float> center, float width, float height, float rate)
+    {
+        float texWidth = texture.Width;
+        float texHeight = texture.Height;
+
+        SDL.SDL_Rect topSrcRect;
+        topSrcRect.x = 0;
+        topSrcRect.y = (int)(texHeight * rate);
+        topSrcRect.w = (int)texWidth;
+        topSrcRect.h = (int)(texHeight * (1.0f - rate));
+
+        SDL.SDL_Rect topDstRect;
+        topDstRect.x = (int)(center.x - width / 2.0f);
+        topDstRect.y = (int)(center.y - height / 2.0f);
+        topDstRect.w = (int)width;
+        topDstRect.h = (int)(height * (1.0f - rate));
+
+        if (SDL.SDL_RenderCopy(renderer_, texture.Resource, ref topSrcRect, ref topDstRect) != 0)
+        {
+            throw new Exception("failed to draw horizon scrolling top texture...");
+        }
+
+        SDL.SDL_Rect bottomSrcRect;
+        bottomSrcRect.x = 0;
+        bottomSrcRect.y = 0;
+        bottomSrcRect.w = (int)texWidth;
+        bottomSrcRect.h = (int)(texHeight * rate);
+
+        SDL.SDL_Rect bottomDstRect;
+        bottomDstRect.x = (int)(center.x - width / 2.0f);
+        bottomDstRect.y = (int)(center.y - height / 2.0f + height * (1.0f - rate));
+        bottomDstRect.w = (int)width;
+        bottomDstRect.h = (int)(height * rate);
+
+        if (SDL.SDL_RenderCopy(renderer_, texture.Resource, ref bottomSrcRect, ref bottomDstRect) != 0)
+        {
+            throw new Exception("failed to draw horizon scrolling bottom texture...");
+        }
+    }
+
+
+    /**
      * @brief 생성자는 외부에서 호출할 수 없도록 감춤니다.
      */
     private RenderManager() { }
