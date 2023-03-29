@@ -10,14 +10,13 @@ class Texture
     /**
      * @brief 텍스처를 로딩하고 관리하는 클래스의 생성자입니다.
      * 
-     * @param renderer 텍스처를 생성하기 위한 렌더러입니다.
      * @param path 텍스처 리소스의 경로입니다.
      * 
      * @throws
      * - 텍스처 이미지 로딩에 실패하면 예외를 던집니다.
      * - 텍스처 리소스 생성에 실패하면 예외를 던집니다.
      */
-    public Texture(IntPtr renderer, string path)
+    public Texture(string path)
     {
         IntPtr surface = SDL_image.IMG_Load(path);
 
@@ -26,7 +25,7 @@ class Texture
             throw new Exception("failed to load texture image...");
         }
 
-        texture_ = SDL.SDL_CreateTextureFromSurface(renderer, surface);
+        texture_ = SDL.SDL_CreateTextureFromSurface(RenderManager.Get().GetRendererPtr(), surface);
         SDL.SDL_FreeSurface(surface);
 
         if(texture_ == IntPtr.Zero)
