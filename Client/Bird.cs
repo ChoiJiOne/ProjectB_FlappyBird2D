@@ -49,13 +49,7 @@ class Bird : IGameObject
      */
     public void Render(IntPtr renderer)
     {
-        SDL.SDL_Rect birdRect;
-        birdRect.x = (int)(rigidBody_.Center.x - rigidBody_.Width / 2.0f);
-        birdRect.y = (int)(rigidBody_.Center.y - rigidBody_.Height / 2.0f);
-        birdRect.w = (int)(rigidBody_.Width);
-        birdRect.h = (int)(rigidBody_.Height);
-
-        SDL.SDL_RenderCopy(renderer, texture_.Resource, IntPtr.Zero, ref birdRect);
+        RenderManager.Get().DrawTexture(ref texture_, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height);
     }
 
 

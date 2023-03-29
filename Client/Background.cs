@@ -56,18 +56,7 @@ class Background : IGameObject
      */
     public void Render(IntPtr renderer)
     {
-        SDL.SDL_Rect backgroundRect;
-        backgroundRect.x = (int)(rigidBody_.Center.x - rigidBody_.Width / 2.0f);
-        backgroundRect.y = (int)(rigidBody_.Center.y - rigidBody_.Height / 2.0f);
-        backgroundRect.w = (int)(rigidBody_.Width);
-        backgroundRect.h = (int)(rigidBody_.Height);
-
-        SDL.SDL_RenderCopy(
-            renderer,
-            texture_.Resource,
-            IntPtr.Zero,
-            ref backgroundRect
-        );
+        RenderManager.Get().DrawTexture(ref texture_, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height);
     }
 
 
