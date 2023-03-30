@@ -25,7 +25,12 @@ class FlappyBird2D
         {
             throw new Exception("failed to initialize SDL_image...");
         }
-        
+
+        if (SDL_ttf.TTF_Init() != 0)
+        {
+            throw new Exception("failed to initialize SDL_ttf...");
+        }
+
         window_ = SDL.SDL_CreateWindow(
             "FlappyBird2D",
             SDL.SDL_WINDOWPOS_CENTERED,
