@@ -100,7 +100,7 @@ class FlappyBird2D
             Vector2<float> center;
             center.x = 500.0f;
             center.y = 400.0f;
-            RenderManager.Get().DrawText(ref font, "ABCDEFGgy", center);
+            RenderManager.Get().DrawText(ref font, "ABCDEFGgy", center, 1.0f, 0.0f, 1.0f, 1.0f);
 
             RenderManager.Get().Present();
         }
