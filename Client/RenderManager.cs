@@ -259,6 +259,56 @@ class RenderManager
 
 
     /**
+     * @brief 텍스트를 백버퍼에 그립니다.
+     * 
+     * @param font 텍스트의 폰트 정보입니다.
+     * @param text 백버퍼에 그릴 텍스트입니다.
+     * @param center 텍스트의 중심 좌표입니다.
+     * @param r 텍스트의 색상 중 R값입니다.
+     * @param g 텍스트의 색상 중 G값입니다.
+     * @param b 텍스트의 색상 중 B값입니다.
+     * @param a 텍스트의 색상 중 A값입니다.
+     */
+    public void DrawText(ref TTFont font, string text, Vector2<float> center)
+    {
+        if(!font.MeasureText(text, out int width, out int height))
+        {
+            return;
+        }
+
+        float x = center.x - (float)width / 2.0f;
+        float y = center.y - (float)height / 2.0f;
+        IntPtr textureAtlas = font.TextureAtlas;
+
+        SDL.SDL_RenderCopy(renderer_, textureAtlas, IntPtr.Zero, IntPtr.Zero);
+
+        SDL.SDL_SetTextureAlphaMod(textureAtlas, 255);
+        SDL.SDL_SetTextureColorMod(textureAtlas, 255, 255, 255);
+
+        for (int index = 0; index < text.Length; ++index)
+        {
+            Glyph glyph = font.GetGlyph((ushort)text[index]);
+
+            SDL.SDL_Rect SrcRect;
+            SrcRect.x = glyph.x;
+            SrcRect.y = glyph.y;
+            SrcRect.w = glyph.width + 1;
+            SrcRect.h = glyph.height + 1;
+
+            SDL.SDL_Rect DstRect;
+            DstRect.x = (int)x + glyph.xoffset;
+            DstRect.y = (int)y + glyph.yoffset;
+            DstRect.w = glyph.width;
+            DstRect.h = glyph.height;
+
+            SDL.SDL_RenderCopy(renderer_, textureAtlas, ref SrcRect, ref DstRect);
+
+            x += glyph.xadvance;
+        }
+    }
+
+
+    /**
      * @brief 생성자는 외부에서 호출할 수 없도록 감춤니다.
      */
     private RenderManager() { }
