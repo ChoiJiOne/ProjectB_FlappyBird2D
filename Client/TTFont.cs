@@ -252,27 +252,29 @@ class TTFont
      * 
      * @param font 트루 타입 폰트 리소스입니다.
      * @param resolution 텍스처 아틀라스의 크기입니다.
-     * @param padding 문자열 사이의 간격입니다.
      * 
      * @throws 텍스처 아틀라스 생성에 실패하면 예외를 던집니다.
      * 
      * @return 텍스처 아틀라스의 포인터를 반환합니다.
      */
-    private IntPtr CreateTextureAtlas(IntPtr font, EResolution resolution, int padding = 2)
+    private IntPtr CreateTextureAtlas(IntPtr font, EResolution resolution)
     {
         int atlasX = 0;
         int atlasY = 0;
         int atlasSize = (int)resolution;
         int maxRowHeight = 0;
 
-        IntPtr atlasSurface = SDL.SDL_CreateRGBSurface(0, atlasSize, atlasSize, 32, 0, 0, 0, 0);
+        IntPtr atlasSurface = SDL.SDL_CreateRGBSurfaceWithFormat(0, atlasSize, atlasSize, 32, SDL.SDL_PIXELFORMAT_RGBA8888);
         if (atlasSurface == IntPtr.Zero)
         {
             throw new Exception("failed to create texture atlas surface...");
         }
 
-        //SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGBA(surface->format, 0, 0, 0, 0));
-        //SDL.SDL_SetColorKey(atlasSurface, SDL.SDL_TRUE, SDL.SDL_MapRGBA(atlasSurface.format, 0, 0, 0, 0));
+        SDL.SDL_Color color;
+        color.r = 255;
+        color.g = 255;
+        color.b = 255;
+        color.a = 255;
 
         for (ushort codePoint = beginCodePoint_; codePoint <= endCodePoint_; ++codePoint)
         {
@@ -281,28 +283,19 @@ class TTFont
                 throw new Exception("failed to get glyph info...");
             }
 
-            if (atlasX + maxx - minx + padding >= atlasSize)
+            if (atlasX + advance >= atlasSize)
             {
                 atlasX = 0;
-                atlasY += maxRowHeight + padding;
+                atlasY += (maxRowHeight + 1);
                 maxRowHeight = 0;
             }
 
-            SDL.SDL_Color color;
-            color.r = 255;
-            color.g = 255;
-            color.b = 255;
-            color.a = 255;
-
-            IntPtr glyphSurface = SDL_ttf.TTF_RenderGlyph_Blended(font, codePoint, color);
-
-
             Glyph glyph;
             glyph.codePoint = codePoint;
-            glyph.x = atlasX + minx;
-            glyph.y = atlasY + miny;
+            glyph.x = atlasX;
+            glyph.y = atlasY;
             glyph.width = maxx - minx;
-            glyph.height = maxy - miny;
+            glyph.height = maxy - miny + 1;
             glyph.xoffset = minx;
             glyph.yoffset = miny;
             glyph.xadvance = advance;
@@ -310,23 +303,31 @@ class TTFont
             glyphs_.Add(glyph);
 
             SDL.SDL_Rect glyphRect;
-            glyphRect.x = atlasX;
-            glyphRect.y = atlasY;
+            glyphRect.x = glyph.x;
+            glyphRect.y = glyph.y + glyph.yoffset;
             glyphRect.w = glyph.width;
             glyphRect.h = glyph.height;
 
-            if(SDL.SDL_BlitSurface(glyphSurface, IntPtr.Zero, atlasSurface, ref glyphRect) != 0)
+            IntPtr glyphSurface = SDL_ttf.TTF_RenderGlyph_Blended(font, codePoint, color);
+
+            if (SDL.SDL_BlitSurface(glyphSurface, IntPtr.Zero, atlasSurface, ref glyphRect) != 0)
             {
                 throw new Exception("failed to blit surface to surface...");
             }
 
             SDL.SDL_FreeSurface(glyphSurface);
 
-            atlasX += glyph.width + padding;
+            atlasX += (glyph.xadvance + 1);
             maxRowHeight = Math.Max(maxRowHeight, glyph.height);
         }
 
-        return SDL.SDL_CreateTextureFromSurface(RenderManager.Get().GetRendererPtr(), atlasSurface);
+        IntPtr textureAtlas = SDL.SDL_CreateTextureFromSurface(RenderManager.Get().GetRendererPtr(), atlasSurface);
+        if(textureAtlas == IntPtr.Zero)
+        {
+            throw new Exception("failed to create texture atlas...");
+        }
+        
+        return textureAtlas;
     }
 
 
