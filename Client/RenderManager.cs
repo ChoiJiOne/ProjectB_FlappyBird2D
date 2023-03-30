@@ -269,7 +269,7 @@ class RenderManager
      * @param b 텍스트의 색상 중 B값입니다.
      * @param a 텍스트의 색상 중 A값입니다.
      */
-    public void DrawText(ref TTFont font, string text, Vector2<float> center)
+    public void DrawText(ref TTFont font, string text, Vector2<float> center, float r, float g, float b, float a)
     {
         if(!font.MeasureText(text, out int width, out int height))
         {
@@ -280,10 +280,15 @@ class RenderManager
         float y = center.y - (float)height / 2.0f;
         IntPtr textureAtlas = font.TextureAtlas;
 
-        SDL.SDL_RenderCopy(renderer_, textureAtlas, IntPtr.Zero, IntPtr.Zero);
+        if(SDL.SDL_SetTextureAlphaMod(textureAtlas, (byte)(a * 255.0f)) != 0)
+        {
+            throw new Exception("failed to set texture atlas alpha mode...");
+        }
 
-        SDL.SDL_SetTextureAlphaMod(textureAtlas, 255);
-        SDL.SDL_SetTextureColorMod(textureAtlas, 255, 255, 255);
+        if(SDL.SDL_SetTextureColorMod(textureAtlas, (byte)(r * 255.0f), (byte)(g * 255.0f), (byte)(b * 255.0f)) != 0)
+        {
+            throw new Exception("failed to set texture atlas color mode...");
+        }
 
         for (int index = 0; index < text.Length; ++index)
         {
@@ -292,16 +297,19 @@ class RenderManager
             SDL.SDL_Rect SrcRect;
             SrcRect.x = glyph.x;
             SrcRect.y = glyph.y;
-            SrcRect.w = glyph.width + 1;
-            SrcRect.h = glyph.height + 1;
+            SrcRect.w = glyph.width;
+            SrcRect.h = glyph.height;
 
             SDL.SDL_Rect DstRect;
-            DstRect.x = (int)x + glyph.xoffset;
-            DstRect.y = (int)y + glyph.yoffset;
+            DstRect.x = (int)x;
+            DstRect.y = (int)y - glyph.yoffset;
             DstRect.w = glyph.width;
             DstRect.h = glyph.height;
 
-            SDL.SDL_RenderCopy(renderer_, textureAtlas, ref SrcRect, ref DstRect);
+            if (SDL.SDL_RenderCopy(renderer_, textureAtlas, ref SrcRect, ref DstRect) != 0)
+            {
+                throw new Exception("failed to draw texture atlas...");
+            }
 
             x += glyph.xadvance;
         }
