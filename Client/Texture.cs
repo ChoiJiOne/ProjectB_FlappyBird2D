@@ -5,7 +5,7 @@ using SDL2;
 /**
  * @brief 텍스처를 로딩하고 관리하는 클래스입니다.
  */
-class Texture
+class Texture : IContent
 {
     /**
      * @brief 텍스처를 로딩하고 관리하는 클래스의 생성자입니다.

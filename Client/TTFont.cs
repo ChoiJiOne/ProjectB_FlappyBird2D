@@ -44,7 +44,7 @@ enum EResolution
  * 
  * @note 텍스처 아틀라스의 크기는 정사각형입니다.
  */
-class TTFont
+class TTFont : IContent
 {
     /**
      * @brief 트루 타입 폰트를 로딩하고 폰트 텍스처 아틀라스를 생성하는 클래스의 생성자입니다.
@@ -161,6 +161,18 @@ class TTFont
         }
 
         return true;
+    }
+
+
+    /**
+     * @brief 생성된 텍스처 아틀라스 리소스를 정리합니다.
+     */
+    public void Release()
+    {
+        if (textureAtlas_ != IntPtr.Zero)
+        {
+            SDL.SDL_DestroyTexture(textureAtlas_);
+        }
     }
 
 
