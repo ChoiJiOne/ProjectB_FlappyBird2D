@@ -1,7 +1,7 @@
 /**
  * @brief 게임 내의 오브젝트를 나타내는 인터페이스입니다.
  */
-public interface IGameObject
+interface IGameObject
 {
     /**
      * @brief 게임 오브젝트를 업데이트합니다.
