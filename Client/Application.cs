@@ -48,6 +48,7 @@ class FlappyBird2D
         InputManager.Get().BindWindowEventAction(EWindowEvent.CLOSE, () => { bIsDone_ = true; });
 
         RenderManager.Get().Setup(window_);
+        ContentManager.Get().Setup(CommandLine.GetValue("Content"));
 
         gameTimer_ = new Timer();
 
@@ -55,18 +56,18 @@ class FlappyBird2D
 
         Background background = new Background();
         background.Plable = false;
-        background.Texture = new Texture(contentPath + "Background.png");
+        background.Texture = ContentManager.Get().CreateTexture("Background", "Background.png");
         background.RigidBody = new RigidBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 
         Floor floor = new Floor();
         floor.Speed = 3.0f;
         floor.Movable = true;
-        floor.Texture = new Texture(contentPath + "Base.png");
+        floor.Texture = ContentManager.Get().CreateTexture("Base", "Base.png");
         floor.RigidBody = new RigidBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f);
 
         Bird bird = new Bird();
         bird.Movable = false;
-        bird.Texture = new Texture(contentPath + "Bird.png");
+        bird.Texture = ContentManager.Get().CreateTexture("Bird", "Bird.png");
         bird.RigidBody = new RigidBody(new Vector2<float>(400.0f, 300.0f), 45.0f, 30.0f);
 
         gameObjects_.Add(background);
@@ -110,6 +111,7 @@ class FlappyBird2D
             gameObject.Cleanup();
         }
 
+        ContentManager.Get().Cleanup();
         RenderManager.Get().Cleanup();
 
         SDL.SDL_DestroyWindow(window_);
