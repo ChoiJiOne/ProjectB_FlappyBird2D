@@ -53,8 +53,6 @@ class FlappyBird2D
 
         string contentPath = CommandLine.GetValue("Content");
 
-        font = new TTFont(contentPath + "SeoulNamsanEB.ttf", 32, 126, 24);
-
         Background background = new Background();
         background.Plable = false;
         background.Texture = new Texture(contentPath + "Background.png");
@@ -145,9 +143,6 @@ class FlappyBird2D
      * @brief 게임 내의 오브젝트들입니다.
      */
     private List<IGameObject> gameObjects_ = new List<IGameObject>();
-
-
-    TTFont font;
 }
 
 
