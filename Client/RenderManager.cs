@@ -70,16 +70,15 @@ class RenderManager
     /**
      * @brief 백버퍼를 초기화합니다.
      * 
-     * @param red 초기화 할 색상의 R값입니다. 범위는 0.0 ~ 1.0입니다.
-     * @param green 초기화 할 색상의 G값입니다. 범위는 0.0 ~ 1.0입니다.
-     * @param blue 초기화 할 색상의 B값입니다. 범위는 0.0 ~ 1.0입니다.
-     * @param alpha 초기화 할 색상의 A값입니다. 범위는 0.0 ~ 1.0입니다.
+     * @param color 초기화 할 RGBA 색상입니다.
+     * 
+     * @throw 백버퍼를 초기화하는 데 실패하면 예외를 던집니다.
      */
-    public void Clear(float red, float green, float blue, float alpha)
+    public void Clear(Color color)
     {
-        SetDrawColor(red, green, blue, alpha);
+        SetDrawColor(color);
 
-        if(SDL.SDL_RenderClear(renderer_) != 0)
+        if (SDL.SDL_RenderClear(renderer_) != 0)
         {
             throw new Exception("failed to clear back buffer...");
         }
@@ -264,12 +263,9 @@ class RenderManager
      * @param font 텍스트의 폰트 정보입니다.
      * @param text 백버퍼에 그릴 텍스트입니다.
      * @param center 텍스트의 중심 좌표입니다.
-     * @param r 텍스트의 색상 중 R값입니다.
-     * @param g 텍스트의 색상 중 G값입니다.
-     * @param b 텍스트의 색상 중 B값입니다.
-     * @param a 텍스트의 색상 중 A값입니다.
+     * @param color 텍스트의 색상입니다.
      */
-    public void DrawText(ref TTFont font, string text, Vector2<float> center, float r, float g, float b, float a)
+    public void DrawText(ref TTFont font, string text, Vector2<float> center, Color color)
     {
         if(!font.MeasureText(text, out int width, out int height))
         {
@@ -280,12 +276,14 @@ class RenderManager
         float y = center.y - (float)height / 2.0f;
         IntPtr textureAtlas = font.TextureAtlas;
 
-        if(SDL.SDL_SetTextureAlphaMod(textureAtlas, (byte)(a * 255.0f)) != 0)
+        color.ConvertToByte(out byte r, out byte g, out byte b, out byte a);
+
+        if (SDL.SDL_SetTextureAlphaMod(textureAtlas, a) != 0)
         {
             throw new Exception("failed to set texture atlas alpha mode...");
         }
 
-        if(SDL.SDL_SetTextureColorMod(textureAtlas, (byte)(r * 255.0f), (byte)(g * 255.0f), (byte)(b * 255.0f)) != 0)
+        if(SDL.SDL_SetTextureColorMod(textureAtlas, r, g, b) != 0)
         {
             throw new Exception("failed to set texture atlas color mode...");
         }
@@ -325,19 +323,13 @@ class RenderManager
     /**
      * @brief SDL 렌더링 컨텍스트에 색상을 설정합니다.
      * 
-     * @param Red 설정할 색상의 R값입니다. 범위는 0.0 ~ 1.0입니다.
-     * @param Green 설정할 색상의 G값입니다. 범위는 0.0 ~ 1.0입니다.
-     * @param Blue 설정할 색상의 B값입니다. 범위는 0.0 ~ 1.0입니다.
-     * @param Alpha 설정할 색상의 A값입니다. 범위는 0.0 ~ 1.0입니다.
+     * @param color SDL 렌더링 컨텍스트에 설정할 색상입니다.
      * 
      * @throws 색상 설정에 실패하면 예외를 던집니다.
      */
-    private void SetDrawColor(float Red, float Green, float Blue, float Alpha)
+    private void SetDrawColor(Color color)
     {
-        byte r = (byte)(Red   * 255.0f);
-        byte g = (byte)(Green * 255.0f);
-        byte b = (byte)(Blue  * 255.0f);
-        byte a = (byte)(Alpha * 255.0f);
+        color.ConvertToByte(out byte r, out byte g, out byte b, out byte a);
 
         if(SDL.SDL_SetRenderDrawColor(renderer_, r, g, b, a) != 0)
         {
