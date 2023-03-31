@@ -565,7 +565,7 @@ class InputManager
 
 
     /**
-     * @brief 입력 처리 매니저가 초기화된 적이 있는지 확입하니다.
+     * @brief 입력 처리 매니저가 초기화된 적이 있는지 확입합니다.
      */
     private bool bIsSetup_ = false;
 
