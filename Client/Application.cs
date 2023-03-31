@@ -49,6 +49,7 @@ class FlappyBird2D
 
         RenderManager.Get().Setup(window_);
         ContentManager.Get().Setup(CommandLine.GetValue("Content"));
+        WorldManager.Get().Setup();
 
         gameTimer_ = new Timer();
 
@@ -111,10 +112,11 @@ class FlappyBird2D
             gameObject.Cleanup();
         }
 
+        SDL.SDL_DestroyWindow(window_);
+
+        WorldManager.Get().Cleanup();
         ContentManager.Get().Cleanup();
         RenderManager.Get().Cleanup();
-
-        SDL.SDL_DestroyWindow(window_);
 
         SDL_image.IMG_Quit();
         SDL.SDL_Quit();
