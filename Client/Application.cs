@@ -89,18 +89,13 @@ class FlappyBird2D
             gameTimer_.Tick();
             InputManager.Get().Tick();
 
-            RenderManager.Get().Clear(0.0f, 0.0f, 0.0f, 1.0f);
+            RenderManager.Get().Clear(Color.BLACK);
 
             foreach (IGameObject gameObject in gameObjects_)
             {
                 gameObject.Update(gameTimer_.GetDeltaSeconds());
                 gameObject.Render();
             }
-
-            Vector2<float> center;
-            center.x = 500.0f;
-            center.y = 400.0f;
-            RenderManager.Get().DrawText(ref font, "ABCDEFGgy", center, 1.0f, 0.0f, 1.0f, 1.0f);
 
             RenderManager.Get().Present();
         }
