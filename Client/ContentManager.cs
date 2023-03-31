@@ -39,10 +39,12 @@ class ContentManager
 
 
     /**
-     * @brief 게임 내의 컨텐츠 리소스들을 정리합니다.
+     * @brief 게임 내의 컨텐츠 리소스들을 명시적으로 정리합니다.
      */
     public void Cleanup()
     {
+        if (!bIsSetup_) return;
+
         foreach(KeyValuePair<string, IContent> contentKeyValue in contents_)
         {
             IContent content = contentKeyValue.Value;
@@ -129,6 +131,10 @@ class ContentManager
      * @param beginCodePoint 텍스처 아틀라스에 표시할 시작 문자입니다.
      * @param endCodePoint 텍스처 아틀라스에 표시할 끝 문자입니다.
      * @param size 폰트의 크기입니다.
+     * 
+     * @throws
+     * - 시그니처 값이 이미 존재하면 예외를 던집니다.
+     * - 트루 타입 폰트 리소스 생성에 실패하면 예외를 던집니다.
      */
     public TTFont CreateTTFont(string signature, string path, ushort beginCodePoint, ushort endCodePoint, int size)
     {

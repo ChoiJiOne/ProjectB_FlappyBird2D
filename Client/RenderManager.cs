@@ -56,6 +56,8 @@ class RenderManager
      */
     public void Cleanup()
     {
+        if (!bIsSetup_) return;
+
         SDL.SDL_DestroyRenderer(renderer_);
 
         bIsSetup_ = false;

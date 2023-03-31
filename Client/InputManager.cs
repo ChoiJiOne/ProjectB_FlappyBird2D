@@ -362,6 +362,17 @@ class InputManager
 
 
     /**
+     * @brief 입력 처리 매니저의 리소스를 명시적으로 정리합니다.
+     */
+    public void Cleanup()
+    {
+        if (!bIsSetup_) return;
+
+        bIsSetup_ = false;
+    }
+
+
+    /**
      * @brief 마우스의 위치에 대한 Getter입니다.
      */
     public Vector2<int> PrevCursorPosition
