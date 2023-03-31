@@ -71,6 +71,10 @@ class FlappyBird2D
         bird.Texture = ContentManager.Get().CreateTexture("Bird", "Bird.png");
         bird.RigidBody = new RigidBody(new Vector2<float>(400.0f, 300.0f), 45.0f, 30.0f);
 
+        WorldManager.Get().AddGameObject("Background", background);
+        WorldManager.Get().AddGameObject("Floor", floor);
+        WorldManager.Get().AddGameObject("Bird", bird);
+
         gameObjects_.Add(background);
         gameObjects_.Add(floor);
         gameObjects_.Add(bird);
