@@ -47,6 +47,13 @@ class Bird : IGameObject
             center.y += (deltaSeconds * 10.0f);
             rigidBody_.Center = center;
         }
+
+        Floor floor = WorldManager.Get().GetGameObject("Floor") as Floor;
+        if(floor.RigidBody.IsCollision(ref rigidBody_))
+        {
+            bIsMove_ = false;
+            floor.Movable = false;
+        }
     }
     
 
