@@ -74,7 +74,10 @@ class WorldManager
      */
     public void AddGameObject(string signature, IGameObject gameObject)
     {
-        if (IsValid(signature)) return;
+        if (IsValid(signature))
+        {
+            throw new Exception("collision game object signature...");
+        }
 
         gameObjects_.Add(signature, gameObject);
     }
