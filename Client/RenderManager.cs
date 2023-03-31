@@ -122,8 +122,8 @@ class RenderManager
         rect.h = (int)(height);
 
         SDL.SDL_Point point;
-        point.x = (int)(center.x);
-        point.y = (int)(center.y);
+        point.x = (int)(width / 2.0f);
+        point.y = (int)(height / 2.0f);
 
         if (SDL.SDL_RenderCopyEx(
             renderer_, 
@@ -131,7 +131,7 @@ class RenderManager
             IntPtr.Zero, 
             ref rect, 
             rotate, 
-            ref point, 
+            ref point,
             SDL.SDL_RendererFlip.SDL_FLIP_NONE) != 0)
         {
             throw new Exception("failed to draw texture in back buffer...");
