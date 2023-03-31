@@ -142,10 +142,7 @@ class ContentManager
         {
             throw new Exception("collision true type font resource signature...");
         }
-
-        beginCodePoint = Math.Max(beginCodePoint, (ushort)0);
-        endCodePoint = Math.Max(endCodePoint, (ushort)0);
-
+        
         beginCodePoint = Math.Min(beginCodePoint, endCodePoint);
         endCodePoint = Math.Max(beginCodePoint, endCodePoint);
 
