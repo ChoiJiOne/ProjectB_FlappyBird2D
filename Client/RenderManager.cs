@@ -34,6 +34,8 @@ class RenderManager
      */
     public void Setup(IntPtr window, bool bIsAccelerated = true, bool bIsSync = true)
     {
+        if (bIsSetup_) return;
+
         int Flags = 0;
         Flags |= (bIsAccelerated ? (int)(SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED) : 0);
         Flags |= (bIsSync ? (int)(SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC) : 0);
@@ -44,6 +46,8 @@ class RenderManager
         {
             throw new Exception("failed to create renderer...");
         }
+
+        bIsSetup_ = true;
     }
 
 
@@ -53,6 +57,8 @@ class RenderManager
     public void Cleanup()
     {
         SDL.SDL_DestroyRenderer(renderer_);
+
+        bIsSetup_ = false;
     }
 
 
@@ -336,6 +342,12 @@ class RenderManager
             throw new Exception("failed to set draw color...");
         }
     }
+
+
+    /**
+     * @brief 렌더 매니저가 초기화된 적이 있는지 확인합니다.
+     */
+    private bool bIsSetup_ = false;
 
 
     /**
