@@ -84,6 +84,26 @@ class WorldManager
 
 
     /**
+     * @brief 월드 매니저가 관리하는 게임 오브젝트를 얻습니다.
+     * 
+     * @param signature 게임 오브젝트의 시그니처 값입니다.
+     * 
+     * @throws 시그니처 값에 대응하는 게임 오브젝트가 없다면 예외를 던집니다.
+     * 
+     * @return 시그니처 값에 대응하는 게임 오브젝트를 반환합니다.
+     */
+    public IGameObject GetGameObject(string signature)
+    {
+        if(!IsValid(signature))
+        {
+            throw new Exception("can't find game object in world manager...");
+        }
+
+        return gameObjects_[signature];
+    }
+
+
+    /**
      * @brief 월드에 게임 오브젝트를 삭제합니다.
      * 
      * @note 시그니처 값에 대응하는 게임 오브젝트가 없으면 아무 동작도 수행하지 않습니다.
