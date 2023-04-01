@@ -8,6 +8,18 @@ using SDL2;
 class Bird : IGameObject
 {
     /**
+     * @brief 새 오브젝트의 상태를 정의합니다.
+     */
+    public enum EState
+    {
+        WAIT = 0x00, // 대기 상태입니다.
+        JUMP = 0x01, // 점프 상태입니다.
+        FALL = 0x02, // 떨어지는 상태입니다.
+        DONE = 0x03, // 끝난 상태입니다.
+    }
+
+
+    /**
      * @brief 게임의 플레이어가 조종하는 새 오브젝트 속성에 대한 Getter/Setter 입니다.
      */
     public Texture Texture
@@ -22,12 +34,6 @@ class Bird : IGameObject
         set => rigidBody_ = value;
     }
 
-    public bool Movable
-    {
-        get => bIsMove_;
-        set => bIsMove_ = value;
-    }
-
 
     /**
      * @brief 게임의 플레이어가 조종하는 새 오브젝트를 업데이트합니다.
@@ -36,22 +42,30 @@ class Bird : IGameObject
      */
     public void Update(float deltaSeconds)
     {
-        if(InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
-        {
-            bIsMove_ = true;
-        }
+        Vector2<float> center;
 
-        if (bIsMove_)
+        switch(currentState_)
         {
-            Vector2<float> center = rigidBody_.Center;
-            center.y += (deltaSeconds * 10.0f);
-            rigidBody_.Center = center;
+            case EState.WAIT:
+                waitTime_ += deltaSeconds;
+
+                if (waitTime_ > maxWaitTime_)
+                {
+                    waitTime_ = 0.0f;
+                    waitMoveDirection_ *= -1.0f;
+                }
+
+                center = rigidBody_.Center;
+                center.y += (waitMoveDirection_ * deltaSeconds * waitMoveLength_);
+                rigidBody_.Center = center;
+
+                break;
         }
 
         Floor floor = WorldManager.Get().GetGameObject("Floor") as Floor;
         if(floor.RigidBody.IsCollision(ref rigidBody_))
         {
-            bIsMove_ = false;
+            currentState_ = EState.DONE;
             floor.Movable = false;
         }
     }
@@ -62,7 +76,7 @@ class Bird : IGameObject
      */
     public void Render()
     {
-        RenderManager.Get().DrawTexture(ref texture_, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height);
+        RenderManager.Get().DrawTexture(ref texture_, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height, rotate_);
     }
 
 
@@ -76,9 +90,41 @@ class Bird : IGameObject
 
 
     /**
-     * @brief 게임의 플레이어가 조종하는 새 오브젝트가 움직일 수 있는지 확인합니다.
+     * @brief 새 오브젝트의 현재 상태입니다.
      */
-    private bool bIsMove_ = false;
+    private EState currentState_ = EState.WAIT;
+
+
+    /**
+     * @brief 새 오브젝트가 대기 시 움직이는 방향입니다.
+     * 
+     * @note +는 아래 방향, -는 위 방향입니다.
+     */
+    private float waitMoveDirection_ = 1.0f;
+
+
+    /**
+     * @brief 새 오브젝트가 대기 상태에서 누적된 시간입니다.
+     */
+    private float waitTime_ = 0.0f;
+
+
+    /**
+     * @brief 새 오브젝트가 대기 상태에서 기다릴 수 있는 최대 시간입니다.
+     */
+    private float maxWaitTime_ = 1.0f;
+
+
+    /**
+     * @brief 새 오브젝트가 대기 상태에서 움직이는 거리입니다.
+     */
+    public float waitMoveLength_ = 10.0f;
+
+    
+    /**
+     * @brief 새 오브젝트의 회전 각도입니다.
+     */
+    private float rotate_ = 0.0f;
 
 
     /**
