@@ -34,6 +34,12 @@ class Bird : IGameObject
         set => rigidBody_ = value;
     }
 
+    public EState State
+    {
+        get => currentState_;
+        set => currentState_ = value;
+    }
+
 
     /**
      * @brief 게임의 플레이어가 조종하는 새 오브젝트를 업데이트합니다.
