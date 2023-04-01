@@ -141,15 +141,6 @@ class Bird : IGameObject
 
 
     /**
-     * @brief 게임의 플레이어가 조종하는 새 오브젝트 내의 리소스를 정리합니다.
-     */
-    public void Cleanup()
-    {
-        texture_.Release();
-    }
-
-
-    /**
      * @brief 새 오브젝트의 현재 상태입니다.
      */
     private EState currentState_ = EState.WAIT;

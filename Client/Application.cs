@@ -110,11 +110,6 @@ class FlappyBird2D
      */
     public void Cleanup()
     {
-        foreach (IGameObject gameObject in gameObjects_)
-        {
-            gameObject.Cleanup();
-        }
-
         SDL.SDL_DestroyWindow(window_);
 
         WorldManager.Get().Cleanup();

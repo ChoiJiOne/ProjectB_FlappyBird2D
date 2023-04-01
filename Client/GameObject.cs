@@ -15,10 +15,4 @@ interface IGameObject
      * @brief 게임 오브젝트를 화면에 그립니다.
      */
     public void Render();
-
-
-    /**
-     * @brief 게임 오브젝트 내의 리소스를 정리합니다.
-     */
-    public void Cleanup();
 }

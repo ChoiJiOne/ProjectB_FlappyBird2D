@@ -41,12 +41,6 @@ class WorldManager
     {
         if (!bIsSetup_) return;
 
-        foreach (KeyValuePair<string, IGameObject> objectKeyValue in gameObjects_)
-        {
-            IGameObject gameObject = objectKeyValue.Value;
-            gameObject.Cleanup();
-        }
-
         bIsSetup_ = false;
     }
 

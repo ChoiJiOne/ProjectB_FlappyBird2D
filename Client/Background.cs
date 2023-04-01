@@ -59,15 +59,6 @@ class Background : IGameObject
 
 
     /**
-     * @brief 백그라운드 게임 오브젝트 내의 리소스를 정리합니다.
-     */
-    public void Cleanup()
-    {
-        texture_.Release();
-    }
-
-
-    /**
      * @brief 현재 게임이 플레이중인지 확인합니다.
      */
     private bool bIsPlay_ = false;

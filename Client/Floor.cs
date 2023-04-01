@@ -61,15 +61,6 @@ class Floor : IGameObject
 
 
     /**
-     * @brief 게임의 바닥 오브젝트 내의 리소스를 정리합니다.
-     */
-    public void Cleanup()
-    {
-        texture_.Release();
-    }
-
-
-    /**
      * @brief 게임의 바닥이 현재 이동 중인지 확인합니다.
      */
     private bool bIsMove_ = false;
