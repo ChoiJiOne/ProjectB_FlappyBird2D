@@ -42,6 +42,7 @@ class Bird : IGameObject
      */
     public void Update(float deltaSeconds)
     {
+        bool bIsPressSpace = (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED);
         Vector2<float> center;
 
         switch(currentState_)
@@ -59,7 +60,7 @@ class Bird : IGameObject
                 center.y += (waitMoveDirection_ * deltaSeconds * waitMoveLength_);
                 rigidBody_.Center = center;
 
-                if(InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
+                if(bIsPressSpace)
                 {
                     currentState_ = EState.JUMP;
                     rotate_ = MinRotate;
@@ -72,6 +73,7 @@ class Bird : IGameObject
 
                 center = rigidBody_.Center;
                 center.y += (deltaSeconds * jumpDirection * moveSpeed_);
+                center.y = Math.Max(center.y, 0);
                 rigidBody_.Center = center;
 
                 if(bIsJump)
@@ -93,24 +95,25 @@ class Bird : IGameObject
                         currentState_ = EState.FALL;
                         jumpMoveDownLength_ = 0.0f;
                     }
+                }
 
-                    if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
-                    {
-                        bIsJump = true;
-                    }
+                if (bIsPressSpace)
+                {
+                    jumpMoveUpLength_ = 0.0f;
+                    jumpMoveDownLength_ = 0.0f;
+                    bIsJump = true;
                 }
                 break;
 
             case EState.FALL:
                 rotate_ += (deltaSeconds * rotateSpeed_);
-
                 rotate_ = Math.Min(rotate_, MaxRotate);
 
                 center = rigidBody_.Center;
                 center.y += (deltaSeconds * moveSpeed_);
                 rigidBody_.Center = center;
 
-                if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
+                if (bIsPressSpace)
                 {
                     currentState_ = EState.JUMP;
                     rotate_ = MinRotate;
