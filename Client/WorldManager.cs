@@ -30,6 +30,8 @@ class WorldManager
     {
         if (bIsSetup_) return;
 
+        gameObjects_ = new Dictionary<string, IGameObject>();
+
         bIsSetup_ = true;
     }
 
@@ -127,7 +129,7 @@ class WorldManager
     /**
      * @brief 월드 매니저가 관리하는 게임 오브젝트입니다.
      */
-    private Dictionary<string, IGameObject> gameObjects_ = new Dictionary<string, IGameObject>();
+    private Dictionary<string, IGameObject> gameObjects_;
 
 
     /**
