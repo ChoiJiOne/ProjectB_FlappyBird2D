@@ -59,6 +59,41 @@ class Bird : IGameObject
                 center.y += (waitMoveDirection_ * deltaSeconds * waitMoveLength_);
                 rigidBody_.Center = center;
 
+                if(InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
+                {
+                    currentState_ = EState.JUMP;
+                    rotate_ = MinRotate;
+                }
+                break;
+
+            case EState.JUMP:
+                center = rigidBody_.Center;
+                center.y -= (deltaSeconds * moveSpeed_);
+                rigidBody_.Center = center;
+
+                jumpMoveLength_ += (deltaSeconds * moveSpeed_);
+
+                if(jumpMoveLength_ > jumpLength_)
+                {
+                    currentState_ = EState.FALL;
+                    jumpMoveLength_ = 0.0f;
+                }
+                break;
+
+            case EState.FALL:
+                rotate_ += (deltaSeconds * rotateSpeed_);
+
+                if (rotate_ > MaxRotate) rotate_ = MaxRotate;
+
+                center = rigidBody_.Center;
+                center.y += (deltaSeconds * moveSpeed_);
+                rigidBody_.Center = center;
+
+                if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
+                {
+                    currentState_ = EState.JUMP;
+                    rotate_ = MinRotate;
+                }
                 break;
         }
 
@@ -120,11 +155,47 @@ class Bird : IGameObject
      */
     public float waitMoveLength_ = 10.0f;
 
+
+    /**
+     * @brief 새 오브젝트가 점프 시 움직이는 거리입니다.
+     */
+    public float jumpLength_ = 70.0f;
+
+
+    /**
+     * @brief 새 오브젝트의 이동 속도입니다.
+     */
+    public float moveSpeed_ = 300.0f;
+
+
+    /**
+     * @brief 새 오브젝트가 점프 시 움직인 거리입니다.
+     */
+    public float jumpMoveLength_ = 0.0f;
+
     
     /**
      * @brief 새 오브젝트의 회전 각도입니다.
      */
     private float rotate_ = 0.0f;
+
+
+    /**
+     * @brief 새 오브젝트의 회전 속도입니다.
+     */
+    private float rotateSpeed_ = 200.0f;
+
+
+    /**
+     * @brief 새 오브젝트의 최소 회전 각도입니다.
+     */
+    private static readonly float MinRotate = -30.0f;
+
+
+    /**
+     * @brief 새 오브젝트의 최대 회전 각도입니다.
+     */
+    private static readonly float MaxRotate = 90.0f;
 
 
     /**
