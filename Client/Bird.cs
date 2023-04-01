@@ -63,27 +63,48 @@ class Bird : IGameObject
                 {
                     currentState_ = EState.JUMP;
                     rotate_ = MinRotate;
+                    bIsJump = true;
                 }
                 break;
 
             case EState.JUMP:
+                float jumpDirection = bIsJump ? -1.0f : 1.0f;
+
                 center = rigidBody_.Center;
-                center.y -= (deltaSeconds * moveSpeed_);
+                center.y += (deltaSeconds * jumpDirection * moveSpeed_);
                 rigidBody_.Center = center;
 
-                jumpMoveLength_ += (deltaSeconds * moveSpeed_);
-
-                if(jumpMoveLength_ > jumpLength_)
+                if(bIsJump)
                 {
-                    currentState_ = EState.FALL;
-                    jumpMoveLength_ = 0.0f;
+                    jumpMoveUpLength_ += (deltaSeconds * moveSpeed_);
+
+                    if(jumpMoveUpLength_ > jumpUpLength_)
+                    {
+                        bIsJump = false;
+                        jumpMoveUpLength_ = 0.0f;
+                    }
+                }
+                else
+                {
+                    jumpMoveDownLength_ += (deltaSeconds * moveSpeed_);
+
+                    if(jumpMoveDownLength_ > jumpDownLength_)
+                    {
+                        currentState_ = EState.FALL;
+                        jumpMoveDownLength_ = 0.0f;
+                    }
+
+                    if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
+                    {
+                        bIsJump = true;
+                    }
                 }
                 break;
 
             case EState.FALL:
                 rotate_ += (deltaSeconds * rotateSpeed_);
 
-                if (rotate_ > MaxRotate) rotate_ = MaxRotate;
+                rotate_ = Math.Min(rotate_, MaxRotate);
 
                 center = rigidBody_.Center;
                 center.y += (deltaSeconds * moveSpeed_);
@@ -93,6 +114,7 @@ class Bird : IGameObject
                 {
                     currentState_ = EState.JUMP;
                     rotate_ = MinRotate;
+                    bIsJump = true;
                 }
                 break;
         }
@@ -153,25 +175,45 @@ class Bird : IGameObject
     /**
      * @brief 새 오브젝트가 대기 상태에서 움직이는 거리입니다.
      */
-    public float waitMoveLength_ = 10.0f;
+    private float waitMoveLength_ = 10.0f;
 
 
     /**
      * @brief 새 오브젝트가 점프 시 움직이는 거리입니다.
      */
-    public float jumpLength_ = 70.0f;
+    private float jumpUpLength_ = 70.0f;
+
+
+    /**
+     * @brief 새 오브젝트가 점프 후 떨어지는 거리입니다.
+     */
+    private float jumpDownLength_ = 50.0f;
 
 
     /**
      * @brief 새 오브젝트의 이동 속도입니다.
      */
-    public float moveSpeed_ = 300.0f;
+    private float moveSpeed_ = 350.0f;
+
+
+    /**
+     * @brief 새 오브젝트의 점프 방향입니다.
+     * 
+     * @note +는 아래 방향, -는 위 방향입니다.
+     */
+    private bool bIsJump = false;
 
 
     /**
      * @brief 새 오브젝트가 점프 시 움직인 거리입니다.
      */
-    public float jumpMoveLength_ = 0.0f;
+    private float jumpMoveUpLength_ = 0.0f;
+
+
+    /**
+     * @brief 새 오브젝트가 점프 후 움직인 거리입니다.
+     */
+    private float jumpMoveDownLength_ = 0.0f; 
 
     
     /**
