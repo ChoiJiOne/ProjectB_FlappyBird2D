@@ -55,6 +55,9 @@ class FlappyBird2D
 
         string contentPath = CommandLine.GetValue("Content");
 
+        ContentManager.Get().CreateTexture("PipeTop", "PipeTop.png");
+        ContentManager.Get().CreateTexture("PipeBottom", "PipeBottom.png");
+
         Background background = new Background();
         background.Plable = false;
         background.Texture = ContentManager.Get().CreateTexture("Background", "Background.png");
@@ -77,6 +80,8 @@ class FlappyBird2D
         gameObjects_.Add(background);
         gameObjects_.Add(bird);
         gameObjects_.Add(floor);
+
+        CreatePipeObject();
     }
 
 
@@ -100,6 +105,14 @@ class FlappyBird2D
                 gameObject.Render();
             }
 
+            Pipe pipe = WorldManager.Get().GetGameObject("Pipe") as Pipe;
+            if(pipe.State == Pipe.EState.LEAVE)
+            {
+                gameObjects_.Remove(pipe);
+                WorldManager.Get().RemoveGameObject("Pipe");
+                CreatePipeObject();
+            }
+
             RenderManager.Get().Present();
         }
     }
@@ -118,6 +131,22 @@ class FlappyBird2D
 
         SDL_image.IMG_Quit();
         SDL.SDL_Quit();
+    }
+
+
+    /**
+     * @brief 파이프 오브젝트를 추가합니다.
+     */
+    private void CreatePipeObject()
+    {
+        Pipe pipe = new Pipe();
+        pipe.Movable = true;
+        pipe.Speed = 300.0f;
+        pipe.TopRigidBody = new RigidBody(new Vector2<float>(1100.0f, 100.0f), 100.0f, 200.0f);
+        pipe.BottomRigidBody = new RigidBody(new Vector2<float>(1100.0f, 500.0f), 100.0f, 200.0f);
+
+        WorldManager.Get().AddGameObject("Pipe", pipe);
+        gameObjects_.Add(pipe);
     }
 
 
