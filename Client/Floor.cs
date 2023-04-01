@@ -1,7 +1,3 @@
-using System;
-using SDL2;
-
-
 /**
  * @brief 게임의 바닥 오브젝트입니다.
  */
