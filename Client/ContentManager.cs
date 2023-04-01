@@ -33,6 +33,7 @@ class ContentManager
         if (bIsSetup_) return;
 
         contentPath_ = contentPath;
+        contents_ = new Dictionary<string, IContent>();
 
         bIsSetup_ = true;
     }
@@ -218,7 +219,7 @@ class ContentManager
     /**
      * @brief 매니저가 관리하는 게임 내의 컨텐츠입니다.
      */
-    private Dictionary<string, IContent> contents_ = new Dictionary<string, IContent>();
+    private Dictionary<string, IContent> contents_;
 
 
     /**
