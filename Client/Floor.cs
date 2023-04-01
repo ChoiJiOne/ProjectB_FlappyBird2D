@@ -34,13 +34,13 @@ class Floor : IGameObject
     /**
      * @brief 게임의 바닥 오브젝트를 업데이트합니다.
      * 
-     * @param DeltaSeconds 초단위 델타 시간값입니다.
+     * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public void Update(float DeltaSeconds)
+    public void Update(float deltaSeconds)
     {
         if (bIsMove_)
         {
-            accumulateTime_ += DeltaSeconds;
+            accumulateTime_ += deltaSeconds;
         }
 
         if(accumulateTime_ > speed_)
