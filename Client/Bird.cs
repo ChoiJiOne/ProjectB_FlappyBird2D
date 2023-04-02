@@ -144,30 +144,7 @@ class Bird : IGameObject
 
         MovePosition(deltaSeconds);
         UpdateWingState(deltaSeconds);
-        
-        if (bIsJump_)
-        {
-            jumpMoveUpLength_ += (deltaSeconds * moveSpeed_);
-
-            if (jumpMoveUpLength_ > jumpUpLength_)
-            {
-                bIsJump_ = false;
-                jumpMoveUpLength_ = 0.0f;
-            }
-        }
-        else
-        {
-            jumpMoveDownLength_ += (deltaSeconds * moveSpeed_);
-
-            if (jumpMoveDownLength_ > jumpDownLength_)
-            {
-                currentState_ = EState.FALL;
-                currWingState_ = EWing.UP;
-                prevWingState_ = EWing.NORMAL;
-                wingStateTime_ = 0.0f;
-                jumpMoveDownLength_ = 0.0f;
-            }
-        }
+        UpdateJumpMoveState(deltaSeconds);
 
         if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
         {
@@ -197,6 +174,39 @@ class Bird : IGameObject
             currentState_ = EState.JUMP;
             rotate_ = MinRotate;
             bIsJump_ = true;
+        }
+    }
+
+
+    /**
+     * @brief 새 오브젝트가 점프했을 때의 이동 상태를 업데이트합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    private void UpdateJumpMoveState(float deltaSeconds)
+    {
+        if (bIsJump_)
+        {
+            jumpMoveUpLength_ += (deltaSeconds * moveSpeed_);
+
+            if (jumpMoveUpLength_ > jumpUpLength_)
+            {
+                bIsJump_ = false;
+                jumpMoveUpLength_ = 0.0f;
+            }
+        }
+        else
+        {
+            jumpMoveDownLength_ += (deltaSeconds * moveSpeed_);
+
+            if (jumpMoveDownLength_ > jumpDownLength_)
+            {
+                currentState_ = EState.FALL;
+                currWingState_ = EWing.UP;
+                prevWingState_ = EWing.NORMAL;
+                wingStateTime_ = 0.0f;
+                jumpMoveDownLength_ = 0.0f;
+            }
         }
     }
 
