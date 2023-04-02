@@ -87,7 +87,7 @@ class Pipe : IGameObject
         }
 
         Bird bird = WorldManager.Get().GetGameObject("Bird") as Bird;
-        if(bird.RigidBody.IsCollision(ref topRigidBody_) || bird.RigidBody.IsCollision(ref bottomRigidBody_))
+        if(bird.Body.IsCollision(ref topRigidBody_) || bird.Body.IsCollision(ref bottomRigidBody_))
         {
             bird.State = Bird.EState.DONE;
             bIsMove_ = false;
