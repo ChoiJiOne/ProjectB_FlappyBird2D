@@ -10,7 +10,7 @@ class Background : IGameObject
     /**
      * @brief 게임의 백그라운드 속성에 대한 Getter/Setter 입니다.
      */
-    public RigidBody BackgroundBody
+    public RigidBody Body
     {
         get => rigidBody_;
     }
@@ -23,7 +23,7 @@ class Background : IGameObject
      * @param width 백그라운드 바디의 가로 크기입니다.
      * @param height 백그라운드 바디의 세로 크기입니다.
      */
-    public void CreateBackgroundBody(Vector2<float> center, float width, float height)
+    public void CreateBody(Vector2<float> center, float width, float height)
     {
         rigidBody_ = new RigidBody(center, width, height);
     }
