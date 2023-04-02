@@ -170,28 +170,15 @@ class Bird : IGameObject
      */
     public void Render()
     {
-        if (currentState_ == EState.JUMP)
-        {
-            string signature = "BirdWingNormal";
-            switch(currWingState_)
-            {
-                case EWing.UP:
-                    signature = "BirdWingUp";
-                    break;
+        string birdTextureSignature = "BirdWingNormal";
 
-                case EWing.DOWN:
-                    signature = "BirdWingDown";
-                    break;
-            }
-
-            Texture wingBird = ContentManager.Get().GetTexture(signature);
-            RenderManager.Get().DrawTexture(ref wingBird, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height, rotate_);
-        }
-        else
+        if(currentState_ == EState.JUMP && (currWingState_ != EWing.NORMAL))
         {
-            Texture normalWingBird = ContentManager.Get().GetTexture("BirdWingNormal");
-            RenderManager.Get().DrawTexture(ref normalWingBird, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height, rotate_);
+            birdTextureSignature = (currWingState_ == EWing.UP) ? "BirdWingUp" : "BirdWingDown";
         }
+
+        Texture wingBird = ContentManager.Get().GetTexture(birdTextureSignature);
+        RenderManager.Get().DrawTexture(ref wingBird, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height, rotate_);
     }
 
 
