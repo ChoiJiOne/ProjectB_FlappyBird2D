@@ -113,7 +113,6 @@ class Bird : IGameObject
         if (floor.Body.IsCollision(ref rigidBody_))
         {
             currentState_ = EState.DONE;
-            floor.Movable = false;
         }
     }
 
