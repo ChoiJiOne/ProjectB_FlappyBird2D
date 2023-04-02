@@ -24,9 +24,9 @@ class Bird : IGameObject
      */
     public enum EWing
     {
-        TOP = 0x00, // 날개가 위에 있습니다.
+        UP = 0x00,     // 날개가 위에 있습니다.
         NORMAL = 0x01, // 날개를 접었습니다.
-        BOTTOM = 0x02, // 날개가 아래에 있습니다.
+        DOWN = 0x02,   // 날개가 아래에 있습니다.
     }
 
 
@@ -97,15 +97,15 @@ class Bird : IGameObject
                     {
                         if(prevWingState_ == EWing.NORMAL)
                         {
-                            currWingState_ = EWing.TOP;
+                            currWingState_ = EWing.UP;
                         }
                         else
                         {
-                            currWingState_ = (prevWingState_ == EWing.TOP) ? EWing.BOTTOM : EWing.TOP;
+                            currWingState_ = (prevWingState_ == EWing.UP) ? EWing.DOWN : EWing.UP;
                             prevWingState_ = EWing.NORMAL;
                         }
                     }
-                    else // currWingState_ == EWing.BOTTOM or currWingState_ == EWing.TOP
+                    else // currWingState_ == EWing.DOWN or currWingState_ == EWing.UP
                     {
                         prevWingState_ = currWingState_;
                         currWingState_ = EWing.NORMAL;
@@ -129,7 +129,7 @@ class Bird : IGameObject
                     if(jumpMoveDownLength_ > jumpDownLength_)
                     {
                         currentState_ = EState.FALL;
-                        currWingState_ = EWing.TOP;
+                        currWingState_ = EWing.UP;
                         prevWingState_ = EWing.NORMAL;
                         wingStateTime_ = 0.0f;
                         jumpMoveDownLength_ = 0.0f;
@@ -175,11 +175,11 @@ class Bird : IGameObject
             string signature = "BirdWingNormal";
             switch(currWingState_)
             {
-                case EWing.TOP:
+                case EWing.UP:
                     signature = "BirdWingUp";
                     break;
 
-                case EWing.BOTTOM:
+                case EWing.DOWN:
                     signature = "BirdWingDown";
                     break;
             }
@@ -291,7 +291,7 @@ class Bird : IGameObject
     /**
      * @brief 현재 새 오브젝트의 날개 상태입니다.
      */
-    private EWing currWingState_ = EWing.TOP;
+    private EWing currWingState_ = EWing.UP;
 
 
     /**
