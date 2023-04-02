@@ -17,16 +17,6 @@ class Background : IGameObject
 
 
     /**
-     * @brief 백그라운드 게임 오브젝트를 업데이트합니다.
-     * 
-     * @param deltaSeconds 초단위 델타 시간값입니다.
-     */
-    public void Update(float deltaSeconds)
-    {
-    }
-
-
-    /**
      * @brief 백그라운드의 바디를 생성합니다.
      * 
      * @param center 백그라운드 바디의 중심 좌표입니다.
@@ -36,6 +26,16 @@ class Background : IGameObject
     public void CreateBackgroundBody(Vector2<float> center, float width, float height)
     {
         rigidBody_ = new RigidBody(center, width, height);
+    }
+
+
+    /**
+     * @brief 백그라운드 게임 오브젝트를 업데이트합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    public void Update(float deltaSeconds)
+    {
     }
 
 
