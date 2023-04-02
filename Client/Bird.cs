@@ -122,10 +122,7 @@ class Bird : IGameObject
             waitMoveDirection_ *= -1.0f;
         }
 
-        Vector2<float> center;
-        center = rigidBody_.Center;
-        center.y += (waitMoveDirection_ * deltaSeconds * waitMoveLength_);
-        rigidBody_.Center = center;
+        MovePosition(deltaSeconds);
 
         if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
         {
@@ -147,11 +144,7 @@ class Bird : IGameObject
 
         float jumpDirection = bIsJump_ ? -1.0f : 1.0f;
 
-        Vector2<float> center;
-        center = rigidBody_.Center;
-        center.y += (deltaSeconds * jumpDirection * moveSpeed_);
-        center.y = Math.Max(center.y, 0);
-        rigidBody_.Center = center;
+        MovePosition(deltaSeconds);
 
         wingStateTime_ += deltaSeconds;
 
@@ -223,16 +216,44 @@ class Bird : IGameObject
         rotate_ += (deltaSeconds * rotateSpeed_);
         rotate_ = Math.Min(rotate_, MaxRotate);
 
-        Vector2<float> center;
-        center = rigidBody_.Center;
-        center.y += (deltaSeconds * moveSpeed_);
-        rigidBody_.Center = center;
+        MovePosition(deltaSeconds);
 
         if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
         {
             currentState_ = EState.JUMP;
             rotate_ = MinRotate;
             bIsJump_ = true;
+        }
+    }
+
+
+    /**
+     * @brief 새 오브젝트를 이동시킵니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    private void MovePosition(float deltaSeconds)
+    {
+        Vector2<float> center = rigidBody_.Center;
+
+        switch (currentState_)
+        {
+            case EState.WAIT:
+                center.y += (waitMoveDirection_ * deltaSeconds * waitMoveLength_);
+                rigidBody_.Center = center;
+                break;
+
+            case EState.JUMP:
+                float jumpDirection = bIsJump_ ? -1.0f : 1.0f;
+                center.y += (deltaSeconds * jumpDirection * moveSpeed_);
+                center.y = Math.Max(center.y, 0);
+                rigidBody_.Center = center;
+                break;
+
+            case EState.FALL:
+                center.y += (deltaSeconds * moveSpeed_);
+                rigidBody_.Center = center;
+                break;
         }
     }
 
