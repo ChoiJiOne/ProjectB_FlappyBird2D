@@ -18,10 +18,22 @@ class Floor : IGameObject
         set => bIsMove_ = value;
     }
 
-    public RigidBody RigidBody
+    public RigidBody Body
     {
         get => rigidBody_;
-        set => rigidBody_ = value;
+    }
+
+
+    /**
+     * @brief 바닥의 바디를 생성합니다.
+     * 
+     * @param center 바닥 바디의 중심 좌표입니다.
+     * @param width 바닥 바디의 가로 크기입니다.
+     * @param height 바닥 바디의 세로 크기입니다.
+     */
+    public void CreateBody(Vector2<float> center, float width, float height)
+    {
+        rigidBody_ = new RigidBody(center, width, height);
     }
 
 
@@ -34,12 +46,12 @@ class Floor : IGameObject
     {
         if (bIsMove_)
         {
-            accumulateTime_ += deltaSeconds;
+            moveLength_ += (deltaSeconds * speed_);
         }
 
-        if(accumulateTime_ > speed_)
+        if(moveLength_ > rigidBody_.Width)
         {
-            accumulateTime_ -= speed_;
+            moveLength_ -= rigidBody_.Width;
         }
     }
 
@@ -49,7 +61,7 @@ class Floor : IGameObject
      */
     public void Render()
     {
-        float factor = accumulateTime_ / speed_;
+        float factor = moveLength_ / rigidBody_.Width;
 
         Texture floorTexture = ContentManager.Get().GetTexture("Floor");
 
@@ -70,11 +82,9 @@ class Floor : IGameObject
 
 
     /**
-     * @brief 게임 바닥 오브젝트의 누적 시간입니다.
-     * 
-     * @note 단위는 초단위입니다.
+     * @brief 게임의 바닥이 이동한 거리입니다.
      */
-    private float accumulateTime_ = 0.0f;
+    private float moveLength_ = 0.0f;
 
 
     /**
