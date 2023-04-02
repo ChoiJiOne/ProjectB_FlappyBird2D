@@ -18,12 +18,6 @@ class Floor : IGameObject
         set => bIsMove_ = value;
     }
 
-    public Texture Texture
-    {
-        get => texture_;
-        set => texture_ = value;
-    }
-
     public RigidBody RigidBody
     {
         get => rigidBody_;
@@ -56,7 +50,16 @@ class Floor : IGameObject
     public void Render()
     {
         float factor = accumulateTime_ / speed_;
-        RenderManager.Get().DrawHorizonScrollingTexture(ref texture_, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height, factor);
+
+        Texture floorTexture = ContentManager.Get().GetTexture("Floor");
+
+        RenderManager.Get().DrawHorizonScrollingTexture(
+            ref floorTexture, 
+            rigidBody_.Center, 
+            rigidBody_.Width, 
+            rigidBody_.Height, 
+            factor
+        );
     }
 
 
@@ -84,10 +87,4 @@ class Floor : IGameObject
      * @brief 게임 바닥 오브젝트의 강체입니다.
      */
     private RigidBody rigidBody_;
-
-
-    /**
-     * @brief 게임의 바닥 오브젝트 텍스처입니다.
-     */
-    private Texture texture_;
 }
