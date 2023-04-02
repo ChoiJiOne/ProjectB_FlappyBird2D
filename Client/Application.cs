@@ -15,24 +15,7 @@ class FlappyBird2D
     {
         SetupCoreProperties();
         LoadTextureResource();
-
-        Background background = new Background();
-        background.UpdateOrder = 0;
-        background.CreateBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
-
-        Floor floor = new Floor();
-        floor.UpdateOrder = 1;
-        floor.Speed = 300.0f;
-        floor.Movable = true;
-        floor.CreateBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f);
-
-        Bird bird = new Bird();
-        bird.UpdateOrder = 3;
-        bird.CreateBody(new Vector2<float>(400.0f, 300.0f), 70.0f, 50.0f);
-
-        WorldManager.Get().AddGameObject("Background", background);
-        WorldManager.Get().AddGameObject("Floor", floor);
-        WorldManager.Get().AddGameObject("Bird", bird);
+        GenerateGameObjects();
 
         CreatePipeObject();
     }
@@ -160,6 +143,31 @@ class FlappyBird2D
         {
             ContentManager.Get().CreateTexture(texture.Key, texture.Value);
         }
+    }
+
+
+    /**
+     * @brief 게임 오브젝트들을 생성합니다.
+     */
+    private void GenerateGameObjects()
+    {
+        Background background = new Background();
+        background.UpdateOrder = 0;
+        background.CreateBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
+
+        Floor floor = new Floor();
+        floor.UpdateOrder = 1;
+        floor.Speed = 300.0f;
+        floor.Movable = true;
+        floor.CreateBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f);
+
+        Bird bird = new Bird();
+        bird.UpdateOrder = 3;
+        bird.CreateBody(new Vector2<float>(400.0f, 300.0f), 70.0f, 50.0f);
+
+        WorldManager.Get().AddGameObject("Background", background);
+        WorldManager.Get().AddGameObject("Floor", floor);
+        WorldManager.Get().AddGameObject("Bird", bird);
     }
 
 
