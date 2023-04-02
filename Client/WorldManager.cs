@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 /**
@@ -57,6 +58,25 @@ class WorldManager
     public bool IsValid(string signature)
     {
         return gameObjects_.ContainsKey(signature);
+    }
+
+
+    /**
+     * @brief 월드 매니저가 관리하는 오브젝트를 업데이트하고 렌더링합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    public void Tick(float deltaSeconds)
+    {
+        IEnumerable<GameObject> gameObjects = from gameObject in gameObjects_
+                          orderby gameObject.Value.UpdateOrder
+                          select gameObject.Value;
+
+        foreach (GameObject gameObject in gameObjects)
+        {
+            gameObject.Update(deltaSeconds);
+            gameObject.Render();
+        }
     }
 
 
