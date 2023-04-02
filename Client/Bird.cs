@@ -338,7 +338,7 @@ class Bird : IGameObject
     /**
      * @brief 새 오브젝트가 점프 후 떨어지는 거리입니다.
      */
-    private float jumpDownLength_ = 50.0f;
+    private float jumpDownLength_ = 40.0f;
 
 
     /**
