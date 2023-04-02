@@ -114,6 +114,15 @@ class FlappyBird2D
                 CreatePipeObject();
             }
 
+            Bird bird = WorldManager.Get().GetGameObject("Bird") as Bird;
+            if(bird.State == Bird.EState.DONE)
+            {
+                pipe.Movable = false;
+
+                Floor floor = WorldManager.Get().GetGameObject("Floor") as Floor;
+                floor.Movable = false;
+            }
+
             RenderManager.Get().Present();
         }
     }
