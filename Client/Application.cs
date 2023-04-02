@@ -55,22 +55,23 @@ class FlappyBird2D
 
         string contentPath = CommandLine.GetValue("Content");
 
+        ContentManager.Get().CreateTexture("Background", "Background.png");
         ContentManager.Get().CreateTexture("PipeTop", "PipeTop.png");
         ContentManager.Get().CreateTexture("PipeBottom", "PipeBottom.png");
+        ContentManager.Get().CreateTexture("BirdWingNormal", "BirdWingNormal.png");
+        ContentManager.Get().CreateTexture("BirdWingDown", "BirdWingDown.png");
+        ContentManager.Get().CreateTexture("BirdWingUp", "BirdWingUp.png");
+        ContentManager.Get().CreateTexture("Floor", "Base.png");
 
         Background background = new Background();
-        background.Plable = false;
-        background.Texture = ContentManager.Get().CreateTexture("Background", "Background.png");
-        background.RigidBody = new RigidBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
+        background.CreateBackgroundBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 
         Floor floor = new Floor();
         floor.Speed = 3.0f;
         floor.Movable = true;
-        floor.Texture = ContentManager.Get().CreateTexture("Base", "Base.png");
         floor.RigidBody = new RigidBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f);
 
         Bird bird = new Bird();
-        bird.Texture = ContentManager.Get().CreateTexture("Bird", "BirdWingNormal.png");
         bird.RigidBody = new RigidBody(new Vector2<float>(400.0f, 300.0f), 70.0f, 50.0f);
 
         WorldManager.Get().AddGameObject("Background", background);
