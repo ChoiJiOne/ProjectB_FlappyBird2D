@@ -33,16 +33,28 @@ class Bird : IGameObject
     /**
      * @brief 게임의 플레이어가 조종하는 새 오브젝트 속성에 대한 Getter/Setter 입니다.
      */
-    public RigidBody RigidBody
+    public RigidBody Body
     {
         get => rigidBody_;
-        set => rigidBody_ = value;
     }
 
     public EState State
     {
         get => currentState_;
         set => currentState_ = value;
+    }
+
+
+    /**
+     * @brief 새 오브젝트의 바디를 생성합니다.
+     * 
+     * @param center 새 오브젝트 바디의 중심 좌표입니다.
+     * @param width 새 오브젝트 바디의 가로 크기입니다.
+     * @param height 새 오브젝트 바디의 세로 크기입니다.
+     */
+    public void CreateBody(Vector2<float> center, float width, float height)
+    {
+        rigidBody_ = new RigidBody(center, width, height);
     }
 
 
