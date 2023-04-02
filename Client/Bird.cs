@@ -59,28 +59,11 @@ class Bird : IGameObject
         switch(currentState_)
         {
             case EState.WAIT:
-                waitTime_ += deltaSeconds;
-
-                if (waitTime_ > maxWaitTime_)
-                {
-                    waitTime_ = 0.0f;
-                    waitMoveDirection_ *= -1.0f;
-                }
-
-                center = rigidBody_.Center;
-                center.y += (waitMoveDirection_ * deltaSeconds * waitMoveLength_);
-                rigidBody_.Center = center;
-
-                if(bIsPressSpace)
-                {
-                    currentState_ = EState.JUMP;
-                    rotate_ = MinRotate;
-                    bIsJump = true;
-                }
+                UpdateWaitState(deltaSeconds);
                 break;
 
             case EState.JUMP:
-                float jumpDirection = bIsJump ? -1.0f : 1.0f;
+                float jumpDirection = bIsJump_ ? -1.0f : 1.0f;
 
                 center = rigidBody_.Center;
                 center.y += (deltaSeconds * jumpDirection * moveSpeed_);
@@ -112,13 +95,13 @@ class Bird : IGameObject
                     }
                 }
 
-                if (bIsJump)
+                if (bIsJump_)
                 {
                     jumpMoveUpLength_ += (deltaSeconds * moveSpeed_);
 
                     if(jumpMoveUpLength_ > jumpUpLength_)
                     {
-                        bIsJump = false;
+                        bIsJump_ = false;
                         jumpMoveUpLength_ = 0.0f;
                     }
                 }
@@ -140,7 +123,7 @@ class Bird : IGameObject
                 {
                     jumpMoveUpLength_ = 0.0f;
                     jumpMoveDownLength_ = 0.0f;
-                    bIsJump = true;
+                    bIsJump_ = true;
                 }
                 break;
 
@@ -156,7 +139,7 @@ class Bird : IGameObject
                 {
                     currentState_ = EState.JUMP;
                     rotate_ = MinRotate;
-                    bIsJump = true;
+                    bIsJump_ = true;
                 }
                 break;
         }
@@ -195,6 +178,36 @@ class Bird : IGameObject
         {
             currentState_ = EState.DONE;
             floor.Movable = false;
+        }
+    }
+
+
+    /**
+     * @brief 새 오브젝트의 상태가 WAIT 상태일 때 업데이트를 수행합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    private void UpdateWaitState(float deltaSeconds)
+    {
+        if (currentState_ != EState.WAIT) return; // 현재 상태가 WAIT가 아니면 수행하지 않습니다.
+
+        waitTime_ += deltaSeconds;
+        if (waitTime_ > maxWaitTime_)
+        {
+            waitTime_ = 0.0f;
+            waitMoveDirection_ *= -1.0f;
+        }
+
+        Vector2<float> center;
+        center = rigidBody_.Center;
+        center.y += (waitMoveDirection_ * deltaSeconds * waitMoveLength_);
+        rigidBody_.Center = center;
+
+        if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
+        {
+            currentState_ = EState.JUMP;
+            rotate_ = MinRotate;
+            bIsJump_ = true;
         }
     }
 
@@ -254,7 +267,7 @@ class Bird : IGameObject
      * 
      * @note +는 아래 방향, -는 위 방향입니다.
      */
-    private bool bIsJump = false;
+    private bool bIsJump_ = false;
 
 
     /**
