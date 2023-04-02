@@ -85,16 +85,6 @@ class Pipe : IGameObject
         {
             currentState_ = EState.ENTRY;
         }
-
-        Bird bird = WorldManager.Get().GetGameObject("Bird") as Bird;
-        if(bird.Body.IsCollision(ref topRigidBody_) || bird.Body.IsCollision(ref bottomRigidBody_))
-        {
-            bird.State = Bird.EState.DONE;
-            bIsMove_ = false;
-
-            Floor floor = WorldManager.Get().GetGameObject("Floor") as Floor;
-            floor.Movable = false;
-        }
     }
 
 
@@ -122,7 +112,7 @@ class Pipe : IGameObject
         );
     }
 
-
+    
     /**
      * @brief 파이프가 이동할 수 있는지 확인합니다.
      */
