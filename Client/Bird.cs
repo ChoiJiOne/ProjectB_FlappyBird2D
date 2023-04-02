@@ -20,14 +20,19 @@ class Bird : IGameObject
 
 
     /**
-     * @brief 게임의 플레이어가 조종하는 새 오브젝트 속성에 대한 Getter/Setter 입니다.
+     * @brief 새 오브젝트의 날개입니다.
      */
-    public Texture Texture
+    public enum EWing
     {
-        get => texture_;
-        set => texture_ = value;
+        TOP = 0x00, // 날개가 위에 있습니다.
+        NORMAL = 0x01, // 날개를 접었습니다.
+        BOTTOM = 0x02, // 날개가 아래에 있습니다.
     }
 
+
+    /**
+     * @brief 게임의 플레이어가 조종하는 새 오브젝트 속성에 대한 Getter/Setter 입니다.
+     */
     public RigidBody RigidBody
     {
         get => rigidBody_;
@@ -82,7 +87,32 @@ class Bird : IGameObject
                 center.y = Math.Max(center.y, 0);
                 rigidBody_.Center = center;
 
-                if(bIsJump)
+                wingStateTime_ += deltaSeconds;
+
+                if(wingStateTime_ > changeWingStateTime_)
+                {
+                    wingStateTime_ = 0.0f;
+
+                    if(currWingState_ == EWing.NORMAL)
+                    {
+                        if(prevWingState_ == EWing.NORMAL)
+                        {
+                            currWingState_ = EWing.TOP;
+                        }
+                        else
+                        {
+                            currWingState_ = (prevWingState_ == EWing.TOP) ? EWing.BOTTOM : EWing.TOP;
+                            prevWingState_ = EWing.NORMAL;
+                        }
+                    }
+                    else // currWingState_ == EWing.BOTTOM or currWingState_ == EWing.TOP
+                    {
+                        prevWingState_ = currWingState_;
+                        currWingState_ = EWing.NORMAL;
+                    }
+                }
+
+                if (bIsJump)
                 {
                     jumpMoveUpLength_ += (deltaSeconds * moveSpeed_);
 
@@ -99,6 +129,9 @@ class Bird : IGameObject
                     if(jumpMoveDownLength_ > jumpDownLength_)
                     {
                         currentState_ = EState.FALL;
+                        currWingState_ = EWing.TOP;
+                        prevWingState_ = EWing.NORMAL;
+                        wingStateTime_ = 0.0f;
                         jumpMoveDownLength_ = 0.0f;
                     }
                 }
@@ -142,7 +175,28 @@ class Bird : IGameObject
      */
     public void Render()
     {
-        RenderManager.Get().DrawTexture(ref texture_, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height, rotate_);
+        if (currentState_ == EState.JUMP)
+        {
+            string signature = "BirdWingNormal";
+            switch(currWingState_)
+            {
+                case EWing.TOP:
+                    signature = "BirdWingUp";
+                    break;
+
+                case EWing.BOTTOM:
+                    signature = "BirdWingDown";
+                    break;
+            }
+
+            Texture wingBird = ContentManager.Get().GetTexture(signature);
+            RenderManager.Get().DrawTexture(ref wingBird, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height, rotate_);
+        }
+        else
+        {
+            Texture normalWingBird = ContentManager.Get().GetTexture("BirdWingNormal");
+            RenderManager.Get().DrawTexture(ref normalWingBird, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height, rotate_);
+        }
     }
 
 
@@ -213,7 +267,31 @@ class Bird : IGameObject
     /**
      * @brief 새 오브젝트가 점프 후 움직인 거리입니다.
      */
-    private float jumpMoveDownLength_ = 0.0f; 
+    private float jumpMoveDownLength_ = 0.0f;
+
+
+    /**
+     * @brief 이전의 새 오브젝트의 날개 상태입니다.
+     */
+    private EWing prevWingState_ = EWing.NORMAL;
+
+
+    /**
+     * @brief 현재 새 오브젝트의 날개 상태입니다.
+     */
+    private EWing currWingState_ = EWing.TOP;
+
+
+    /**
+     * @brief 새 오브젝트의 날개 상태가 지속된 시간입니다.
+     */
+    private float wingStateTime_ = 0.0f;
+
+
+    /**
+     * @brief 새 오브젝트의 날개 상태를 변경하는 시간입니다.
+     */
+    private float changeWingStateTime_ = 0.1f;
 
     
     /**
@@ -244,10 +322,4 @@ class Bird : IGameObject
      * @brief 게임의 플레이어가 조종하는 새 오브젝트의 강체입니다.
      */
     private RigidBody rigidBody_;
-
-
-    /**
-     * @brief 게임의 플레이어가 조종하는 새 오브젝트의 텍스처입니다.
-     */
-    private Texture texture_;
 }
