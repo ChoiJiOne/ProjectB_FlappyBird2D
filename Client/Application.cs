@@ -51,17 +51,7 @@ class FlappyBird2D
         ContentManager.Get().Setup(CommandLine.GetValue("Content"));
         WorldManager.Get().Setup();
 
-        gameTimer_ = new Timer();
-
-        string contentPath = CommandLine.GetValue("Content");
-
-        ContentManager.Get().CreateTexture("Background", "Background.png");
-        ContentManager.Get().CreateTexture("PipeTop", "PipeTop.png");
-        ContentManager.Get().CreateTexture("PipeBottom", "PipeBottom.png");
-        ContentManager.Get().CreateTexture("BirdWingNormal", "BirdWingNormal.png");
-        ContentManager.Get().CreateTexture("BirdWingDown", "BirdWingDown.png");
-        ContentManager.Get().CreateTexture("BirdWingUp", "BirdWingUp.png");
-        ContentManager.Get().CreateTexture("Floor", "Base.png");
+        LoadTextureResource();
 
         Background background = new Background();
         background.UpdateOrder = 0;
@@ -138,6 +128,32 @@ class FlappyBird2D
 
 
     /**
+     * @brief 텍스처 리소스를 로딩합니다.
+     * 
+     * @throws 텍스처 리소스 생성에 실패하면 예외를 던집니다.
+     */
+    private void LoadTextureResource()
+    {
+        Dictionary<string, string> textures = new Dictionary<string, string>()
+        {
+            {     "Background",     "Background.png" },
+            {        "PipeTop",        "PipeTop.png" },
+            {     "PipeBottom",     "PipeBottom.png" },
+            { "BirdWingNormal", "BirdWingNormal.png" },
+            {   "BirdWingDown",   "BirdWingDown.png" },
+            {     "BirdWingUp",     "BirdWingUp.png" },
+            {          "Floor",          "Floor.png" },
+
+        };
+
+        foreach(KeyValuePair<string, string> texture in textures)
+        {
+            ContentManager.Get().CreateTexture(texture.Key, texture.Value);
+        }
+    }
+
+
+    /**
      * @brief 파이프 오브젝트를 추가합니다.
      */
     private void CreatePipeObject()
@@ -170,7 +186,7 @@ class FlappyBird2D
     /**
      * @brief 게임 타이머입니다.
      */
-    private Timer gameTimer_;
+    private Timer gameTimer_ = new Timer();
 }
 
 
