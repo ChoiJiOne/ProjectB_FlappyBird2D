@@ -315,7 +315,7 @@ class Bird : IGameObject
     /**
      * @brief 새 오브젝트가 대기 상태에서 움직이는 거리입니다.
      */
-    private float waitMoveLength_ = 10.0f;
+    private float waitMoveLength_ = 20.0f;
 
 
     /**
