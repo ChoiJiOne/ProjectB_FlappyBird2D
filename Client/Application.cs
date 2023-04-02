@@ -13,44 +13,7 @@ class FlappyBird2D
      */
     public void Setup()
     {
-        if(SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING) != 0)
-        {
-            throw new Exception("failed to initialize SDL...");
-        }
-
-        int Flags = (int)(SDL_image.IMG_InitFlags.IMG_INIT_PNG | SDL_image.IMG_InitFlags.IMG_INIT_JPG);
-        int InitFlag = SDL_image.IMG_Init((SDL_image.IMG_InitFlags)(Flags));
-
-        if((InitFlag & Flags) != Flags)
-        {
-            throw new Exception("failed to initialize SDL_image...");
-        }
-
-        if (SDL_ttf.TTF_Init() != 0)
-        {
-            throw new Exception("failed to initialize SDL_ttf...");
-        }
-
-        window_ = SDL.SDL_CreateWindow(
-            "FlappyBird2D",
-            SDL.SDL_WINDOWPOS_CENTERED,
-            SDL.SDL_WINDOWPOS_CENTERED,
-            1000, 800,
-            SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN
-        );
-
-        if(window_ == IntPtr.Zero)
-        {
-            throw new Exception("failed to create window...");
-        }
-
-        InputManager.Get().Setup();
-        InputManager.Get().BindWindowEventAction(EWindowEvent.CLOSE, () => { bIsDone_ = true; });
-
-        RenderManager.Get().Setup(window_);
-        ContentManager.Get().Setup(CommandLine.GetValue("Content"));
-        WorldManager.Get().Setup();
-
+        SetupCoreProperties();
         LoadTextureResource();
 
         Background background = new Background();
@@ -124,6 +87,53 @@ class FlappyBird2D
 
         SDL_image.IMG_Quit();
         SDL.SDL_Quit();
+    }
+
+
+    /**
+     * @brief 게임 진행에 필요한 핵심 요소들을 초기화합니다.
+     * 
+     * @throws 게임 진행에 필요한 핵심 요소들의 초기화에 실패하면 예외를 던집니다.
+     */
+    private void SetupCoreProperties()
+    {
+        if (SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING) != 0)
+        {
+            throw new Exception("failed to initialize SDL...");
+        }
+
+        int Flags = (int)(SDL_image.IMG_InitFlags.IMG_INIT_PNG | SDL_image.IMG_InitFlags.IMG_INIT_JPG);
+        int InitFlag = SDL_image.IMG_Init((SDL_image.IMG_InitFlags)(Flags));
+
+        if ((InitFlag & Flags) != Flags)
+        {
+            throw new Exception("failed to initialize SDL_image...");
+        }
+
+        if (SDL_ttf.TTF_Init() != 0)
+        {
+            throw new Exception("failed to initialize SDL_ttf...");
+        }
+
+        window_ = SDL.SDL_CreateWindow(
+            "FlappyBird2D",
+            SDL.SDL_WINDOWPOS_CENTERED,
+            SDL.SDL_WINDOWPOS_CENTERED,
+            1000, 800,
+            SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN
+        );
+
+        if (window_ == IntPtr.Zero)
+        {
+            throw new Exception("failed to create window...");
+        }
+
+        InputManager.Get().Setup();
+        RenderManager.Get().Setup(window_);
+        ContentManager.Get().Setup(CommandLine.GetValue("Content"));
+        WorldManager.Get().Setup();
+
+        InputManager.Get().BindWindowEventAction(EWindowEvent.CLOSE, () => { bIsDone_ = true; });
     }
 
 
