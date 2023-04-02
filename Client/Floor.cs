@@ -47,12 +47,14 @@ class Floor : IGameObject
         if (bIsMove_)
         {
             moveLength_ += (deltaSeconds * speed_);
+
+            if (moveLength_ > rigidBody_.Width)
+            {
+                moveLength_ -= rigidBody_.Width;
+            }
         }
 
-        if(moveLength_ > rigidBody_.Width)
-        {
-            moveLength_ -= rigidBody_.Width;
-        }
+        CheckCollisionBird();
     }
 
 
@@ -72,6 +74,19 @@ class Floor : IGameObject
             rigidBody_.Height, 
             factor
         );
+    }
+
+
+    /**
+     * @brief 새 오브젝트와 충돌하는지 확인합니다.
+     */
+    private void CheckCollisionBird()
+    {
+        Bird bird = WorldManager.Get().GetGameObject("Bird") as Bird;
+        if(bird.Body.IsCollision(ref rigidBody_))
+        {
+            bIsMove_ = false;
+        }
     }
 
 
