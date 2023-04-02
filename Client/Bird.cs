@@ -161,12 +161,7 @@ class Bird : IGameObject
                 break;
         }
 
-        Floor floor = WorldManager.Get().GetGameObject("Floor") as Floor;
-        if(floor.RigidBody.IsCollision(ref rigidBody_))
-        {
-            currentState_ = EState.DONE;
-            floor.Movable = false;
-        }
+        CheckCollisionFloor();
     }
     
 
@@ -196,6 +191,23 @@ class Bird : IGameObject
         {
             Texture normalWingBird = ContentManager.Get().GetTexture("BirdWingNormal");
             RenderManager.Get().DrawTexture(ref normalWingBird, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height, rotate_);
+        }
+    }
+
+
+    /**
+     * @brief 새 오브젝트가 바닥과 부딪히는지 확인합니다.
+     * 
+     * @note 새 오브젝트가 바닥과 부딪히면 상태를 DONE으로 변경합니다.
+     */
+    private void CheckCollisionFloor()
+    {
+        Floor floor = WorldManager.Get().GetGameObject("Floor") as Floor;
+
+        if (floor.RigidBody.IsCollision(ref rigidBody_))
+        {
+            currentState_ = EState.DONE;
+            floor.Movable = false;
         }
     }
 
