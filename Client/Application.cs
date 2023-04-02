@@ -64,23 +64,22 @@ class FlappyBird2D
         ContentManager.Get().CreateTexture("Floor", "Base.png");
 
         Background background = new Background();
+        background.UpdateOrder = 0;
         background.CreateBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 
         Floor floor = new Floor();
+        floor.UpdateOrder = 1;
         floor.Speed = 300.0f;
         floor.Movable = true;
         floor.CreateBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f);
 
         Bird bird = new Bird();
+        bird.UpdateOrder = 3;
         bird.CreateBody(new Vector2<float>(400.0f, 300.0f), 70.0f, 50.0f);
 
         WorldManager.Get().AddGameObject("Background", background);
         WorldManager.Get().AddGameObject("Floor", floor);
         WorldManager.Get().AddGameObject("Bird", bird);
-
-        gameObjects_.Add(background);
-        gameObjects_.Add(bird);
-        gameObjects_.Add(floor);
 
         CreatePipeObject();
     }
@@ -99,17 +98,11 @@ class FlappyBird2D
             InputManager.Get().Tick();
 
             RenderManager.Get().Clear(Color.BLACK);
-
-            foreach (GameObject gameObject in gameObjects_)
-            {
-                gameObject.Update(gameTimer_.GetDeltaSeconds());
-                gameObject.Render();
-            }
+            WorldManager.Get().Tick(gameTimer_.GetDeltaSeconds());
 
             Pipe pipe = WorldManager.Get().GetGameObject("Pipe") as Pipe;
             if(pipe.State == Pipe.EState.LEAVE)
             {
-                gameObjects_.Remove(pipe);
                 WorldManager.Get().RemoveGameObject("Pipe");
                 CreatePipeObject();
             }
@@ -150,13 +143,13 @@ class FlappyBird2D
     private void CreatePipeObject()
     {
         Pipe pipe = new Pipe();
+        pipe.UpdateOrder = 2;
         pipe.Movable = true;
         pipe.Speed = 300.0f;
         pipe.TopRigidBody = new RigidBody(new Vector2<float>(1100.0f, 100.0f), 100.0f, 200.0f);
         pipe.BottomRigidBody = new RigidBody(new Vector2<float>(1100.0f, 500.0f), 100.0f, 200.0f);
 
         WorldManager.Get().AddGameObject("Pipe", pipe);
-        gameObjects_.Add(pipe);
     }
 
 
@@ -178,12 +171,6 @@ class FlappyBird2D
      * @brief 게임 타이머입니다.
      */
     private Timer gameTimer_;
-
-
-    /**
-     * @brief 게임 내의 오브젝트들입니다.
-     */
-    private List<GameObject> gameObjects_ = new List<GameObject>();
 }
 
 
