@@ -30,7 +30,7 @@ class WorldManager
     {
         if (bIsSetup_) return;
 
-        gameObjects_ = new Dictionary<string, IGameObject>();
+        gameObjects_ = new Dictionary<string, GameObject>();
 
         bIsSetup_ = true;
     }
@@ -68,7 +68,7 @@ class WorldManager
      * 
      * @throws 시그니처 값이 이미 존재하면 예외를 던집니다.
      */
-    public void AddGameObject(string signature, IGameObject gameObject)
+    public void AddGameObject(string signature, GameObject gameObject)
     {
         if (IsValid(signature))
         {
@@ -88,7 +88,7 @@ class WorldManager
      * 
      * @return 시그니처 값에 대응하는 게임 오브젝트를 반환합니다.
      */
-    public IGameObject GetGameObject(string signature)
+    public GameObject GetGameObject(string signature)
     {
         if(!IsValid(signature))
         {
@@ -129,7 +129,7 @@ class WorldManager
     /**
      * @brief 월드 매니저가 관리하는 게임 오브젝트입니다.
      */
-    private Dictionary<string, IGameObject> gameObjects_;
+    private Dictionary<string, GameObject> gameObjects_;
 
 
     /**

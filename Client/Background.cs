@@ -5,7 +5,7 @@ using SDL2;
 /**
  * @brief 게임의 백그라운드 오브젝트입니다.
  */
-class Background : IGameObject
+class Background : GameObject
 {
     /**
      * @brief 게임의 백그라운드 속성에 대한 Getter/Setter 입니다.
@@ -34,7 +34,7 @@ class Background : IGameObject
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public void Update(float deltaSeconds)
+    public override void Update(float deltaSeconds)
     {
     }
 
@@ -42,7 +42,7 @@ class Background : IGameObject
     /**
      * @brief 백그라운드 게임 오브젝트를 화면에 그립니다.
      */
-    public void Render()
+    public override void Render()
     {
         Texture backgroundTexture = ContentManager.Get().GetTexture("Background");
 

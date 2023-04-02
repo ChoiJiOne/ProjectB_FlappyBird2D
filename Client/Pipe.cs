@@ -4,7 +4,7 @@ using System;
 /**
  * @brief 게임의 파이프 오브젝트입니다.
  */
-class Pipe : IGameObject
+class Pipe : GameObject
 {
     /**
      * @brief 파이프 오브젝트의 상태를 정의합니다.
@@ -56,7 +56,7 @@ class Pipe : IGameObject
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public void Update(float deltaSeconds)
+    public override void Update(float deltaSeconds)
     {
         if (currentState_ == EState.LEAVE) return;
 
@@ -91,7 +91,7 @@ class Pipe : IGameObject
     /**
      * @brief 게임의 파이프 오브젝트를 화면에 그립니다.
      */
-    public void Render()
+    public override void Render()
     {
         Texture topPipeTexture = ContentManager.Get().GetTexture("PipeTop");
         

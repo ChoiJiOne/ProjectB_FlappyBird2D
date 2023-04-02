@@ -5,7 +5,7 @@ using SDL2;
 /**
  * @brief 게임의 플레이어가 조종하는 새 오브젝트입니다.
  */
-class Bird : IGameObject
+class Bird : GameObject
 {
     /**
      * @brief 새 오브젝트의 상태를 정의합니다.
@@ -63,7 +63,7 @@ class Bird : IGameObject
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public void Update(float deltaSeconds)
+    public override void Update(float deltaSeconds)
     {
         switch(currentState_)
         {
@@ -87,7 +87,7 @@ class Bird : IGameObject
     /**
      * @brief 게임의 플레이어가 조종하는 새 오브젝트를 화면에 그립니다.
      */
-    public void Render()
+    public override void Render()
     {
         string birdTextureSignature = "BirdWingNormal";
 

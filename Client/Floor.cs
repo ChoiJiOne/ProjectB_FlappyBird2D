@@ -1,7 +1,7 @@
 /**
  * @brief 게임의 바닥 오브젝트입니다.
  */
-class Floor : IGameObject
+class Floor : GameObject
 {
     /**
      * @brief 게임의 바닥 오브젝트 속성에 대한 Getter/Setter 입니다.
@@ -42,7 +42,7 @@ class Floor : IGameObject
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public void Update(float deltaSeconds)
+    public override void Update(float deltaSeconds)
     {
         if (bIsMove_)
         {
@@ -59,7 +59,7 @@ class Floor : IGameObject
     /**
      * @brief 게임의 바닥 오브젝트를 화면에 그립니다.
      */
-    public void Render()
+    public override void Render()
     {
         float factor = moveLength_ / rigidBody_.Width;
 

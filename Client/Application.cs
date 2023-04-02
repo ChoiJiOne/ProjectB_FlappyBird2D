@@ -100,7 +100,7 @@ class FlappyBird2D
 
             RenderManager.Get().Clear(Color.BLACK);
 
-            foreach (IGameObject gameObject in gameObjects_)
+            foreach (GameObject gameObject in gameObjects_)
             {
                 gameObject.Update(gameTimer_.GetDeltaSeconds());
                 gameObject.Render();
@@ -183,7 +183,7 @@ class FlappyBird2D
     /**
      * @brief 게임 내의 오브젝트들입니다.
      */
-    private List<IGameObject> gameObjects_ = new List<IGameObject>();
+    private List<GameObject> gameObjects_ = new List<GameObject>();
 }
 
 
