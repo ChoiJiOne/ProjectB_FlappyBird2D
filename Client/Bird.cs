@@ -142,35 +142,9 @@ class Bird : IGameObject
     {
         if (currentState_ != EState.JUMP) return;
 
-        float jumpDirection = bIsJump_ ? -1.0f : 1.0f;
-
         MovePosition(deltaSeconds);
-
-        wingStateTime_ += deltaSeconds;
-
-        if (wingStateTime_ > changeWingStateTime_)
-        {
-            wingStateTime_ = 0.0f;
-
-            if (currWingState_ == EWing.NORMAL)
-            {
-                if (prevWingState_ == EWing.NORMAL)
-                {
-                    currWingState_ = EWing.UP;
-                }
-                else
-                {
-                    currWingState_ = (prevWingState_ == EWing.UP) ? EWing.DOWN : EWing.UP;
-                    prevWingState_ = EWing.NORMAL;
-                }
-            }
-            else // currWingState_ == EWing.DOWN or currWingState_ == EWing.UP
-            {
-                prevWingState_ = currWingState_;
-                currWingState_ = EWing.NORMAL;
-            }
-        }
-
+        UpdateWingState(deltaSeconds);
+        
         if (bIsJump_)
         {
             jumpMoveUpLength_ += (deltaSeconds * moveSpeed_);
@@ -255,6 +229,50 @@ class Bird : IGameObject
                 rigidBody_.Center = center;
                 break;
         }
+    }
+
+
+    /**
+     * @brief 새 오브젝트의 날개 상태를 업데이트합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    public void UpdateWingState(float deltaSeconds)
+    {
+        wingStateTime_ += deltaSeconds;
+
+        if (wingStateTime_ > changeWingStateTime_)
+        {
+            wingStateTime_ = 0.0f;
+
+            if (currWingState_ == EWing.NORMAL)
+            {
+                currWingState_ = GetCountWingState(prevWingState_);
+                prevWingState_ = EWing.NORMAL;
+            }
+            else // currWingState_ == EWing.DOWN or currWingState_ == EWing.UP
+            {
+                prevWingState_ = currWingState_;
+                currWingState_ = EWing.NORMAL;
+            }
+        }
+    }
+
+
+    /**
+     * @brief 날개 상태의 반대 상태를 얻습니다.
+     * 
+     * @note 예시는 다음과 같습니다.
+     * UP => DOWN, DOWN => UP, NORMAL => NORMAL
+     */
+    public static EWing GetCountWingState(EWing wingState)
+    {
+        if(wingState == EWing.NORMAL)
+        {
+            return EWing.NORMAL;
+        }
+
+        return (wingState == EWing.UP ? EWing.DOWN : EWing.UP);
     }
 
 
