@@ -98,7 +98,7 @@ class Bird : IGameObject
     {
         Floor floor = WorldManager.Get().GetGameObject("Floor") as Floor;
 
-        if (floor.RigidBody.IsCollision(ref rigidBody_))
+        if (floor.Body.IsCollision(ref rigidBody_))
         {
             currentState_ = EState.DONE;
             floor.Movable = false;

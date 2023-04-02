@@ -73,13 +73,15 @@ class Pipe : IGameObject
 
         Background background = WorldManager.Get().GetGameObject("Background") as Background;
         if(currentState_ == EState.ENTRY &&
-           (!background.BackgroundBody.IsCollision(ref topRigidBody_) || 
-           !background.BackgroundBody.IsCollision(ref bottomRigidBody_)))
+           (!background.Body.IsCollision(ref topRigidBody_) || 
+           !background.Body.IsCollision(ref bottomRigidBody_)))
         {
             currentState_ = EState.LEAVE;
         }
 
-        if(currentState_ == EState.WAIT && background.BackgroundBody.IsCollision(ref topRigidBody_) && background.BackgroundBody.IsCollision(ref bottomRigidBody_))
+        if(currentState_ == EState.WAIT && 
+            background.Body.IsCollision(ref topRigidBody_) && 
+            background.Body.IsCollision(ref bottomRigidBody_))
         {
             currentState_ = EState.ENTRY;
         }
