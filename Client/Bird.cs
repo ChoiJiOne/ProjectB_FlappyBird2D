@@ -53,9 +53,6 @@ class Bird : IGameObject
      */
     public void Update(float deltaSeconds)
     {
-        bool bIsPressSpace = (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED);
-        Vector2<float> center;
-
         switch(currentState_)
         {
             case EState.WAIT:
@@ -63,68 +60,7 @@ class Bird : IGameObject
                 break;
 
             case EState.JUMP:
-                float jumpDirection = bIsJump_ ? -1.0f : 1.0f;
-
-                center = rigidBody_.Center;
-                center.y += (deltaSeconds * jumpDirection * moveSpeed_);
-                center.y = Math.Max(center.y, 0);
-                rigidBody_.Center = center;
-
-                wingStateTime_ += deltaSeconds;
-
-                if(wingStateTime_ > changeWingStateTime_)
-                {
-                    wingStateTime_ = 0.0f;
-
-                    if(currWingState_ == EWing.NORMAL)
-                    {
-                        if(prevWingState_ == EWing.NORMAL)
-                        {
-                            currWingState_ = EWing.UP;
-                        }
-                        else
-                        {
-                            currWingState_ = (prevWingState_ == EWing.UP) ? EWing.DOWN : EWing.UP;
-                            prevWingState_ = EWing.NORMAL;
-                        }
-                    }
-                    else // currWingState_ == EWing.DOWN or currWingState_ == EWing.UP
-                    {
-                        prevWingState_ = currWingState_;
-                        currWingState_ = EWing.NORMAL;
-                    }
-                }
-
-                if (bIsJump_)
-                {
-                    jumpMoveUpLength_ += (deltaSeconds * moveSpeed_);
-
-                    if(jumpMoveUpLength_ > jumpUpLength_)
-                    {
-                        bIsJump_ = false;
-                        jumpMoveUpLength_ = 0.0f;
-                    }
-                }
-                else
-                {
-                    jumpMoveDownLength_ += (deltaSeconds * moveSpeed_);
-
-                    if(jumpMoveDownLength_ > jumpDownLength_)
-                    {
-                        currentState_ = EState.FALL;
-                        currWingState_ = EWing.UP;
-                        prevWingState_ = EWing.NORMAL;
-                        wingStateTime_ = 0.0f;
-                        jumpMoveDownLength_ = 0.0f;
-                    }
-                }
-
-                if (bIsPressSpace)
-                {
-                    jumpMoveUpLength_ = 0.0f;
-                    jumpMoveDownLength_ = 0.0f;
-                    bIsJump_ = true;
-                }
+                UpdateJumpState(deltaSeconds);
                 break;
 
             case EState.FALL:
@@ -195,6 +131,81 @@ class Bird : IGameObject
         {
             currentState_ = EState.JUMP;
             rotate_ = MinRotate;
+            bIsJump_ = true;
+        }
+    }
+
+
+    /**
+     * @brief 새 오브젝트의 상태가 JUMP 상태일 때 업데이트를 수행합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    private void UpdateJumpState(float deltaSeconds)
+    {
+        if (currentState_ != EState.JUMP) return;
+
+        float jumpDirection = bIsJump_ ? -1.0f : 1.0f;
+
+        Vector2<float> center;
+        center = rigidBody_.Center;
+        center.y += (deltaSeconds * jumpDirection * moveSpeed_);
+        center.y = Math.Max(center.y, 0);
+        rigidBody_.Center = center;
+
+        wingStateTime_ += deltaSeconds;
+
+        if (wingStateTime_ > changeWingStateTime_)
+        {
+            wingStateTime_ = 0.0f;
+
+            if (currWingState_ == EWing.NORMAL)
+            {
+                if (prevWingState_ == EWing.NORMAL)
+                {
+                    currWingState_ = EWing.UP;
+                }
+                else
+                {
+                    currWingState_ = (prevWingState_ == EWing.UP) ? EWing.DOWN : EWing.UP;
+                    prevWingState_ = EWing.NORMAL;
+                }
+            }
+            else // currWingState_ == EWing.DOWN or currWingState_ == EWing.UP
+            {
+                prevWingState_ = currWingState_;
+                currWingState_ = EWing.NORMAL;
+            }
+        }
+
+        if (bIsJump_)
+        {
+            jumpMoveUpLength_ += (deltaSeconds * moveSpeed_);
+
+            if (jumpMoveUpLength_ > jumpUpLength_)
+            {
+                bIsJump_ = false;
+                jumpMoveUpLength_ = 0.0f;
+            }
+        }
+        else
+        {
+            jumpMoveDownLength_ += (deltaSeconds * moveSpeed_);
+
+            if (jumpMoveDownLength_ > jumpDownLength_)
+            {
+                currentState_ = EState.FALL;
+                currWingState_ = EWing.UP;
+                prevWingState_ = EWing.NORMAL;
+                wingStateTime_ = 0.0f;
+                jumpMoveDownLength_ = 0.0f;
+            }
+        }
+
+        if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
+        {
+            jumpMoveUpLength_ = 0.0f;
+            jumpMoveDownLength_ = 0.0f;
             bIsJump_ = true;
         }
     }
