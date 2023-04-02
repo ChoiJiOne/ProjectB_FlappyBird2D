@@ -128,19 +128,7 @@ class Bird : IGameObject
                 break;
 
             case EState.FALL:
-                rotate_ += (deltaSeconds * rotateSpeed_);
-                rotate_ = Math.Min(rotate_, MaxRotate);
-
-                center = rigidBody_.Center;
-                center.y += (deltaSeconds * moveSpeed_);
-                rigidBody_.Center = center;
-
-                if (bIsPressSpace)
-                {
-                    currentState_ = EState.JUMP;
-                    rotate_ = MinRotate;
-                    bIsJump_ = true;
-                }
+                UpdateFallState(deltaSeconds);
                 break;
         }
 
@@ -201,6 +189,32 @@ class Bird : IGameObject
         Vector2<float> center;
         center = rigidBody_.Center;
         center.y += (waitMoveDirection_ * deltaSeconds * waitMoveLength_);
+        rigidBody_.Center = center;
+
+        if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
+        {
+            currentState_ = EState.JUMP;
+            rotate_ = MinRotate;
+            bIsJump_ = true;
+        }
+    }
+
+
+    /**
+     * @brief 새 오브젝트의 상태가 FALL 상태일 때 업데이트를 수행합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    private void UpdateFallState(float deltaSeconds)
+    {
+        if (currentState_ != EState.FALL) return; // 현재 상태가 FALL이 아니면 수행하지 않습니다.
+
+        rotate_ += (deltaSeconds * rotateSpeed_);
+        rotate_ = Math.Min(rotate_, MaxRotate);
+
+        Vector2<float> center;
+        center = rigidBody_.Center;
+        center.y += (deltaSeconds * moveSpeed_);
         rigidBody_.Center = center;
 
         if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
