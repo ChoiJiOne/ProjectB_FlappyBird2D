@@ -72,18 +72,18 @@ class Pipe : GameObject
         }
 
         Background background = WorldManager.Get().GetGameObject("Background") as Background;
-        if(currentState_ == EState.ENTRY &&
-           (!background.Body.IsCollision(ref topRigidBody_) || 
-           !background.Body.IsCollision(ref bottomRigidBody_)))
+        switch(currentState_)
         {
-            currentState_ = EState.LEAVE;
-        }
+            case EState.WAIT:
+                CheckEntryFromBackground(background);
+                break;
 
-        if(currentState_ == EState.WAIT && 
-            background.Body.IsCollision(ref topRigidBody_) && 
-            background.Body.IsCollision(ref bottomRigidBody_))
-        {
-            currentState_ = EState.ENTRY;
+            case EState.ENTRY:
+                CheckLeaveFromBackground(background);
+                break;
+
+            case EState.LEAVE:
+                break;
         }
     }
 
@@ -110,6 +110,38 @@ class Pipe : GameObject
             bottomRigidBody_.Width,
             bottomRigidBody_.Height
         );
+    }
+
+
+    /**
+     * @brief 파이프가 백그라운드 밖으로 나갔는지 확인합니다.
+     * 
+     * @param background 백그라운드 오브젝트입니다.
+     */
+    private void CheckLeaveFromBackground(Background background)
+    {
+        if (currentState_ != EState.ENTRY) return;
+
+        if (!background.Body.IsCollision(ref topRigidBody_) || !background.Body.IsCollision(ref bottomRigidBody_))
+        {
+            currentState_ = EState.LEAVE;
+        }
+    }
+
+
+    /**
+     * @brief 파이프가 백그라운드 내부로 들어왔는지 확인합니다.
+     * 
+     * @param background 백그라운드 오브젝트입니다.
+     */
+    private void CheckEntryFromBackground(Background background)
+    {
+        if (currentState_ != EState.WAIT) return;
+
+        if (background.Body.IsCollision(ref topRigidBody_) && background.Body.IsCollision(ref bottomRigidBody_))
+        {
+            currentState_ = EState.ENTRY;
+        }
     }
 
     
