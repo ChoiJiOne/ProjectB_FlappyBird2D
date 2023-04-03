@@ -78,10 +78,11 @@ class Bird : GameObject
             case EState.FALL:
                 UpdateFallState(deltaSeconds);
                 break;
-        }
 
-        CheckCollisionPipe();
-        CheckCollisionFloor();
+            case EState.DONE:
+                UpdateDoneState(deltaSeconds);
+                break;
+        }
     }
     
 
@@ -163,6 +164,9 @@ class Bird : GameObject
             rotate_ = MinRotate;
             bIsJump_ = true;
         }
+
+        CheckCollisionPipe();
+        CheckCollisionFloor();
     }
 
 
@@ -185,6 +189,9 @@ class Bird : GameObject
             jumpMoveDownLength_ = 0.0f;
             bIsJump_ = true;
         }
+
+        CheckCollisionPipe();
+        CheckCollisionFloor();
     }
 
 
@@ -197,9 +204,6 @@ class Bird : GameObject
     {
         if (currentState_ != EState.FALL) return; // 현재 상태가 FALL이 아니면 수행하지 않습니다.
 
-        rotate_ += (deltaSeconds * rotateSpeed_);
-        rotate_ = Math.Min(rotate_, MaxRotate);
-
         MovePosition(deltaSeconds);
 
         if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
@@ -208,6 +212,25 @@ class Bird : GameObject
             rotate_ = MinRotate;
             bIsJump_ = true;
         }
+
+        CheckCollisionPipe();
+        CheckCollisionFloor();
+    }
+
+
+    /**
+     * @brief 새 오브젝트가 DONE 상태일 때 업데이트를 수행합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    private void UpdateDoneState(float deltaSeconds)
+    {
+        if (currentState_ != EState.DONE) return;
+
+        MovePosition(deltaSeconds);
+
+        Background background = WorldManager.Get().GetGameObject("Background") as Background;
+        bIsLeaveInBackground_ = !background.Body.IsCollision(ref rigidBody_);
     }
 
 
@@ -268,8 +291,19 @@ class Bird : GameObject
                 break;
 
             case EState.FALL:
+                rotate_ += (deltaSeconds * rotateSpeed_);
+                rotate_ = Math.Min(rotate_, MaxRotate);
                 center.y += (deltaSeconds * moveSpeed_);
                 rigidBody_.Center = center;
+                break;
+
+            case EState.DONE:
+                if(!bIsLeaveInBackground_)
+                {
+                    center.y += (deltaSeconds * moveSpeed_);
+                    rigidBody_.Center = center;
+                    rotate_ += (deltaSeconds * rotateSpeed_);
+                }
                 break;
         }
     }
@@ -423,6 +457,12 @@ class Bird : GameObject
      * @brief 새 오브젝트의 회전 속도입니다.
      */
     private float rotateSpeed_ = 200.0f;
+
+
+    /**
+     * @brief 새 오브젝트가 백그라운드 밖으로 나갔는지 확인합니다.
+     */
+    private bool bIsLeaveInBackground_ = false;
 
 
     /**
