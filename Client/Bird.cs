@@ -1,5 +1,5 @@
 using System;
-using SDL2;
+using System.Collections.Generic;
 
 
 /**
@@ -80,6 +80,7 @@ class Bird : GameObject
                 break;
         }
 
+        CheckCollisionPipe();
         CheckCollisionFloor();
     }
     
@@ -113,6 +114,27 @@ class Bird : GameObject
         if (floor.Body.IsCollision(ref rigidBody_))
         {
             currentState_ = EState.DONE;
+        }
+    }
+
+
+    /**
+     * @brief 새 오브젝트가 파이프와 부딪히는지 확인합니다.
+     * 
+     * @note 새 오브젝트가 파이프와 부딪히면 상태를 DONE으로 변경합니다.
+     */
+    private void CheckCollisionPipe()
+    {
+        PipeDetector pipeDetector = WorldManager.Get().GetGameObject("PipeDetector") as PipeDetector;
+        List<Pipe> pipes = pipeDetector.DetectPipes;
+
+        foreach(Pipe pipe in pipes)
+        {
+            if(pipe.TopRigidBody.IsCollision(ref rigidBody_) || pipe.BottomRigidBody.IsCollision(ref rigidBody_))
+            {
+                currentState_ = EState.DONE;
+                return;
+            }
         }
     }
 
