@@ -85,10 +85,10 @@ class FlappyBird2D
             throw new Exception("failed to initialize SDL...");
         }
 
-        int Flags = (int)(SDL_image.IMG_InitFlags.IMG_INIT_PNG | SDL_image.IMG_InitFlags.IMG_INIT_JPG);
-        int InitFlag = SDL_image.IMG_Init((SDL_image.IMG_InitFlags)(Flags));
+        int flags = (int)(SDL_image.IMG_InitFlags.IMG_INIT_PNG | SDL_image.IMG_InitFlags.IMG_INIT_JPG);
+        int initFlag = SDL_image.IMG_Init((SDL_image.IMG_InitFlags)(flags));
 
-        if ((InitFlag & Flags) != Flags)
+        if ((initFlag & flags) != flags)
         {
             throw new Exception("failed to initialize SDL_image...");
         }
