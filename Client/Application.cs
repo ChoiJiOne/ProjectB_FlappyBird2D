@@ -16,8 +16,6 @@ class FlappyBird2D
         SetupCoreProperties();
         LoadTextureResource();
         GenerateGameObjects();
-
-        CreatePipeObject();
     }
 
 
@@ -35,22 +33,6 @@ class FlappyBird2D
 
             RenderManager.Get().Clear(Color.BLACK);
             WorldManager.Get().Tick(gameTimer_.GetDeltaSeconds());
-
-            Pipe pipe = WorldManager.Get().GetGameObject("Pipe") as Pipe;
-            if(pipe.State == Pipe.EState.LEAVE)
-            {
-                WorldManager.Get().RemoveGameObject("Pipe");
-                CreatePipeObject();
-            }
-
-            Bird bird = WorldManager.Get().GetGameObject("Bird") as Bird;
-            if(bird.State == Bird.EState.DONE)
-            {
-                pipe.Movable = false;
-
-                Floor floor = WorldManager.Get().GetGameObject("Floor") as Floor;
-                floor.Movable = false;
-            }
 
             RenderManager.Get().Present();
         }
@@ -168,22 +150,6 @@ class FlappyBird2D
         WorldManager.Get().AddGameObject("Background", background);
         WorldManager.Get().AddGameObject("Floor", floor);
         WorldManager.Get().AddGameObject("Bird", bird);
-    }
-
-
-    /**
-     * @brief 파이프 오브젝트를 추가합니다.
-     */
-    private void CreatePipeObject()
-    {
-        Pipe pipe = new Pipe();
-        pipe.UpdateOrder = 2;
-        pipe.Movable = true;
-        pipe.Speed = 300.0f;
-        pipe.TopRigidBody = new RigidBody(new Vector2<float>(1100.0f, 100.0f), 100.0f, 200.0f);
-        pipe.BottomRigidBody = new RigidBody(new Vector2<float>(1100.0f, 500.0f), 100.0f, 200.0f);
-
-        WorldManager.Get().AddGameObject("Pipe", pipe);
     }
 
 
