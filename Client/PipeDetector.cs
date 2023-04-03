@@ -154,7 +154,7 @@ class PipeDetector : GameObject
         );
 
         Pipe newPipe = new Pipe();
-        newPipe.UpdateOrder = 2;
+        newPipe.UpdateOrder = 1;
         newPipe.Movable = true;
         newPipe.Speed = 300.0f;
         newPipe.SignatureNumber = countGeneratePipe_;

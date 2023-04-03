@@ -138,7 +138,7 @@ class FlappyBird2D
         background.CreateBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 
         Floor floor = new Floor();
-        floor.UpdateOrder = 1;
+        floor.UpdateOrder = 2;
         floor.Speed = 300.0f;
         floor.Movable = true;
         floor.CreateBody(new Vector2<float>(500.0f, 750.0f), 1000.0f, 100.0f);
