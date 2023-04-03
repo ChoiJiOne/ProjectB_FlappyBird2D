@@ -140,6 +140,45 @@ class RenderManager
 
 
     /**
+     * @brief 백버퍼에 텍스처를 그립니다.
+     * 
+     * @param texture 백버퍼에 그릴 텍스처 리소스입니다.
+     * @param leftTop 텍스처의 화면 상 중심 좌표입니다.
+     * @param rightBottom 텍스처의 가로 크기입니다.
+     * @param rotate 텍스처의 회전 각도 값입니다. 기준은 육십분법이고 기본 값은 0.0입니다.
+     * 
+     * @throws 텍스처를 백버퍼에 그리는 데 실패하면 예외를 던집니다.
+     */
+    public void DrawTexture(ref Texture texture, Vector2<float> leftTop, Vector2<float> rightBottom, float rotate = 0.0f)
+    {
+        float width = rightBottom.x - leftTop.x;
+        float height = rightBottom.y - leftTop.y;
+
+        SDL.SDL_Rect rect;
+        rect.x = (int)(leftTop.x);
+        rect.y = (int)(leftTop.y);
+        rect.w = (int)(width);
+        rect.h = (int)(height);
+
+        SDL.SDL_Point point;
+        point.x = (int)(width / 2.0f);
+        point.y = (int)(height / 2.0f);
+
+        if (SDL.SDL_RenderCopyEx(
+            renderer_,
+            texture.Resource,
+            IntPtr.Zero,
+            ref rect,
+            rotate,
+            ref point,
+            SDL.SDL_RendererFlip.SDL_FLIP_NONE) != 0)
+        {
+            throw new Exception("failed to draw texture in back buffer...");
+        }
+    }
+
+
+    /**
      * @brief 가로로 움직이는 텍스처를 백버퍼에 그립니다.
      * 
      * @note 텍스처 분할 비율은 다음과 같습니다.
