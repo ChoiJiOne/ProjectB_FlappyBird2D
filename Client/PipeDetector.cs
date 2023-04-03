@@ -118,9 +118,6 @@ class PipeDetector : GameObject
      */
     private void GenerateDetectPipe()
     {
-        //float pipeWidth = totalPipeWidth_;
-        //float pipeHeight = (TotalPipeHeight - PipeTopAndBottomGapLength) / 2.0f;
-
         Random random = new Random();
 
         bool bIsFindRespawnPosition = false;
