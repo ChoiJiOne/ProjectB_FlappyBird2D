@@ -32,6 +32,12 @@ class Pipe : GameObject
         set => speed_ = value;
     }
 
+    public int SignatureNumber
+    {
+        get => signatureNumber_;
+        set => signatureNumber_ = value;
+    }
+
     public EState State
     {
         get => currentState_;
@@ -155,6 +161,12 @@ class Pipe : GameObject
      * @brief 파이프의 이동 속도입니다.
      */
     private float speed_ = 0.0f;
+
+
+    /**
+     * @brief 파이프의 고유 넘버입니다.
+     */
+    private int signatureNumber_ = -1;
 
 
     /**
