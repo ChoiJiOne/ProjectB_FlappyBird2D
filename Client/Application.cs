@@ -156,7 +156,7 @@ class FlappyBird2D
         pipeDetector.PipeTopAndBottomGapLength = 200.0f;
         pipeDetector.TotalPipeWidth = 100.0f;
         pipeDetector.TotalPipeHeight = 700.0f;
-        pipeDetector.MinPipeHeight = 50.0f;
+        pipeDetector.MinPipeHeight = 100.0f;
         pipeDetector.PipeSpeed = 300.0f;
 
         GameStateDetector gameStateDetector = new GameStateDetector();
