@@ -59,6 +59,7 @@ workspace "FlappyBird2D"
 
         -- 외부 라이브러리를 추가합니다.
         links { 
+            "System",
             "SDL2.lib", 
             "SDL2main.lib",
             "SDL2_image.lib", 
@@ -117,6 +118,11 @@ workspace "FlappyBird2D"
 
         -- 소스 코드 경로를 추가합니다.
         includedirs { "%{server}", }
+
+        -- 외부 라이브러리를 추가합니다.
+        links { 
+            "System",
+        }
 
         -- 파일을 추가합니다.
         files { "%{server}/*", }
