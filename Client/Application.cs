@@ -149,7 +149,7 @@ class FlappyBird2D
 
         PipeDetector pipeDetector = new PipeDetector();
         pipeDetector.UpdateOrder = 4;
-        pipeDetector.CanGeneratePipe = true;
+        pipeDetector.CanGeneratePipe = false;
         pipeDetector.MaxPipeCount = 7;
         pipeDetector.RespawnPosition = new Vector2<float>(1200.0f, 300.0f);
         pipeDetector.PipeToPipeGapLength = 300.0f;
@@ -159,10 +159,14 @@ class FlappyBird2D
         pipeDetector.MinPipeHeight = 50.0f;
         pipeDetector.PipeSpeed = 300.0f;
 
+        GameStateDetector gameStateDetector = new GameStateDetector();
+        gameStateDetector.UpdateOrder = 5;
+
         WorldManager.Get().AddGameObject("Background", background);
         WorldManager.Get().AddGameObject("Floor", floor);
         WorldManager.Get().AddGameObject("Bird", bird);
         WorldManager.Get().AddGameObject("PipeDetector", pipeDetector);
+        WorldManager.Get().AddGameObject("GameStateDetector", gameStateDetector);
     }
 
 
