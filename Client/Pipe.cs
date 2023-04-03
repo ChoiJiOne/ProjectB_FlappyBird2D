@@ -99,23 +99,29 @@ class Pipe : GameObject
      */
     public override void Render()
     {
+        float textureWidth = topRigidBody_.Width;
+        float textureHeight = topRigidBody_.Height > bottomRigidBody_.Height ? topRigidBody_.Height : bottomRigidBody_.Height;
+
+        Vector2<float> leftTop;
+        Vector2<float> rightBottom;
+
         Texture topPipeTexture = ContentManager.Get().GetTexture("PipeTop");
-        
-        RenderManager.Get().DrawTexture(
-            ref topPipeTexture,
-            topRigidBody_.Center,
-            topRigidBody_.Width,
-            topRigidBody_.Height
-        );
+        leftTop.x = (topRigidBody_.Center.x - textureWidth / 2.0f);
+        leftTop.y = (topRigidBody_.Center.y - topRigidBody_.Height / 2.0f - (textureHeight - topRigidBody_.Height));
+
+        rightBottom.x = (topRigidBody_.Center.x + textureWidth / 2.0f);
+        rightBottom.y = (topRigidBody_.Center.y + topRigidBody_.Height / 2.0f);
+
+        RenderManager.Get().DrawTexture(ref topPipeTexture, leftTop, rightBottom);
 
         Texture bottomPipeTexture = ContentManager.Get().GetTexture("PipeBottom");
+        leftTop.x = (bottomRigidBody_.Center.x - textureWidth / 2.0f);
+        leftTop.y = (bottomRigidBody_.Center.y - bottomRigidBody_.Height / 2.0f);
+        
+        rightBottom.x = (bottomRigidBody_.Center.x + textureWidth / 2.0f);
+        rightBottom.y = (bottomRigidBody_.Center.y + bottomRigidBody_.Height / 2.0f + (textureHeight - bottomRigidBody_.Height));
 
-        RenderManager.Get().DrawTexture(
-            ref bottomPipeTexture,
-            bottomRigidBody_.Center,
-            bottomRigidBody_.Width,
-            bottomRigidBody_.Height
-        );
+        RenderManager.Get().DrawTexture(ref bottomPipeTexture, leftTop, rightBottom);
     }
 
 
