@@ -141,15 +141,28 @@ class FlappyBird2D
         floor.UpdateOrder = 1;
         floor.Speed = 300.0f;
         floor.Movable = true;
-        floor.CreateBody(new Vector2<float>(500.0f, 700.0f), 1000.0f, 200.0f);
+        floor.CreateBody(new Vector2<float>(500.0f, 750.0f), 1000.0f, 100.0f);
 
         Bird bird = new Bird();
         bird.UpdateOrder = 3;
-        bird.CreateBody(new Vector2<float>(400.0f, 300.0f), 70.0f, 50.0f);
+        bird.CreateBody(new Vector2<float>(400.0f, 350.0f), 70.0f, 50.0f);
+
+        PipeDetector pipeDetector = new PipeDetector();
+        pipeDetector.UpdateOrder = 4;
+        pipeDetector.CanGeneratePipe = true;
+        pipeDetector.MaxPipeCount = 7;
+        pipeDetector.RespawnPosition = new Vector2<float>(1200.0f, 300.0f);
+        pipeDetector.PipeToPipeGapLength = 300.0f;
+        pipeDetector.PipeTopAndBottomGapLength = 200.0f;
+        pipeDetector.TotalPipeWidth = 100.0f;
+        pipeDetector.TotalPipeHeight = 700.0f;
+        pipeDetector.MinPipeHeight = 50.0f;
+        pipeDetector.PipeSpeed = 300.0f;
 
         WorldManager.Get().AddGameObject("Background", background);
         WorldManager.Get().AddGameObject("Floor", floor);
         WorldManager.Get().AddGameObject("Bird", bird);
+        WorldManager.Get().AddGameObject("PipeDetector", pipeDetector);
     }
 
 
