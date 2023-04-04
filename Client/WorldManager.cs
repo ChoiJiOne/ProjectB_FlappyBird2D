@@ -76,8 +76,7 @@ class WorldManager
         {
             if(gameObject.Active)
             {
-                gameObject.Update(deltaSeconds);
-                gameObject.Render();
+                gameObject.Tick(deltaSeconds);
             }
         }
     }
