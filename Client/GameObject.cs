@@ -6,6 +6,12 @@ abstract class GameObject
     /**
      * @brief 게임 오브젝트 속성의 Getter/Setter입니다.
      */
+    public bool Active
+    {
+        get => bIsActive_;
+        set => bIsActive_ = value;
+    }
+
     public int UpdateOrder
     {
         get => updateOrder_;
@@ -25,6 +31,14 @@ abstract class GameObject
      * @brief 게임 오브젝트를 화면에 그립니다.
      */
     public abstract void Render();
+
+
+    /**
+     * @brief 게임 오브젝트의 활성화 여부입니다.
+     * 
+     * @note 비활성화 되어 있다면, 업데이트와 렌더링을 수행하지 않습니다.
+     */
+    private bool bIsActive_ = false;
 
 
     /**
