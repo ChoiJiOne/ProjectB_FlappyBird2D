@@ -24,13 +24,7 @@ abstract class GameObject
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public abstract void Update(float deltaSeconds);
-
-
-    /**
-     * @brief 게임 오브젝트를 화면에 그립니다.
-     */
-    public abstract void Render();
+    public abstract void Tick(float deltaSeconds);
 
 
     /**
