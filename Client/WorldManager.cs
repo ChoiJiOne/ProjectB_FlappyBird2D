@@ -74,8 +74,11 @@ class WorldManager
 
         foreach (GameObject gameObject in gameObjects)
         {
-            gameObject.Update(deltaSeconds);
-            gameObject.Render();
+            if(gameObject.Active)
+            {
+                gameObject.Update(deltaSeconds);
+                gameObject.Render();
+            }
         }
     }
 
