@@ -186,6 +186,14 @@ class FlappyBird2D
         birdSlate.ChangeWingStateTime = 0.09f;
         birdSlate.CreateUIBody(new Vector2<float>(800.0f, 200.0f), 70.0f, 50.0f);
 
+        Button playButton = new Button();
+        playButton.UpdateOrder = 6;
+        playButton.Active = true;
+        playButton.UITexture = "PlayButton";
+        playButton.EventAction = () => { };
+        playButton.ReduceRatio = 0.95f;
+        playButton.CreateUIBody(new Vector2<float>(500.0f, 400.0f), 200.0f, 120.0f);
+
         WorldManager.Get().AddGameObject("Background", background);
         WorldManager.Get().AddGameObject("Floor", floor);
         WorldManager.Get().AddGameObject("Bird", bird);
@@ -193,6 +201,7 @@ class FlappyBird2D
         WorldManager.Get().AddGameObject("GameStateDetector", gameStateDetector);
         WorldManager.Get().AddGameObject("FlappyBirdSlate", flappyBirdSlate);
         WorldManager.Get().AddGameObject("BirdSlate", birdSlate);
+        WorldManager.Get().AddGameObject("PlayButton", playButton);
     }
 
 
