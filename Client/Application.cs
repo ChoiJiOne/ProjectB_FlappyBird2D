@@ -168,11 +168,31 @@ class FlappyBird2D
         gameStateDetector.UpdateOrder = 5;
         gameStateDetector.Active = false;
 
+        FlappyBirdSlate flappyBirdSlate = new FlappyBirdSlate();
+        flappyBirdSlate.UpdateOrder = 6;
+        flappyBirdSlate.Active = true;
+        flappyBirdSlate.UITexture = "FlappyBird";
+        flappyBirdSlate.Movable = true;
+        flappyBirdSlate.MaxWaitTimeForMove = 1.0f;
+        flappyBirdSlate.MoveLength = 20.0f;
+        flappyBirdSlate.CreateUIBody(new Vector2<float>(500.0f, 200.0f), 400.0f, 100.0f);
+
+        BirdSlate birdSlate = new BirdSlate();
+        birdSlate.UpdateOrder = 6;
+        birdSlate.Active = true;
+        birdSlate.Movable = true;
+        birdSlate.MaxWaitTimeForMove = 1.0f;
+        birdSlate.MoveLength = 20.0f;
+        birdSlate.ChangeWingStateTime = 0.09f;
+        birdSlate.CreateUIBody(new Vector2<float>(800.0f, 200.0f), 70.0f, 50.0f);
+
         WorldManager.Get().AddGameObject("Background", background);
         WorldManager.Get().AddGameObject("Floor", floor);
         WorldManager.Get().AddGameObject("Bird", bird);
         WorldManager.Get().AddGameObject("PipeDetector", pipeDetector);
         WorldManager.Get().AddGameObject("GameStateDetector", gameStateDetector);
+        WorldManager.Get().AddGameObject("FlappyBirdSlate", flappyBirdSlate);
+        WorldManager.Get().AddGameObject("BirdSlate", birdSlate);
     }
 
 
