@@ -11,6 +11,7 @@ class GameStateDetector : GameObject
      */
     public enum EGameState
     {
+        START = 0x00,
         READY = 0x01,
         PLAY = 0x02,
         DONE = 0x03,
