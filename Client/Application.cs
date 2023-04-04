@@ -141,19 +141,19 @@ class FlappyBird2D
 
         Floor floor = new Floor();
         floor.UpdateOrder = 2;
-        floor.Active = true;
+        floor.Active = false;
         floor.Speed = 300.0f;
         floor.Movable = true;
         floor.CreateBody(new Vector2<float>(500.0f, 750.0f), 1000.0f, 100.0f);
 
         Bird bird = new Bird();
         bird.UpdateOrder = 3;
-        bird.Active = true;
+        bird.Active = false;
         bird.CreateBody(new Vector2<float>(400.0f, 350.0f), 70.0f, 50.0f);
 
         PipeDetector pipeDetector = new PipeDetector();
         pipeDetector.UpdateOrder = 4;
-        pipeDetector.Active = true;
+        pipeDetector.Active = false;
         pipeDetector.CanGeneratePipe = false;
         pipeDetector.MaxPipeCount = 7;
         pipeDetector.RespawnPosition = new Vector2<float>(1200.0f, 300.0f);
@@ -166,7 +166,7 @@ class FlappyBird2D
 
         GameStateDetector gameStateDetector = new GameStateDetector();
         gameStateDetector.UpdateOrder = 5;
-        gameStateDetector.Active = true;
+        gameStateDetector.Active = false;
 
         WorldManager.Get().AddGameObject("Background", background);
         WorldManager.Get().AddGameObject("Floor", floor);
