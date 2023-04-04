@@ -205,6 +205,10 @@ class ClientApplication
     {
         AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CrashHandler.DetectApplicationCrash);
 
+#if SHIPPING
+        ConsoleHandler.SetVisible(false);
+#endif
+
         CommandLine.Parse(args);
         FlappyBird2D Game = new FlappyBird2D();
 
