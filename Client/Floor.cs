@@ -42,7 +42,7 @@ class Floor : GameObject
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public override void Update(float deltaSeconds)
+    public override void Tick(float deltaSeconds)
     {
         if (bIsMove_)
         {
@@ -53,23 +53,16 @@ class Floor : GameObject
                 moveLength_ -= rigidBody_.Width;
             }
         }
-    }
 
-
-    /**
-     * @brief 게임의 바닥 오브젝트를 화면에 그립니다.
-     */
-    public override void Render()
-    {
         float factor = moveLength_ / rigidBody_.Width;
 
         Texture floorTexture = ContentManager.Get().GetTexture("Floor");
 
         RenderManager.Get().DrawHorizonScrollingTexture(
-            ref floorTexture, 
-            rigidBody_.Center, 
-            rigidBody_.Width, 
-            rigidBody_.Height, 
+            ref floorTexture,
+            rigidBody_.Center,
+            rigidBody_.Width,
+            rigidBody_.Height,
             factor
         );
     }

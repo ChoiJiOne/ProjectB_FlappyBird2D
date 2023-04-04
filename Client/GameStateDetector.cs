@@ -32,7 +32,7 @@ class GameStateDetector : GameObject
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public override void Update(float deltaSeconds)
+    public override void Tick(float deltaSeconds)
     {
         switch(gameState_)
         {
@@ -45,14 +45,6 @@ class GameStateDetector : GameObject
                 break;
         }
     }
-
-
-    /**
-     * @brief 현재 게임 상태를 추적하는 게임 오브젝트를 화면에 그립니다.
-     * 
-     * @note 게임 상태를 추적하는 게임 오브젝트는 화면에 렌더링을 수행하지 않습니다.
-     */
-    public override void Render() {}
 
 
     /**

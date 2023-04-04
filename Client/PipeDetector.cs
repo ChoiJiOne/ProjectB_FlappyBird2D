@@ -73,23 +73,15 @@ class PipeDetector : GameObject
     /**
      * @brief 파이프를 생성하고 추적하는 오브젝트를 업데이트합니다.
      */
-    public override void Update(float deltaSeconds)
+    public override void Tick(float deltaSeconds)
     {
         RemoveLeavePipeFromBackground();
 
         if (CanGenerateDetectPipe())
         {
-            GenerateDetectPipe();
+            GenerateDetectPipe(); 
         }
     }
-
-
-    /**
-     * @brief 파이프를 생성하고 추적하는 오브젝트를 렌더링합니다.
-     * 
-     * @note 파이프 추적 객체는 렌더링을 수행하지 않습니다.
-     */
-    public override void Render() {}
 
 
     /**
@@ -140,7 +132,7 @@ class PipeDetector : GameObject
         float pipeTopHeight = respawnPosition_.y - pipeTopAndBottomGapLength_ / 2.0f;
         float pipeBottomHeight = totalPipeHeight_ - (pipeTopHeight + pipeTopAndBottomGapLength_);
 
-        Vector2<float> topCenter = new Vector2<float>(
+         Vector2<float> topCenter = new Vector2<float>(
             respawnPosition_.x,
             pipeTopHeight / 2.0f
         );
@@ -152,6 +144,7 @@ class PipeDetector : GameObject
 
         Pipe newPipe = new Pipe();
         newPipe.UpdateOrder = 1;
+        newPipe.Active = true;
         newPipe.Movable = true;
         newPipe.Speed = 300.0f;
         newPipe.SignatureNumber = countGeneratePipe_;

@@ -34,22 +34,14 @@ class Background : GameObject
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public override void Update(float deltaSeconds)
-    {
-    }
-
-
-    /**
-     * @brief 백그라운드 게임 오브젝트를 화면에 그립니다.
-     */
-    public override void Render()
+    public override void Tick(float deltaSeconds)
     {
         Texture backgroundTexture = ContentManager.Get().GetTexture("Background");
 
         RenderManager.Get().DrawTexture(
-            ref backgroundTexture, 
-            rigidBody_.Center, 
-            rigidBody_.Width, 
+            ref backgroundTexture,
+            rigidBody_.Center,
+            rigidBody_.Width,
             rigidBody_.Height
         );
     }

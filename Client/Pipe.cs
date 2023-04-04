@@ -62,7 +62,7 @@ class Pipe : GameObject
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public override void Update(float deltaSeconds)
+    public override void Tick(float deltaSeconds)
     {
         if (currentState_ == EState.LEAVE) return;
 
@@ -91,14 +91,7 @@ class Pipe : GameObject
             case EState.LEAVE:
                 break;
         }
-    }
 
-
-    /**
-     * @brief 게임의 파이프 오브젝트를 화면에 그립니다.
-     */
-    public override void Render()
-    {
         float textureWidth = topRigidBody_.Width;
         float textureHeight = topRigidBody_.Height > bottomRigidBody_.Height ? topRigidBody_.Height : bottomRigidBody_.Height;
 
@@ -117,7 +110,7 @@ class Pipe : GameObject
         Texture bottomPipeTexture = ContentManager.Get().GetTexture("PipeBottom");
         leftTop.x = (bottomRigidBody_.Center.x - textureWidth / 2.0f);
         leftTop.y = (bottomRigidBody_.Center.y - bottomRigidBody_.Height / 2.0f);
-        
+
         rightBottom.x = (bottomRigidBody_.Center.x + textureWidth / 2.0f);
         rightBottom.y = (bottomRigidBody_.Center.y + bottomRigidBody_.Height / 2.0f + (textureHeight - bottomRigidBody_.Height));
 

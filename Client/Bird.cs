@@ -63,7 +63,7 @@ class Bird : GameObject
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public override void Update(float deltaSeconds)
+    public override void Tick(float deltaSeconds)
     {
         switch(currentState_)
         {
@@ -83,17 +83,10 @@ class Bird : GameObject
                 UpdateDoneState(deltaSeconds);
                 break;
         }
-    }
-    
 
-    /**
-     * @brief 게임의 플레이어가 조종하는 새 오브젝트를 화면에 그립니다.
-     */
-    public override void Render()
-    {
         string birdTextureSignature = "BirdWingNormal";
 
-        if(currentState_ == EState.JUMP && (currWingState_ != EWing.NORMAL))
+        if (currentState_ == EState.JUMP && (currWingState_ != EWing.NORMAL))
         {
             birdTextureSignature = (currWingState_ == EWing.UP) ? "BirdWingUp" : "BirdWingDown";
         }
@@ -101,7 +94,7 @@ class Bird : GameObject
         Texture wingBird = ContentManager.Get().GetTexture(birdTextureSignature);
         RenderManager.Get().DrawTexture(ref wingBird, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height, rotate_);
     }
-
+    
 
     /**
      * @brief 새 오브젝트가 바닥과 부딪히는지 확인합니다.
