@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SDL2;
 
 
@@ -103,23 +104,23 @@ class FlappyBird2D
 
 
     /**
-     * @brief 텍스처 리소스를 로딩합니다.
+     * @brief 전체 텍스처 리소스를 로딩합니다.
      * 
      * @throws 텍스처 리소스 생성에 실패하면 예외를 던집니다.
      */
     private void LoadTextureResource()
     {
-        Dictionary<string, string> textures = new Dictionary<string, string>()
-        {
-            {     "Background",     "Background.png" },
-            {        "PipeTop",        "PipeTop.png" },
-            {     "PipeBottom",     "PipeBottom.png" },
-            { "BirdWingNormal", "BirdWingNormal.png" },
-            {   "BirdWingDown",   "BirdWingDown.png" },
-            {     "BirdWingUp",     "BirdWingUp.png" },
-            {          "Floor",          "Floor.png" },
+        string[] pngImageFilePaths = System.IO.Directory.GetFiles(CommandLine.GetValue("Content"), "*.png");
+        Dictionary<string, string> textures = new Dictionary<string, string>();
 
-        };
+        foreach(string pngImageFilePath in pngImageFilePaths)
+        {
+            string[] tokens = pngImageFilePath.Split('\\');
+            string pngImageFile = tokens.Last();
+
+            string[] pngImageFileTokens = pngImageFile.Split('.');
+            textures.Add(pngImageFileTokens.First(), pngImageFile);
+        }
 
         foreach(KeyValuePair<string, string> texture in textures)
         {
