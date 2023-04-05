@@ -40,7 +40,8 @@ class GameStateDetector : GameObject
 
     public EGameState GameState
     {
-        get => gameState_;
+        get => currGameState_;
+        set => currGameState_ = value;
     }
 
 
@@ -51,7 +52,79 @@ class GameStateDetector : GameObject
      */
     public override void Tick(float deltaSeconds)
     {
+        switch(gameScene_)
+        {
+            case EGameScene.START:
+                UpdateStartScene(deltaSeconds);
+                break;
 
+            case EGameScene.READY:
+                UpdateReadyScene(deltaSeconds);
+                break;
+
+            case EGameScene.PLAY:
+                UpdatePlayScene(deltaSeconds);
+                break;
+
+            case EGameScene.DONE:
+                UpdateDoneScene(deltaSeconds);
+                break;
+        }
+    }
+
+
+    /**
+     * @brief 게임의 상태가 변경되었는지 확인합니다.
+     * 
+     * @return 게임의 상태가 변경되었다면 true, 그렇지 않으면 false를 반환합니다.
+     */
+    private bool IsSwitchGameState()
+    {
+        return prevGameState_ != currGameState_;
+    }
+
+
+    /**
+     * @brief 게임의 시작씬에서 업데이트를 수행합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    private void UpdateStartScene(float deltaSeconds)
+    {
+        if (!IsSwitchGameState()) return;
+    }
+
+
+    /**
+     * @brief 게임의 준비씬에서 업데이트를 수행합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    private void UpdateReadyScene(float deltaSeconds)
+    {
+        if (!IsSwitchGameState()) return;
+    }
+
+
+    /**
+     * @brief 게임의 플레이씬에서 업데이트를 수행합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    private void UpdatePlayScene(float deltaSeconds)
+    {
+        if (!IsSwitchGameState()) return;
+    }
+
+
+    /**
+     * @brief 게임의 종료씬에서 업데이트를 수행합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
+     */
+    private void UpdateDoneScene(float deltaSeconds)
+    {
+        if (!IsSwitchGameState()) return;
     }
 
 
@@ -62,7 +135,13 @@ class GameStateDetector : GameObject
 
 
     /**
+     * @brief 이전의 게임 상태입니다.
+     */
+    private EGameState prevGameState_ = EGameState.WAIT;
+
+
+    /**
      * @brief 현재 게임 상태입니다.
      */
-    private EGameState gameState_ = EGameState.WAIT;
+    private EGameState currGameState_ = EGameState.WAIT;
 }

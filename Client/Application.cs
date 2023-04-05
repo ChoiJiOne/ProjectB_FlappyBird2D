@@ -134,74 +134,18 @@ class FlappyBird2D
      */
     private void GenerateGameObjects()
     {
+        GameStateDetector gameStateDetector = new GameStateDetector();
+        gameStateDetector.UpdateOrder = 5;
+        gameStateDetector.Active = true;
+        gameStateDetector.GameState = GameStateDetector.EGameState.ENTRY;
+
         Background background = new Background();
         background.UpdateOrder = 0;
         background.Active = true;
         background.CreateBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 
-        Floor floor = new Floor();
-        floor.UpdateOrder = 2;
-        floor.Active = false;
-        floor.Speed = 300.0f;
-        floor.Movable = true;
-        floor.CreateBody(new Vector2<float>(500.0f, 750.0f), 1000.0f, 100.0f);
-
-        Bird bird = new Bird();
-        bird.UpdateOrder = 3;
-        bird.Active = false;
-        bird.CreateBody(new Vector2<float>(400.0f, 350.0f), 70.0f, 50.0f);
-
-        PipeDetector pipeDetector = new PipeDetector();
-        pipeDetector.UpdateOrder = 4;
-        pipeDetector.Active = false;
-        pipeDetector.CanGeneratePipe = false;
-        pipeDetector.MaxPipeCount = 7;
-        pipeDetector.RespawnPosition = new Vector2<float>(1200.0f, 300.0f);
-        pipeDetector.PipeToPipeGapLength = 300.0f;
-        pipeDetector.PipeTopAndBottomGapLength = 200.0f;
-        pipeDetector.TotalPipeWidth = 100.0f;
-        pipeDetector.TotalPipeHeight = 700.0f;
-        pipeDetector.MinPipeHeight = 100.0f;
-        pipeDetector.PipeSpeed = 300.0f;
-
-        GameStateDetector gameStateDetector = new GameStateDetector();
-        gameStateDetector.UpdateOrder = 5;
-        gameStateDetector.Active = false;
-
-        SlideSlate flappyBirdSlate = new SlideSlate();
-        flappyBirdSlate.UpdateOrder = 6;
-        flappyBirdSlate.Active = true;
-        flappyBirdSlate.UITexture = "FlappyBird";
-        flappyBirdSlate.Movable = true;
-        flappyBirdSlate.MaxWaitTimeForMove = 1.0f;
-        flappyBirdSlate.MoveLength = 20.0f;
-        flappyBirdSlate.CreateUIBody(new Vector2<float>(500.0f, 200.0f), 400.0f, 100.0f);
-
-        BirdSlate birdSlate = new BirdSlate();
-        birdSlate.UpdateOrder = 6;
-        birdSlate.Active = true;
-        birdSlate.Movable = true;
-        birdSlate.MaxWaitTimeForMove = 1.0f;
-        birdSlate.MoveLength = 20.0f;
-        birdSlate.ChangeWingStateTime = 0.09f;
-        birdSlate.CreateUIBody(new Vector2<float>(750.0f, 200.0f), 70.0f, 50.0f);
-
-        Button playButton = new Button();
-        playButton.UpdateOrder = 6;
-        playButton.Active = true;
-        playButton.UITexture = "PlayButton";
-        playButton.EventAction = () => { };
-        playButton.ReduceRatio = 0.95f;
-        playButton.CreateUIBody(new Vector2<float>(500.0f, 400.0f), 200.0f, 120.0f);
-
         WorldManager.Get().AddGameObject("Background", background);
-        WorldManager.Get().AddGameObject("Floor", floor);
-        WorldManager.Get().AddGameObject("Bird", bird);
-        WorldManager.Get().AddGameObject("PipeDetector", pipeDetector);
         WorldManager.Get().AddGameObject("GameStateDetector", gameStateDetector);
-        WorldManager.Get().AddGameObject("FlappyBirdSlate", flappyBirdSlate);
-        WorldManager.Get().AddGameObject("BirdSlate", birdSlate);
-        WorldManager.Get().AddGameObject("PlayButton", playButton);
     }
 
 
