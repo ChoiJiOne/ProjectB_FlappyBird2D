@@ -86,7 +86,7 @@ class Bird : GameObject
 
         string birdTextureSignature = "BirdWingNormal";
 
-        if (currentState_ == EState.JUMP && (currWingState_ != EWing.NORMAL))
+        if (currWingState_ != EWing.NORMAL)
         {
             birdTextureSignature = (currWingState_ == EWing.UP) ? "BirdWingUp" : "BirdWingDown";
         }
@@ -150,6 +150,7 @@ class Bird : GameObject
         }
 
         MovePosition(deltaSeconds);
+        UpdateWingState(deltaSeconds);
 
         if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
         {
