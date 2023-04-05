@@ -7,9 +7,9 @@ using System.Collections.Generic;
 class GameStateDetector : GameObject
 {
     /**
-     * @brief 현재 게임 상태를 나타내는 열거형입니다.
+     * @brief 현재 게임 씬의 상태를 나타내는 열거형입니다.
      */
-    public enum EGameState
+    public enum EGameScene
     {
         START = 0x00,
         READY = 0x01,
@@ -19,8 +19,25 @@ class GameStateDetector : GameObject
 
 
     /**
+     * @brief 현재 게임의 상태를 나타내는열거형입니다.
+     */
+    public enum EGameState
+    {
+        WAIT = 0x00,
+        ENTRY = 0x01,
+        PROCESSING = 0x02,
+        LEAVE = 0x03,
+    }
+
+
+    /**
      * @brief 현재 게임 상태를 추적하는 게임 오브젝트의 Setter/Getter입니다.
      */
+    public EGameScene GameScene
+    {
+        get => gameScene_;
+    }
+
     public EGameState GameState
     {
         get => gameState_;
@@ -34,71 +51,18 @@ class GameStateDetector : GameObject
      */
     public override void Tick(float deltaSeconds)
     {
-        switch(gameState_)
-        {
-            case EGameState.READY:
-                UpdateReadyState(deltaSeconds);
-                break;
 
-            case EGameState.PLAY:
-                UpdatePlayState(deltaSeconds);
-                break;
-        }
     }
 
 
     /**
-     * @brief 대기 중인 상태의 업데이트를 수행합니다.
-     * 
-     * @param deltaSeconds 초단위 델타 시간값입니다.
+     * @brief 현재 게임 씬입니다.
      */
-    private void UpdateReadyState(float deltaSeconds)
-    {
-        if (gameState_ != EGameState.READY) return;
-
-        bool bIsDetectSpace = InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED;
-
-        if (bIsDetectSpace)
-        {
-            gameState_ = EGameState.PLAY;
-
-            PipeDetector pipeDetector = WorldManager.Get().GetGameObject("PipeDetector") as PipeDetector;
-            pipeDetector.CanGeneratePipe = true;
-        }
-    }
-
-
-    /**
-     * @brief 플레이 중인 상태의 업데이트를 수행합니다.
-     * 
-     * @param deltaSeconds 초단위 델타 시간값입니다.
-     */
-    private void UpdatePlayState(float deltaSeconds)
-    {
-        if (gameState_ != EGameState.PLAY) return;
-
-        Bird bird = WorldManager.Get().GetGameObject("Bird") as Bird;
-        if (bird.State == Bird.EState.DONE)
-        {
-            Floor floor = WorldManager.Get().GetGameObject("Floor") as Floor;
-            floor.Movable = false;
-
-            PipeDetector pipeDetector = WorldManager.Get().GetGameObject("PipeDetector") as PipeDetector;
-            pipeDetector.CanGeneratePipe = false;
-
-            List<Pipe> pipes = pipeDetector.DetectPipes;
-            foreach (Pipe pipe in pipes)
-            {
-                pipe.Movable = false;
-            }
-
-            gameState_ = EGameState.DONE;
-        }
-    }
+    private EGameScene gameScene_ = EGameScene.START;
 
 
     /**
      * @brief 현재 게임 상태입니다.
      */
-    EGameState gameState_ = EGameState.READY;
+    private EGameState gameState_ = EGameState.WAIT;
 }
