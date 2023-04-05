@@ -118,7 +118,7 @@ class Button : GameObject
     /**
      * @brief UI 버튼 클릭 시 동작할 액션입니다.
      */
-    Action eventAction_;
+    Action eventAction_ = () => { };
 
 
     /**
