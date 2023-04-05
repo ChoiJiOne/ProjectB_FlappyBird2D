@@ -168,7 +168,7 @@ class FlappyBird2D
         gameStateDetector.UpdateOrder = 5;
         gameStateDetector.Active = false;
 
-        FlappyBirdSlate flappyBirdSlate = new FlappyBirdSlate();
+        SlideSlate flappyBirdSlate = new SlideSlate();
         flappyBirdSlate.UpdateOrder = 6;
         flappyBirdSlate.Active = true;
         flappyBirdSlate.UITexture = "FlappyBird";
