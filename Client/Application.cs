@@ -184,7 +184,7 @@ class FlappyBird2D
         birdSlate.MaxWaitTimeForMove = 1.0f;
         birdSlate.MoveLength = 20.0f;
         birdSlate.ChangeWingStateTime = 0.09f;
-        birdSlate.CreateUIBody(new Vector2<float>(800.0f, 200.0f), 70.0f, 50.0f);
+        birdSlate.CreateUIBody(new Vector2<float>(750.0f, 200.0f), 70.0f, 50.0f);
 
         Button playButton = new Button();
         playButton.UpdateOrder = 6;
