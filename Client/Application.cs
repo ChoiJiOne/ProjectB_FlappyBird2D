@@ -145,13 +145,21 @@ class FlappyBird2D
 
         StartSceneNode startSceneNode = new StartSceneNode();
         ReadySceneNode readySceneNoed = new ReadySceneNode();
+        PlaySceneNode playSceneNode = new PlaySceneNode();
+        DoneSceneNode doneSceneNode = new DoneSceneNode();
 
         startSceneNode.NextSceneNode = readySceneNoed;
+        readySceneNoed.NextSceneNode = playSceneNode;
+        playSceneNode.NextSceneNode = doneSceneNode;
+        doneSceneNode.NextSceneNode = startSceneNode;
+
         scene.CurrSceneNode = startSceneNode;
         scene.CurrSceneNode.Entry();
 
         scene.AddSceneNode(startSceneNode);
         scene.AddSceneNode(readySceneNoed);
+        scene.AddSceneNode(playSceneNode);
+        scene.AddSceneNode(doneSceneNode);
 
         WorldManager.Get().AddGameObject("Background", background);
         WorldManager.Get().AddGameObject("Scene", scene);
