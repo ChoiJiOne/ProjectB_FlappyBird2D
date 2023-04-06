@@ -118,6 +118,11 @@ class Bird : GameObject
         {
             currentState_ = EState.DONE;
         }
+
+        if(currentState_ == EState.DONE)
+        {
+            floor.Movable = false;
+        }
     }
 
 
@@ -136,8 +141,17 @@ class Bird : GameObject
             if(pipe.TopRigidBody.IsCollision(ref rigidBody_) || pipe.BottomRigidBody.IsCollision(ref rigidBody_))
             {
                 currentState_ = EState.DONE;
-                return;
             }
+        }
+
+        if (currentState_ == EState.DONE)
+        {
+            foreach (Pipe pipe in pipes)
+            {
+                pipe.Movable = false;
+            }
+
+            pipeDetector.CanGeneratePipe = false;
         }
     }
 
