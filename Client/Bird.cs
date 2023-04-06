@@ -44,6 +44,12 @@ class Bird : GameObject
         set => currentState_ = value;
     }
 
+    public bool Movable
+    {
+        get => bCanMove_;
+        set => bCanMove_ = value;
+    }
+
 
     /**
      * @brief 새 오브젝트의 바디를 생성합니다.
@@ -65,23 +71,26 @@ class Bird : GameObject
      */
     public override void Tick(float deltaSeconds)
     {
-        switch(currentState_)
+        if (bCanMove_)
         {
-            case EState.WAIT:
-                UpdateWaitState(deltaSeconds);
-                break;
+            switch (currentState_)
+            {
+                case EState.WAIT:
+                    UpdateWaitState(deltaSeconds);
+                    break;
 
-            case EState.JUMP:
-                UpdateJumpState(deltaSeconds);
-                break;
+                case EState.JUMP:
+                    UpdateJumpState(deltaSeconds);
+                    break;
 
-            case EState.FALL:
-                UpdateFallState(deltaSeconds);
-                break;
+                case EState.FALL:
+                    UpdateFallState(deltaSeconds);
+                    break;
 
-            case EState.DONE:
-                UpdateDoneState(deltaSeconds);
-                break;
+                case EState.DONE:
+                    UpdateDoneState(deltaSeconds);
+                    break;
+            }
         }
 
         string birdTextureSignature = "BirdWingNormal";
@@ -345,6 +354,12 @@ class Bird : GameObject
 
         return (wingState == EWing.UP ? EWing.DOWN : EWing.UP);
     }
+
+
+    /**
+     * @brief 새 오브젝트가 움직일 수 있는지 확인합니다.
+     */
+    private bool bCanMove_ = true;
 
 
     /**
