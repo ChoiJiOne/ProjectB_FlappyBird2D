@@ -19,6 +19,7 @@ class DoneSceneNode : SceneNode
         gameObjectSignatures_.Add("Floor");
         gameObjectSignatures_.Add("Bird");
         gameObjectSignatures_.Add("PipeDetector");
+        gameObjectSignatures_.Add("ScoreBoard");
 
         Button okButton = new Button();
         okButton.UpdateOrder = 6;
