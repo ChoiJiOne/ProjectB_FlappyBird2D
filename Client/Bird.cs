@@ -50,6 +50,11 @@ class Bird : GameObject
         set => bCanMove_ = value;
     }
 
+    public int PassPipe
+    {
+        get => countPassPipe_;
+    }
+
 
     /**
      * @brief 새 오브젝트의 바디를 생성합니다.
@@ -157,6 +162,32 @@ class Bird : GameObject
 
 
     /**
+     * @brief 새 오브젝트가 통과한 파이프를 확인합니다.
+     */
+    private void CheckPassPipe()
+    {
+        float birdCenterX = rigidBody_.Center.x;
+
+        PipeDetector pipeDetector = WorldManager.Get().GetGameObject("PipeDetector") as PipeDetector;
+        List<Pipe> pipes = pipeDetector.DetectPipes;
+        float pipeWidth = 0.0f;
+        float pipeCenterX = 0.0f;
+
+        foreach (Pipe pipe in pipes)
+        {
+            pipeWidth = pipe.TopRigidBody.Width;
+            pipeCenterX = pipe.TopRigidBody.Center.x;
+
+            if(Math.Abs(birdCenterX - pipeCenterX) <= pipeWidth && !pipe.PassBird)
+            {
+                pipe.PassBird = true;
+                countPassPipe_++;
+            }
+        }
+    }
+
+
+    /**
      * @brief 새 오브젝트의 상태가 WAIT 상태일 때 업데이트를 수행합니다.
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
@@ -211,6 +242,7 @@ class Bird : GameObject
             bIsJump_ = true;
         }
 
+        CheckPassPipe();
         CheckCollisionPipe();
         CheckCollisionFloor();
     }
@@ -234,6 +266,7 @@ class Bird : GameObject
             bIsJump_ = true;
         }
 
+        CheckPassPipe();
         CheckCollisionPipe();
         CheckCollisionFloor();
     }
@@ -501,6 +534,12 @@ class Bird : GameObject
      * @brief 새 오브젝트가 백그라운드 밖으로 나갔는지 확인합니다.
      */
     private bool bIsLeaveInBackground_ = false;
+
+
+    /**
+     * @brief 새 오브젝트가 통과한 파이프의 수입니다.
+     */
+    private int countPassPipe_ = 0;
 
 
     /**
