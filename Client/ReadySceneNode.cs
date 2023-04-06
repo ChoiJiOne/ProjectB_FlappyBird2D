@@ -13,8 +13,8 @@ class ReadySceneNode : SceneNode
     {
         gameObjectSignatures_ = new List<string>();
 
-        gameObjectSignatures_.Add("GetReady");
-        gameObjectSignatures_.Add("PressButtonExample");
+        gameObjectSignatures_.Add("GetReadySlate");
+        gameObjectSignatures_.Add("PressButtonExampleSlate");
 
         Floor floor = new Floor();
         Bird bird = new Bird();
