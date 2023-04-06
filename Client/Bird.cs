@@ -166,6 +166,10 @@ class Bird : GameObject
             currentState_ = EState.JUMP;
             rotate_ = MinRotate;
             bIsJump_ = true;
+
+            Scene scene = WorldManager.Get().GetGameObject("Scene") as Scene;
+            SceneNode currentSceneNode = scene.CurrSceneNode;
+            currentSceneNode.DetectSwitch = true;
         }
 
         CheckCollisionPipe();
