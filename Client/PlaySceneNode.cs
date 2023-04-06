@@ -35,6 +35,16 @@ class PlaySceneNode : SceneNode
                 }
             }
         };
+
+        ScoreBoard scoreBord = new ScoreBoard();
+        scoreBord.UpdateOrder = 6;
+        scoreBord.Active = true;
+        scoreBord.Center = new Vector2<float>(500.0f, 50.0f);
+        scoreBord.BoardNumberWidth = 25.0f;
+        scoreBord.BoardNumberHeight = 35.0f;
+        scoreBord.NumberGapLength = 5.0f;
+
+        WorldManager.Get().AddGameObject("ScoreBord", scoreBord);
     }
 
 
