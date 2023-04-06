@@ -26,6 +26,12 @@ class Pipe : GameObject
         set => bIsMove_ = value;
     }
 
+    public bool PassBird
+    {
+        get => bIsPassBird_;
+        set => bIsPassBird_ = value;
+    }
+
     public float Speed
     {
         get => speed_;
@@ -154,6 +160,12 @@ class Pipe : GameObject
      * @brief 파이프가 이동할 수 있는지 확인합니다.
      */
     private bool bIsMove_ = false;
+
+
+    /**
+     * @brief 새 오브젝트가 이 파이프를 통과했는지 확인합니다.
+     */
+    private bool bIsPassBird_ = false;
 
 
     /**
