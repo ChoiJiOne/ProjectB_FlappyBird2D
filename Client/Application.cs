@@ -139,36 +139,22 @@ class FlappyBird2D
         background.Active = true;
         background.CreateBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 
-        SlideSlate flappyBirdSlate = new SlideSlate();
-        flappyBirdSlate.UpdateOrder = 6;
-        flappyBirdSlate.Active = true;
-        flappyBirdSlate.UITexture = "FlappyBird";
-        flappyBirdSlate.Movable = true;
-        flappyBirdSlate.MaxWaitTimeForMove = 1.0f;
-        flappyBirdSlate.MoveLength = 20.0f;
-        flappyBirdSlate.CreateUIBody(new Vector2<float>(500.0f, 200.0f), 400.0f, 100.0f);
+        Scene scene = new Scene();
+        scene.UpdateOrder = 7;
+        scene.Active = true;
 
-        BirdSlate birdSlate = new BirdSlate();
-        birdSlate.UpdateOrder = 6;
-        birdSlate.Active = true;
-        birdSlate.Movable = true;
-        birdSlate.MaxWaitTimeForMove = 1.0f;
-        birdSlate.MoveLength = 20.0f;
-        birdSlate.ChangeWingStateTime = 0.09f;
-        birdSlate.CreateUIBody(new Vector2<float>(750.0f, 200.0f), 70.0f, 50.0f);
+        StartSceneNode startSceneNode = new StartSceneNode();
+        ReadySceneNode readySceneNoed = new ReadySceneNode();
 
-        Button playButton = new Button();
-        playButton.UpdateOrder = 6;
-        playButton.Active = true;
-        playButton.UITexture = "PlayButton";
-        playButton.EventAction = () => { };
-        playButton.ReduceRatio = 0.95f;
-        playButton.CreateUIBody(new Vector2<float>(500.0f, 400.0f), 200.0f, 120.0f);
+        startSceneNode.NextSceneNode = readySceneNoed;
+        scene.CurrSceneNode = startSceneNode;
+        scene.CurrSceneNode.Entry();
+
+        scene.AddSceneNode(startSceneNode);
+        scene.AddSceneNode(readySceneNoed);
 
         WorldManager.Get().AddGameObject("Background", background);
-        WorldManager.Get().AddGameObject("FlappyBirdSlate", flappyBirdSlate);
-        WorldManager.Get().AddGameObject("BirdSlate", birdSlate);
-        WorldManager.Get().AddGameObject("PlayButton", playButton);
+        WorldManager.Get().AddGameObject("Scene", scene);
     }
 
 
