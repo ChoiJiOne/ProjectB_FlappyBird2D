@@ -32,7 +32,7 @@ class ReadySceneNode : SceneNode
         bird.UpdateOrder = 3;
         bird.Active = true;
         bird.Movable = true;
-        bird.CreateBody(new Vector2<float>(400.0f, 350.0f), 70.0f, 50.0f);
+        bird.CreateBody(new Vector2<float>(300.0f, 350.0f), 70.0f, 50.0f);
 
         pipeDetector.Active = true;
         pipeDetector.UpdateOrder = 4;
