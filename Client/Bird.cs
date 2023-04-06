@@ -126,7 +126,7 @@ class Bird : GameObject
 
         if(currentState_ == EState.DONE)
         {
-            floor.Movable = false;
+            StopRelatedGameObject();
         }
     }
 
@@ -151,12 +151,7 @@ class Bird : GameObject
 
         if (currentState_ == EState.DONE)
         {
-            foreach (Pipe pipe in pipes)
-            {
-                pipe.Movable = false;
-            }
-
-            pipeDetector.CanGeneratePipe = false;
+            StopRelatedGameObject();
         }
     }
 
@@ -183,6 +178,25 @@ class Bird : GameObject
                 pipe.PassBird = true;
                 countPassPipe_++;
             }
+        }
+    }
+
+
+    /**
+     * @brief 새 오브젝트와 관련 있는 게임 오브젝트의 움직임을 중단합니다.
+     */
+    private void StopRelatedGameObject()
+    {
+        Floor floor = WorldManager.Get().GetGameObject("Floor") as Floor;
+        PipeDetector pipeDetector = WorldManager.Get().GetGameObject("PipeDetector") as PipeDetector;
+        List<Pipe> pipes = pipeDetector.DetectPipes;
+
+        floor.Movable = false;
+        pipeDetector.CanGeneratePipe = false;
+
+        foreach (Pipe pipe in pipes)
+        {
+            pipe.Movable = false;
         }
     }
 
