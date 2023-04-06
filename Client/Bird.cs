@@ -252,6 +252,17 @@ class Bird : GameObject
 
         Background background = WorldManager.Get().GetGameObject("Background") as Background;
         bIsLeaveInBackground_ = !background.Body.IsCollision(ref rigidBody_);
+
+        if(bIsLeaveInBackground_)
+        {
+            Scene scene = WorldManager.Get().GetGameObject("Scene") as Scene;
+            SceneNode currentSceneNode = scene.CurrSceneNode;
+
+            if (currentSceneNode is PlaySceneNode)
+            {
+                currentSceneNode.DetectSwitch = true;
+            }
+        }
     }
 
 
