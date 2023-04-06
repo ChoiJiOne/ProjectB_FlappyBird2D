@@ -25,6 +25,7 @@ class DoneSceneNode : SceneNode
         okButton.Active = true;
         okButton.UITexture = "OkButton";
         okButton.EventAction = () => { DetectSwitch = true; };
+        okButton.ReduceRatio = 0.95f;
         okButton.CreateUIBody(new Vector2<float>(500.0f, 400.0f), 160.0f, 60.0f);
 
         WorldManager.Get().AddGameObject("OkButton", okButton);
