@@ -72,6 +72,12 @@ class ScoreBoard : GameObject
     {
         List<int> digits = new List<int>();
 
+        if(number == 0)
+        {
+            digits.Add(0);
+            return digits;
+        }
+
         while(number > 0)
         {
             digits.Add(number % 10);
