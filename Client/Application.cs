@@ -140,7 +140,7 @@ class FlappyBird2D
         background.CreateBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 
         Scene scene = new Scene();
-        scene.UpdateOrder = 7;
+        scene.UpdateOrder = 8;
         scene.Active = true;
 
         StartSceneNode startSceneNode = new StartSceneNode();
