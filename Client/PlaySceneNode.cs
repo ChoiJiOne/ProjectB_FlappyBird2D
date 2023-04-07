@@ -45,6 +45,27 @@ class PlaySceneNode : SceneNode
         scoreBord.NumberGapLength = 5.0f;
 
         WorldManager.Get().AddGameObject("ScoreBoard", scoreBord);
+
+        InputManager.Get().BindWindowEventAction(
+            EWindowEvent.FOCUS_LOST,
+            () =>
+            {
+                pressButton.UITexture = "ContinueButton";
+
+                bird.Movable = !bird.Movable;
+                if (bird.State != Bird.EState.DONE)
+                {
+                    floor.Movable = !floor.Movable;
+                    pipeDetector.CanGeneratePipe = !pipeDetector.CanGeneratePipe;
+
+                    List<Pipe> pipes = pipeDetector.DetectPipes;
+                    foreach (Pipe pipe in pipes)
+                    {
+                        pipe.Movable = !pipe.Movable;
+                    }
+                }
+            }
+        );
     }
 
 
@@ -64,6 +85,8 @@ class PlaySceneNode : SceneNode
         {
             pipe.Movable = false;
         }
+
+        InputManager.Get().UnbindWindowEventAction(EWindowEvent.FOCUS_LOST);
 
         DetectSwitch = false;
     }
