@@ -173,7 +173,7 @@ class Bird : GameObject
             pipeWidth = pipe.TopRigidBody.Width;
             pipeCenterX = pipe.TopRigidBody.Center.x;
 
-            if(Math.Abs(birdCenterX - pipeCenterX) <= pipeWidth && !pipe.PassBird)
+            if(Math.Abs(birdCenterX - pipeCenterX) <= 1.0f && !pipe.PassBird)
             {
                 pipe.PassBird = true;
                 countPassPipe_++;
