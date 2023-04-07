@@ -16,10 +16,20 @@ class DoneSceneNode : SceneNode
         gameObjectSignatures_ = new List<string>();
 
         gameObjectSignatures_.Add("OkButton");
+        gameObjectSignatures_.Add("ResultBoard");
         gameObjectSignatures_.Add("Floor");
         gameObjectSignatures_.Add("Bird");
         gameObjectSignatures_.Add("PipeDetector");
         gameObjectSignatures_.Add("ScoreBoard");
+
+        ScoreBoard scoreBoard = WorldManager.Get().GetGameObject("ScoreBoard") as ScoreBoard;
+        scoreBoard.UpdateOrder = 7;
+        scoreBoard.Active = true;
+
+        Vector2<float> center = scoreBoard.Center;
+        center.x = 600.0f;
+        center.y = 450.0f;
+        scoreBoard.Center = center;
 
         Button okButton = new Button();
         okButton.UpdateOrder = 6;
@@ -29,7 +39,13 @@ class DoneSceneNode : SceneNode
         okButton.ReduceRatio = 0.95f;
         okButton.CreateUIBody(new Vector2<float>(500.0f, 600.0f), 160.0f, 60.0f);
 
+        ResultBoard resultBoard = new ResultBoard();
+        resultBoard.UpdateOrder = 6;
+        resultBoard.Active = true;
+        resultBoard.CreateBody(new Vector2<float>(500.0f, 400.0f), 500.0f, 300.0f);
+
         WorldManager.Get().AddGameObject("OkButton", okButton);
+        WorldManager.Get().AddGameObject("ResultBoard", resultBoard);
     }
 
 
