@@ -41,7 +41,7 @@ class PlaySceneNode : SceneNode
         scoreBord.Active = true;
         scoreBord.Center = new Vector2<float>(500.0f, 50.0f);
         scoreBord.BoardNumberWidth = 25.0f;
-        scoreBord.BoardNumberHeight = 40.0f;
+        scoreBord.BoardNumberHeight = 50.0f;
         scoreBord.NumberGapLength = 5.0f;
 
         WorldManager.Get().AddGameObject("ScoreBoard", scoreBord);
