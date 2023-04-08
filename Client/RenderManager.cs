@@ -305,63 +305,6 @@ class RenderManager
 
 
     /**
-     * @brief 텍스트를 백버퍼에 그립니다.
-     * 
-     * @param font 텍스트의 폰트 정보입니다.
-     * @param text 백버퍼에 그릴 텍스트입니다.
-     * @param center 텍스트의 중심 좌표입니다.
-     * @param color 텍스트의 색상입니다.
-     */
-    public void DrawText(ref TTFont font, string text, Vector2<float> center, Color color)
-    {
-        if(!font.MeasureText(text, out int width, out int height))
-        {
-            return;
-        }
-
-        float x = center.x - (float)width / 2.0f;
-        float y = center.y - (float)height / 2.0f;
-        IntPtr textureAtlas = font.TextureAtlas;
-
-        color.ConvertToByte(out byte r, out byte g, out byte b, out byte a);
-
-        if (SDL.SDL_SetTextureAlphaMod(textureAtlas, a) != 0)
-        {
-            throw new Exception("failed to set texture atlas alpha mode...");
-        }
-
-        if(SDL.SDL_SetTextureColorMod(textureAtlas, r, g, b) != 0)
-        {
-            throw new Exception("failed to set texture atlas color mode...");
-        }
-
-        for (int index = 0; index < text.Length; ++index)
-        {
-            Glyph glyph = font.GetGlyph((ushort)text[index]);
-
-            SDL.SDL_Rect SrcRect;
-            SrcRect.x = glyph.x;
-            SrcRect.y = glyph.y;
-            SrcRect.w = glyph.width;
-            SrcRect.h = glyph.height;
-
-            SDL.SDL_Rect DstRect;
-            DstRect.x = (int)x;
-            DstRect.y = (int)y - glyph.yoffset;
-            DstRect.w = glyph.width;
-            DstRect.h = glyph.height;
-
-            if (SDL.SDL_RenderCopy(renderer_, textureAtlas, ref SrcRect, ref DstRect) != 0)
-            {
-                throw new Exception("failed to draw texture atlas...");
-            }
-
-            x += glyph.xadvance;
-        }
-    }
-
-
-    /**
      * @brief 생성자는 외부에서 호출할 수 없도록 감춤니다.
      */
     private RenderManager() { }

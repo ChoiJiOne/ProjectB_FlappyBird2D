@@ -124,65 +124,6 @@ class ContentManager
 
 
     /**
-     * @brief 트루 타입 폰트 리소스를 생성합니다.
-     * 
-     * @note 이때, 트루 타입 폰트 리소스의 경로는 Content 폴더 기준입니다.
-     * 
-     * @param path 트루 타입 폰트 리소스의 경로입니다.
-     * @param beginCodePoint 텍스처 아틀라스에 표시할 시작 문자입니다.
-     * @param endCodePoint 텍스처 아틀라스에 표시할 끝 문자입니다.
-     * @param size 폰트의 크기입니다.
-     * 
-     * @throws
-     * - 시그니처 값이 이미 존재하면 예외를 던집니다.
-     * - 트루 타입 폰트 리소스 생성에 실패하면 예외를 던집니다.
-     */
-    public TTFont CreateTTFont(string signature, string path, ushort beginCodePoint, ushort endCodePoint, int size)
-    {
-        if (IsValid(signature))
-        {
-            throw new Exception("collision true type font resource signature...");
-        }
-        
-        beginCodePoint = Math.Min(beginCodePoint, endCodePoint);
-        endCodePoint = Math.Max(beginCodePoint, endCodePoint);
-
-        TTFont font = new TTFont(contentPath_ + path, beginCodePoint, endCodePoint, size);
-        contents_.Add(signature, font);
-
-        return font;
-    }
-
-
-    /**
-     * @brief 트루 타입 폰트 리소스를 얻습니다.
-     * 
-     * @param signature 트루 타입 폰트 리소스에 대응하는 시그니처 값입니다.
-     * 
-     * @throws 
-     * 시그니처 값에 대응하는 트루 타입 폰트 리소스가 존재하지 않으면 예외를 던집니다.
-     * 시그니처 값에 대응하는 컨텐츠가 트루 타입 폰트가 아니면 예외를 던집니다.
-     * 
-     * @return 시그니처 값에 대응하는 텍스처 리소스입니다.
-     */
-    public TTFont GetTTFont(string signature)
-    {
-        if (!IsValid(signature))
-        {
-            throw new Exception("can't find true type font resource from signature...");
-        }
-
-        IContent content = contents_[signature];
-        if (!(content is TTFont))
-        {
-            throw new Exception("signature isn't true type font resource...");
-        }
-
-        return (content as TTFont);
-    }
-
-
-    /**
      * @brief 게임 컨텐츠를 삭제합니다.
      * 
      * @note 시그니처 값에 대응하는 게임 컨텐츠 리소스가 존재하지 않으면 아무 동작도 수행하지 않습니다.
