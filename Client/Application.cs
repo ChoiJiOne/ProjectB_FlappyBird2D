@@ -16,6 +16,7 @@ class FlappyBird2D
     {
         SetupCoreProperties();
         LoadTextureResource();
+        LoadSoundResource();
         GenerateGameObjects();
     }
 
@@ -126,6 +127,32 @@ class FlappyBird2D
         foreach(KeyValuePair<string, string> texture in textures)
         {
             ContentManager.Get().CreateTexture(texture.Key, texture.Value);
+        }
+    }
+
+
+    /**
+     * @brief 전체 사운드 리소스를 로딩합니다.
+     * 
+     * @throws 사운드 리소스 생성에 실패하면 예외를 던집니다.
+     */
+    private void LoadSoundResource()
+    {
+        string[] soundFilePaths = System.IO.Directory.GetFiles(CommandLine.GetValue("Content"), "*.mp3");
+        Dictionary<string, string> sounds = new Dictionary<string, string>();
+
+        foreach (string soundFilePath in soundFilePaths)
+        {
+            string[] tokens = soundFilePath.Split('\\');
+            string soundFile = tokens.Last();
+
+            string[] soundFileTokens = soundFile.Split('.');
+            sounds.Add(soundFileTokens.First(), soundFile);
+        }
+
+        foreach (KeyValuePair<string, string> sound in sounds)
+        {
+            ContentManager.Get().CreateSound(sound.Key, sound.Value);
         }
     }
 
