@@ -20,16 +20,16 @@ class DoneSceneNode : SceneNode
         gameObjectSignatures_.Add("Floor");
         gameObjectSignatures_.Add("Bird");
         gameObjectSignatures_.Add("PipeDetector");
-        gameObjectSignatures_.Add("ScoreBoard");
+        gameObjectSignatures_.Add("BirdScore");
 
-        ScoreBoard scoreBoard = WorldManager.Get().GetGameObject("ScoreBoard") as ScoreBoard;
-        scoreBoard.UpdateOrder = 7;
-        scoreBoard.Active = true;
+        Number birdScore = WorldManager.Get().GetGameObject("BirdScore") as Number;
+        birdScore.UpdateOrder = 7;
+        birdScore.Active = true;
 
-        Vector2<float> center = scoreBoard.Center;
+        Vector2<float> center = birdScore.Center;
         center.x = 600.0f;
         center.y = 450.0f;
-        scoreBoard.Center = center;
+        birdScore.Center = center;
 
         Button okButton = new Button();
         okButton.UpdateOrder = 6;

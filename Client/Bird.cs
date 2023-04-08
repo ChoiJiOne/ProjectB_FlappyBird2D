@@ -177,6 +177,9 @@ class Bird : GameObject
             {
                 pipe.PassBird = true;
                 countPassPipe_++;
+
+                Number birdScore = WorldManager.Get().GetGameObject("BirdScore") as Number;
+                birdScore.NumberContext = countPassPipe_;
             }
         }
     }
