@@ -152,7 +152,8 @@ class FlappyBird2D
 
         foreach (KeyValuePair<string, string> sound in sounds)
         {
-            ContentManager.Get().CreateSound(sound.Key, sound.Value);
+            Sound soundResource = ContentManager.Get().CreateSound(sound.Key, sound.Value);
+            soundResource.SetLooping(false);
         }
     }
 
