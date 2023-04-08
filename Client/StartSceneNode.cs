@@ -39,7 +39,14 @@ class StartSceneNode : SceneNode
         playButton.UpdateOrder = 2;
         playButton.Active = true;
         playButton.UITexture = "PlayButton";
-        playButton.EventAction = () => { DetectSwitch = true; };
+        playButton.EventAction = () => 
+        { 
+            DetectSwitch = true;
+
+            Sound doneSound = ContentManager.Get().GetSound("Done") as Sound;
+            doneSound.Reset();
+            doneSound.Play();
+        };
         playButton.ReduceRatio = 0.95f;
         playButton.CreateUIBody(new Vector2<float>(500.0f, 400.0f), 200.0f, 120.0f);
 
