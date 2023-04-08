@@ -1,4 +1,3 @@
-#include <string>
 #include <cstdint>
 
 
@@ -23,7 +22,7 @@ extern "C" __declspec(dllexport) void Cleanup();
  *
  * @return 생성된 사운드 리소스의 아이디를 반환합니다. 생성에 실패하면 -1을 반환합니다.
  */
-extern "C" __declspec(dllexport) int32_t CreateSound(const std::string& Path);
+extern "C" __declspec(dllexport) int32_t CreateSound(const char* Path);
 
 
 /**

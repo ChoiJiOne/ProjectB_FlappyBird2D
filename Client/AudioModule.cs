@@ -30,7 +30,7 @@ class AudioModule
      *
      * @return 생성된 사운드 리소스의 아이디를 반환합니다. 생성에 실패하면 -1을 반환합니다.
      */
-    [DllImport("AudioModule.dll", EntryPoint = "CreateSound", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("AudioModule.dll", EntryPoint = "CreateSound", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     public static extern int CreateSound([MarshalAs(UnmanagedType.LPStr)] string Path);
 
 

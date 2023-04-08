@@ -61,11 +61,11 @@ void Cleanup()
 	bIsSetup = false;
 }
 
-int32_t CreateSound(const std::string& Path)
+int32_t CreateSound(const char* Path)
 {
 	std::unique_ptr<ma_sound> Sound = std::make_unique<ma_sound>();
 
-	if (ma_sound_init_from_file(MiniAudioEngine.get(), Path.c_str(), 0, nullptr, nullptr, Sound.get()) != MA_SUCCESS)
+	if (ma_sound_init_from_file(MiniAudioEngine.get(), Path, 0, nullptr, nullptr, Sound.get()) != MA_SUCCESS)
 	{
 		return -1;
 	}
