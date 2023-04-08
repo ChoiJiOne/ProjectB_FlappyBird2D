@@ -212,7 +212,7 @@ class FlappyBird2D
     /**
      * @brief 게임 타이머입니다.
      */
-    private Timer gameTimer_ = new Timer();
+    private GameTimer gameTimer_ = new GameTimer();
 }
 
 

@@ -4,7 +4,7 @@ using SDL2;
 /**
  * @brief 게임 내에 시간 측정에 사용될 타이머 클래스입니다.
  */
-class Timer
+class GameTimer
 {
 
 	/**
