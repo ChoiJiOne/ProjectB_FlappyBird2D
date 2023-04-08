@@ -2,12 +2,12 @@ using System.Collections.Generic;
 
 
 /**
- * @brief 게임의 스코어 보드 오브젝트입니다.
+ * @brief 게임의 숫자 오브젝트입니다.
  */
-class ScoreBoard : GameObject
+class Number : GameObject
 {
     /**
-     * @brief 게임 스코어 보드 오브젝트의 속성에 대한 Getter/Setter입니다.
+     * @brief 게임 숫자 오브젝트의 속성에 대한 Getter/Setter입니다.
      */
     public Vector2<float> Center
     {
@@ -15,16 +15,22 @@ class ScoreBoard : GameObject
         set => center_ = value;
     }
 
-    public float BoardNumberWidth
+    public int NumberContext
     {
-        get => boardNumberWidth_;
-        set => boardNumberWidth_ = value;
+        get => number_;
+        set => number_ = value;
     }
 
-    public float BoardNumberHeight
+    public float NumberWidth
     {
-        get => boardNumberHeight_;
-        set => boardNumberHeight_ = value;
+        get => numberWidth_;
+        set => numberWidth_ = value;
+    }
+
+    public float NumberHeight
+    {
+        get => numberHeight_;
+        set => numberHeight_ = value;
     }
 
     public float NumberGapLength
@@ -35,17 +41,14 @@ class ScoreBoard : GameObject
 
 
     /**
-     * @brief 게임의 스코어 보드 오브젝트를 업데이트합니다.
+     * @brief 게임의 숫자 오브젝트를 업데이트합니다.
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
     public override void Tick(float deltaSeconds)
     {
-        Bird bird = WorldManager.Get().GetGameObject("Bird") as Bird;
-        score_ = bird.PassPipe;
-
-        List<int> digits = CreateDigitArray(score_);
-        float totalWidth = (boardNumberWidth_ + numberGapLength_) * (float)(digits.Count - 1);
+        List<int> digits = CreateDigitArray(number_);
+        float totalWidth = (numberWidth_ + numberGapLength_) * (float)(digits.Count - 1);
 
         Vector2<float> digitCenter;
         digitCenter.x = center_.x - totalWidth / 2.0f;
@@ -54,9 +57,9 @@ class ScoreBoard : GameObject
         foreach(int digit in digits)
         {
             Texture numberTexture = ContentManager.Get().GetTexture(numberTextureSignatures_[digit]);
-            RenderManager.Get().DrawTexture(ref numberTexture, digitCenter, boardNumberWidth_, boardNumberHeight_);
+            RenderManager.Get().DrawTexture(ref numberTexture, digitCenter, numberWidth_, numberHeight_);
 
-            digitCenter.x += (boardNumberWidth_ + numberGapLength_);
+            digitCenter.x += (numberWidth_ + numberGapLength_);
         }
     }
 
@@ -90,33 +93,31 @@ class ScoreBoard : GameObject
 
 
     /**
-     * @brief 현재 게임 스코어입니다.
-     * 
-     * @note 이 스코어는 새 오브젝트가 통과한 파이프 수입니다.
+     * @brief 화면에 표시할 숫자입니다.
      */
-    private int score_ = 0;
+    private int number_ = 0;
 
 
     /**
-     * @brief 게임 스코어 보드의 중심 좌표입니다.
+     * @brief 게임 숫자의 중심 좌표입니다.
      */
     private Vector2<float> center_;
 
 
     /**
-     * @brief 보드 상 숫자 하나의 가로 크기입니다.
+     * @brief 숫자 하나의 가로 크기입니다.
      */
-    private float boardNumberWidth_ = 0.0f;
+    private float numberWidth_ = 0.0f;
 
 
     /**
-     * @brief 보드 상 숫자 하나의 세로 크기입니다.
+     * @brief 숫자 하나의 세로 크기입니다.
      */
-    private float boardNumberHeight_ = 0.0f;
+    private float numberHeight_ = 0.0f;
 
 
     /**
-     * @brief 보드 상에 표시될 숫자들의 간격입니다.
+     * @brief 표시될 숫자들의 간격입니다.
      */
     private float numberGapLength_ = 0.0f;
 
