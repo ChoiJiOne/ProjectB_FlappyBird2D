@@ -124,6 +124,60 @@ class ContentManager
 
 
     /**
+     * @brief 사운드 리소스를 생성합니다.
+     * 
+     * @note 이때, 사운드 리소스의 경로는 Content 폴더 기준입니다.
+     * 
+     * @param signature 다른 사운드 리소스와 구분하기 위한 시그니처 값입니다.
+     * @param path 사운드 리소스의 경로입니다. 
+     * 
+     * @throws 
+     * - 시그니처 값이 이미 존재하면 예외를 던집니다.
+     * - 사운드 리소스 생성에 실패하면 예외를 던집니다.
+     */
+    public Sound CreateSound(string signature, string path)
+    {
+        if (IsValid(signature))
+        {
+            throw new Exception("collision sound resource signature...");
+        }
+
+        Sound sound = new Sound(contentPath_ + path);
+        contents_.Add(signature, sound);
+
+        return sound;
+    }
+
+
+    /**
+     * @brief 사운드 리소스를 얻습니다.
+     * 
+     * @param signature 사운드 리소스에 대응하는 시그니처 값입니다.
+     * 
+     * @throws 
+     * 시그니처 값에 대응하는 사운드 리소스가 존재하지 않으면 예외를 던집니다.
+     * 시그니처 값에 대응하는 컨텐츠가 사운드가 아니면 예외를 던집니다.
+     * 
+     * @return 시그니처 값에 대응하는 사운드 리소스입니다.
+     */
+    public Sound GetSound(string signature)
+    {
+        if (!IsValid(signature))
+        {
+            throw new Exception("can't find sound resource from signature...");
+        }
+
+        IContent content = contents_[signature];
+        if (!(content is Sound))
+        {
+            throw new Exception("signature isn't sound resource...");
+        }
+
+        return (content as Sound);
+    }
+
+
+    /**
      * @brief 게임 컨텐츠를 삭제합니다.
      * 
      * @note 시그니처 값에 대응하는 게임 컨텐츠 리소스가 존재하지 않으면 아무 동작도 수행하지 않습니다.
