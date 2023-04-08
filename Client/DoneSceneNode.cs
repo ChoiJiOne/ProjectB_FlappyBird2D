@@ -42,6 +42,10 @@ class DoneSceneNode : SceneNode
         ResultBoard resultBoard = new ResultBoard();
         resultBoard.UpdateOrder = 6;
         resultBoard.Active = true;
+        resultBoard.UIWidth = 200.0f;
+        resultBoard.UIHeight = 50.0f;
+        resultBoard.PlayerIDPosition = new Vector2<float>(400.0f, 350.0f);
+        resultBoard.PlayerScorePosition = new Vector2<float>(400.0f, 450.0f);
         resultBoard.CreateBody(new Vector2<float>(500.0f, 400.0f), 500.0f, 300.0f);
 
         WorldManager.Get().AddGameObject("OkButton", okButton);

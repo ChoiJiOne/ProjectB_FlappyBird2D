@@ -12,6 +12,30 @@ class ResultBoard : GameObject
         set => playerID_ = value;
     }
 
+    public float UIWidth
+    {
+        get => uiWidth_;
+        set => uiWidth_ = value;
+    }
+
+    public float UIHeight
+    {
+        get => uiHeight_;
+        set => uiHeight_ = value;
+    }
+
+    public Vector2<float> PlayerIDPosition
+    {
+        get => playerIDPosition_;
+        set => playerIDPosition_ = value;
+    }
+
+    public Vector2<float> PlayerScorePosition
+    {
+        get => playerScorePosition_;
+        set => playerScorePosition_ = value;
+    }
+
     public RigidBody BoardBody
     {
         get => rigidBody_;
@@ -41,18 +65,11 @@ class ResultBoard : GameObject
         Texture slateTexture = ContentManager.Get().GetTexture("Slate");
         RenderManager.Get().DrawTexture(ref slateTexture, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height);
 
-        Vector2<float> center;
-        float width = 200.0f, height = 50.0f;
-
-        center.x = 400.0f;
-        center.y = 350.0f;
         Texture userIDTexture = ContentManager.Get().GetTexture("UserID");
-        RenderManager.Get().DrawTexture(ref userIDTexture, center, width, height);
+        RenderManager.Get().DrawTexture(ref userIDTexture, playerIDPosition_, uiWidth_, uiHeight_);
 
-        center.x = 400.0f;
-        center.y = 450.0f;
         Texture scoreTexture = ContentManager.Get().GetTexture("Score");
-        RenderManager.Get().DrawTexture(ref scoreTexture, center, width, height);
+        RenderManager.Get().DrawTexture(ref scoreTexture, playerScorePosition_, uiWidth_, uiHeight_);
     }
 
 
@@ -60,6 +77,18 @@ class ResultBoard : GameObject
      * @brief 플레이어의 아이디입니다.
      */
     int playerID_ = 0;
+
+
+    /**
+     * @brief 보드 내의 UI 가로 크기입니다.
+     */
+    float uiWidth_ = 0.0f;
+
+
+    /**
+     * @brief 보드 내의 UI 세로 크기입니다.
+     */
+    float uiHeight_ = 0.0f;
 
 
     /**
