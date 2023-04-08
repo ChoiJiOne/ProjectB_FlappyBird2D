@@ -122,6 +122,7 @@ class Bird : GameObject
         if (floor.Body.IsCollision(ref rigidBody_))
         {
             currentState_ = EState.DONE;
+            PlaySound("Hit");
         }
 
         if(currentState_ == EState.DONE)
@@ -146,6 +147,7 @@ class Bird : GameObject
             if(pipe.TopRigidBody.IsCollision(ref rigidBody_) || pipe.BottomRigidBody.IsCollision(ref rigidBody_))
             {
                 currentState_ = EState.DONE;
+                PlaySound("Hit");
             }
         }
 
@@ -180,6 +182,8 @@ class Bird : GameObject
 
                 Number birdScore = WorldManager.Get().GetGameObject("BirdScore") as Number;
                 birdScore.NumberContext = countPassPipe_;
+
+                PlaySound("Coin");
             }
         }
     }
@@ -232,6 +236,8 @@ class Bird : GameObject
             Scene scene = WorldManager.Get().GetGameObject("Scene") as Scene;
             SceneNode currentSceneNode = scene.CurrSceneNode;
             currentSceneNode.DetectSwitch = true;
+
+            PlaySound("Jump");
         }
 
         CheckCollisionPipe();
@@ -257,6 +263,8 @@ class Bird : GameObject
             jumpMoveUpLength_ = 0.0f;
             jumpMoveDownLength_ = 0.0f;
             bIsJump_ = true;
+
+            PlaySound("Jump");
         }
 
         CheckPassPipe();
@@ -281,6 +289,8 @@ class Bird : GameObject
             currentState_ = EState.JUMP;
             rotate_ = MinRotate;
             bIsJump_ = true;
+
+            PlaySound("Jump");
         }
 
         CheckPassPipe();
@@ -415,6 +425,17 @@ class Bird : GameObject
                 currWingState_ = EWing.NORMAL;
             }
         }
+    }
+
+
+    /**
+     * @brief 사운드를 플레이합니다.
+     */
+    private void PlaySound(string signature)
+    {
+        Sound sound = ContentManager.Get().GetSound(signature) as Sound;
+        sound.Reset();
+        sound.Play();
     }
 
 
