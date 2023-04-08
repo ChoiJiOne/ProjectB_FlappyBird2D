@@ -71,7 +71,7 @@ int32_t CreateSound(const char* Path)
 	}
 
 	Sounds.push_back(std::move(Sound));
-	return CountSoundResource;
+	return CountSoundResource++;
 }
 
 void SetSoundVolume(int32_t SoundID, float Volume)
