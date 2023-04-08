@@ -21,6 +21,7 @@ class DoneSceneNode : SceneNode
         gameObjectSignatures_.Add("Bird");
         gameObjectSignatures_.Add("PipeDetector");
         gameObjectSignatures_.Add("BirdScore");
+        gameObjectSignatures_.Add("UserID");
 
         Number birdScore = WorldManager.Get().GetGameObject("BirdScore") as Number;
         birdScore.UpdateOrder = 7;
@@ -30,6 +31,14 @@ class DoneSceneNode : SceneNode
         center.x = 600.0f;
         center.y = 450.0f;
         birdScore.Center = center;
+
+        Number userID = new Number();
+        userID.UpdateOrder = 7;
+        userID.Active = true;
+        userID.Center = new Vector2<float>(600.0f, 350.0f);
+        userID.NumberWidth = 25.0f;
+        userID.NumberHeight = 50.0f;
+        userID.NumberGapLength = 5.0f;
 
         Button okButton = new Button();
         okButton.UpdateOrder = 6;
@@ -50,6 +59,7 @@ class DoneSceneNode : SceneNode
 
         WorldManager.Get().AddGameObject("OkButton", okButton);
         WorldManager.Get().AddGameObject("ResultBoard", resultBoard);
+        WorldManager.Get().AddGameObject("UserID", userID);
     }
 
 
