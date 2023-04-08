@@ -51,6 +51,7 @@ class FlappyBird2D
         ContentManager.Get().Cleanup();
         RenderManager.Get().Cleanup();
 
+        AudioModule.Cleanup();
         SDL_image.IMG_Quit();
         SDL.SDL_Quit();
     }
@@ -74,6 +75,11 @@ class FlappyBird2D
         if ((initFlag & flags) != flags)
         {
             throw new Exception("failed to initialize SDL_image...");
+        }
+
+        if(!AudioModule.Setup())
+        {
+            throw new Exception("failed to initialize audio module...");
         }
 
         window_ = SDL.SDL_CreateWindow(
