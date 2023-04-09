@@ -13,11 +13,8 @@ workspace "FlappyBird2D"
     -- 솔루션 경로를 설정합니다.
     location "%{wks.name}"
 
-    -- 클라이언트 소스 경로를 설정합니다.
-    client="%{wks.location}/../Client"
-
-    -- 서버 소스 경로를 설정합니다.
-    server="%{wks.location}/../Server"
+    -- 게임 소스 경로를 설정합니다.
+    game="%{wks.location}/../Game"
 
     -- 오디오 모듈 경로를 설정합니다.
     audiomodule="%{wks.location}/../AudioModule"
@@ -69,8 +66,8 @@ workspace "FlappyBird2D"
             symbols "Off"
 
 
-    -- 클라이언트 프로젝트입니다.
-    project "Client"
+    -- 게임 프로젝트입니다.
+    project "Game"
         -- 프로젝트의 종류를 설정합니다.
         kind "ConsoleApp"
 
@@ -91,13 +88,13 @@ workspace "FlappyBird2D"
 
         -- 소스 코드 경로를 추가합니다.
         includedirs { 
-            "%{client}",
+            "%{game}",
             "%{thirdparty}/Include",
         }
 
         -- 파일을 추가합니다.
         files { 
-            "%{client}/*",
+            "%{game}/*",
             "%{thirdparty}/Include/*",
         }
 
