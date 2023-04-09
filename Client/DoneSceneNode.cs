@@ -21,24 +21,15 @@ class DoneSceneNode : SceneNode
         gameObjectSignatures_.Add("Bird");
         gameObjectSignatures_.Add("PipeDetector");
         gameObjectSignatures_.Add("BirdScore");
-        gameObjectSignatures_.Add("UserID");
 
         Number birdScore = WorldManager.Get().GetGameObject("BirdScore") as Number;
         birdScore.UpdateOrder = 7;
         birdScore.Active = true;
 
         Vector2<float> center = birdScore.Center;
-        center.x = 600.0f;
-        center.y = 450.0f;
+        center.x = 650.0f;
+        center.y = 400.0f;
         birdScore.Center = center;
-
-        Number userID = new Number();
-        userID.UpdateOrder = 7;
-        userID.Active = true;
-        userID.Center = new Vector2<float>(600.0f, 350.0f);
-        userID.NumberWidth = 25.0f;
-        userID.NumberHeight = 50.0f;
-        userID.NumberGapLength = 5.0f;
 
         Button okButton = new Button();
         okButton.UpdateOrder = 6;
@@ -60,13 +51,11 @@ class DoneSceneNode : SceneNode
         resultBoard.Active = true;
         resultBoard.UIWidth = 200.0f;
         resultBoard.UIHeight = 50.0f;
-        resultBoard.PlayerIDPosition = new Vector2<float>(400.0f, 350.0f);
-        resultBoard.PlayerScorePosition = new Vector2<float>(400.0f, 450.0f);
-        resultBoard.CreateBody(new Vector2<float>(500.0f, 400.0f), 500.0f, 300.0f);
+        resultBoard.PlayerScorePosition = new Vector2<float>(400.0f, 400.0f);
+        resultBoard.CreateBody(new Vector2<float>(500.0f, 400.0f), 500.0f, 200.0f);
 
         WorldManager.Get().AddGameObject("OkButton", okButton);
         WorldManager.Get().AddGameObject("ResultBoard", resultBoard);
-        WorldManager.Get().AddGameObject("UserID", userID);
     }
 
 
