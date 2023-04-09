@@ -24,12 +24,6 @@ class ResultBoard : GameObject
         set => uiHeight_ = value;
     }
 
-    public Vector2<float> PlayerIDPosition
-    {
-        get => playerIDPosition_;
-        set => playerIDPosition_ = value;
-    }
-
     public Vector2<float> PlayerScorePosition
     {
         get => playerScorePosition_;
@@ -65,9 +59,6 @@ class ResultBoard : GameObject
         Texture slateTexture = ContentManager.Get().GetTexture("Slate");
         RenderManager.Get().DrawTexture(ref slateTexture, rigidBody_.Center, rigidBody_.Width, rigidBody_.Height);
 
-        Texture userIDTexture = ContentManager.Get().GetTexture("UserID");
-        RenderManager.Get().DrawTexture(ref userIDTexture, playerIDPosition_, uiWidth_, uiHeight_);
-
         Texture scoreTexture = ContentManager.Get().GetTexture("Score");
         RenderManager.Get().DrawTexture(ref scoreTexture, playerScorePosition_, uiWidth_, uiHeight_);
     }
@@ -89,12 +80,6 @@ class ResultBoard : GameObject
      * @brief 보드 내의 UI 세로 크기입니다.
      */
     float uiHeight_ = 0.0f;
-
-
-    /**
-     * @brief 플레이어 아이디가 표시될 위치입니다.
-     */
-    Vector2<float> playerIDPosition_;
 
 
     /**
