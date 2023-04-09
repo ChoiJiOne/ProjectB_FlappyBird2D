@@ -125,60 +125,6 @@ workspace "FlappyBird2D"
             runtime  "Debug"
             optimize "Off"
             symbols "On"
-
-            -- 디버그 모드의 명령행 인수를 추가합니다.
-            debugargs { "Mode=Debug", }
-        
-        filter "configurations:Release"
-            defines { "NDEBUG", "RELEASE" }
-            runtime "Release"
-            optimize "On"
-            symbols "On"
-
-            -- 릴리즈 모드의 명령행 인수를 추가합니다.
-            debugargs { "Mode=Release", }
-
-        filter "configurations:Shipping"
-            defines { "NDEBUG", "SHIPPING" }
-            runtime "Release"
-            optimize "Full"
-            symbols "Off"
-
-            -- 쉽핑 모드의 명령행 인수를 추가합니다.
-            debugargs { "Mode=Shipping", }
-
-
-    -- 서버 프로젝트입니다.
-    project "Server"
-        -- 프로젝트의 종류를 설정합니다.
-        kind "ConsoleApp"
-
-        -- 프로젝트의 언어를 설정합니다.
-        language "C#"
-
-        -- C# 버전을 8.0으로 설정합니다.
-        csversion("8.0")
-
-        -- 포인터 사용을 위해 활성화합니다.
-        clr "Unsafe"
-
-        -- 소스 코드 경로를 추가합니다.
-        includedirs { "%{server}", }
-
-        -- 외부 라이브러리를 추가합니다.
-        links { 
-            "System",
-        }
-
-        -- 파일을 추가합니다.
-        files { "%{server}/*", }
-
-        -- 빌드 구성 요소의 속성을 설정합니다.
-        filter "configurations:Debug"
-            defines { "DEBUG" }
-            runtime  "Debug"
-            optimize "Off"
-            symbols "On"
         
         filter "configurations:Release"
             defines { "NDEBUG", "RELEASE" }
