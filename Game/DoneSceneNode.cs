@@ -15,6 +15,7 @@ class DoneSceneNode : SceneNode
 
         gameObjectSignatures_ = new List<string>();
 
+        gameObjectSignatures_.Add("GameOverSlate");
         gameObjectSignatures_.Add("OkButton");
         gameObjectSignatures_.Add("ResultBoard");
         gameObjectSignatures_.Add("Floor");
@@ -31,6 +32,15 @@ class DoneSceneNode : SceneNode
         center.y = 400.0f;
         birdScore.Center = center;
 
+        SlideSlate gameOverSlate = new SlideSlate();
+        gameOverSlate.UpdateOrder = 6;
+        gameOverSlate.Active = true;
+        gameOverSlate.UITexture = "GameOver";
+        gameOverSlate.Movable = true;
+        gameOverSlate.MaxWaitTimeForMove = 1.0f;
+        gameOverSlate.MoveLength = 20.0f;
+        gameOverSlate.CreateUIBody(new Vector2<float>(500.0f, 200.0f), 400.0f, 100.0f);
+
         Button okButton = new Button();
         okButton.UpdateOrder = 6;
         okButton.Active = true;
@@ -44,7 +54,7 @@ class DoneSceneNode : SceneNode
             doneSound.Play();
         };
         okButton.ReduceRatio = 0.95f;
-        okButton.CreateUIBody(new Vector2<float>(500.0f, 600.0f), 160.0f, 60.0f);
+        okButton.CreateUIBody(new Vector2<float>(500.0f, 550.0f), 160.0f, 60.0f);
 
         ResultBoard resultBoard = new ResultBoard();
         resultBoard.UpdateOrder = 6;
@@ -54,6 +64,7 @@ class DoneSceneNode : SceneNode
         resultBoard.PlayerScorePosition = new Vector2<float>(400.0f, 400.0f);
         resultBoard.CreateBody(new Vector2<float>(500.0f, 400.0f), 500.0f, 200.0f);
 
+        WorldManager.Get().AddGameObject("GameOverSlate", gameOverSlate);
         WorldManager.Get().AddGameObject("OkButton", okButton);
         WorldManager.Get().AddGameObject("ResultBoard", resultBoard);
     }
