@@ -237,22 +237,23 @@ workspace "FlappyBird2D"
         -- 소스 코드 경로를 추가합니다.
         includedirs { 
             "%{game}",
-            "%{thirdparty}/Include",
+            "%{thirdparty}/SDL2/Include",
         }
 
         -- 파일을 추가합니다.
         files { 
             "%{game}/*",
-            "%{thirdparty}/Include/*",
+            "%{thirdparty}/SDL2/Include/*",
         }
 
         -- 라이브러리 경로를 추가합니다.
-        libdirs { "%{thirdparty}/Lib", }
+        libdirs { "%{thirdparty}/SDL2/Lib", }
 
         -- 외부 라이브러리를 추가합니다.
         links {
             "System",
             "AudioModule",
+            "DatabaseModule",
             "SDL2.lib", 
             "SDL2main.lib",
             "SDL2_image.lib",
@@ -264,19 +265,21 @@ workspace "FlappyBird2D"
             "Content=%{wks.location}..\\Content\\",
         }
 
-        -- 빌드 구성 요소의 속성을 설정합니다.
+        -- Debug 빌드의 설정을 수행합니다.
         filter "configurations:Debug"
             defines { "DEBUG" }
             runtime  "Debug"
             optimize "Off"
             symbols "On"
         
+        -- Release 빌드의 설정을 수행합니다.
         filter "configurations:Release"
             defines { "NDEBUG", "RELEASE" }
             runtime "Release"
             optimize "On"
             symbols "On"
 
+        -- Shipping 빌드의 설정을 수행합니다.
         filter "configurations:Shipping"
             defines { "NDEBUG", "SHIPPING" }
             runtime "Release"
