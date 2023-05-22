@@ -1,6 +1,9 @@
 #include <cstdint>
 
 
+/**
+ * @brief 오디오 모듈의 네임 스페이스입니다.
+ */
 namespace AudioModule
 {
 	/**
