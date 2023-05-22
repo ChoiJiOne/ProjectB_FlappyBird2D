@@ -22,6 +22,9 @@ workspace "FlappyBird2D"
     -- 데이터베이스 모듈 경로를 설정합니다.
     databasemodule="%{wks.location}/../DatabaseModule"
 
+    -- 툴에서 공통적으로 사용할 유틸리티 소스 경로를 설정합니다.
+    commonTool="%{wks.location}/../CommonTool"
+
     -- 폰트 아틀라스 생성 툴 소스 경로를 설정합니다.
     fontatlas="%{wks.location}/../FontAltasTool"
 
@@ -124,6 +127,53 @@ workspace "FlappyBird2D"
             symbols "Off"
 
 
+    -- 툴에서 공통적으로 사용할 유틸리티 프로젝트입니다.
+    project "CommonTool"
+        -- 툴에서 공통적으로 사용할 유틸리티 프로젝트의 종류를 설정합니다.
+        kind "StaticLib"
+
+        -- 프로그래밍 언어를 설정합니다.
+        language "C++"
+
+        -- C++의 표준을 설정합니다.
+        cppdialect "C++17"
+
+        -- 툴에서 공통적으로 사용할 유틸리티 프로젝트 소스 코드의 include 경로를 추가합니다.
+        includedirs { 
+            "%{commonTool}",
+            "%{commonTool}/Public",
+            "%{commonTool}/Private",
+        }
+
+        -- 툴에서 공통적으로 사용할 유틸리티 프로젝트 소스 코드의 file을 추가합니다.
+        files { 
+            "%{commonTool}/*",
+            "%{commonTool}/Public/*",
+            "%{commonTool}/Private/*",
+        }
+
+        -- Debug 빌드의 설정을 수행합니다.
+        filter "configurations:Debug"
+            defines { "DEBUG" }
+            runtime  "Debug"
+            optimize "Off"
+            symbols "On"
+
+        -- Release 빌드의 설정을 수행합니다.
+        filter "configurations:Release"
+            defines { "NDEBUG", "RELEASE" }
+            runtime "Release"
+            optimize "On"
+            symbols "On"
+        
+        -- Shipping 빌드의 설정을 수행합니다.
+        filter "configurations:Shipping"
+            defines { "NDEBUG", "SHIPPING" }
+            runtime "Release"
+            optimize "Full"
+            symbols "Off"
+
+
     -- 폰트 아틀라스 생성 툴 프로젝트입니다.
     project "FontAltasTool"
         -- 폰트 아틀라스 생성 툴 프로젝트의 종류를 설정합니다.
@@ -138,14 +188,19 @@ workspace "FlappyBird2D"
         -- 폰트 아틀라스 생성 툴 소스 코드의 include 경로를 추가합니다.
         includedirs { 
             "%{fontatlas}", 
+            "%{commonTool}/Public",
             "%{thirdparty}/stb",
         }
 
         -- 폰트 아틀라스 생성 툴 소스 코드의 file을 추가합니다.
         files { 
-            "%{fontatlas}/*", 
+            "%{fontatlas}/*",
+            "%{commonTool}/Public/*",
             "%{thirdparty}/stb/*",
         }
+
+        -- 외부 라이브러리를 추가합니다.
+        links { "CommonTool" }
 
         -- Debug 빌드의 설정을 수행합니다.
         filter "configurations:Debug"
@@ -182,15 +237,20 @@ workspace "FlappyBird2D"
 
         -- 텍스처 아틀라스 생성 툴 소스 코드의 include 경로를 추가합니다.
         includedirs { 
-            "%{textureatlas}", 
+            "%{textureatlas}",
+            "%{commonTool}/Public",
             "%{thirdparty}/stb",
         }
 
         -- 텍스처 아틀라스 생성 툴 소스 코드의 file을 추가합니다.
         files { 
-            "%{textureatlas}/*", 
+            "%{textureatlas}/*",
+            "%{commonTool}/Public/*",
             "%{thirdparty}/stb/*",
         }
+
+        -- 외부 라이브러리를 추가합니다.
+        links { "CommonTool" }
 
         -- Debug 빌드의 설정을 수행합니다.
         filter "configurations:Debug"
