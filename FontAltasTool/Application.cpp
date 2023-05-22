@@ -8,6 +8,7 @@
 
 #include "FileHelper.hpp"
 #include "Glyph.h"
+#include "INIFormat.h"
 #include "INISection.h"
 
 
@@ -21,29 +22,33 @@
  */
 int32_t main(int32_t argc, char** argv)
 {
-	INISection section;
-	section.AddData("A", "1");
-	section.AddData("B", "2");
-	section.AddData("C", "3");
-	section.AddData("D", "4");
+	INIFormat iniFormat;
 
-	auto sectionData0 = section.GetSectionData();
-	for (auto data : sectionData0)
+	INISection section0;
+	section0.AddData("A", "1");
+	section0.AddData("B", "2");
+	section0.AddData("C", "3");
+	section0.AddData("D", "4");
+	iniFormat.AddSection("x", section0);
+	
+	INISection section1;
+	section1.AddData("E", "1");
+	section1.AddData("F", "2");
+	section1.AddData("G", "3");
+	section1.AddData("H", "4");
+	iniFormat.AddSection("y", section1);
+
+	auto sections = iniFormat.GetSections();
+
+	for (const auto& section : sections)
 	{
-		std::cout << data.first << ", " << data.second << std::endl;
-	}
+		auto sectionData = section.second.GetSectionData();
+		for (const auto data : sectionData)
+		{
+			std::cout << data.first << ", " << data.second << std::endl;
+		}
 
-	auto data1 = section.GetData("A");
-	std::cout << data1.first << ", " << data1.second << std::endl;
-
-	std::string data2 = section.GetValue("B");
-	std::cout << data2 << std::endl;
-
-	section.RemoveData("C");
-	auto sectionData1 = section.GetSectionData();
-	for (auto data : sectionData1)
-	{
-		std::cout << data.first << ", " << data.second << std::endl;
+		std::cout << "\n\n";
 	}
 
 	return 0;
