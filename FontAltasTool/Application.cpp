@@ -20,7 +20,7 @@
  */
 int32_t main(int32_t argc, char** argv)
 {
-	std::wstring path = L"D:\\Work\\FlappyBird2D\\Content\\SeoulNamsanEB.ttf";
+	std::wstring path = L"D:\\Work\\FlappyBird2D\\Content\\Font\\SeoulNamsanEB.ttf";
 
 	std::vector<uint8_t> buffer;
 	FileHelper::ReadBufferFromFile(path, buffer);
