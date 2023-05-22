@@ -63,4 +63,52 @@ public:
 		CHECK(ReadFile(fileHandle, &outBuffer[0], fileSize, &bytesRead, nullptr), "failed read file...");
 		CHECK(CloseHandle(fileHandle), "failed to close file...");
 	}
+
+
+	/**
+	 * @brief 버퍼를 파일에 씁니다.
+	 * 
+	 * @note 파일 경로는 UTF-8 문자열입니다.
+	 * 
+	 * @param path 파일의 경로입니다.
+	 * @param buffer 파일에 쓸 버퍼입니다.
+	 * 
+	 * @throws 파일 쓰기에 실패하면 C++ 표준 예외를 던집니다.
+	 * 
+	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/fileapi/nf-fileapi-createfilea
+	 */
+	static inline void WriteBufferFromFile(const std::string& path, const std::vector<uint8_t>& buffer)
+	{
+		HANDLE fileHandle = CreateFileA(path.c_str(), GENERIC_WRITE, FILE_SHARE_READ, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+		CHECK((fileHandle != INVALID_HANDLE_VALUE), "failed to create file...");
+
+		DWORD bytesWrite;
+
+		CHECK(WriteFile(fileHandle, &buffer[0], static_cast<DWORD>(buffer.size()), &bytesWrite, nullptr), "failed to write file...");
+		CHECK(CloseHandle(fileHandle), "failed to close file...");
+	}
+
+
+	/**
+	 * @brief 버퍼를 파일에 씁니다.
+	 *
+	 * @note 파일 경로는 UTF-16 문자열입니다.
+	 *
+	 * @param path 파일의 경로입니다.
+	 * @param buffer 파일에 쓸 버퍼입니다.
+	 *
+	 * @throws 파일 쓰기에 실패하면 C++ 표준 예외를 던집니다.
+	 * 
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew
+	 */
+	static inline void WriteBufferFromFile(const std::wstring& path, const std::vector<uint8_t>& buffer)
+	{
+		HANDLE fileHandle = CreateFileW(path.c_str(), GENERIC_WRITE, FILE_SHARE_READ, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+		CHECK((fileHandle != INVALID_HANDLE_VALUE), "failed to create file...");
+
+		DWORD bytesWrite;
+
+		CHECK(WriteFile(fileHandle, &buffer[0], static_cast<DWORD>(buffer.size()), &bytesWrite, nullptr), "failed to write file...");
+		CHECK(CloseHandle(fileHandle), "failed to close file...");
+	}
 };
