@@ -47,29 +47,31 @@ workspace "FlappyBird2D"
 
         -- 오디오 모듈 소스 코드의 include 경로를 추가합니다.
         includedirs { 
-            "%{audiomodule}/Source", 
-            "%{audiomodule}/ThirdParty",
+            "%{audiomodule}", 
+            "%{thirdparty}/miniaudio",
         }
 
         -- 오디오 모듈 소스 코드의 file을 추가합니다.
         files { 
-            "%{audiomodule}/Source/*", 
-            "%{audiomodule}/ThirdParty/*",
+            "%{audiomodule}/*", 
+            "%{thirdparty}/miniaudio/*",
         }
 
-        -- 빌드의 구성 요소별 설정을 수행합니다.
+        -- Debug 빌드의 설정을 수행합니다.
         filter "configurations:Debug"
             defines { "DEBUG" }
             runtime  "Debug"
             optimize "Off"
             symbols "On"
 
+        -- Release 빌드의 설정을 수행합니다.
         filter "configurations:Release"
             defines { "NDEBUG", "RELEASE" }
             runtime "Release"
             optimize "On"
             symbols "On"
 
+        -- Shipping 빌드의 설정을 수행합니다.
         filter "configurations:Shipping"
             defines { "NDEBUG", "SHIPPING" }
             runtime "Release"
