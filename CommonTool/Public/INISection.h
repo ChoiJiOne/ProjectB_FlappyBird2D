@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <map>
 
 
@@ -44,7 +45,7 @@ public:
 	 * 
 	 * @param instance 대입할 INI 섹션 영역의 인스턴스입니다.
 	 * 
-	 * @return 대입한 INI 섹션 영역을 반환합니다.
+	 * @return 대입한 INI 섹션 영역의 참조자를 반환합니다.
 	 */
 	INISection& operator=(INISection&& instance) noexcept
 	{
@@ -61,7 +62,7 @@ public:
 	 *
 	 * @param instance 대입할 INI 섹션 영역의 인스턴스입니다.
 	 *
-	 * @return 대입한 INI 섹션 영역을 반환합니다.
+	 * @return 대입한 INI 섹션 영역의 참조자를 반환합니다.
 	 */
 	INISection& operator=(const INISection& instance)
 	{
