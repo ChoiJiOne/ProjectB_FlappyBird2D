@@ -112,7 +112,7 @@ class FlappyBird2D
      */
     private void LoadTextureResource()
     {
-        string[] pngImageFilePaths = System.IO.Directory.GetFiles(CommandLine.GetValue("Content"), "*.png");
+        string[] pngImageFilePaths = System.IO.Directory.GetFiles(CommandLine.GetValue("Content") + "Texture\\", "*.png");
         Dictionary<string, string> textures = new Dictionary<string, string>();
 
         foreach(string pngImageFilePath in pngImageFilePaths)
@@ -126,7 +126,7 @@ class FlappyBird2D
 
         foreach(KeyValuePair<string, string> texture in textures)
         {
-            ContentManager.Get().CreateTexture(texture.Key, texture.Value);
+            ContentManager.Get().CreateTexture(texture.Key, "Texture\\" + texture.Value);
         }
     }
 
@@ -138,7 +138,7 @@ class FlappyBird2D
      */
     private void LoadSoundResource()
     {
-        string[] soundFilePaths = System.IO.Directory.GetFiles(CommandLine.GetValue("Content"), "*.mp3");
+        string[] soundFilePaths = System.IO.Directory.GetFiles(CommandLine.GetValue("Content") + "Audio\\", "*.mp3");
         Dictionary<string, string> sounds = new Dictionary<string, string>();
 
         foreach (string soundFilePath in soundFilePaths)
@@ -152,7 +152,7 @@ class FlappyBird2D
 
         foreach (KeyValuePair<string, string> sound in sounds)
         {
-            Sound soundResource = ContentManager.Get().CreateSound(sound.Key, sound.Value);
+            Sound soundResource = ContentManager.Get().CreateSound(sound.Key, "Audio\\" + sound.Value);
             soundResource.SetLooping(false);
         }
     }
