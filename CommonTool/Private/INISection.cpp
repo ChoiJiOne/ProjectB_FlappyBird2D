@@ -18,11 +18,13 @@ void INISection::AddEnforceData(const std::string& key, const std::string& value
 	sectionData_.insert({ key, value });
 }
 
-const std::pair<std::string, std::string>& INISection::GetData(const std::string& key) const
+std::pair<std::string, std::string> INISection::GetData(const std::string& key) const
 {
 	CHECK(IsValidKey(key), "invalid ini section key...");
 
-	return *sectionData_.find(key);
+	std::pair<std::string, std::string> sectionData = *sectionData_.find(key);
+
+	return sectionData;
 }
 
 void INISection::RemoveData(const std::string& key)
@@ -33,7 +35,7 @@ void INISection::RemoveData(const std::string& key)
 	}
 }
 
-const std::string& INISection::GetValue(const std::string& key) const
+std::string INISection::GetValue(const std::string& key) const
 {
 	CHECK(IsValidKey(key), "invalid ini section key...");
 

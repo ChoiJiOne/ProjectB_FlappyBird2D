@@ -104,7 +104,7 @@ public:
 	 * 
 	 * @return 섹션 내 키-값 쌍을 반환합니다.
 	 */
-	const std::pair<std::string, std::string>& GetData(const std::string& key) const;
+	std::pair<std::string, std::string> GetData(const std::string& key) const;
 
 
 	/**
@@ -126,7 +126,7 @@ public:
 	 * 
 	 * @return 키 값에 대응하는 값을 반환합니다.
 	 */
-	const std::string& GetValue(const std::string& key) const;
+	std::string GetValue(const std::string& key) const;
 
 	
 	/**
