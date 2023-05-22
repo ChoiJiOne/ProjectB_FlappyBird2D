@@ -8,6 +8,7 @@
 
 #include "FileHelper.hpp"
 #include "Glyph.h"
+#include "INISection.h"
 
 
 /**
@@ -20,10 +21,17 @@
  */
 int32_t main(int32_t argc, char** argv)
 {
-	std::wstring path = L"D:\\Work\\FlappyBird2D\\Content\\Font\\SeoulNamsanEB.ttf";
+	INISection section;
+	section.AddData("A", "1");
+	section.AddData("B", "2");
+	section.AddData("C", "3");
+	section.AddData("D", "4");
 
-	std::vector<uint8_t> buffer;
-	FileHelper::ReadBufferFromFile(path, buffer);
+	auto sectionData = section.GetSectionData();
+	for (auto data : sectionData)
+	{
+		std::cout << data.first << ", " << data.second << std::endl;
+	}
 
 	return 0;
 }
