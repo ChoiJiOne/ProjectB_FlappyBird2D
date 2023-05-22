@@ -1,5 +1,10 @@
 #include <iostream>
 
+// @third party code - BEGIN
+#include <stb_rect_pack.h>
+#include <stb_truetype.h>
+// @third party code - END
+
 
 /**
  * @brief 애플리케이션의 진입점입니다.
