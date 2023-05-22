@@ -121,6 +121,18 @@ public:
 	const std::map<std::string, INISection>& GetSections() const { return iniSection_; }
 
 
+	/**
+	 * @brief INI 파일 포멧을 .ini 파일로 저장합니다.
+	 * 
+	 * @note 경로에 ini 파일 이름과 확장자도 같이 포함되어 있어야 합니다.
+	 * 
+	 * @param path .ini 파일의 경로입니다.
+	 * 
+	 * @throws 파일 쓰기에 실패하면 C++ 표준 예외를 던집니다.
+	 */
+	static void ExportINIFile(const std::string& path, const INIFormat& iniFormat);
+	
+
 private:
 	/**
 	 * @brief 키 값에 대응하는 값이 존재하는지 확인합니다.
