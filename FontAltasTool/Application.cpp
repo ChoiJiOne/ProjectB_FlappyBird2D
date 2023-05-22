@@ -40,16 +40,24 @@ int32_t main(int32_t argc, char** argv)
 
 	auto sections = iniFormat.GetSections();
 
+	std::string content;
+	
 	for (const auto& section : sections)
 	{
 		auto sectionData = section.second.GetSectionData();
 		for (const auto data : sectionData)
 		{
-			std::cout << data.first << ", " << data.second << std::endl;
+			content += (data.first + "," + data.second + "\n");
 		}
 
-		std::cout << "\n\n";
+		content += "\n\n";
 	}
+
+	content += "Hello World!";
+
+	std::vector<uint8_t> buffer;
+	buffer.assign(content.begin(), content.end());
+	FileHelper::WriteBufferFromFile("D:\\Work\\FlappyBird2D\\Content\\test.ini", buffer);
 
 	return 0;
 }
