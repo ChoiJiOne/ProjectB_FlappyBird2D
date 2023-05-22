@@ -1,3 +1,12 @@
 .vs
 *.dmp
+*.sln
+*.csproj
+Properties
+bin/Debug
+bin/Release
+bin/Shipping
+obj/Debug
+obj/Release
+obj/Shipping
 FlappyBird2D
