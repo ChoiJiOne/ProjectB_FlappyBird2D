@@ -79,6 +79,51 @@ workspace "FlappyBird2D"
             symbols "Off"
 
 
+    -- 데이터베이스 모듈 프로젝트입니다.
+    project "DatabaseModule"
+        -- 데이터베이스 모듈 프로젝트의 종류를 설정합니다.
+        kind "SharedLib"
+
+        -- 프로그래밍 언어를 설정합니다.
+        language "C++"
+
+        -- C++의 표준을 설정합니다.
+        cppdialect "C++17"
+
+        -- 데이터베이스 모듈 소스 코드의 include 경로를 추가합니다.
+        includedirs { 
+            "%{databasemodule}", 
+            "%{thirdparty}/SQLite3",
+        }
+
+        -- 데이터베이스 모듈 소스 코드의 file을 추가합니다.
+        files { 
+            "%{databasemodule}/*", 
+            "%{thirdparty}/SQLite3/*",
+        }
+
+        -- Debug 빌드의 설정을 수행합니다.
+        filter "configurations:Debug"
+            defines { "DEBUG" }
+            runtime  "Debug"
+            optimize "Off"
+            symbols "On"
+
+        -- Release 빌드의 설정을 수행합니다.
+        filter "configurations:Release"
+            defines { "NDEBUG", "RELEASE" }
+            runtime "Release"
+            optimize "On"
+            symbols "On"
+        
+        -- Shipping 빌드의 설정을 수행합니다.
+        filter "configurations:Shipping"
+            defines { "NDEBUG", "SHIPPING" }
+            runtime "Release"
+            optimize "Full"
+            symbols "Off"
+
+    
     -- 게임 프로젝트입니다.
     project "Game"
         -- 프로젝트의 종류를 설정합니다.
