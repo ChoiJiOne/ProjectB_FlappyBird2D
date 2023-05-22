@@ -1,5 +1,7 @@
 #pragma once
 
+#include "CrashHandler.h"
+
 
 /**
  * @brief 클래스의 복사 생성자 및 대입 연산자를 사용하지 못하도록 삭제합니다.
@@ -30,6 +32,7 @@ CLASS& operator=(const CLASS&) = delete;
 {\
 	if(!EXPRESSION)\
 	{\
+		CrashHandler::RecordCrashError(__FILE__, __LINE__, MESSAGE);\
 		throw std::exception();\
 	}\
 }
@@ -46,6 +49,7 @@ CLASS& operator=(const CLASS&) = delete;
 #ifndef ENFORCE_THROW_EXCEPTION
 #define ENFORCE_THROW_EXCEPTION(MESSAGE)\
 {\
+	CrashHandler::RecordCrashError(__FILE__, __LINE__, MESSAGE);\
 	throw std::exception();\
 }
 #endif
