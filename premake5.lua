@@ -152,6 +152,9 @@ workspace "FlappyBird2D"
             "%{commonTool}/Private/*",
         }
 
+        -- 외부 라이브러리를 연결합니다.
+        links { "Dbghelp.lib", }
+
         -- Debug 빌드의 설정을 수행합니다.
         filter "configurations:Debug"
             defines { "DEBUG" }
