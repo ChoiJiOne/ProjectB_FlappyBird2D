@@ -34,11 +34,15 @@ bool IsValidArgumentForFontAtlas()
 
 	for (const auto& argument : arguments)
 	{
+		std::cout << "check " << argument << " argument...\n";
+
 		if (!CommandLine::IsValid(argument))
 		{
-			std::cout << StringHelper::Format("[LOG] invalid %s argument for font atlas", argument.c_str());
+			std::cout << "invaild [" << argument << "] argument for font atlas...\n";
 			return false;
 		}
+
+		std::cout << "=>" << argument << " : " << CommandLine::GetValue(argument) << "\n";
 	}
 
 	return true;
@@ -59,12 +63,8 @@ int32_t main(int32_t argc, char** argv)
 
 	if (!IsValidArgumentForFontAtlas())
 	{
-		std::cout << "[LOG] failed to generate font altas\n";
+		std::cout << "failed to generate font altas...\n";
 		return -1;
-	}
-	else
-	{
-		std::cout << "[LOG] successed to generate font altas\n";
 	}
 	
 	return 0;
