@@ -10,9 +10,39 @@
 
 #include "CommandLine.h"
 #include "FileHelper.hpp"
+#include "StringHelper.hpp"
 #include "Glyph.h"
 #include "INIFormat.h"
 #include "INISection.h"
+
+
+/**
+ * @brief 폰트 아틀라스 생성을 위한 명령행 인수가 유효한지 검사합니다.
+ * 
+ * @return 폰트 아틀라스 생성을 위한 명령행 인수가 유효하면 true, 그렇지 않으면 false를 반환합니다.
+ */
+bool IsValidArgumentForFontAtlas()
+{
+	std::array<std::string, 6> arguments = {
+		"Crash",
+		"FontPath",
+		"BeginCodePoint",
+		"EndCodePoint",
+		"FontSize",
+		"OutputPath",
+	};
+
+	for (const auto& argument : arguments)
+	{
+		if (!CommandLine::IsValid(argument))
+		{
+			std::cout << StringHelper::Format("[LOG] invalid %s argument for font atlas", argument.c_str());
+			return false;
+		}
+	}
+
+	return true;
+}
 
 
 /**
@@ -27,22 +57,14 @@ int32_t main(int32_t argc, char** argv)
 {
 	CommandLine::Parse(argc, argv);
 
-	std::array<std::string, 6> arguments = {
-		"Crash",
-		"FontPath",
-		"BeginCodePoint",
-		"EndCodePoint",
-		"FontSize",
-		"OutputPath",
-	};
-
-	for (const auto& argument : arguments)
+	if (!IsValidArgumentForFontAtlas())
 	{
-		if (!CommandLine::IsValid(argument))
-		{
-			std::cout << "invaild command line argument" << std::endl;
-			return -1;
-		}
+		std::cout << "[LOG] failed to generate font altas\n";
+		return -1;
+	}
+	else
+	{
+		std::cout << "[LOG] successed to generate font altas\n";
 	}
 	
 	return 0;
