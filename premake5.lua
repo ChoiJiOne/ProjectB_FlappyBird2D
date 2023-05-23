@@ -205,6 +205,16 @@ workspace "FlappyBird2D"
         -- 외부 라이브러리를 추가합니다.
         links { "CommonTool" }
 
+        -- 명령행 인수를 설정합니다.
+        debugargs {
+            "Crash=%{wks.location}..\\Crash\\",
+            "FontPath=%{wks.location}..\\Content\\SeoulNamsanEB.ttf",
+            "BeginCodePoint=32",
+            "EndCodePoint=127",
+            "FontSize=32",
+            "OutputPath=%{wks.location}..\\Content\\",
+        }
+
         -- Debug 빌드의 설정을 수행합니다.
         filter "configurations:Debug"
             defines { "DEBUG" }
