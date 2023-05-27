@@ -14,6 +14,7 @@
 #include "Glyph.h"
 #include "INIFormat.h"
 #include "INISection.h"
+#include "Logger.hpp"
 #include "StringHelper.hpp"
 
 /**
@@ -36,15 +37,15 @@ bool IsPassArgumentForFontAtlas()
 
 	for (const auto& argument : arguments)
 	{
-		std::cout << "check " << argument << " argument... ";
-
-		if (!CommandLine::IsValid(argument))
+		if (CommandLine::IsValid(argument))
 		{
-			std::cout << failedMessage << '\n';
+			Logger::Display(Logger::ELevel::NORMAL, StringHelper::Format("confirming the pass of parameter %s... => VALID!", argument.c_str()));
+		}
+		else
+		{
+			Logger::Display(Logger::ELevel::ERR, StringHelper::Format("confirming the pass of parameter %s... => INVALID!", argument.c_str()));
 			return false;
 		}
-		
-		std::cout << successedMessage << '\n';
 	}
 
 	return true;
