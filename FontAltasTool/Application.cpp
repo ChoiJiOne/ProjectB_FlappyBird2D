@@ -181,6 +181,84 @@ bool GenerateFontAtlas(
 	int32_t& outAltasBitmapSize
 )
 {
+	std::vector<uint8_t> buffer;
+	FileHelper::ReadBufferFromFile(fontPath, buffer);
+
+	stbtt_fontinfo fontInfo;
+	const unsigned char* bufferPtr = reinterpret_cast<const unsigned char*>(&buffer[0]);
+	int32_t offsetIndex = stbtt_GetFontOffsetForIndex(reinterpret_cast<const unsigned char*>(&buffer[0]), 0);
+
+	if (!stbtt_InitFont(&fontInfo, bufferPtr, offsetIndex))
+	{
+		Logger::Display(Logger::ELevel::ERR, "failed to initialize stb_truetype...");
+		return false;
+	}
+
+	std::size_t codePointRange = static_cast<std::size_t>(endCodePoint - beginCodePoint + 1);
+
+	outGlyphs.clear();
+	outGlyphs.resize(codePointRange);
+
+	std::vector<stbtt_packedchar> packedchars(codePointRange);
+
+	int32_t success = 0;
+	stbtt_pack_context packContext;
+
+	for (int32_t size = 16; size < 8192; size *= 2)
+	{
+		outAtlasBitmapBuffer.clear();
+		outAtlasBitmapBuffer.resize(size * size);
+
+		success = stbtt_PackBegin(&packContext, &outAtlasBitmapBuffer[0], size, size, 0, 1, nullptr);
+		stbtt_PackSetOversampling(&packContext, 1, 1);
+
+		success = stbtt_PackFontRange(
+			&packContext,
+			reinterpret_cast<const unsigned char*>(&buffer[0]),
+			0,
+			fontSize,
+			beginCodePoint,
+			static_cast<int>(packedchars.size()),
+			&packedchars[0]
+		);
+
+		if (success)
+		{
+			stbtt_PackEnd(&packContext);
+			outAltasBitmapSize = size;
+			break;
+		}
+		else
+		{
+			stbtt_PackEnd(&packContext);
+		}
+	}
+
+	if (!success)
+	{
+		Logger::Display(Logger::ELevel::ERR, "failed to generate font bitmap...");
+		return false;
+	}
+
+	for (std::size_t index = 0; index < packedchars.size(); ++index)
+	{
+		outGlyphs[index].codePoint = static_cast<int32_t>(index + beginCodePoint);
+
+		outGlyphs[index].x0 = packedchars[index].x0;
+		outGlyphs[index].y0 = packedchars[index].y0;
+		outGlyphs[index].x1 = packedchars[index].x1;
+		outGlyphs[index].y1 = packedchars[index].y1;
+
+		outGlyphs[index].xoffset = packedchars[index].xoff;
+		outGlyphs[index].yoffset = packedchars[index].yoff;
+
+		outGlyphs[index].xoffset2 = packedchars[index].xoff2;
+		outGlyphs[index].yoffset2 = packedchars[index].yoff2;
+
+		outGlyphs[index].xadvance = packedchars[index].xadvance;
+	}
+
+	Logger::Display(Logger::ELevel::NORMAL, "successed generate font atlas...");
 	return true;
 }
 
