@@ -143,4 +143,34 @@ public:
 	{
 		return PathIsDirectoryW(directoryPath.c_str());
 	}
+
+
+	/**
+	 * @brief 파일이 유효한지 검사합니다.
+	 * 
+	 * @note 디렉토리 경로는 UTF-8 문자열입니다.
+	 * 
+	 * @param filePath 유효한지 검사할 파일 경로입니다.
+	 * 
+	 * @return 파일이 유효하다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	static inline bool IsValidFile(const std::string& filePath)
+	{
+		return PathFileExistsA(filePath.c_str());
+	}
+
+
+	/**
+	 * @brief 파일이 유효한지 검사합니다.
+	 *
+	 * @note 디렉토리 경로는 UTF-16 문자열입니다.
+	 *
+	 * @param filePath 유효한지 검사할 파일 경로입니다.
+	 *
+	 * @return 파일이 유효하다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	static inline bool IsValidFile(const std::wstring& filePath)
+	{
+		return PathFileExistsW(filePath.c_str());
+	}
 };
