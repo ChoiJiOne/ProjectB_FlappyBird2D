@@ -79,6 +79,16 @@ bool IsValidArgumentForFontAtlas(
 		outFontPath = fontPath;
 	}
 
+	if (!FileHelper::IsValidFile(fontPath))
+	{
+		Logger::Display(Logger::ELevel::ERR, StringHelper::Format("%s is invalid type font file...", fontPath.c_str()));
+		return false;
+	}
+	else
+	{
+		Logger::Display(Logger::ELevel::NORMAL, StringHelper::Format("%s is valid true type font file...", fontPath.c_str()));
+	}
+
 	int32_t beginCodePoint = 0;
 	std::stringstream beginCodePointStream(CommandLine::GetValue("BeginCodePoint"));
 	beginCodePointStream >> beginCodePoint;
@@ -171,9 +181,6 @@ bool GenerateFontAtlas(
 	int32_t& outAltasBitmapSize
 )
 {
-
-
-
 	return true;
 }
 
