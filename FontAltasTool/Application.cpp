@@ -23,27 +23,6 @@
  */
 bool IsValidArgumentForFontAtlas()
 {
-	std::array<std::string, 5> arguments = {
-		"FontPath",
-		"BeginCodePoint",
-		"EndCodePoint",
-		"FontSize",
-		"OutputPath",
-	};
-
-	for (const auto& argument : arguments)
-	{
-		std::cout << "check " << argument << " argument...\n";
-
-		if (!CommandLine::IsValid(argument))
-		{
-			std::cout << "invaild [" << argument << "] argument for font atlas...\n";
-			return false;
-		}
-
-		std::cout << "=>" << argument << " : " << CommandLine::GetValue(argument) << "\n";
-	}
-
 	return true;
 }
 
@@ -51,7 +30,9 @@ bool IsValidArgumentForFontAtlas()
 /**
  * @brief 폰트 아틀라스를 생성합니다.
  * 
- * @note 코드 포인트의 범위는 시작과 끝을 포함합니다.
+ * @note 
+ * 코드 포인트의 범위는 시작과 끝을 포함합니다.
+ * 폰트 아틀라스 비트맵의 가로 세로 크기는 동일합니다. 
  * 
  * @param fontPath 트루 타입 폰트 리소스의 경로입니다.
  * @param beginCodePoint 코드 포인트의 시작입니다.
@@ -59,6 +40,7 @@ bool IsValidArgumentForFontAtlas()
  * @param fontSize 폰트 아틀라스 내 문자의 크기입니다.
  * @param outGlyphs[out] 폰트 아틀라스 내 문자들의 위치 및 크기입니다.
  * @param outAtlasBitmapBuffer[out] 폰트 아틀라스의 비트맵 버퍼입니다.
+ * @param outAtlasBitmapSize[out] 폰트 아틀라스 비트맵의 크기입니다.
  * 
  * @return 폰트 아틀라스 생성에 성공하면 true, 그렇지 않으면 false를 반환합니다. 
  */
@@ -68,10 +50,10 @@ bool GenerateFontAtlas(
 	int32_t endCodePoint,
 	float fontSize,
 	std::vector<Glyph>& outGlyphs,
-	std::vector<uint8_t>& outAtlasBitmapBuffer
+	std::vector<uint8_t>& outAtlasBitmapBuffer,
+	int32_t& outAltasBitmapSize
 )
 {
-
 }
 
 
@@ -93,6 +75,8 @@ int32_t main(int32_t argc, char** argv)
 		std::cout << "failed to generate font altas...\n";
 		return -1;
 	}
+
+	
 	
 	return 0;
 }
