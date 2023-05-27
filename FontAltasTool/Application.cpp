@@ -24,9 +24,6 @@
  */
 bool IsPassArgumentForFontAtlas()
 {
-	std::string successedMessage = "VALID";
-	std::string failedMessage = "INVALID";
-
 	std::array<std::string, 5> arguments = {
 		"FontPath",
 		"BeginCodePoint",
@@ -174,6 +171,9 @@ bool GenerateFontAtlas(
 	int32_t& outAltasBitmapSize
 )
 {
+
+
+
 	return true;
 }
 
@@ -206,6 +206,15 @@ int32_t main(int32_t argc, char** argv)
 		Logger::Display(Logger::ELevel::ERR, "font atlas argument is invalid...");
 		return -1;
 	}
-	
+
+	std::vector<Glyph> glyphs;
+	std::vector<uint8_t> atlasBitmapBuffer;
+	int32_t altasBitmapSize;
+
+	if (!GenerateFontAtlas(fontPath, beginCodePoint, endCodePoint, fontSize, glyphs, atlasBitmapBuffer, altasBitmapSize))
+	{
+		Logger::Display(Logger::ELevel::ERR, "failed to generate font atlas...");
+	}
+
 	return 0;
 }
