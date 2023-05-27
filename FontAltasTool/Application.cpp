@@ -89,7 +89,7 @@ bool IsValidArgumentForFontAtlas()
 	}
 
 	std::string outputPath = CommandLine::GetValue("OutputPath");
-	if (!FileHelper::IsDirectory(outputPath))
+	if (!FileHelper::IsValidDirectory(outputPath))
 	{
 		return false;
 	}
