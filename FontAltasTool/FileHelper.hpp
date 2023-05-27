@@ -1,5 +1,7 @@
 #pragma once
 
+#include <shlwapi.h>
+
 #include "Macro.h"
 
 
@@ -110,5 +112,35 @@ public:
 
 		CHECK(WriteFile(fileHandle, &buffer[0], static_cast<DWORD>(buffer.size()), &bytesWrite, nullptr), "failed to write file...");
 		CHECK(CloseHandle(fileHandle), "failed to close file...");
+	}
+
+
+	/**
+	 * @brief 경로가 디렉토리인지 검사합니다.
+	 * 
+	 * @note 디렉토리 경로는 UTF-8 문자열입니다.
+	 * 
+	 * @param path 디렉토리인지 검사할 경로입니다.
+	 * 
+	 * @return 경로가 디렉토리라면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	static inline bool IsDirectory(const std::string& path)
+	{
+		return PathIsDirectoryA(path.c_str()) == TRUE;
+	}
+
+
+	/**
+	 * @brief 경로가 디렉토리인지 검사합니다.
+	 *
+	 * @note 디렉토리 경로는 UTF-16 문자열입니다.
+	 *
+	 * @param path 디렉토리인지 검사할 경로입니다.
+	 *
+	 * @return 경로가 디렉토리라면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	static inline bool IsDirectory(const std::wstring& path)
+	{
+		return PathIsDirectoryW(path.c_str()) == TRUE;
 	}
 };
