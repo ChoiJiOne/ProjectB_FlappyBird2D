@@ -142,13 +142,13 @@ int32_t main(int32_t argc, char** argv)
 
 	if (!IsPassArgumentForFontAtlas())
 	{
-		std::cout << "font atlas argument is missing...\n";
+		Logger::Display(Logger::ELevel::ERR, "font atlas argument is missing...");
 		return -1;
 	}
 
 	if (!IsValidArgumentForFontAtlas())
 	{
-		std::cout << "font atlas argument is invalid...\n";
+		Logger::Display(Logger::ELevel::ERR, "font atlas argument is invalid...");
 		return -1;
 	}
 	
