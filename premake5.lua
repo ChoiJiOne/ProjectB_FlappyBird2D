@@ -149,10 +149,7 @@ workspace "FlappyBird2D"
             "%{fontatlas}/*",
             "%{thirdparty}/stb/*",
         }
-
-        -- 외부 라이브러리를 추가합니다.
-        links { "CommonTool" }
-
+        
         -- 명령행 인수를 설정합니다.
         debugargs {
             "FontPath=%{wks.location}..\\Content\\SeoulNamsanEB.ttf",
