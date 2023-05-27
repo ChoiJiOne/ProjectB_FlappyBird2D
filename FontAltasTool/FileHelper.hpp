@@ -126,7 +126,7 @@ public:
 	 */
 	static inline bool IsDirectory(const std::string& path)
 	{
-		return PathIsDirectoryA(path.c_str()) == TRUE;
+		return PathIsDirectoryA(path.c_str());
 	}
 
 
@@ -141,6 +141,6 @@ public:
 	 */
 	static inline bool IsDirectory(const std::wstring& path)
 	{
-		return PathIsDirectoryW(path.c_str()) == TRUE;
+		return PathIsDirectoryW(path.c_str());
 	}
 };
