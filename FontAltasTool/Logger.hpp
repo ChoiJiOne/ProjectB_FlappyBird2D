@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <iostream>
 #include <windows.h>
 
 #include "Macro.h"
@@ -24,10 +25,83 @@ public:
 	 */
 	enum class ELevel
 	{
-		NOR  = 0x00,
-		WARN = 0x01,
-		ERR  = 0x02,
+		NORMAL  = 0x00,
+		WARNING = 0x01,
+		ERR     = 0x02,
 	};
+
+
+public:
+	/**
+	 * @brief 로그를 화면에 출력합니다.
+	 * 
+	 * @param level 화면에 출력할 로그의 레벨입니다.
+	 * @param message 화면에 출력할 로그 메시지입니다.
+	 */
+	static inline void Display(const ELevel& level, const std::string& message)
+	{
+		std::string logMessage;
+
+		switch (level)
+		{
+		case ELevel::NORMAL:
+			logMessage = "[NORMAL]";
+			SetConsoleColor(normalMessageColor_);
+			break;
+
+		case ELevel::WARNING:
+			logMessage = "[WARNING]";
+			SetConsoleColor(warningMessageColor_);
+			break;
+
+		case ELevel::ERR:
+			logMessage = "[ERR]";
+			SetConsoleColor(errorMessageColor_);
+			break;
+
+		default:
+			ENFORCE_THROW_EXCEPTION("undedefined logging level...");
+		}
+
+		std::cout << logMessage << message << '\n';
+		SetConsoleColor(EConsoleColor::WHITE);
+	}
+
+
+	/**
+	 * @brief 로그를 화면에 출력합니다.
+	 *
+	 * @param level 화면에 출력할 로그의 레벨입니다.
+	 * @param message 화면에 출력할 로그 메시지입니다.
+	 */
+	static inline void Display(const ELevel& level, const std::wstring& message)
+	{
+		std::wstring logMessage;
+
+		switch (level)
+		{
+		case ELevel::NORMAL:
+			logMessage = L"[NORMAL]";
+			SetConsoleColor(normalMessageColor_);
+			break;
+
+		case ELevel::WARNING:
+			logMessage = L"[WARNING]";
+			SetConsoleColor(warningMessageColor_);
+			break;
+
+		case ELevel::ERR:
+			logMessage = L"[ERR]";
+			SetConsoleColor(errorMessageColor_);
+			break;
+
+		default:
+			ENFORCE_THROW_EXCEPTION("undedefined logging level...");
+		}
+
+		std::wcout << logMessage << message << '\n';
+		SetConsoleColor(EConsoleColor::WHITE);
+	}
 
 
 private:
