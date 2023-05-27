@@ -120,13 +120,13 @@ public:
 	 * 
 	 * @note 디렉토리 경로는 UTF-8 문자열입니다.
 	 * 
-	 * @param path 디렉토리인지 검사할 경로입니다.
+	 * @param directoryPath 디렉토리인지 검사할 경로입니다.
 	 * 
 	 * @return 경로가 디렉토리라면 true, 그렇지 않으면 false를 반환합니다.
 	 */
-	static inline bool IsValidDirectory(const std::string& path)
+	static inline bool IsValidDirectory(const std::string& directoryPath)
 	{
-		return PathIsDirectoryA(path.c_str());
+		return PathIsDirectoryA(directoryPath.c_str());
 	}
 
 
@@ -135,12 +135,12 @@ public:
 	 *
 	 * @note 디렉토리 경로는 UTF-16 문자열입니다.
 	 *
-	 * @param path 디렉토리인지 검사할 경로입니다.
+	 * @param directoryPath 디렉토리인지 검사할 경로입니다.
 	 *
 	 * @return 경로가 디렉토리라면 true, 그렇지 않으면 false를 반환합니다.
 	 */
-	static inline bool IsValidDirectory(const std::wstring& path)
+	static inline bool IsValidDirectory(const std::wstring& directoryPath)
 	{
-		return PathIsDirectoryW(path.c_str());
+		return PathIsDirectoryW(directoryPath.c_str());
 	}
 };
