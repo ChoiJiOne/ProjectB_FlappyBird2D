@@ -149,7 +149,7 @@ workspace "FlappyBird2D"
             "%{fontatlas}/*",
             "%{thirdparty}/stb/*",
         }
-        
+
         -- 명령행 인수를 설정합니다.
         debugargs {
             "FontPath=%{wks.location}..\\Content\\SeoulNamsanEB.ttf",
@@ -160,7 +160,10 @@ workspace "FlappyBird2D"
         }
 
         -- 외부 라이브러리를 연결합니다.
-        links { "Dbghelp.lib", }
+        links { 
+            "Dbghelp.lib",
+            "shlwapi.lib",
+        }
 
         -- Debug 빌드의 설정을 수행합니다.
         filter "configurations:Debug"
