@@ -13,6 +13,23 @@
  */
 class Logger
 {
+public:
+	/**
+	 * @brief 로그의 레벨입니다.
+	 * 
+	 * @note
+	 * 일반의 경우 흰색으로 표시됩니다.
+	 * 경고의 경우 노란색으로 표시됩니다.
+	 * 에러의 경우 빨간색으로 표시됩니다.
+	 */
+	enum class ELevel
+	{
+		NOR  = 0x00,
+		WARN = 0x01,
+		ERR  = 0x02,
+	};
+
+
 private:
 	/**
 	 * @brief 콘솔의 텍스트 컬러입니다.
