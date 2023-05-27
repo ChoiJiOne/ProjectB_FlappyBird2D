@@ -181,4 +181,34 @@ public:
 	{
 		return PathFileExistsW(filePath.c_str());
 	}
+
+
+	/**
+	 * @brief 경로에서 파일 이름을 찾습니다.
+	 * 
+	 * @note 경로는 UTF-8 문자열입니다.
+	 * 
+	 * @param path 파일 이름을 찾을 경로입니다.
+	 * 
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathfindfilenamea
+	 */
+	static inline std::string FindFileNameInPath(const std::string& path)
+	{
+		return std::string(PathFindFileNameA(path.c_str()));
+	}
+
+
+	/**
+	 * @brief 경로에서 파일 이름을 찾습니다.
+	 *
+	 * @note 경로는 UTF-16 문자열입니다.
+	 *
+	 * @param path 파일 이름을 찾을 경로입니다.
+	 *
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathfindfilenamea
+	 */
+	static inline std::wstring FindFileNameInPath(const std::wstring& path)
+	{
+		return std::wstring(PathFindFileNameW(path.c_str()));
+	}
 };
