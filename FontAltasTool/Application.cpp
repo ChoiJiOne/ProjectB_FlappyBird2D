@@ -6,6 +6,7 @@
 
 #include <array>
 #include <iostream>
+#include <sstream>
 #include <vector>
 
 #include "CommandLine.h"
@@ -56,6 +57,43 @@ bool IsPassArgumentForFontAtlas()
  */
 bool IsValidArgumentForFontAtlas()
 {
+	std::string fontPath = CommandLine::GetValue("FontPath");
+
+	if (fontPath.find(".ttf") == std::string::npos)
+	{
+		return false;
+	}
+	
+	int32_t beginCodePoint = 0;
+	std::stringstream beginCodePointStream(CommandLine::GetValue("BeginCodePoint"));
+	beginCodePointStream >> beginCodePoint;
+	if (beginCodePointStream.fail())
+	{
+		return false;
+	}
+
+	int32_t endCodePoint = 0;
+	std::stringstream endCodePointStream(CommandLine::GetValue("EndCodePoint"));
+	endCodePointStream >> endCodePoint;
+	if (endCodePointStream.fail())
+	{
+		return false;
+	}
+	
+	float fontSize = 0.0f;
+	std::stringstream fontSizeStream(CommandLine::GetValue("FontSize"));
+	fontSizeStream >> fontSize;
+	if (fontSizeStream.fail())
+	{
+		return false;
+	}
+
+	std::string outputPath = CommandLine::GetValue("OutputPath");
+	if (!FileHelper::IsDirectory(outputPath))
+	{
+		return false;
+	}
+	
 	return true;
 }
 
@@ -103,13 +141,13 @@ int32_t main(int32_t argc, char** argv)
 
 	if (!IsPassArgumentForFontAtlas())
 	{
-		std::cout << "failed to generate font altas...\n";
+		std::cout << "font atlas argument is missing...\n";
 		return -1;
 	}
 
 	if (!IsValidArgumentForFontAtlas())
 	{
-		std::cout << "failed to generate font altas...\n";
+		std::cout << "font atlas argument is invalid...\n";
 		return -1;
 	}
 	
