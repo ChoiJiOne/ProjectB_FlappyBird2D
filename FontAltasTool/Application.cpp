@@ -54,45 +54,94 @@ bool IsPassArgumentForFontAtlas()
 /**
  * @brief 폰트 아틀라스 생성을 위한 명령행 인수가 유효한지 검사합니다.
  * 
+ * @param outFontPath[out] 트루 타입 폰트의 경로입니다.
+ * @param outBeginCodePoint[out] 코드 포인트의 시작점입니다.
+ * @param outEndCodePoint[out] 코드 포인트의 끝점입니다.
+ * @param outFontSize[out] 폰트의 크기입니다.
+ * @param outOutputPath[out] 폰트 아틀라스의 출력 경로입니다.
+ * 
  * @return 폰트 아틀라스 생성을 위한 명령행 인수가 유효하면 true, 그렇지 않으면 false를 반환합니다.
  */
-bool IsValidArgumentForFontAtlas()
+bool IsValidArgumentForFontAtlas(
+	std::string& outFontPath,
+	int32_t& outBeginCodePoint,
+	int32_t& outEndCodePoint,
+	float& outFontSize,
+	std::string& outOutputPath
+)
 {
 	std::string fontPath = CommandLine::GetValue("FontPath");
-
 	if (fontPath.find(".ttf") == std::string::npos)
 	{
+		Logger::Display(Logger::ELevel::ERR, StringHelper::Format("%s is not true type font file...", fontPath.c_str()));
 		return false;
 	}
-	
+	else
+	{
+		Logger::Display(Logger::ELevel::NORMAL, StringHelper::Format("%s is true type font file...", fontPath.c_str()));
+		outFontPath = fontPath;
+	}
+
 	int32_t beginCodePoint = 0;
 	std::stringstream beginCodePointStream(CommandLine::GetValue("BeginCodePoint"));
 	beginCodePointStream >> beginCodePoint;
-	if (beginCodePointStream.fail())
+	if (beginCodePointStream.fail() || beginCodePoint < 0)
 	{
+		Logger::Display(Logger::ELevel::ERR, StringHelper::Format("invalid begin code point => %d...", beginCodePoint));
 		return false;
+	}
+	else
+	{
+		Logger::Display(Logger::ELevel::NORMAL, StringHelper::Format("valid begin code point => %d...", beginCodePoint));
+		outBeginCodePoint = beginCodePoint;
 	}
 
 	int32_t endCodePoint = 0;
 	std::stringstream endCodePointStream(CommandLine::GetValue("EndCodePoint"));
 	endCodePointStream >> endCodePoint;
-	if (endCodePointStream.fail())
+	if (endCodePointStream.fail() || endCodePoint < 0)
 	{
+		Logger::Display(Logger::ELevel::ERR, StringHelper::Format("invalid end code point => %d...", endCodePoint));
 		return false;
+	}
+	else
+	{
+		Logger::Display(Logger::ELevel::NORMAL, StringHelper::Format("valid end code point => %d...", endCodePoint));
+		outEndCodePoint = endCodePoint;
+	}
+
+	if (beginCodePoint > endCodePoint)
+	{
+		Logger::Display(Logger::ELevel::WARNING, StringHelper::Format("BeginCodePoint is bigger than EndCodePoint..."));
+		Logger::Display(Logger::ELevel::WARNING, StringHelper::Format("swap BeginCodePoint and EndCodePoint..."));
+		outBeginCodePoint = endCodePoint;
+		outEndCodePoint = beginCodePoint;
 	}
 	
 	float fontSize = 0.0f;
 	std::stringstream fontSizeStream(CommandLine::GetValue("FontSize"));
 	fontSizeStream >> fontSize;
-	if (fontSizeStream.fail())
+	if (fontSizeStream.fail() || fontSize < 0.0f)
 	{
+		Logger::Display(Logger::ELevel::ERR, StringHelper::Format("invalid font size => %f...", fontSize));
 		return false;
+	}
+	else
+	{
+		Logger::Display(Logger::ELevel::NORMAL, StringHelper::Format("valid font size => %f...", fontSize));
+		outFontSize = fontSize;
 	}
 
 	std::string outputPath = CommandLine::GetValue("OutputPath");
 	if (!FileHelper::IsValidDirectory(outputPath))
 	{
+		Logger::Display(Logger::ELevel::ERR, StringHelper::Format("invalid output path => %s...", outputPath.c_str()));
 		return false;
+	}
+	else
+	{
+		Logger::Display(Logger::ELevel::NORMAL, StringHelper::Format("valid output path => %s...", outputPath.c_str()));
+		outOutputPath = outputPath;
 	}
 	
 	return true;
@@ -146,7 +195,13 @@ int32_t main(int32_t argc, char** argv)
 		return -1;
 	}
 
-	if (!IsValidArgumentForFontAtlas())
+	std::string fontPath;
+	int32_t beginCodePoint;
+	int32_t endCodePoint;
+	float fontSize;
+	std::string outputPath;
+
+	if (!IsValidArgumentForFontAtlas(fontPath, beginCodePoint, endCodePoint, fontSize, outputPath))
 	{
 		Logger::Display(Logger::ELevel::ERR, "font atlas argument is invalid...");
 		return -1;
