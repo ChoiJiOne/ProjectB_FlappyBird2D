@@ -28,6 +28,7 @@ public:
 		NORMAL  = 0x00,
 		WARNING = 0x01,
 		ERR     = 0x02,
+		SUCCESS = 0x03,
 	};
 
 
@@ -57,6 +58,11 @@ public:
 		case ELevel::ERR:
 			logMessage = "[ERR]";
 			SetConsoleColor(errorMessageColor_);
+			break;
+
+		case ELevel::SUCCESS:
+			logMessage = "[SUCCESS]";
+			SetConsoleColor(successMessageColor_);
 			break;
 
 		default:
@@ -93,6 +99,11 @@ public:
 		case ELevel::ERR:
 			logMessage = L"[ERR]";
 			SetConsoleColor(errorMessageColor_);
+			break;
+
+		case ELevel::SUCCESS:
+			logMessage = L"[SUCCESS]";
+			SetConsoleColor(successMessageColor_);
 			break;
 
 		default:
@@ -160,4 +171,10 @@ private:
 	 * @brief 에러 메시지의 텍스트 색상입니다.
 	 */
 	static const EConsoleColor errorMessageColor_ = EConsoleColor::RED;
+
+
+	/**
+	 * @brief 성공 메시지의 텍스트 색상입니다.
+	 */
+	static const EConsoleColor successMessageColor_ = EConsoleColor::BLUE;
 };
