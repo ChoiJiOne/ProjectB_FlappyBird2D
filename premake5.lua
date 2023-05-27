@@ -152,7 +152,7 @@ workspace "FlappyBird2D"
 
         -- 명령행 인수를 설정합니다.
         debugargs {
-            "FontPath=%{wks.location}..\\Content\\SeoulNamsanEB.ttf",
+            "FontPath=%{wks.location}..\\Content\\Font\\SeoulNamsanEB.ttf",
             "BeginCodePoint=32",
             "EndCodePoint=127",
             "FontSize=32",
