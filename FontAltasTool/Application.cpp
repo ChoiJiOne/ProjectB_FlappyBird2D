@@ -258,9 +258,104 @@ bool GenerateFontAtlas(
 		outGlyphs[index].xadvance = packedchars[index].xadvance;
 	}
 
-	Logger::Display(Logger::ELevel::NORMAL, "successed generate font atlas...");
+	Logger::Display(Logger::ELevel::SUCCESS, "successed generate font atlas...");
 	return true;
 }
+
+/**
+ * @brief PNG 파일과 INI 파일을 내보냅니다.
+ * 
+ * @param fontPath 트루 타입 폰트의 경로입니다.
+ * @param beginCodePoint 코드 포인트의 시작점입니다.
+ * @param endCodePoint 코드 포인트의 끝점입니다.
+ * @param fontSize 폰트의 크기입니다.
+ * @param glyphs 폰트의 글리프입니다.
+ * @param atlasBitmapBuffer 폰트 아틀라스의 비트맵 버퍼입니다.
+ * @param altasBitmapSize 폰트 아틀라스의 크기입니다.
+ * @param outputPath PNG와 INI 파일을 저장할 경로입니다.
+ * 
+ * @return 파일을 내보내는 데 성공하면 true, 실패하면 false를 반환합니다.
+ */
+bool ExportFontAtlas(
+	const std::string& fontPath,
+    int32_t beginCodePoint,
+	int32_t endCodePoint,
+	float fontSize,
+	const std::vector<Glyph>& glyphs,
+	const std::vector<uint8_t>& atlasBitmapBuffer,
+	int32_t altasBitmapSize,
+	const std::string& outputPath
+)
+{
+	std::string fontFile = FileHelper::FindFileNameInPath(fontPath);
+	std::vector<std::string> fontFileElement = StringHelper::Split(fontFile, ".");
+	std::string fontFileName = fontFileElement.front();
+
+	std::string fontAtlasIniFilePath = StringHelper::Format("%s%s.ini", outputPath.c_str(), fontFileName.c_str());
+	std::string fontAtlasPngFilePath = StringHelper::Format("%s%s.png", outputPath.c_str(), fontFileName.c_str());
+
+	INIFormat fontAtlas;
+
+	INISection fontInfoSection;
+	fontInfoSection.AddData("BeginCodePoint", std::to_string(beginCodePoint));
+	fontInfoSection.AddData("EndCodePoint", std::to_string(endCodePoint));
+	fontInfoSection.AddData("FontSize", std::to_string(fontSize));
+	fontInfoSection.AddData("BitmapSize", std::to_string(altasBitmapSize));
+	fontInfoSection.AddData("FontFile", fontFile);
+
+	fontAtlas.AddSection("Info", fontInfoSection);
+
+	for (const auto& glyph : glyphs)
+	{
+		INISection section;
+
+		section.AddData("codePoint", std::to_string(glyph.codePoint));
+		section.AddData("x0", std::to_string(glyph.x0));
+		section.AddData("y0", std::to_string(glyph.y0));
+		section.AddData("x1", std::to_string(glyph.x1));
+		section.AddData("y1", std::to_string(glyph.y1));
+		section.AddData("xoffset", std::to_string(glyph.xoffset));
+		section.AddData("yoffset", std::to_string(glyph.yoffset));
+		section.AddData("xoffset2", std::to_string(glyph.xoffset2));
+		section.AddData("yoffset2", std::to_string(glyph.yoffset2));
+		section.AddData("xadvance", std::to_string(glyph.xadvance));
+
+		fontAtlas.AddSection(std::to_string(glyph.codePoint), section);
+	}
+
+	fontAtlas.ExportINIFile(fontAtlasIniFilePath, fontAtlas);
+	if (FileHelper::IsValidFile(fontAtlasIniFilePath))
+	{
+		Logger::Display(Logger::ELevel::SUCCESS, StringHelper::Format("successed to generate ini file => %s...", fontAtlasIniFilePath.c_str()));
+	}
+	else
+	{
+		Logger::Display(Logger::ELevel::ERR, StringHelper::Format("failed to generate ini file => %s...", fontAtlasIniFilePath.c_str()));
+		return false;
+	}
+
+	int32_t success = stbi_write_png(
+		fontAtlasPngFilePath.c_str(),
+		altasBitmapSize,
+		altasBitmapSize,
+		1,
+		reinterpret_cast<const void*>(&atlasBitmapBuffer[0]),
+		altasBitmapSize
+	);
+
+	if (success)
+	{
+		Logger::Display(Logger::ELevel::SUCCESS, StringHelper::Format("successed to generate png file => %s...", fontAtlasPngFilePath.c_str()));
+	}
+	else
+	{
+		Logger::Display(Logger::ELevel::ERR, StringHelper::Format("failed to generate png file => %s...", fontAtlasPngFilePath.c_str()));
+		return false;
+	}
+
+	return true;
+}
+
 
 /**
  * @brief 애플리케이션의 진입점입니다.
@@ -299,6 +394,13 @@ int32_t main(int32_t argc, char** argv)
 	if (!GenerateFontAtlas(fontPath, beginCodePoint, endCodePoint, fontSize, glyphs, atlasBitmapBuffer, altasBitmapSize))
 	{
 		Logger::Display(Logger::ELevel::ERR, "failed to generate font atlas...");
+		return -1;
+	}
+
+	if (!ExportFontAtlas(fontPath, beginCodePoint, endCodePoint, fontSize, glyphs, atlasBitmapBuffer, altasBitmapSize, outputPath))
+	{
+		Logger::Display(Logger::ELevel::ERR, "failed to export ini and png file...");
+		return -1;
 	}
 
 	return 0;
