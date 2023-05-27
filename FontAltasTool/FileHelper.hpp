@@ -124,7 +124,7 @@ public:
 	 * 
 	 * @return 경로가 디렉토리라면 true, 그렇지 않으면 false를 반환합니다.
 	 */
-	static inline bool IsDirectory(const std::string& path)
+	static inline bool IsValidDirectory(const std::string& path)
 	{
 		return PathIsDirectoryA(path.c_str());
 	}
@@ -139,7 +139,7 @@ public:
 	 *
 	 * @return 경로가 디렉토리라면 true, 그렇지 않으면 false를 반환합니다.
 	 */
-	static inline bool IsDirectory(const std::wstring& path)
+	static inline bool IsValidDirectory(const std::wstring& path)
 	{
 		return PathIsDirectoryW(path.c_str());
 	}
