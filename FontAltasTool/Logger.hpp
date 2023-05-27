@@ -50,4 +50,23 @@ private:
 	{
 		CHECK(SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), static_cast<WORD>(consoleColor)), "failed to set text color...");
 	}
+
+
+private:
+	/**
+	 * @brief 일반 로그 메시지의 텍스트 색상입니다.
+	 */
+	static const EConsoleColor normalMessageColor_ = EConsoleColor::WHITE;
+
+
+	/**
+	 * @brief 경고 메시지의 텍스트 색상입니다.
+	 */
+	static const EConsoleColor warningMessageColor_ = EConsoleColor::YELLOW;
+
+
+	/**
+	 * @brief 에러 메시지의 텍스트 색상입니다.
+	 */
+	static const EConsoleColor errorMessageColor_ = EConsoleColor::RED;
 };
