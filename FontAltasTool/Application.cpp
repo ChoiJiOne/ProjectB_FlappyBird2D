@@ -10,11 +10,44 @@
 
 #include "CommandLine.h"
 #include "FileHelper.hpp"
-#include "StringHelper.hpp"
 #include "Glyph.h"
 #include "INIFormat.h"
 #include "INISection.h"
+#include "StringHelper.hpp"
 
+/**
+ * @brief 폰트 아틀라스 생성을 위한 명령행 인수가 모두 전달되었는지 검사합니다.
+ * 
+ * @return 폰트 아틀라스 생성을 위한 명령행 인수가 모두 전달되었다면 true, 그렇지 않으면 false를 반환합니다.
+ */
+bool IsPassArgumentForFontAtlas()
+{
+	std::string successedMessage = "VALID";
+	std::string failedMessage = "INVALID";
+
+	std::array<std::string, 5> arguments = {
+		"FontPath",
+		"BeginCodePoint",
+		"EndCodePoint",
+		"FontSize",
+		"OutputPath",
+	};
+
+	for (const auto& argument : arguments)
+	{
+		std::cout << "check " << argument << " argument... ";
+
+		if (!CommandLine::IsValid(argument))
+		{
+			std::cout << failedMessage << '\n';
+			return false;
+		}
+		
+		std::cout << successedMessage << '\n';
+	}
+
+	return true;
+}
 
 /**
  * @brief 폰트 아틀라스 생성을 위한 명령행 인수가 유효한지 검사합니다.
@@ -25,7 +58,6 @@ bool IsValidArgumentForFontAtlas()
 {
 	return true;
 }
-
 
 /**
  * @brief 폰트 아틀라스를 생성합니다.
@@ -54,9 +86,8 @@ bool GenerateFontAtlas(
 	int32_t& outAltasBitmapSize
 )
 {
+	return true;
 }
-
-
 
 /**
  * @brief 애플리케이션의 진입점입니다.
@@ -70,13 +101,17 @@ int32_t main(int32_t argc, char** argv)
 {
 	CommandLine::Parse(argc, argv);
 
-	if (!IsValidArgumentForFontAtlas())
+	if (!IsPassArgumentForFontAtlas())
 	{
 		std::cout << "failed to generate font altas...\n";
 		return -1;
 	}
 
-	
+	if (!IsValidArgumentForFontAtlas())
+	{
+		std::cout << "failed to generate font altas...\n";
+		return -1;
+	}
 	
 	return 0;
 }
