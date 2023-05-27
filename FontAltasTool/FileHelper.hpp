@@ -123,6 +123,8 @@ public:
 	 * @param directoryPath 디렉토리인지 검사할 경로입니다.
 	 * 
 	 * @return 경로가 디렉토리라면 true, 그렇지 않으면 false를 반환합니다.
+	 * 
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathisdirectorya
 	 */
 	static inline bool IsValidDirectory(const std::string& directoryPath)
 	{
@@ -138,6 +140,8 @@ public:
 	 * @param directoryPath 디렉토리인지 검사할 경로입니다.
 	 *
 	 * @return 경로가 디렉토리라면 true, 그렇지 않으면 false를 반환합니다.
+	 * 
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathisdirectoryw
 	 */
 	static inline bool IsValidDirectory(const std::wstring& directoryPath)
 	{
@@ -153,6 +157,8 @@ public:
 	 * @param filePath 유효한지 검사할 파일 경로입니다.
 	 * 
 	 * @return 파일이 유효하다면 true, 그렇지 않으면 false를 반환합니다.
+	 * 
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathfileexistsa
 	 */
 	static inline bool IsValidFile(const std::string& filePath)
 	{
@@ -168,6 +174,8 @@ public:
 	 * @param filePath 유효한지 검사할 파일 경로입니다.
 	 *
 	 * @return 파일이 유효하다면 true, 그렇지 않으면 false를 반환합니다.
+	 * 
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathfileexistsw
 	 */
 	static inline bool IsValidFile(const std::wstring& filePath)
 	{
