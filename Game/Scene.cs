@@ -17,17 +17,6 @@ class Scene : GameObject
 
 
     /**
-     * @brief 씬 노드를 추가합니다.
-     * 
-     * @param sceneNode 추가할 씬 노드입니다.
-     */
-    public void AddSceneNode(SceneNode sceneNode)
-    {
-        sceneNodes_.AddLast(sceneNode);
-    }
-
-
-    /**
      * @brief 씬 오브젝트를 업데이트합니다.
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
@@ -47,10 +36,4 @@ class Scene : GameObject
      *@brief 씬이 현재 가리키는 씬 노드입니다.
      */
     private SceneNode currentSceneNode_ = null;
-
-
-    /**
-     * @brief 씬 내의 노드 목록입니다.
-     */
-    private LinkedList<SceneNode> sceneNodes_ = new LinkedList<SceneNode>();
 }
