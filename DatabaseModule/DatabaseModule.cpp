@@ -23,7 +23,7 @@ namespace DatabaseModule
 	{
 		sqlite3* databaseHandle = nullptr;
 		int32_t result = sqlite3_open(path, &databaseHandle);
-
+		
 		if (result == SQLITE_OK)
 		{
 			databaseHandles.push_back(databaseHandle);

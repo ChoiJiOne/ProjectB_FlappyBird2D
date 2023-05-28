@@ -18,6 +18,11 @@ class FlappyBird2D
         LoadTextureResource();
         LoadSoundResource();
         GenerateGameObjects();
+
+        int index0 = DatabaseModule.CreateDatabaseHandle("D:\\Temp\\DB\\test0");
+        int index1 = DatabaseModule.CreateDatabaseHandle("D:\\Temp\\DB\\test01.db");
+        int index2 = DatabaseModule.CreateDatabaseHandle("D:\\Temp\\DB\\test02.db");
+
     }
 
 

@@ -20,7 +20,4 @@ namespace DatabaseModule
 	 * @brief 데이터베이스 모듈 내의 데이터베이스 핸들을 정리합니다.
 	 */
 	extern "C" __declspec(dllexport) void Cleanup();
-
-
-
 }
