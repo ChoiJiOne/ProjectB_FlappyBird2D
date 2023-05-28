@@ -52,6 +52,7 @@ class FlappyBird2D
         ContentManager.Get().Cleanup();
         RenderManager.Get().Cleanup();
 
+        DatabaseModule.Cleanup();
         AudioModule.Cleanup();
         SDL_image.IMG_Quit();
         SDL.SDL_Quit();
