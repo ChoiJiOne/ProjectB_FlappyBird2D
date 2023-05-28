@@ -168,30 +168,25 @@ class FlappyBird2D
         background.Active = true;
         background.CreateBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 
-        //Scene scene = new Scene();
-        //scene.UpdateOrder = 8;
-        //scene.Active = true;
+        Scene scene = new Scene();
+        scene.UpdateOrder = 8;
+        scene.Active = true;
 
-        //StartSceneNode startSceneNode = new StartSceneNode();
-        //ReadySceneNode readySceneNoed = new ReadySceneNode();
-        //PlaySceneNode playSceneNode = new PlaySceneNode();
-        //DoneSceneNode doneSceneNode = new DoneSceneNode();
+        StartSceneNode startSceneNode = new StartSceneNode();
+        ReadySceneNode readySceneNoed = new ReadySceneNode();
+        PlaySceneNode playSceneNode = new PlaySceneNode();
+        DoneSceneNode doneSceneNode = new DoneSceneNode();
 
-        //startSceneNode.NextSceneNode = readySceneNoed;
-        //readySceneNoed.NextSceneNode = playSceneNode;
-        //playSceneNode.NextSceneNode = doneSceneNode;
-        //doneSceneNode.NextSceneNode = startSceneNode;
+        startSceneNode.NextSceneNode = readySceneNoed;
+        readySceneNoed.NextSceneNode = playSceneNode;
+        playSceneNode.NextSceneNode = doneSceneNode;
+        doneSceneNode.NextSceneNode = startSceneNode;
 
-        //scene.CurrSceneNode = startSceneNode;
-        //scene.CurrSceneNode.Entry();
-
-        //scene.AddSceneNode(startSceneNode);
-        //scene.AddSceneNode(readySceneNoed);
-        //scene.AddSceneNode(playSceneNode);
-        //scene.AddSceneNode(doneSceneNode);
+        scene.CurrSceneNode = startSceneNode;
+        scene.CurrSceneNode.Entry();
 
         WorldManager.Get().AddGameObject("Background", background);
-        //WorldManager.Get().AddGameObject("Scene", scene);
+        WorldManager.Get().AddGameObject("Scene", scene);
     }
 
 
