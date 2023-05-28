@@ -227,7 +227,7 @@ class Bird : GameObject
         MovePosition(deltaSeconds);
         UpdateWingState(deltaSeconds);
 
-        if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
+        if (InputManager.Get().GetMousePressState(EMouseButton.LEFT) == EPressState.PRESSED)
         {
             currentState_ = EState.JUMP;
             rotate_ = MinRotate;
@@ -258,7 +258,7 @@ class Bird : GameObject
         UpdateWingState(deltaSeconds);
         UpdateJumpMoveState(deltaSeconds);
 
-        if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
+        if (InputManager.Get().GetMousePressState(EMouseButton.LEFT) == EPressState.PRESSED)
         {
             jumpMoveUpLength_ = 0.0f;
             jumpMoveDownLength_ = 0.0f;
@@ -284,7 +284,7 @@ class Bird : GameObject
 
         MovePosition(deltaSeconds);
 
-        if (InputManager.Get().GetKeyPressState(EVirtualKey.CODE_SPACE) == EPressState.PRESSED)
+        if (InputManager.Get().GetMousePressState(EMouseButton.LEFT) == EPressState.PRESSED)
         {
             currentState_ = EState.JUMP;
             rotate_ = MinRotate;
