@@ -80,53 +80,8 @@ workspace "FlappyBird2D"
             runtime "Release"
             optimize "Full"
             symbols "Off"
-
-
-    -- 데이터베이스 모듈 프로젝트입니다.
-    project "DatabaseModule"
-        -- 데이터베이스 모듈 프로젝트의 종류를 설정합니다.
-        kind "SharedLib"
-
-        -- 프로그래밍 언어를 설정합니다.
-        language "C++"
-
-        -- C++의 표준을 설정합니다.
-        cppdialect "C++17"
-
-        -- 데이터베이스 모듈 소스 코드의 include 경로를 추가합니다.
-        includedirs { 
-            "%{databasemodule}", 
-            "%{thirdparty}/SQLite3",
-        }
-
-        -- 데이터베이스 모듈 소스 코드의 file을 추가합니다.
-        files { 
-            "%{databasemodule}/*", 
-            "%{thirdparty}/SQLite3/*",
-        }
-
-        -- Debug 빌드의 설정을 수행합니다.
-        filter "configurations:Debug"
-            defines { "DEBUG" }
-            runtime  "Debug"
-            optimize "Off"
-            symbols "On"
-
-        -- Release 빌드의 설정을 수행합니다.
-        filter "configurations:Release"
-            defines { "NDEBUG", "RELEASE" }
-            runtime "Release"
-            optimize "On"
-            symbols "On"
         
-        -- Shipping 빌드의 설정을 수행합니다.
-        filter "configurations:Shipping"
-            defines { "NDEBUG", "SHIPPING" }
-            runtime "Release"
-            optimize "Full"
-            symbols "Off"
-
-
+            
     -- 폰트 아틀라스 생성 툴 프로젝트입니다.
     project "FontAltasTool"
         -- 폰트 아틀라스 생성 툴 프로젝트의 종류를 설정합니다.
@@ -216,17 +171,19 @@ workspace "FlappyBird2D"
         -- 파일을 추가합니다.
         files { 
             "%{game}/*",
-            "%{thirdparty}/SDL2/Include/*",
+            "%{thirdparty}/SDL2/*",
         }
 
         -- 라이브러리 경로를 추가합니다.
-        libdirs { "%{thirdparty}/SDL2/Lib", }
+        libdirs { "%{thirdparty}/Bin", }
 
         -- 외부 라이브러리를 추가합니다.
         links {
             "System",
             "AudioModule",
             "DatabaseModule",
+            "System.Data.SQLite",
+            "System.Data.SQLite.Linq",
             "SDL2.lib", 
             "SDL2main.lib",
             "SDL2_image.lib",
