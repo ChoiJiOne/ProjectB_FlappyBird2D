@@ -45,7 +45,16 @@ class TTFont : IContent
         LoadTextureAtlas(textureAtlasPath);
     }
 
-    
+
+    /**
+     * @brief 트루 타입 폰트 속성에 대한 대한 Getter/Setter 입니다.
+     */
+    public IntPtr Resource
+    {
+        get => textureAtlas_;
+    }
+
+
     /**
      * @brief 트루 타입 폰트의 데이터를 명시적으로 정리합니다.
      */
