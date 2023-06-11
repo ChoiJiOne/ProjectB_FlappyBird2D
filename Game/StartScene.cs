@@ -59,7 +59,7 @@ class StartScene : Scene
 
 
     /**
-     * @brief 게임의 시작 씬으로부터 부터 나갑니다.
+     * @brief 게임의 시작 씬으로부터 나갑니다.
      */
     public override void Leave()
     {
