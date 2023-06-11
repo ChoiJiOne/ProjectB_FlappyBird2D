@@ -81,7 +81,7 @@ workspace "FlappyBird2D"
             optimize "Full"
             symbols "Off"
         
-            
+
     -- 폰트 아틀라스 생성 툴 프로젝트입니다.
     project "FontAltasTool"
         -- 폰트 아틀라스 생성 툴 프로젝트의 종류를 설정합니다.
@@ -165,7 +165,7 @@ workspace "FlappyBird2D"
         -- 소스 코드 경로를 추가합니다.
         includedirs { 
             "%{game}",
-            "%{thirdparty}/SDL2/Include",
+            "%{thirdparty}/SDL2",
         }
 
         -- 파일을 추가합니다.
