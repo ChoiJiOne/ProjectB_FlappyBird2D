@@ -26,7 +26,7 @@ def copy_file(source_path, destination_path, file_name):
 if __name__ == "__main__":
     current_directory = os.getcwd()
 
-    dll_library_path = os.path.join(current_directory, "ThirdParty\\SDL2\\Lib")
+    dll_library_path = os.path.join(current_directory, "ThirdParty\\Bin")
 
     binary_paths = [
         os.path.join(current_directory, "FlappyBird2D\\bin\\Win64\\Debug"),
