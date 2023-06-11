@@ -57,7 +57,41 @@ class TTFont : IContent
         }
     }
 
-    
+
+    /**
+     * @brief 텍스트의 크기를 측정합니다.
+     * 
+     * @param text 측정할 텍스트의 크기입니다.
+     * @param outWidth[out] 전체 텍스트의 가로 크기입니다.
+     * @param outHeight[out] 전체 텍스트의 세로 크기입니다.
+     * 
+     * @throws 유효하지 않은 텍스트의 크기를 측정하면 예외를 던집니다.
+     */
+    public void MeasureText(string text, out int outWidth, out int outHeight)
+    {
+        int textWidth = 0;
+        int textHeight = -1;
+
+        char[] characters = text.ToCharArray();
+
+        foreach (char character in characters)
+        {
+            int currentWidth = (int)(glyphs_[character].xadvance);
+            int currentHeight = glyphs_[character].y1 - glyphs_[character].y0;
+
+            textWidth += currentWidth;
+
+            if (currentHeight > textHeight)
+            {
+                textHeight = currentHeight;
+            }
+        }
+
+        outWidth = textWidth;
+        outHeight = textHeight;
+    }
+
+
     /**
      * @brief 텍스트가 유효한지 검사합니다.
      * 
