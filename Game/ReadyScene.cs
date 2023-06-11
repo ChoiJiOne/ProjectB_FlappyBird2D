@@ -4,13 +4,15 @@ using System.Collections.Generic;
 /**
  * @brief 게임의 준비 씬 노드입니다.
  */
-class ReadySceneNode : SceneNode
+class ReadyScene : Scene
 {
     /**
      * @brief 게임의 준비 씬 노드에 입장합니다.
      */
     public override void Entry()
     {
+        Active = true; // 씬 활성화
+
         gameObjectSignatures_ = new List<string>();
 
         gameObjectSignatures_.Add("GetReadySlate");
@@ -92,12 +94,23 @@ class ReadySceneNode : SceneNode
             WorldManager.Get().RemoveGameObject(gameObjectSignature);
         }
 
+        NextScene.Entry();
+
         DetectSwitch = false;
+        Active = false; // 씬 비활성화
     }
 
 
     /**
-     * @brief 준비 씬 노드 내의 게임 오브젝트 시그니처입니다.
+     * @brief 게임의 준비 씬을 업데이트합니다.
+     * 
+     * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    private List<string> gameObjectSignatures_ = null;
+    public override void Tick(float deltaSeconds)
+    {
+        if (DetectSwitch)
+        {
+            Leave();
+        }
+    }
 }

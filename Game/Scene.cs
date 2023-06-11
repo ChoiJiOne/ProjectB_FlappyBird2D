@@ -9,31 +9,59 @@ class Scene : GameObject
     /**
      * @brief 게임 내 씬의 속성에 대한 Getter/Setter입니다.
      */
-    public SceneNode CurrSceneNode
+    public bool DetectSwitch
     {
-        get => currentSceneNode_;
-        set => currentSceneNode_ = value;
+        get => bIsDetectSwitch_;
+        set => bIsDetectSwitch_ = value;
     }
+
+    public Scene NextScene
+    {
+        get => nextScene_;
+        set => nextScene_ = value;
+    }
+
+
+    /**
+     * @brief 씬에 진입합니다.
+     * 
+     * @note 이 메서드는 상속받는 하위 클래스에서 구현해야 합니다.
+     */
+    public virtual void Entry() { }
+
+
+    /**
+     * @brief 씬으로부터 나갑니다.
+     * 
+     * @note 이 메서드는 상속받는 하위 클래스에서 구현해야 합니다.
+     */
+    public virtual void Leave() { }
 
 
     /**
      * @brief 씬 오브젝트를 업데이트합니다.
      * 
+     * @note 이 메서드는 상속받는 하위 클래스에서 구현해야 합니다.
+     * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public override void Tick(float deltaSeconds)
-    {
-        if(currentSceneNode_.DetectSwitch)
-        {
-            currentSceneNode_.Leave();
-            currentSceneNode_ = currentSceneNode_.NextSceneNode;
-            currentSceneNode_.Entry();
-        }
-    }
+    public override void Tick(float deltaSeconds) {}
 
-    
+
     /**
-     *@brief 씬이 현재 가리키는 씬 노드입니다.
+     * @brief 씬의 전환을 확인합니다.
      */
-    private SceneNode currentSceneNode_ = null;
+    protected bool bIsDetectSwitch_ = false;
+
+
+    /**
+     * @brief 씬에 연결된 다음 씬입니다.
+     */
+    protected Scene nextScene_ = null;
+
+
+    /**
+     * @brief 씬 내의 게임 오브젝트 시그니처입니다.
+     */
+    protected List<string> gameObjectSignatures_ = null;
 }

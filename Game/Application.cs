@@ -52,7 +52,6 @@ class FlappyBird2D
         ContentManager.Get().Cleanup();
         RenderManager.Get().Cleanup();
 
-        DatabaseModule.Cleanup();
         AudioModule.Cleanup();
         SDL_image.IMG_Quit();
         SDL.SDL_Quit();
@@ -169,25 +168,34 @@ class FlappyBird2D
         background.Active = true;
         background.CreateBody(new Vector2<float>(500.0f, 400.0f), 1000.0f, 800.0f);
 
-        Scene scene = new Scene();
-        scene.UpdateOrder = 8;
-        scene.Active = true;
+        StartScene startScene = new StartScene();
+        startScene.UpdateOrder = 8;
+        startScene.Active = false;
+        
+        ReadyScene readyScene = new ReadyScene();
+        readyScene.UpdateOrder = 8;
+        readyScene.Active = false;
 
-        StartSceneNode startSceneNode = new StartSceneNode();
-        ReadySceneNode readySceneNoed = new ReadySceneNode();
-        PlaySceneNode playSceneNode = new PlaySceneNode();
-        DoneSceneNode doneSceneNode = new DoneSceneNode();
+        PlayScene playScene = new PlayScene();
+        playScene.UpdateOrder = 8;
+        playScene.Active = false;
 
-        startSceneNode.NextSceneNode = readySceneNoed;
-        readySceneNoed.NextSceneNode = playSceneNode;
-        playSceneNode.NextSceneNode = doneSceneNode;
-        doneSceneNode.NextSceneNode = startSceneNode;
+        DoneScene doneScene = new DoneScene();
+        doneScene.UpdateOrder = 8;
+        doneScene.Active = false;
 
-        scene.CurrSceneNode = startSceneNode;
-        scene.CurrSceneNode.Entry();
+        startScene.NextScene = readyScene;
+        readyScene.NextScene = playScene;
+        playScene.NextScene = doneScene;
+        doneScene.NextScene = startScene;
+
+        startScene.Entry();
 
         WorldManager.Get().AddGameObject("Background", background);
-        WorldManager.Get().AddGameObject("Scene", scene);
+        WorldManager.Get().AddGameObject("StartScene", startScene);
+        WorldManager.Get().AddGameObject("ReadyScene", readyScene);
+        WorldManager.Get().AddGameObject("PlayScene", playScene);
+        WorldManager.Get().AddGameObject("DoneScene", doneScene);
     }
 
 
