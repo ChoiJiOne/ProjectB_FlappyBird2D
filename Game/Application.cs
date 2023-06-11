@@ -239,10 +239,10 @@ class ClientApplication
 #endif
 
         CommandLine.Parse(args);
-        FlappyBird2D Game = new FlappyBird2D();
+        FlappyBird2D game = new FlappyBird2D();
 
-        Game.Setup();
-        Game.Run();
-        Game.Cleanup();
+        game.Setup();
+        game.Run();
+        game.Cleanup();
     }
 }
