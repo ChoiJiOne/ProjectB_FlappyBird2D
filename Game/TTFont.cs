@@ -1,22 +1,24 @@
 using System;
+using System.IO;
+using System.Text.RegularExpressions;
 using SDL2;
 using System.Collections.Generic;
 
 /**
  * @brief 폰트 텍스처 아틀라스 내 문자 정보입니다.
  */
-struct Glyph
+class Glyph
 {
-    public int codePoint;
-    public int x0;
-    public int y0;
-    public int x1;
-    public int y1;
-    public float xoffset;
-    public float yoffset;
-    public float xoffset2;
-    public float yoffset2;
-    public float xadvance;
+    public int codePoint = 0;
+    public int x0 = 0;
+    public int y0 = 0;
+    public int x1 = 0;
+    public int y1 = 0;
+    public float xoffset = 0.0f;
+    public float yoffset = 0.0f;
+    public float xoffset2 = 0.0f;
+    public float yoffset2 = 0.0f;
+    public float xadvance = 0.0f;
 }
 
 
@@ -39,7 +41,7 @@ class TTFont : IContent
      */
     public TTFont(string glyphPath, string textureAtlasPath)
     {
-
+        ParseGlyphInfo(glyphPath);
     }
 
     
@@ -56,15 +58,80 @@ class TTFont : IContent
 
 
     /**
+     * @brief 글리프 정보를 포함한 ini 파일을 파싱합니다.
+     * 
+     * @param glyphPath 글리프 정보를 포함한 ini 파일 경로입니다.
+     * 
+     * @throws
+     * - 글리프 정보 파일이 ini 파일이 아니라면 예외를 던집니다.
+     * - 글리프 정보 파일이 유효하지 않으면 예외를 던집니다.
+     */
+    private void ParseGlyphInfo(string glyphPath)
+    {
+        string glyphFileContent = File.ReadAllText(glyphPath);
+        Regex sectionRegex = new Regex(@"\[(.*?)\](.*?)(?=\[|\z)", RegexOptions.Singleline);
+
+        MatchCollection sectionMatches = sectionRegex.Matches(glyphFileContent);
+
+        foreach (Match sectionMatche in sectionMatches)
+        {
+            string section = sectionMatche.Groups[1].Value.Trim();
+            string context = sectionMatche.Groups[2].Value.Trim();
+
+            string[] lines = context.Split(new[] { "\r\n" }, StringSplitOptions.None);
+            Dictionary<string, string> keyValues = new Dictionary<string, string>();
+
+            foreach (string line in lines)
+            {
+                string[] keyValue = line.Split('=');
+                keyValues.Add(keyValue[0], keyValue[1]);
+            }
+
+            if (Int32.TryParse(section, out int codePoint))
+            {
+                glyphs_.Add((char)(codePoint), new Glyph());
+
+                glyphs_[(char)(codePoint)].codePoint = codePoint;
+                glyphs_[(char)(codePoint)].x0 = Int32.Parse(keyValues["x0"]);
+                glyphs_[(char)(codePoint)].y0 = Int32.Parse(keyValues["y0"]);
+                glyphs_[(char)(codePoint)].x1 = Int32.Parse(keyValues["x1"]);
+                glyphs_[(char)(codePoint)].y1 = Int32.Parse(keyValues["y1"]);
+                glyphs_[(char)(codePoint)].xoffset = float.Parse(keyValues["xoffset"]);
+                glyphs_[(char)(codePoint)].yoffset = float.Parse(keyValues["yoffset"]);
+                glyphs_[(char)(codePoint)].xoffset2 = float.Parse(keyValues["xoffset2"]);
+                glyphs_[(char)(codePoint)].yoffset2 = float.Parse(keyValues["yoffset2"]);
+                glyphs_[(char)(codePoint)].xadvance = float.Parse(keyValues["xadvance"]);
+            }
+            else
+            {
+                if (section.Equals("Info"))
+                {
+                    beginCodePoint_ = Int32.Parse(keyValues["BeginCodePoint"]);
+                    endCodePoint_ = Int32.Parse(keyValues["EndCodePoint"]);
+                    textureAtlasSize_ = Int32.Parse(keyValues["BitmapSize"]);
+                    fontSize_ = float.Parse(keyValues["FontSize"]);
+                }
+            }
+        }
+    }
+    
+
+    /**
      * @brief 코드 포인트의 시작점입니다.
      */
-    private int beginCodePoint_;
+    private int beginCodePoint_ = 0;
 
 
     /**
      * @brief 코드 포인트의 끝점입니다.
      */
-    private int endCodePoint_;
+    private int endCodePoint_ = 0;
+
+
+    /**
+     * @brief 문자의 글리프 정보입니다.
+     */
+    private Dictionary<char, Glyph> glyphs_ = new Dictionary<char, Glyph>();
 
 
     /**
@@ -72,7 +139,7 @@ class TTFont : IContent
      * 
      * @note 텍스처 아틀라스의 가로 세로 크기는 동일합니다.
      */
-    private int textureAtlasSize_;
+    private int textureAtlasSize_ = 0;
 
 
     /**
@@ -84,5 +151,5 @@ class TTFont : IContent
     /**
      * @brief 폰트의 크기입니다.
      */
-    private float fontSize_;
+    private float fontSize_ = 0.0f;
 }
