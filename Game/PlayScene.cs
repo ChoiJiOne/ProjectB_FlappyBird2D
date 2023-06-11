@@ -11,7 +11,7 @@ class PlayScene : Scene
      */
     public override void Entry()
     {
-        Active = true; // 씬 활성화
+        base.Entry();
 
         Floor floor = WorldManager.Get().GetGameObject("Floor") as Floor;
         Bird bird = WorldManager.Get().GetGameObject("Bird") as Bird;
@@ -90,23 +90,6 @@ class PlayScene : Scene
 
         InputManager.Get().UnbindWindowEventAction(EWindowEvent.FOCUS_LOST);
 
-        NextScene.Entry();
-
-        DetectSwitch = false;
-        Active = false; // 씬 비활성화
-    }
-
-
-    /**
-     * @brief 게임의 플레이 씬을 업데이트합니다.
-     * 
-     * @param deltaSeconds 초단위 델타 시간값입니다.
-     */
-    public override void Tick(float deltaSeconds)
-    {
-        if (DetectSwitch)
-        {
-            Leave();
-        }
+        base.Leave();
     }
 }

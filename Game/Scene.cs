@@ -27,7 +27,10 @@ class Scene : GameObject
      * 
      * @note 이 메서드는 상속받는 하위 클래스에서 구현해야 합니다.
      */
-    public virtual void Entry() { }
+    public virtual void Entry() 
+    {
+        Active = true;
+    }
 
 
     /**
@@ -35,7 +38,25 @@ class Scene : GameObject
      * 
      * @note 이 메서드는 상속받는 하위 클래스에서 구현해야 합니다.
      */
-    public virtual void Leave() { }
+    public virtual void Leave() 
+    {
+        NextScene.Entry();
+
+        DetectSwitch = false;
+        Active = false;
+    }
+
+
+    /**
+     * @brief 씬 내의 게임 오브젝트를 삭제합니다.
+     */
+    public void CleanupGameObjects()
+    {
+        foreach (string gameObjectSignature in gameObjectSignatures_)
+        {
+            WorldManager.Get().RemoveGameObject(gameObjectSignature);
+        }
+    }
 
 
     /**
@@ -45,7 +66,13 @@ class Scene : GameObject
      * 
      * @param deltaSeconds 초단위 델타 시간값입니다.
      */
-    public override void Tick(float deltaSeconds) {}
+    public override void Tick(float deltaSeconds) 
+    {
+        if(bIsDetectSwitch_)
+        {
+            Leave();
+        }
+    }
 
 
     /**
