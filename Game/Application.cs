@@ -28,6 +28,13 @@ class FlappyBird2D
     {
         gameTimer_.Reset();
 
+        TTFont font = new TTFont(
+            "D:\\Work\\FlappyBird2D\\Content\\Font\\SeoulNamsanEB.ini",
+            "D:\\Work\\FlappyBird2D\\Content\\Font\\SeoulNamsanEB.png"
+        );
+
+        Color color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
+
         while (!bIsDone_)
         {
             gameTimer_.Tick();
@@ -35,6 +42,8 @@ class FlappyBird2D
 
             RenderManager.Get().Clear(Color.BLACK);
             WorldManager.Get().Tick(gameTimer_.GetDeltaSeconds());
+
+            RenderManager.Get().DrawText(ref font, "Hello World", new Vector2<float>(500.0f, 400.0f), color);
 
             RenderManager.Get().Present();
         }
