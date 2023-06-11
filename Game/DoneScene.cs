@@ -19,6 +19,7 @@ class DoneScene : Scene
 
         gameObjectSignatures_.Add("GameOverSlate");
         gameObjectSignatures_.Add("OkButton");
+        gameObjectSignatures_.Add("RankButton");
         gameObjectSignatures_.Add("ResultBoard");
         gameObjectSignatures_.Add("Floor");
         gameObjectSignatures_.Add("Bird");
@@ -43,12 +44,27 @@ class DoneScene : Scene
         gameOverSlate.MoveLength = 20.0f;
         gameOverSlate.CreateUIBody(new Vector2<float>(500.0f, 200.0f), 400.0f, 100.0f);
 
+        Button rankButton = new Button();
+        rankButton.UpdateOrder = 6;
+        rankButton.Active = true;
+        rankButton.UITexture = "RankButton";
+        rankButton.EventAction = () =>
+        {
+            DetectSwitch = true;
+
+            Sound doneSound = ContentManager.Get().GetSound("Done") as Sound;
+            doneSound.Reset();
+            doneSound.Play();
+        };
+        rankButton.ReduceRatio = 0.95f;
+        rankButton.CreateUIBody(new Vector2<float>(500.0f, 600.0f), 200.0f, 120.0f);
+        
         Button okButton = new Button();
         okButton.UpdateOrder = 6;
         okButton.Active = true;
         okButton.UITexture = "OkButton";
-        okButton.EventAction = () => 
-        { 
+        okButton.EventAction = () =>
+        {
             DetectSwitch = true;
 
             Sound doneSound = ContentManager.Get().GetSound("Done") as Sound;
@@ -56,7 +72,7 @@ class DoneScene : Scene
             doneSound.Play();
         };
         okButton.ReduceRatio = 0.95f;
-        okButton.CreateUIBody(new Vector2<float>(500.0f, 550.0f), 160.0f, 60.0f);
+        okButton.CreateUIBody(new Vector2<float>(500.0f, 750.0f), 160.0f, 60.0f);
 
         ResultBoard resultBoard = new ResultBoard();
         resultBoard.UpdateOrder = 6;
@@ -68,6 +84,7 @@ class DoneScene : Scene
 
         WorldManager.Get().AddGameObject("GameOverSlate", gameOverSlate);
         WorldManager.Get().AddGameObject("OkButton", okButton);
+        WorldManager.Get().AddGameObject("RankButton", rankButton);
         WorldManager.Get().AddGameObject("ResultBoard", resultBoard);
     }
 
