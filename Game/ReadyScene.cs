@@ -7,7 +7,7 @@ using System.Collections.Generic;
 class ReadyScene : Scene
 {
     /**
-     * @brief 게임의 준비 씬 노드에 입장합니다.
+     * @brief 게임의 준비 씬에 입장합니다.
      */
     public override void Entry()
     {
@@ -85,7 +85,7 @@ class ReadyScene : Scene
 
 
     /**
-     * @brief 게임의 준비 씬 노드로 부터 나갑니다.
+     * @brief 게임의 준비 씬으로부터 나갑니다.
      */
     public override void Leave()
     {

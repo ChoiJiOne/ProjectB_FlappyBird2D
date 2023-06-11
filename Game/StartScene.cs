@@ -7,7 +7,7 @@ using System.Collections.Generic;
 class StartScene : Scene
 {
     /**
-     * @brief 게임의 시작 씬 노드에 입장합니다.
+     * @brief 게임의 시작 씬에 입장합니다.
      */
     public override void Entry()
     {
@@ -59,7 +59,7 @@ class StartScene : Scene
 
 
     /**
-     * @brief 게임의 시작 씬 노드로 부터 나갑니다.
+     * @brief 게임의 시작 씬으로부터 부터 나갑니다.
      */
     public override void Leave()
     {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 class DoneScene : Scene
 {
     /**
-     * @brief 게임의 종료 씬 노드에 입장합니다.
+     * @brief 게임의 종료 씬에 입장합니다.
      */
     public override void Entry()
     {
@@ -90,7 +90,7 @@ class DoneScene : Scene
 
 
     /**
-     * @brief 게임의 종료 씬 노드에서 나갑니다.
+     * @brief 게임의 종료 씬으로부터 나갑니다.
      */
     public override void Leave()
     {
