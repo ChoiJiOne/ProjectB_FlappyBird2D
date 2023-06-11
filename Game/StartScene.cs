@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 
 /**
- * 게임의 시작 씬 노드입니다.
+ * 게임의 시작 씬 입니다.
  */
 class StartScene : Scene
 {

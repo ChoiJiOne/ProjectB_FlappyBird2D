@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 
 /**
- * @brief 게임의 준비 씬 노드입니다.
+ * @brief 게임의 준비 씬 입니다.
  */
 class ReadyScene : Scene
 {

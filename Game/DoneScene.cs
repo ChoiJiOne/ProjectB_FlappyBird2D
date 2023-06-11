@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 
 /**
- * @brief 게임의 종료 씬 노드입니다.
+ * @brief 게임의 종료 씬 입니다.
  */
 class DoneScene : Scene
 {
