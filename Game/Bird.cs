@@ -233,9 +233,8 @@ class Bird : GameObject
             rotate_ = MinRotate;
             bIsJump_ = true;
 
-            Scene scene = WorldManager.Get().GetGameObject("Scene") as Scene;
-            SceneNode currentSceneNode = scene.CurrSceneNode;
-            currentSceneNode.DetectSwitch = true;
+            Scene scene = WorldManager.Get().GetGameObject("ReadyScene") as Scene;
+            scene.DetectSwitch = true;
 
             PlaySound("Jump");
         }
@@ -315,12 +314,11 @@ class Bird : GameObject
 
         if(bIsLeaveInBackground_)
         {
-            Scene scene = WorldManager.Get().GetGameObject("Scene") as Scene;
-            SceneNode currentSceneNode = scene.CurrSceneNode;
-
-            if (currentSceneNode is PlaySceneNode)
+            Scene scene = WorldManager.Get().GetGameObject("PlayScene") as Scene;
+            if (scene is PlayScene)
             {
-                currentSceneNode.DetectSwitch = true;
+                scene.DetectSwitch = true;
+                Active = false;
             }
         }
     }
