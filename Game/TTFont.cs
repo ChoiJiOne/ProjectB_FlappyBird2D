@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 using SDL2;
 using System.Collections.Generic;
 
@@ -53,7 +54,7 @@ class TTFont : IContent
     {
         get => textureAtlas_;
     }
-
+    
 
     /**
      * @brief 트루 타입 폰트의 데이터를 명시적으로 정리합니다.
@@ -220,13 +221,45 @@ class TTFont : IContent
             throw new Exception("failed to load font texture atlas image...");
         }
 
-        textureAtlas_ = SDL.SDL_CreateTextureFromSurface(RenderManager.Get().GetRendererPtr(), textureAtlasSurface);
+        SDL.SDL_Surface surface = Marshal.PtrToStructure<SDL.SDL_Surface>(textureAtlasSurface);
+        int width = surface.w;
+        int height = surface.h;
+        byte[] pixels = new byte[width * height];
+
+        Marshal.Copy(surface.pixels, pixels, 0, width * height);
         SDL.SDL_FreeSurface(textureAtlasSurface);
+
+        textureAtlas_ = SDL.SDL_CreateTexture(
+            RenderManager.Get().GetRendererPtr(),
+            SDL.SDL_PIXELFORMAT_RGBA8888,
+            (int)(SDL.SDL_TextureAccess.SDL_TEXTUREACCESS_STATIC),
+            width,
+            height
+        );
 
         if (textureAtlas_ == IntPtr.Zero)
         {
             throw new Exception("failed to create font texture atlas resource...");
         }
+
+        uint[] atlasPixels = new uint[width * height];
+        IntPtr format = SDL.SDL_AllocFormat(SDL.SDL_PIXELFORMAT_RGBA8888);
+
+        for (int index = 0; index < width * height; ++index)
+        {
+            atlasPixels[index] = SDL.SDL_MapRGBA(format, 0xFF, 0xFF, 0xFF, pixels[index]);
+        }
+
+        IntPtr atlasPixelsPtr = Marshal.AllocHGlobal(atlasPixels.Length * sizeof(uint));
+        Marshal.Copy(atlasPixels, 0, atlasPixelsPtr, atlasPixels.Length);
+
+        if (SDL.SDL_UpdateTexture(textureAtlas_, IntPtr.Zero, atlasPixelsPtr, width * sizeof(uint)) != 0)
+        {
+            throw new Exception("failed to update texture atlas pixels...");
+        }
+
+        Marshal.FreeHGlobal(atlasPixelsPtr);
+        SDL.SDL_FreeFormat(format);
     }
 
 
