@@ -184,10 +184,15 @@ class FlappyBird2D
         doneScene.UpdateOrder = 8;
         doneScene.Active = false;
 
+        RankScene rankScene = new RankScene();
+        rankScene.UpdateOrder = 8;
+        rankScene.Active = false;
+
         startScene.NextScene = readyScene;
         readyScene.NextScene = playScene;
         playScene.NextScene = doneScene;
         doneScene.NextScene = startScene;
+        rankScene.NextScene = startScene;
 
         startScene.Entry();
 
@@ -196,6 +201,7 @@ class FlappyBird2D
         WorldManager.Get().AddGameObject("ReadyScene", readyScene);
         WorldManager.Get().AddGameObject("PlayScene", playScene);
         WorldManager.Get().AddGameObject("DoneScene", doneScene);
+        WorldManager.Get().AddGameObject("RankScene", rankScene);
     }
 
 
