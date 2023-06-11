@@ -51,6 +51,7 @@ class DoneScene : Scene
         rankButton.EventAction = () =>
         {
             DetectSwitch = true;
+            NextScene = WorldManager.Get().GetGameObject("RankScene") as Scene;
 
             Sound doneSound = ContentManager.Get().GetSound("Done") as Sound;
             doneSound.Reset();
@@ -66,6 +67,7 @@ class DoneScene : Scene
         okButton.EventAction = () =>
         {
             DetectSwitch = true;
+            NextScene = WorldManager.Get().GetGameObject("StartScene") as Scene;
 
             Sound doneSound = ContentManager.Get().GetSound("Done") as Sound;
             doneSound.Reset();
