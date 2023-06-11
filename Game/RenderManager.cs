@@ -305,6 +305,68 @@ class RenderManager
 
 
     /**
+     * @brief 텍스트를 백버퍼에 그립니다.
+     * 
+     * @param font 텍스트의 트루 타입 폰트 정보입니다.
+     * @param text 화면에 그릴 텍스트입니다.
+     * @param center 화면에 그릴 텍스트의 중심 좌표입니다.
+     * @param color 화면에 그릴 텍스트의 색상입니다.
+     * 
+     * @throws 텍스트가 유효하지 않으면 예외를 던집니다.
+     */
+    public void DrawText(ref TTFont font, string text, Vector2<float> center, Color color)
+    {
+        if(!font.IsValidText(text))
+        {
+            throw new Exception("invalid text for rendering...");
+        }
+
+        font.MeasureText(text, out int textWidth, out int textHeight);
+
+        Vector2<float> position;
+        position.x = center.x - (int)((float)textWidth / 2.0f);
+        position.y = center.y + (int)((float)textHeight / 2.0f);
+        
+        color.ConvertToByte(out byte r, out byte g, out byte b, out byte a);
+    
+        char[] characters = text.ToCharArray();
+        foreach (char character in characters)
+        {
+            if (SDL.SDL_SetTextureColorMod(font.Resource, r, g, b) != 0)
+            {
+                throw new Exception("failed to set texture atlas color mod...");
+            }
+
+            if(SDL.SDL_SetTextureAlphaMod(font.Resource, a) != 0)
+            {
+                throw new Exception("failed to set texture atlas alpha mod...");
+            }
+
+            Glyph glyph = font.GetGlyph(character);
+
+            SDL.SDL_Rect src;
+            src.x = glyph.x0;
+            src.y = glyph.y0;
+            src.w = glyph.x1 - glyph.x0;
+            src.h = glyph.y1 - glyph.y0;
+
+            SDL.SDL_Rect dst;
+            dst.x = (int)(position.x + glyph.xoffset);
+            dst.y = (int)(position.y + glyph.yoffset);
+            dst.w = glyph.x1 - glyph.x0;
+            dst.h = glyph.y1 - glyph.y0;
+
+            if(SDL.SDL_RenderCopy(renderer_, font.Resource, ref src, ref dst) != 0)
+            {
+                throw new Exception("failed to render character...");
+            }
+
+            position.x += (int)(glyph.xadvance);
+        }
+    }
+
+
+    /**
      * @brief 생성자는 외부에서 호출할 수 없도록 감춤니다.
      */
     private RenderManager() { }
