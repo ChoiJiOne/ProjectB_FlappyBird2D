@@ -42,6 +42,7 @@ class TTFont : IContent
     public TTFont(string glyphPath, string textureAtlasPath)
     {
         ParseGlyphInfo(glyphPath);
+        LoadTextureAtlas(textureAtlasPath);
     }
 
     
@@ -114,7 +115,31 @@ class TTFont : IContent
             }
         }
     }
-    
+
+
+    /**
+     * @brief 트루 타입 폰트의 텍스처 아틀라스를 로딩합니다.
+     * 
+     * @param textureAtlasPath 트루 타입 폰트의 텍스처 아틀라스 경로입니다.
+     */
+    private void LoadTextureAtlas(string textureAtlasPath)
+    {
+        IntPtr textureAtlasSurface = SDL_image.IMG_Load(textureAtlasPath);
+
+        if (textureAtlasSurface == IntPtr.Zero)
+        {
+            throw new Exception("failed to load font texture atlas image...");
+        }
+
+        textureAtlas_ = SDL.SDL_CreateTextureFromSurface(RenderManager.Get().GetRendererPtr(), textureAtlasSurface);
+        SDL.SDL_FreeSurface(textureAtlasSurface);
+
+        if (textureAtlas_ == IntPtr.Zero)
+        {
+            throw new Exception("failed to create font texture atlas resource...");
+        }
+    }
+
 
     /**
      * @brief 코드 포인트의 시작점입니다.
