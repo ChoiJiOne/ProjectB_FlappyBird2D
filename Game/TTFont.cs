@@ -231,7 +231,7 @@ class TTFont : IContent
 
         textureAtlas_ = SDL.SDL_CreateTexture(
             RenderManager.Get().GetRendererPtr(),
-            SDL.SDL_PIXELFORMAT_RGBA8888,
+            SDL.SDL_PIXELFORMAT_ABGR8888,
             (int)(SDL.SDL_TextureAccess.SDL_TEXTUREACCESS_STATIC),
             width,
             height
@@ -242,24 +242,31 @@ class TTFont : IContent
             throw new Exception("failed to create font texture atlas resource...");
         }
 
-        uint[] atlasPixels = new uint[width * height];
-        IntPtr format = SDL.SDL_AllocFormat(SDL.SDL_PIXELFORMAT_RGBA8888);
+        int format = 4;
+        byte[] atlasPixels = new byte[width * height * format];
 
         for (int index = 0; index < width * height; ++index)
         {
-            atlasPixels[index] = SDL.SDL_MapRGBA(format, 0xFF, 0xFF, 0xFF, pixels[index]);
+            atlasPixels[format * index + 0] = 0xFF;
+            atlasPixels[format * index + 1] = 0xFF;
+            atlasPixels[format * index + 2] = 0xFF;
+            atlasPixels[format * index + 3] = pixels[index];
         }
 
-        IntPtr atlasPixelsPtr = Marshal.AllocHGlobal(atlasPixels.Length * sizeof(uint));
+        IntPtr atlasPixelsPtr = Marshal.AllocHGlobal(atlasPixels.Length);
         Marshal.Copy(atlasPixels, 0, atlasPixelsPtr, atlasPixels.Length);
 
-        if (SDL.SDL_UpdateTexture(textureAtlas_, IntPtr.Zero, atlasPixelsPtr, width * sizeof(uint)) != 0)
+        if(SDL.SDL_SetTextureBlendMode(textureAtlas_, SDL.SDL_BlendMode.SDL_BLENDMODE_BLEND) != 0)
+        {
+            throw new Exception("failed to set texture atlas blending mode...");
+        }
+
+        if (SDL.SDL_UpdateTexture(textureAtlas_, IntPtr.Zero, atlasPixelsPtr, width * format) != 0)
         {
             throw new Exception("failed to update texture atlas pixels...");
         }
 
         Marshal.FreeHGlobal(atlasPixelsPtr);
-        SDL.SDL_FreeFormat(format);
     }
 
 
