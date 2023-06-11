@@ -14,6 +14,24 @@ class RankScene : Scene
         base.Entry();
 
         gameObjectSignatures_ = new List<string>();
+        gameObjectSignatures_.Add("OkButton");
+
+        Button okButton = new Button();
+        okButton.UpdateOrder = 6;
+        okButton.Active = true;
+        okButton.UITexture = "OkButton";
+        okButton.EventAction = () =>
+        {
+            DetectSwitch = true;
+
+            Sound doneSound = ContentManager.Get().GetSound("Done") as Sound;
+            doneSound.Reset();
+            doneSound.Play();
+        };
+        okButton.ReduceRatio = 0.95f;
+        okButton.CreateUIBody(new Vector2<float>(500.0f, 600.0f), 160.0f, 60.0f);
+
+        WorldManager.Get().AddGameObject("OkButton", okButton);
     }
 
 
@@ -22,6 +40,7 @@ class RankScene : Scene
      */
     public override void Leave()
     {
+        CleanupGameObjects();
         base.Leave();
     }
 }
