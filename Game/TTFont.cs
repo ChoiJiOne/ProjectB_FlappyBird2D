@@ -57,6 +57,29 @@ class TTFont : IContent
         }
     }
 
+    
+    /**
+     * @brief 텍스트가 유효한지 검사합니다.
+     * 
+     * @param text 검사를 수행할 텍스트입니다.
+     * 
+     * @return 텍스트가 유효하다면 true, 그렇지 않으면 false를 반환합니다.
+     */
+    public bool IsValidText(string text)
+    {
+        char[] characters = text.ToCharArray();
+
+        foreach(char character in characters)
+        {
+            if(!glyphs_.ContainsKey(character))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
     /**
      * @brief 글리프 정보를 포함한 ini 파일을 파싱합니다.
