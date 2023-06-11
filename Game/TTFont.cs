@@ -69,6 +69,11 @@ class TTFont : IContent
      */
     public void MeasureText(string text, out int outWidth, out int outHeight)
     {
+        if(!IsValidText(text))
+        {
+            throw new Exception("invalid text in font...");
+        }
+
         int textWidth = 0;
         int textHeight = -1;
 
@@ -112,6 +117,24 @@ class TTFont : IContent
         }
 
         return true;
+    }
+
+
+    /**
+     * @brief 글리프 정보를 얻습니다.
+     * 
+     * @param character 글리프 정보를 얻을 문자입니다.
+     * 
+     * @return 문자에 대응하는 글리프를 반환합니다.
+     */
+    public Glyph GetGlyph(char character)
+    {
+        if (!glyphs_.ContainsKey(character))
+        {
+            throw new Exception("invalid character in font...");
+        }
+
+        return glyphs_[character];
     }
 
 
