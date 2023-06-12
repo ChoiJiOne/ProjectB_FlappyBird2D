@@ -7,6 +7,22 @@ using System.Collections.Generic;
 class RankScene : Scene
 {
     /**
+     * @brief 랭킹 씬에 대한 Getter/Setter 입니다.
+     */
+    public string GamePlayTime
+    {
+        get => gamePlayTime_;
+        set => gamePlayTime_ = value;
+    }
+
+    public int CountPassPipe
+    {
+        get => countPassPipe_;
+        set => countPassPipe_ = value;
+    }
+
+
+    /**
      * @brief 플레이어의 랭킹 씬에 입장합니다.
      */
     public override void Entry()
@@ -43,4 +59,16 @@ class RankScene : Scene
         CleanupGameObjects();
         base.Leave();
     }
+
+
+    /**
+     * @brief 게임 플레이가 끝난 시각입니다.
+     */
+    private string gamePlayTime_;
+
+
+    /**
+     * @brief 플레이어가 통과한 파이프의 수입니다.
+     */
+    private int countPassPipe_ = 0;
 }
