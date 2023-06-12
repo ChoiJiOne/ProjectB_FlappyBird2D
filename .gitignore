@@ -4,6 +4,7 @@
 *.sln
 *.csproj
 *.db
+*.zip
 Properties
 bin/Debug
 bin/Release
