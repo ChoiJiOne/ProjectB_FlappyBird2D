@@ -16,6 +16,8 @@ class CommandLine
      */
     public static void Parse(string[] args)
     {
+        Logger.Info("parse command line argument");
+
         foreach (string arg in args)
         {
             string[] tokens = arg.Split('=');
