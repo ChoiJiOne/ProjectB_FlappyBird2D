@@ -152,10 +152,7 @@ workspace "FlappyBird2D"
 
         -- C# 버전을 8.0으로 설정합니다.
         csversion("8.0")
-
-        -- .Net Framework 버전을 설정합니다.
-        dotnetframework "4.5"
-
+        
         -- 포인터 사용을 위해 활성화합니다.
         clr "Unsafe"
 
