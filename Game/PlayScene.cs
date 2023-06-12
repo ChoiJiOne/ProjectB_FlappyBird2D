@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 
@@ -87,6 +88,15 @@ class PlayScene : Scene
         {
             pipe.Movable = false;
         }
+
+        Bird bird = WorldManager.Get().GetGameObject("Bird") as Bird;
+
+        RankScene rankScene = WorldManager.Get().GetGameObject("RankScene") as RankScene;
+        rankScene.CountPassPipe = bird.PassPipe;
+        rankScene.GamePlayTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+
+        Database playRankDB = ContentManager.Get().GetDatabase("PlayRank");
+        playRankDB.Execute(string.Format("INSERT INTO PlayRank VALUES ('{0}', {1})", rankScene.GamePlayTime, rankScene.CountPassPipe));
 
         InputManager.Get().UnbindWindowEventAction(EWindowEvent.FOCUS_LOST);
 
