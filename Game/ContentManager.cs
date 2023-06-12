@@ -178,6 +178,60 @@ class ContentManager
 
 
     /**
+     * @brief 데이터베이스 리소스를 생성합니다.
+     * 
+     * @note 이때, 데이터베이스 리소스의 경로는 Content 폴더 기준입니다.
+     * 
+     * @param signature 다른 데이터베이스 리소스와 구분하기 위한 시그니처 값입니다.
+     * @param path 데이터베이스 리소스의 경로입니다. 
+     * 
+     * @throws 
+     * - 시그니처 값이 이미 존재하면 예외를 던집니다.
+     * - 데이터베이스 리소스 생성에 실패하면 예외를 던집니다.
+     */
+    public Database CreateDatabase(string signature, string path)
+    {
+        if (IsValid(signature))
+        {
+            throw new Exception("collision database resource signature...");
+        }
+
+        Database database = new Database(contentPath_ + path);
+        contents_.Add(signature, database);
+
+        return database;
+    }
+
+
+    /**
+     * @brief 데이터베이스 리소스를 얻습니다.
+     * 
+     * @param signature 데이터베이스 리소스에 대응하는 시그니처 값입니다.
+     * 
+     * @throws 
+     * 시그니처 값에 대응하는 데이터베이스 리소스가 존재하지 않으면 예외를 던집니다.
+     * 시그니처 값에 대응하는 컨텐츠가 데이터베이스가 아니면 예외를 던집니다.
+     * 
+     * @return 시그니처 값에 대응하는 데이터베이스 리소스입니다.
+     */
+    public Database GetDatabase(string signature)
+    {
+        if (!IsValid(signature))
+        {
+            throw new Exception("can't find database resource from signature...");
+        }
+
+        IContent content = contents_[signature];
+        if (!(content is Database))
+        {
+            throw new Exception("signature isn't database resource...");
+        }
+
+        return (content as Database);
+    }
+    
+
+    /**
      * @brief 게임 컨텐츠를 삭제합니다.
      * 
      * @note 시그니처 값에 대응하는 게임 컨텐츠 리소스가 존재하지 않으면 아무 동작도 수행하지 않습니다.
