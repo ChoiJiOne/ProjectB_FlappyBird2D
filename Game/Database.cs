@@ -1,3 +1,4 @@
+using System.Data;
 using System.Data.SQLite;
 
 
@@ -46,7 +47,25 @@ class Database : IContent
         return (executeResult == 1);
     }
 
-    
+
+    /**
+     * @brief SQL문을 실행하여 DB 내의 데이터를 얻습니다.
+     * 
+     * @param command 실행할 SQL입니다.
+     * 
+     * @return DB의 대응하는 데이터 셋을 반환합니다.
+     */
+    public DataSet Select(string command)
+    {
+        DataSet dataSet = new DataSet();
+
+        SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter(command, sqlConnection_);
+        dataAdapter.Fill(dataSet);
+
+        return dataSet;
+    }
+
+
     /**
      * @brief SQLite 데이터베이스에 대한 연결을 나타냅니다.
      * 
