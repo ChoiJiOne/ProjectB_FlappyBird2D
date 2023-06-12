@@ -9,6 +9,18 @@ class RankBoard : GameObject
     /**
      * @brief 플레이어의 랭킹을 보여주는 오브젝트에 대한 Getter/Setter입니다.
      */
+    public Vector2<float> BasePosition
+    {
+        get => basePosition_;
+        set => basePosition_ = value;
+    }
+
+    public float Stride
+    {
+        get => stride_;
+        set => stride_ = value;
+    }
+
     public List<KeyValuePair<string, int>> TopPlayRank
     {
         get => topPlayRank_;
@@ -35,8 +47,38 @@ class RankBoard : GameObject
      */
     public override void Tick(float deltaSeconds)
     {
+        TTFont font = ContentManager.Get().GetTTFont("SeoulNamsanEB");
 
+        Vector2<float> position;
+        position.x = basePosition_.x;
+        position.y = basePosition_.y;
+
+        RenderManager.Get().DrawText(ref font, "TOP 3 RANK", position, Color.BLUE);
+
+        foreach(KeyValuePair<string, int> topPlayRank in topPlayRank_)
+        {
+            position.y += stride_;
+            RenderManager.Get().DrawText(ref font, string.Format("{0} | {1}", topPlayRank.Key, topPlayRank.Value), position, Color.WHITE);
+        }
+
+        position.y += stride_;
+        RenderManager.Get().DrawText(ref font, "YOUR", position, Color.RED);
+
+        position.y += stride_;
+        RenderManager.Get().DrawText(ref font, string.Format("{0} | {1}", newGamePlayTime_, newCountPassPipe_), position, Color.WHITE);
     }
+
+
+    /**
+     * @brief UI의 기준 위치입니다.
+     */
+    private Vector2<float> basePosition_;
+
+
+    /**
+     * @brief 표시될 문자열 간의 위치 간격입니다.
+     */
+    private float stride_;
 
 
     /**
