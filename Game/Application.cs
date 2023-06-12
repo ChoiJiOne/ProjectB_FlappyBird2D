@@ -17,6 +17,7 @@ class FlappyBird2D
         SetupCoreProperties();
         LoadTextureResource();
         LoadSoundResource();
+        LoadDatabase();
         GenerateGameObjects();
     }
 
@@ -154,6 +155,32 @@ class FlappyBird2D
         {
             Sound soundResource = ContentManager.Get().CreateSound(sound.Key, "Audio\\" + sound.Value);
             soundResource.SetLooping(false);
+        }
+    }
+
+    
+    /**
+     * @brief 전체 데이터베이스를 로딩합니다.
+     * 
+     * @throws 데이터베이스 로딩에 실패하면 예외를 던집니다.
+     */
+    private void LoadDatabase()
+    {
+        string[] dbFilePaths = System.IO.Directory.GetFiles(CommandLine.GetValue("Content") + "DB\\", "*.db");
+        Dictionary<string, string> databases = new Dictionary<string, string>();
+
+        foreach (string dbFilePath in dbFilePaths)
+        {
+            string[] tokens = dbFilePath.Split('\\');
+            string dbFile = tokens.Last();
+
+            string[] dbFileTokens = dbFile.Split('.');
+            databases.Add(dbFileTokens.First(), dbFile);
+        }
+
+        foreach (KeyValuePair<string, string> database in databases)
+        {
+            ContentManager.Get().CreateDatabase(database.Key, "DB\\" + database.Value);
         }
     }
 
