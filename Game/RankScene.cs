@@ -1,3 +1,5 @@
+using System;
+using System.Data;
 using System.Collections.Generic;
 
 
@@ -47,6 +49,8 @@ class RankScene : Scene
         okButton.ReduceRatio = 0.95f;
         okButton.CreateUIBody(new Vector2<float>(500.0f, 600.0f), 160.0f, 60.0f);
 
+        List<KeyValuePair<string, int>> topPlayRank = GetTop3PlayRank();
+
         WorldManager.Get().AddGameObject("OkButton", okButton);
     }
 
@@ -58,6 +62,31 @@ class RankScene : Scene
     {
         CleanupGameObjects();
         base.Leave();
+    }
+
+
+    /**
+     * @brief 데이터베이스로부터 상위 3개의 기록을 가져옵니다.
+     * 
+     * @return 상위 3개의 기록을 반환합니다.
+     */
+    private List<KeyValuePair<string, int>> GetTop3PlayRank()
+    {
+        List<KeyValuePair<string, int>> topPlayRank = new List<KeyValuePair<string, int>>();
+
+        Database playRank = ContentManager.Get().GetDatabase("PlayRank");
+        DataSet playRankDataSet = playRank.Select("SELECT * FROM PlayRank ORDER BY Pipe DESC LIMIT 3;");
+        DataTable playRankDataTable = playRankDataSet.Tables[0];
+
+        foreach (DataRow dataRows in playRankDataTable.Rows)
+        {
+            string playTime = (string)(dataRows.ItemArray[0]);
+            Int64 pipe = (Int64)(dataRows.ItemArray[1]);
+
+            topPlayRank.Add(new KeyValuePair<string, int>(playTime, (int)pipe));
+        }
+
+        return topPlayRank;
     }
 
 
