@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.SQLite;
 using SDL2;
 
 
@@ -158,7 +159,7 @@ class FlappyBird2D
         }
     }
 
-    
+
     /**
      * @brief 전체 데이터베이스를 로딩합니다.
      * 
@@ -166,21 +167,24 @@ class FlappyBird2D
      */
     private void LoadDatabase()
     {
-        string[] dbFilePaths = System.IO.Directory.GetFiles(CommandLine.GetValue("Content") + "DB\\", "*.db");
-        Dictionary<string, string> databases = new Dictionary<string, string>();
+        string playRankDBFile = CommandLine.GetValue("Content") + "DB\\PlayRank.db";
+        bool bIsCreateDBFile = false;
 
-        foreach (string dbFilePath in dbFilePaths)
+        if (!System.IO.File.Exists(playRankDBFile))
         {
-            string[] tokens = dbFilePath.Split('\\');
-            string dbFile = tokens.Last();
-
-            string[] dbFileTokens = dbFile.Split('.');
-            databases.Add(dbFileTokens.First(), dbFile);
+            bIsCreateDBFile = true;
+            SQLiteConnection.CreateFile(playRankDBFile);
         }
 
-        foreach (KeyValuePair<string, string> database in databases)
+        Database playRankDB = ContentManager.Get().CreateDatabase("PlayRank", "DB\\PlayRank.db");
+
+        if(bIsCreateDBFile)
         {
-            ContentManager.Get().CreateDatabase(database.Key, "DB\\" + database.Value);
+            playRankDB.Execute("CREATE TABLE \"PlayRank\" (" +
+                "\"Time\"	TEXT NOT NULL," +
+                "\"Pipe\"	INTEGER NOT NULL," +
+                "PRIMARY KEY(\"Time\",\"Pipe\")" +
+            ")");
         }
     }
 
