@@ -33,6 +33,7 @@ class RankScene : Scene
 
         gameObjectSignatures_ = new List<string>();
         gameObjectSignatures_.Add("OkButton");
+        gameObjectSignatures_.Add("RankBoard");
 
         Button okButton = new Button();
         okButton.UpdateOrder = 6;
@@ -48,10 +49,18 @@ class RankScene : Scene
         };
         okButton.ReduceRatio = 0.95f;
         okButton.CreateUIBody(new Vector2<float>(500.0f, 600.0f), 160.0f, 60.0f);
-
-        List<KeyValuePair<string, int>> topPlayRank = GetTop3PlayRank();
+        
+        RankBoard rankBoard = new RankBoard();
+        rankBoard.UpdateOrder = 2;
+        rankBoard.Active = true;
+        rankBoard.BasePosition = new Vector2<float>(500.0f, 200.0f);
+        rankBoard.Stride = 50.0f;
+        rankBoard.TopPlayRank = GetTop3PlayRank();
+        rankBoard.NewGamePlayTime = gamePlayTime_;
+        rankBoard.NewCountPassPipe = countPassPipe_;
 
         WorldManager.Get().AddGameObject("OkButton", okButton);
+        WorldManager.Get().AddGameObject("RankBoard", rankBoard);
     }
 
 
