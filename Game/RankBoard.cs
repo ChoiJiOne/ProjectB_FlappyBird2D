@@ -53,7 +53,7 @@ class RankBoard : GameObject
         position.x = basePosition_.x;
         position.y = basePosition_.y;
 
-        RenderManager.Get().DrawText(ref font, "TOP 3 RANK", position, Color.BLUE);
+        RenderManager.Get().DrawText(ref font, "TOP 3", position, Color.BLUE);
 
         foreach(KeyValuePair<string, int> topPlayRank in topPlayRank_)
         {
