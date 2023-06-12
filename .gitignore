@@ -1,7 +1,9 @@
 .vs
 *.dmp
+*.txt
 *.sln
 *.csproj
+*.db
 Properties
 bin/Debug
 bin/Release
