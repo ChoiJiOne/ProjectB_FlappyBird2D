@@ -15,6 +15,8 @@ class FlappyBird2D
      */
     public void Setup()
     {
+        Logger.Info("setup flappy bird 2d game");
+
         SetupCoreProperties();
         LoadTextureResource();
         LoadSoundResource();
@@ -29,6 +31,8 @@ class FlappyBird2D
      */
     public void Run()
     {
+        Logger.Info("play flappy bird 2d game");
+
         gameTimer_.Reset();
         
         while (!bIsDone_)
@@ -49,6 +53,8 @@ class FlappyBird2D
      */
     public void Cleanup()
     {
+        Logger.Info("cleanup flappy bird 2d game");
+
         SDL.SDL_DestroyWindow(window_);
 
         WorldManager.Get().Cleanup();
@@ -281,6 +287,7 @@ class ClientApplication
      */
     static void Main(string[] args)
     {
+        Logger.Info("run flappy bird 2d game");
         AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CrashHandler.DetectApplicationCrash);
 
 #if SHIPPING
