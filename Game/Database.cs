@@ -33,6 +33,22 @@ class Database : IContent
 
 
     /**
+     * @brief SQL문을 실행합니다.
+     * 
+     * @param command 실행할 SQL입니다.
+     * 
+     * @return SQL문을 실행하는 데 성공했다면 true, 그렇지 않으면 false를 반환합니다.
+     */
+    public bool Execute(string command)
+    {
+        SQLiteCommand sqlCommand = new SQLiteCommand(command, sqlConnection_);
+        int executeResult = sqlCommand.ExecuteNonQuery();
+        
+        return (executeResult == 1);
+    }
+
+    
+    /**
      * @brief SQLite 데이터베이스에 대한 연결을 나타냅니다.
      * 
      * @see https://learn.microsoft.com/ko-kr/dotnet/api/microsoft.data.sqlite.sqliteconnection?view=msdata-sqlite-7.0.0
