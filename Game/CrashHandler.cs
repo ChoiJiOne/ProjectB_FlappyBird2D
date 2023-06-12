@@ -50,7 +50,16 @@ class CrashHandler
      */
     public static void DetectApplicationCrash(object Sender, UnhandledExceptionEventArgs ExceptionEvent)
     {
-        string crashDumpFileName = CommandLine.GetValue("Crash") + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".dmp";
+        string crashDirectory = CommandLine.GetValue("Crash") + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+        DirectoryInfo directoryInfo = new DirectoryInfo(crashDirectory);
+
+        if(!directoryInfo.Exists)
+        {
+            directoryInfo.Create();
+        }
+
+        string crashDumpFileName = crashDirectory + "\\" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".dmp";
+        string logFileName = crashDirectory + "\\" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".txt";
 
         MINIDUMP_EXCEPTION_INFORMATION exceptionInfo = new MINIDUMP_EXCEPTION_INFORMATION();
         exceptionInfo.ClientPointers = 1;
@@ -70,8 +79,9 @@ class CrashHandler
         );
 
         crashDumpFile.Close();
+        Logger.Export(logFileName);
 
-        if(!bIsSuccess)
+        if (!bIsSuccess)
         {
             System.Console.WriteLine("failed to create crash dump file : %s...", crashDumpFileName);
         }
