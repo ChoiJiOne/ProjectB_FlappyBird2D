@@ -181,6 +181,7 @@ workspace "FlappyBird2D"
         links {
             "System",
             "AudioModule",
+            "System.Data",
             "SQLite.Interop",
             "System.Data.SQLite",
             "System.Data.SQLite.Linq",
