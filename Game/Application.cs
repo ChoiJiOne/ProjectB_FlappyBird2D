@@ -19,6 +19,7 @@ class FlappyBird2D
         LoadTextureResource();
         LoadSoundResource();
         LoadDatabase();
+        LoadTTFont();
         GenerateGameObjects();
     }
 
@@ -161,7 +162,7 @@ class FlappyBird2D
 
 
     /**
-     * @brief 전체 데이터베이스를 로딩합니다.
+     * @brief 데이터베이스를 로딩합니다.
      * 
      * @throws 데이터베이스 로딩에 실패하면 예외를 던집니다.
      */
@@ -186,6 +187,17 @@ class FlappyBird2D
                 "PRIMARY KEY(\"Time\",\"Pipe\")" +
             ")");
         }
+    }
+
+
+    /**
+     * @brief 트루 타입 폰트를 로딩합니다.
+     * 
+     * @throws 트루 타입 폰트 로딩에 실패하면 예외를 던집니다.
+     */
+    private void LoadTTFont()
+    {
+        ContentManager.Get().CreateTTFont("SeoulNamsanEB", "Font\\SeoulNamsanEB.ini", "Font\\SeoulNamsanEB.png");
     }
 
 
