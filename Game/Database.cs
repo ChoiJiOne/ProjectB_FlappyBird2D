@@ -1,4 +1,3 @@
-using System.Data;
 using System.Data.SQLite;
 
 
@@ -53,5 +52,5 @@ class Database : IContent
      * 
      * @see https://learn.microsoft.com/ko-kr/dotnet/api/microsoft.data.sqlite.sqliteconnection?view=msdata-sqlite-7.0.0
      */
-    SQLiteConnection sqlConnection_;
+    private SQLiteConnection sqlConnection_;
 }
