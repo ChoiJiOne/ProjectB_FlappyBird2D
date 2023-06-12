@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.SQLite;
@@ -174,6 +175,14 @@ class FlappyBird2D
      */
     private void LoadDatabase()
     {
+        string dbDirectory = CommandLine.GetValue("Content") + "DB";
+        DirectoryInfo directoryInfo = new DirectoryInfo(dbDirectory);
+
+        if (!directoryInfo.Exists)
+        {
+            directoryInfo.Create();
+        }
+
         string playRankDBFile = CommandLine.GetValue("Content") + "DB\\PlayRank.db";
         bool bIsCreateDBFile = false;
 
