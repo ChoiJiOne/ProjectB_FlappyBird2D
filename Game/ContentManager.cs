@@ -178,6 +178,61 @@ class ContentManager
 
 
     /**
+     * @brief 트루 타입 폰트 리소스를 생성합니다.
+     * 
+     * @note 이때, 트루 타입 폰트 리소스의 경로는 Content 폴더 기준입니다.
+     * 
+     * @param signature 다른 사운드 리소스와 구분하기 위한 시그니처 값입니다.
+     * @param glyphPath 글리프 정보를 포함한 ini 파일 경로입니다.
+     * @param textureAtlasPath 트루 타입 폰트의 텍스처 아틀라스 경로입니다.
+     * 
+     * @throws 
+     * - 시그니처 값이 이미 존재하면 예외를 던집니다.
+     * - 트루 타입 폰트 리소스 생성에 실패하면 예외를 던집니다.
+     */
+    public TTFont CreateTTFont(string signature, string glyphPath, string textureAtlasPath)
+    {
+        if (IsValid(signature))
+        {
+            throw new Exception("collision true type font resource signature...");
+        }
+
+        TTFont font = new TTFont(contentPath_ + glyphPath, contentPath_ + textureAtlasPath);
+        contents_.Add(signature, font);
+
+        return font;
+    }
+
+
+    /**
+     * @brief 트루 타입 폰트 리소스를 얻습니다.
+     * 
+     * @param signature 트루 타입 폰트 리소스에 대응하는 시그니처 값입니다.
+     * 
+     * @throws 
+     * 시그니처 값에 대응하는 트루 타입 폰트 리소스가 존재하지 않으면 예외를 던집니다.
+     * 시그니처 값에 대응하는 컨텐츠가 사운드가 아니면 예외를 던집니다.
+     * 
+     * @return 시그니처 값에 대응하는 트루 타입 폰트 리소스입니다.
+     */
+    public TTFont GetTTFont(string signature)
+    {
+        if (!IsValid(signature))
+        {
+            throw new Exception("can't find true type font resource from signature...");
+        }
+
+        IContent content = contents_[signature];
+        if (!(content is TTFont))
+        {
+            throw new Exception("signature isn't true type font resource...");
+        }
+
+        return (content as TTFont);
+    }
+
+
+    /**
      * @brief 데이터베이스 리소스를 생성합니다.
      * 
      * @note 이때, 데이터베이스 리소스의 경로는 Content 폴더 기준입니다.
