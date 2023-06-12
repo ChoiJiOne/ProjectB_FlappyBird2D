@@ -53,6 +53,11 @@ class PlayScene : Scene
             EWindowEvent.FOCUS_LOST,
             () =>
             {
+                if(pressButton.UITexture.Equals("ContinueButton"))
+                {
+                    return;
+                }
+
                 pressButton.UITexture = "ContinueButton";
 
                 bird.Movable = !bird.Movable;
