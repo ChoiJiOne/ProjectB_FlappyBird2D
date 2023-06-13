@@ -21,7 +21,16 @@ workspace "FlappyBird2D"
 
     -- 폰트 아틀라스 생성 툴 소스 경로를 설정합니다.
     fontatlas="%{wks.location}/../FontAltasTool"
-    
+
+    -- 크래시 패킷 클래스 라이브러리 경로를 설정합니다.
+    crashPacket="%{wks.location}/../CrashPacket"
+
+    -- 크래시 전송 툴의 경로를 설정합니다.
+    crashReportSender="%{wks.location}/../CrashReportSender"
+
+    -- 크래시 수집 툴의 경로를 설정합니다.
+    crashReportCollector="%{wks.location}/../CrashReportCollector"
+
     -- 서드파티 라이브러리 경로를 설정합니다.
     thirdparty="%{wks.location}/../ThirdParty"
 
@@ -191,6 +200,170 @@ workspace "FlappyBird2D"
             "Content=%{wks.location}..\\Content\\",
             "IP=127.0.0.1",
             "PORT=7777",
+        }
+
+        -- Debug 빌드의 설정을 수행합니다.
+        filter "configurations:Debug"
+            defines { "DEBUG" }
+            runtime  "Debug"
+            optimize "Off"
+            symbols "On"
+        
+        -- Release 빌드의 설정을 수행합니다.
+        filter "configurations:Release"
+            defines { "NDEBUG", "RELEASE" }
+            runtime "Release"
+            optimize "On"
+            symbols "On"
+
+        -- Shipping 빌드의 설정을 수행합니다.
+        filter "configurations:Shipping"
+            defines { "NDEBUG", "SHIPPING" }
+            runtime "Release"
+            optimize "Full"
+            symbols "Off"
+
+
+    -- 크래시 패킷 전송 라이브러리 프로젝트입니다.
+    project "CrashPacket"
+        -- 프로젝트의 종류를 설정합니다.
+        kind "SharedLib"
+
+        -- 프로젝트의 언어를 설정합니다.
+        language "C#"
+
+        -- C# 버전을 8.0으로 설정합니다.
+        csversion("8.0")
+        
+        -- 경고 무시 옵션 추가
+        disablewarnings { 
+            "MSB3245", 
+            "MSB3246", 
+        }
+
+        -- 소스 코드 경로를 추가합니다.
+        includedirs { "%{crashPacket}", }
+
+        -- 파일을 추가합니다.
+        files { "%{crashPacket}/*", }
+
+        -- 외부 라이브러리를 추가합니다.
+        links {
+            "System",
+            "System.Data",
+            "System.Net",
+            "System.Net.Sockets",
+            "System.Runtime.Serialization",
+        }
+
+        -- Debug 빌드의 설정을 수행합니다.
+        filter "configurations:Debug"
+            defines { "DEBUG" }
+            runtime  "Debug"
+            optimize "Off"
+            symbols "On"
+        
+        -- Release 빌드의 설정을 수행합니다.
+        filter "configurations:Release"
+            defines { "NDEBUG", "RELEASE" }
+            runtime "Release"
+            optimize "On"
+            symbols "On"
+
+        -- Shipping 빌드의 설정을 수행합니다.
+        filter "configurations:Shipping"
+            defines { "NDEBUG", "SHIPPING" }
+            runtime "Release"
+            optimize "Full"
+            symbols "Off"
+
+
+    -- 크래시를 전송하는 프로젝트입니다.
+    project "CrashReportSender"
+        -- 프로젝트의 종류를 설정합니다.
+        kind "ConsoleApp"
+
+        -- 프로젝트의 언어를 설정합니다.
+        language "C#"
+
+        -- C# 버전을 8.0으로 설정합니다.
+        csversion("8.0")
+        
+        -- 경고 무시 옵션 추가
+        disablewarnings { 
+            "MSB3245", 
+            "MSB3246", 
+        }
+
+        -- 소스 코드 경로를 추가합니다.
+        includedirs { "%{crashReportSender}", }
+
+        -- 파일을 추가합니다.
+        files { "%{crashReportSender}/*", }
+
+        -- 외부 라이브러리를 추가합니다.
+        links {
+            "CrashPacket",
+            "System",
+            "System.Data",
+            "System.Net",
+            "System.Net.Sockets",
+            "System.Runtime.Serialization",
+        }
+
+        -- Debug 빌드의 설정을 수행합니다.
+        filter "configurations:Debug"
+            defines { "DEBUG" }
+            runtime  "Debug"
+            optimize "Off"
+            symbols "On"
+        
+        -- Release 빌드의 설정을 수행합니다.
+        filter "configurations:Release"
+            defines { "NDEBUG", "RELEASE" }
+            runtime "Release"
+            optimize "On"
+            symbols "On"
+
+        -- Shipping 빌드의 설정을 수행합니다.
+        filter "configurations:Shipping"
+            defines { "NDEBUG", "SHIPPING" }
+            runtime "Release"
+            optimize "Full"
+            symbols "Off"
+
+
+    -- 크래시를 수집하는 프로젝트입니다.
+    project "CrashReportCollector"
+        -- 프로젝트의 종류를 설정합니다.
+        kind "ConsoleApp"
+
+        -- 프로젝트의 언어를 설정합니다.
+        language "C#"
+
+        -- C# 버전을 8.0으로 설정합니다.
+        csversion("8.0")
+        
+        -- 경고 무시 옵션 추가
+        disablewarnings { 
+            "MSB3245", 
+            "MSB3246", 
+        }
+
+        -- 소스 코드 경로를 추가합니다.
+        includedirs { "%{crashReportCollector}", }
+
+        -- 파일을 추가합니다.
+        files { "%{crashReportCollector}/*", }
+
+        -- 외부 라이브러리를 추가합니다.
+        links {
+            "CrashPacket",
+            "System",
+            "System.Data",
+            "System.Net",
+            "System.Net.Sockets",
+            "System.Runtime.Serialization",
         }
 
         -- Debug 빌드의 설정을 수행합니다.
