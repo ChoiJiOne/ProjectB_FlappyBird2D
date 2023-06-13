@@ -26,6 +26,22 @@ public class CrashPacketRequestBody : ISerialize
 
 
     /**
+     * @brief 파일 전송을 요청했을 때의 크래시 패킷 바디의 Getter/Setter입니다.
+     */
+    public long FileSize
+    {
+        get => fileSize_;
+        set => fileSize_ = value;
+    }
+
+    public byte[] FileName
+    {
+        get => fileName_;
+        set => fileName_ = value;
+    }
+    
+
+    /**
      * @brief 파일 전송을 요청했을 때의 크래시 패킷 바디 바이트 버퍼를 얻습니다.
      * 
      * @return 파일 전송을 요청했을 때의 크래시 패킷 바디 바이트 버퍼를 반환합니다.
@@ -85,6 +101,22 @@ public class CrashPacketResponseBody : ISerialize
     {
         packetID_ = BitConverter.ToUInt32(bodyBytes, 0);
         response_ = bodyBytes[4];
+    }
+
+
+    /**
+     * @brief 응답했을 때의 크래시 패킷 바디의 Getter/Setter입니다.
+     */
+    public uint PacketID
+    {
+        get => packetID_;
+        set => packetID_ = value;
+    }
+
+    public byte Response
+    {
+        get => response_;
+        set => response_ = value;
     }
 
 
@@ -152,6 +184,16 @@ public class CrashPacketDataBody : ISerialize
 
 
     /**
+     * @brief 데이터가 포함된 크래시 패킷 바디의 Getter/Setter입니다.
+     */
+    public byte[] Data
+    {
+        get => data_;
+        set => data_ = value;
+    }
+
+
+    /**
      * @brief 데이터가 포함된 크래시 패킷 바디 바이트 버퍼를 얻습니다.
      * 
      * @return 데이터가 포함된  크래시 패킷 바디 바이트 버퍼를 반환합니다.
@@ -200,6 +242,22 @@ public class CrashPacketResultBody : ISerialize
     {
         packetID_ = BitConverter.ToUInt32(bodyBytes, 0);
         result_ = bodyBytes[4];
+    }
+
+
+    /**
+     * @brief 패킷 전송 결과를 포함한 크래시 패킷 바디의 Getter/Setter 입니다.
+     */
+    public uint PacketID
+    {
+        get => packetID_;
+        set => packetID_ = value;
+    }
+
+    public byte Result
+    {
+        get => result_;
+        set => result_ = value;
     }
 
 
