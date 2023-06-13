@@ -198,6 +198,8 @@ workspace "FlappyBird2D"
         debugargs {
             "Crash=%{wks.location}..\\Crash\\",
             "Content=%{wks.location}..\\Content\\",
+            "IP=127.0.0.1",
+            "PORT=7777",
         }
 
         -- Debug 빌드의 설정을 수행합니다.
