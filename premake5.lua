@@ -19,18 +19,9 @@ workspace "FlappyBird2D"
     -- 오디오 모듈 경로를 설정합니다.
     audiomodule="%{wks.location}/../AudioModule"
 
-    -- 데이터베이스 모듈 경로를 설정합니다.
-    databasemodule="%{wks.location}/../DatabaseModule"
-
-    -- 툴에서 공통적으로 사용할 유틸리티 소스 경로를 설정합니다.
-    commonTool="%{wks.location}/../CommonTool"
-
     -- 폰트 아틀라스 생성 툴 소스 경로를 설정합니다.
     fontatlas="%{wks.location}/../FontAltasTool"
-
-    -- 텍스처 아틀라스 생성 툴 소스 경로를 설정합니다.
-    textureatlas="%{wks.location}/../TextureAtlasTool"
-
+    
     -- 서드파티 라이브러리 경로를 설정합니다.
     thirdparty="%{wks.location}/../ThirdParty"
 
