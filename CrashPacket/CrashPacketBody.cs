@@ -4,7 +4,7 @@ using System;
 /**
  * @brief 파일 전송을 요청했을 때의 크래시 패킷 바디입니다.
  */
-class CrashPacketRequestBody : ISerialize
+public class CrashPacketRequestBody : ISerialize
 {
     /**
      * @brief 파일 전송을 요청했을 때의 크래시 패킷 바디 빈 생성자입니다.
@@ -68,7 +68,7 @@ class CrashPacketRequestBody : ISerialize
 /**
  * @brief 응답했을 때의 크래시 패킷 바디입니다.
  */
-class CrashPacketResponseBody : ISerialize
+public class CrashPacketResponseBody : ISerialize
 {
     /**
      * @brief 응답했을 때의 크래시 패킷 바디의 빈 생성자입니다.
@@ -131,7 +131,7 @@ class CrashPacketResponseBody : ISerialize
 /**
  * @brief 데이터가 포함된 크래시 패킷 바디입니다.
  */
-class CrashPacketDataBody : ISerialize
+public class CrashPacketDataBody : ISerialize
 {
     /**
      * @brief 데이터가 포함된 크래시 패킷 바디의 빈 생성자입니다.
@@ -183,7 +183,7 @@ class CrashPacketDataBody : ISerialize
 /**
  * @brief 패킷 전송 결과를 포함한 크래시 패킷 바디입니다.
  */
-class CrashPacketResultBody : ISerialize
+public class CrashPacketResultBody : ISerialize
 {
     /**
      * @brief 패킷 전송 결과를 포함한 크래시 패킷 바디의 빈 생성자입니다.

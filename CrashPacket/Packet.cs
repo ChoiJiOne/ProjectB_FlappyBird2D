@@ -1,7 +1,7 @@
 /**
  * @brief 직렬화된 패킷입니다.
  */
-class Packet : ISerialize
+public class Packet : ISerialize
 {
     /**
      * @brief 직렬화된 패킷의 Getter/Setter입니다.

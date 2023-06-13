@@ -4,7 +4,7 @@ using System;
 /**
  * @brief 크래시 패킷의 헤더입니다.
  */
-class CrashPacketHeader : ISerialize
+public class CrashPacketHeader : ISerialize
 {
     /**
      * @brief 크래시 패킷 해더에 대한 Getter/Setter입니다.

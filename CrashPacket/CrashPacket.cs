@@ -5,7 +5,7 @@ using System.IO;
 /**
  * @brief 직렬화된 크래시 패킷입니다.
  */
-class CrashPacket : Packet
+public class CrashPacket : Packet
 {
     /**
      * @brief 패킷의 종류입니다.
@@ -142,4 +142,3 @@ class CrashPacket : Packet
         return new CrashPacket() { Header = packetHeader, Body = packetBody };
     }
 }
-
