@@ -103,8 +103,14 @@ class CrashPacketHeader : ISerialize
      */
     public int GetByteBufferSize()
     {
-        return PACKET_SIZE;
+        return PACKET_HEADER_SIZE;
     }
+
+
+    /**
+     * @brief 크래시 패킷의 크기입니다.
+     */
+    public static readonly int PACKET_HEADER_SIZE = 16;
 
 
     /**
@@ -141,10 +147,4 @@ class CrashPacketHeader : ISerialize
      * @brief 패킷의 파편 번호입니다.
      */
     private ushort seq_;
-
-
-    /**
-     * @brief 크래시 패킷의 크기입니다.
-     */
-    private static readonly int PACKET_SIZE = 16;
 }
