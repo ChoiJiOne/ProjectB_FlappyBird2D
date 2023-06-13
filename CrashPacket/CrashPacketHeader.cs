@@ -75,7 +75,7 @@ public class CrashPacketHeader : ISerialize
      */
     public byte[] GetByteBuffer()
     {
-        byte[] byteBuffer = new byte[PACKET_SIZE];
+        byte[] byteBuffer = new byte[PACKET_HEADER_SIZE];
 
         byte[] buffer = BitConverter.GetBytes(packetID_);
         Array.Copy(buffer, 0, byteBuffer, 0, buffer.Length);
