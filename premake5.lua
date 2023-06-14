@@ -199,7 +199,7 @@ workspace "FlappyBird2D"
             "Crash=%{wks.location}..\\Crash\\",
             "Content=%{wks.location}..\\Content\\",
             "IP=127.0.0.1",
-            "PORT=7777",
+            "PORT=8888",
         }
 
         -- Debug 빌드의 설정을 수행합니다.
@@ -367,6 +367,13 @@ workspace "FlappyBird2D"
             "System.Net",
             "System.Net.Sockets",
             "System.Runtime.Serialization",
+        }
+
+        -- 명령행 인수를 설정합니다.
+        debugargs {
+            "127.0.0.1",
+            "8888",
+            "%{wks.location}..\\Collect\\",
         }
 
         -- Debug 빌드의 설정을 수행합니다.
