@@ -51,8 +51,10 @@ class CrashHandler
      */
     public static void DetectApplicationCrash(object Sender, UnhandledExceptionEventArgs ExceptionEvent)
     {
+        string machineName = Environment.MachineName;
+
         string currentTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-        string crashDirectory = CommandLine.GetValue("Crash") + currentTime;
+        string crashDirectory = string.Format("{0}{1}-{2}", CommandLine.GetValue("Crash"), machineName, currentTime);
         DirectoryInfo directoryInfo = new DirectoryInfo(crashDirectory);
 
         if(!directoryInfo.Exists)
@@ -60,8 +62,9 @@ class CrashHandler
             directoryInfo.Create();
         }
 
-        string crashDumpFileName = crashDirectory + "\\" + currentTime + ".dmp";
-        string logFileName = crashDirectory + "\\" + currentTime + ".txt";
+        string fileName = machineName + "-" + currentTime;
+        string crashDumpFileName = crashDirectory + "\\" + fileName + ".dmp";
+        string logFileName = crashDirectory + "\\" + fileName + ".txt";
 
         MINIDUMP_EXCEPTION_INFORMATION exceptionInfo = new MINIDUMP_EXCEPTION_INFORMATION();
         exceptionInfo.ClientPointers = 1;
@@ -88,7 +91,7 @@ class CrashHandler
             System.Console.WriteLine("failed to create crash dump file : %s...", crashDumpFileName);
         }
 
-        string zipFileName = CommandLine.GetValue("Crash") + currentTime + ".zip";
+        string zipFileName = CommandLine.GetValue("Crash") + fileName + ".zip";
         ZipFile.CreateFromDirectory(crashDirectory, zipFileName);
     }
 }
