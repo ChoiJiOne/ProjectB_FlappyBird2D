@@ -17,7 +17,7 @@ class CrashReportSender
     static void Main(string[] args)
     {
         Console.WriteLine("run crash report sender...");
-        SetProperties();
+        SetProperties(args);
 
         client_.Connect(serverAddress_);
         networkStream_ = client_.GetStream();
@@ -32,12 +32,20 @@ class CrashReportSender
 
     /**
      * @brief 멤버 변수를 설정합니다.
+     * 
+     * @param args 명령행 인수입니다.
      */
-    private static void SetProperties()
+    private static void SetProperties(string[] args)
     {
-        serverIP_ = "127.0.0.1";
-        serverPort_ = 5425;
-        sendFilePath_ = "D:\\Work\\FlappyBird2D\\Crash\\2023-06-13-07-13-54.zip";
+        if (args.Length != 3)
+        {
+            Console.WriteLine("invalid command line arguments...");
+            return;
+        }
+
+        serverIP_ = args[0];
+        serverPort_ = int.Parse(args[1]);
+        sendFilePath_ = args[2];
 
         clientAddress_ = new IPEndPoint(0, 0);
         serverAddress_ = new IPEndPoint(IPAddress.Parse(serverIP_), serverPort_);
@@ -61,7 +69,7 @@ class CrashReportSender
         requestPacket.Body = new CrashPacketRequestBody()
         {
             FileSize = new FileInfo(sendFilePath_).Length,
-            FileName = System.Text.Encoding.Default.GetBytes(sendFilePath_)
+            FileName = System.Text.Encoding.Default.GetBytes(Path.GetFileName(sendFilePath_))
         };
         requestPacket.Header = new CrashPacketHeader()
         {
