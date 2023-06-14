@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 
@@ -93,5 +94,15 @@ class CrashHandler
 
         string zipFileName = CommandLine.GetValue("Crash") + fileName + ".zip";
         ZipFile.CreateFromDirectory(crashDirectory, zipFileName);
+
+        string crashReportSenderPath = CommandLine.GetValue("CrashReportSender") + "CrashReportSender.exe";
+        string serverIP = CommandLine.GetValue("IP");
+        string serverPort = CommandLine.GetValue("PORT");
+        string arguments = string.Format("{0} {1} {2}", serverIP, serverPort, zipFileName);
+
+        ProcessStartInfo crashReportSender = new ProcessStartInfo(crashReportSenderPath, arguments);
+        crashReportSender.UseShellExecute = true;
+
+        Process.Start(crashReportSender);
     }
 }
