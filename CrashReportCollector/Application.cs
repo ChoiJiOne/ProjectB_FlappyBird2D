@@ -143,6 +143,10 @@ class CrashReportCollector
             Directory.CreateDirectory(crashReportDirectory_);
         }
 
+        Console.WriteLine("IP = {0}", serverIP_);
+        Console.WriteLine("PORT = {0}", serverPort_);
+        Console.WriteLine("DIRECTORY = {0}", crashReportDirectory_);
+
         serverAddress_ = new IPEndPoint(IPAddress.Parse(serverIP_), serverPort_);
         server_ = new TcpListener(serverAddress_);
     }
