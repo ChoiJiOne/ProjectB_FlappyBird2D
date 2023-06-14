@@ -208,6 +208,7 @@ workspace "FlappyBird2D"
             runtime  "Debug"
             optimize "Off"
             symbols "On"
+            debugargs { "CrashReportSender=%{wks.location}bin\\Win64\\Debug\\", }
         
         -- Release 빌드의 설정을 수행합니다.
         filter "configurations:Release"
@@ -215,6 +216,7 @@ workspace "FlappyBird2D"
             runtime "Release"
             optimize "On"
             symbols "On"
+            debugargs { "CrashReportSender=%{wks.location}bin\\Win64\\Release\\", }
 
         -- Shipping 빌드의 설정을 수행합니다.
         filter "configurations:Shipping"
@@ -222,6 +224,7 @@ workspace "FlappyBird2D"
             runtime "Release"
             optimize "Full"
             symbols "Off"
+            debugargs { "CrashReportSender=%{wks.location}bin\\Win64\\Shipping\\", }
 
 
     -- 크래시 패킷 전송 라이브러리 프로젝트입니다.
