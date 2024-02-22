@@ -11,19 +11,11 @@
 #include "MathModule.h"
 
 #include "Assertion.h"
-#include "FrameBuffer.h"
-#include "GeometryGenerator.h"
-#include "PostEffectPass.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "SDLManager.h"
 #include "Shader.h"
-#include "ShadowMap.h"
-#include "Skybox.h"
-#include "SkyboxPass.h"
-#include "StaticMesh.h"
 #include "Texture2D.h"
-#include "Vertex.h"
 
 int32_t WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR pCmdLine, _In_ int32_t nCmdShow)
 {
