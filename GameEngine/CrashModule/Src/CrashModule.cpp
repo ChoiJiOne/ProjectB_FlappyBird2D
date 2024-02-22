@@ -74,18 +74,7 @@ bool CreateMinidumpFile(const std::wstring& path, EXCEPTION_POINTERS* exceptionP
 	HANDLE fileHandle = CreateFileW(path.c_str(), GENERIC_WRITE, FILE_SHARE_WRITE, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 	if (fileHandle == INVALID_HANDLE_VALUE)
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			crashErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordErrorMessage())
 		{
 			strncpy_s(crashErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to create minidump file", MAX_BUFFER_SIZE);
 		}
@@ -104,18 +93,7 @@ bool CreateMinidumpFile(const std::wstring& path, EXCEPTION_POINTERS* exceptionP
 
 	if (!MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), fileHandle, MiniDumpWithFullMemory, &exception, nullptr, nullptr))
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			crashErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordErrorMessage())
 		{
 			strncpy_s(crashErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to write minidump file", MAX_BUFFER_SIZE);
 		}
@@ -129,18 +107,7 @@ bool CreateMinidumpFile(const std::wstring& path, EXCEPTION_POINTERS* exceptionP
 	
 	if (!CloseHandle(fileHandle))
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			crashErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordErrorMessage())
 		{
 			strncpy_s(crashErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to close minidump file", MAX_BUFFER_SIZE);
 		}
@@ -183,18 +150,7 @@ bool CrashModule::RegisterExceptionFilter()
 	static wchar_t exePath[MAX_BUFFER_SIZE];
 	if (!GetModuleFileNameW(nullptr, exePath, MAX_BUFFER_SIZE))
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			crashErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordErrorMessage())
 		{
 			strncpy_s(crashErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to get execute file name", MAX_BUFFER_SIZE);
 		}
@@ -223,18 +179,7 @@ bool CrashModule::RegisterExceptionFilter()
 
 	if (!PathFileExistsW(savePath.c_str()) && !CreateDirectoryW(savePath.c_str(), nullptr))
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			crashErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordErrorMessage())
 		{
 			strncpy_s(crashErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to create crash directory", MAX_BUFFER_SIZE);
 		}
