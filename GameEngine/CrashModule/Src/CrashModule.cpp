@@ -24,7 +24,7 @@ std::wstring PrintF(const wchar_t* format, ...)
 	return std::wstring(buffer, size);
 }
 
-bool RecordErrorMessage()
+bool RecordCrashModuleErrorMessage()
 {
 	uint32_t size = FormatMessageA
 	(
@@ -74,7 +74,7 @@ bool CreateMinidumpFile(const std::wstring& path, EXCEPTION_POINTERS* exceptionP
 	HANDLE fileHandle = CreateFileW(path.c_str(), GENERIC_WRITE, FILE_SHARE_WRITE, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 	if (fileHandle == INVALID_HANDLE_VALUE)
 	{
-		if (!RecordErrorMessage())
+		if (!RecordCrashModuleErrorMessage())
 		{
 			strncpy_s(crashErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to create minidump file", MAX_BUFFER_SIZE);
 		}
@@ -93,7 +93,7 @@ bool CreateMinidumpFile(const std::wstring& path, EXCEPTION_POINTERS* exceptionP
 
 	if (!MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), fileHandle, MiniDumpWithFullMemory, &exception, nullptr, nullptr))
 	{
-		if (!RecordErrorMessage())
+		if (!RecordCrashModuleErrorMessage())
 		{
 			strncpy_s(crashErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to write minidump file", MAX_BUFFER_SIZE);
 		}
@@ -107,7 +107,7 @@ bool CreateMinidumpFile(const std::wstring& path, EXCEPTION_POINTERS* exceptionP
 	
 	if (!CloseHandle(fileHandle))
 	{
-		if (!RecordErrorMessage())
+		if (!RecordCrashModuleErrorMessage())
 		{
 			strncpy_s(crashErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to close minidump file", MAX_BUFFER_SIZE);
 		}
@@ -150,7 +150,7 @@ bool CrashModule::RegisterExceptionFilter()
 	static wchar_t exePath[MAX_BUFFER_SIZE];
 	if (!GetModuleFileNameW(nullptr, exePath, MAX_BUFFER_SIZE))
 	{
-		if (!RecordErrorMessage())
+		if (!RecordCrashModuleErrorMessage())
 		{
 			strncpy_s(crashErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to get execute file name", MAX_BUFFER_SIZE);
 		}
@@ -179,7 +179,7 @@ bool CrashModule::RegisterExceptionFilter()
 
 	if (!PathFileExistsW(savePath.c_str()) && !CreateDirectoryW(savePath.c_str(), nullptr))
 	{
-		if (!RecordErrorMessage())
+		if (!RecordCrashModuleErrorMessage())
 		{
 			strncpy_s(crashErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to create crash directory", MAX_BUFFER_SIZE);
 		}

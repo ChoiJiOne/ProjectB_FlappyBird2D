@@ -5,7 +5,7 @@
 const uint32_t MAX_BUFFER_SIZE = 1024;
 char fileErrorMessageBuffer[MAX_BUFFER_SIZE];
 
-bool RecordErrorMessage()
+bool RecordFileModuleErrorMessage()
 {
 	uint32_t size = FormatMessageA
 	(
@@ -31,18 +31,7 @@ bool FileModule::ReadBufferFromFile(const std::string& path, std::vector<uint8_t
 	HANDLE fileHandle = CreateFileA(path.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
 	if (fileHandle == INVALID_HANDLE_VALUE)
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			fileErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordFileModuleErrorMessage())
 		{
 			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to open file", MAX_BUFFER_SIZE);
 		}
@@ -56,18 +45,7 @@ bool FileModule::ReadBufferFromFile(const std::string& path, std::vector<uint8_t
 	DWORD bytesRead;
 	if (!ReadFile(fileHandle, &outBuffer[0], fileSize, &bytesRead, nullptr))
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			fileErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordFileModuleErrorMessage())
 		{
 			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to read file", MAX_BUFFER_SIZE);
 		}
@@ -77,18 +55,7 @@ bool FileModule::ReadBufferFromFile(const std::string& path, std::vector<uint8_t
 
 	if (!CloseHandle(fileHandle))
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			fileErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordFileModuleErrorMessage())
 		{
 			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to close file", MAX_BUFFER_SIZE);
 		}
@@ -104,18 +71,7 @@ bool FileModule::ReadBufferFromFile(const std::wstring& path, std::vector<uint8_
 	HANDLE fileHandle = CreateFileW(path.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
 	if (fileHandle == INVALID_HANDLE_VALUE)
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			fileErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordFileModuleErrorMessage())
 		{
 			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to open file", MAX_BUFFER_SIZE);
 		}
@@ -129,18 +85,7 @@ bool FileModule::ReadBufferFromFile(const std::wstring& path, std::vector<uint8_
 	DWORD bytesRead;
 	if (!ReadFile(fileHandle, &outBuffer[0], fileSize, &bytesRead, nullptr))
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			fileErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordFileModuleErrorMessage())
 		{
 			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to open file", MAX_BUFFER_SIZE);
 		}
@@ -150,18 +95,7 @@ bool FileModule::ReadBufferFromFile(const std::wstring& path, std::vector<uint8_
 
 	if (!CloseHandle(fileHandle))
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			fileErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordFileModuleErrorMessage())
 		{
 			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to open file", MAX_BUFFER_SIZE);
 		}
@@ -177,18 +111,7 @@ bool FileModule::WriteBufferToFile(const std::string& path, const std::vector<ui
 	HANDLE fileHandle = CreateFileA(path.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 	if (fileHandle == INVALID_HANDLE_VALUE)
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			fileErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordFileModuleErrorMessage())
 		{
 			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to create file", MAX_BUFFER_SIZE);
 		}
@@ -199,18 +122,7 @@ bool FileModule::WriteBufferToFile(const std::string& path, const std::vector<ui
 	DWORD writeByteSize = 0;
 	if (!WriteFile(fileHandle, &buffer[0], static_cast<DWORD>(buffer.size()), &writeByteSize, nullptr))
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			fileErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordFileModuleErrorMessage())
 		{
 			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to write file", MAX_BUFFER_SIZE);
 		}
@@ -220,18 +132,7 @@ bool FileModule::WriteBufferToFile(const std::string& path, const std::vector<ui
 
 	if (!CloseHandle(fileHandle))
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			fileErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordFileModuleErrorMessage())
 		{
 			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to close file", MAX_BUFFER_SIZE);
 		}
@@ -247,18 +148,7 @@ bool FileModule::WriteBufferToFile(const std::wstring& path, const std::vector<u
 	HANDLE fileHandle = CreateFileW(path.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 	if (fileHandle == INVALID_HANDLE_VALUE)
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			fileErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordFileModuleErrorMessage())
 		{
 			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to create file", MAX_BUFFER_SIZE);
 		}
@@ -270,18 +160,7 @@ bool FileModule::WriteBufferToFile(const std::wstring& path, const std::vector<u
 	DWORD writeByteSize = 0;
 	if (!WriteFile(fileHandle, &buffer[0], static_cast<DWORD>(buffer.size()), &writeByteSize, nullptr))
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			fileErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordFileModuleErrorMessage())
 		{
 			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to write file", MAX_BUFFER_SIZE);
 		}
@@ -291,18 +170,7 @@ bool FileModule::WriteBufferToFile(const std::wstring& path, const std::vector<u
 
 	if (!CloseHandle(fileHandle))
 	{
-		uint32_t size = FormatMessageA
-		(
-			FORMAT_MESSAGE_FROM_SYSTEM,
-			nullptr,
-			static_cast<DWORD>(GetLastError()),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-			fileErrorMessageBuffer,
-			MAX_BUFFER_SIZE,
-			nullptr
-		);
-
-		if (size == 0)
+		if (!RecordFileModuleErrorMessage())
 		{
 			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to close file", MAX_BUFFER_SIZE);
 		}
