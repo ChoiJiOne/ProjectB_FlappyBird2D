@@ -12,7 +12,7 @@ char crashErrorMessageBuffer[MAX_BUFFER_SIZE];
 wchar_t crashSavePath[MAX_BUFFER_SIZE];
 LPTOP_LEVEL_EXCEPTION_FILTER topLevelExceptionFilter;
 
-std::wstring PrintFormat(const wchar_t* format, ...)
+std::wstring PrintF(const wchar_t* format, ...)
 {
 	static wchar_t buffer[MAX_BUFFER_SIZE];
 
@@ -29,7 +29,7 @@ std::wstring GetCurrentSystemTimeAsString()
 	SYSTEMTIME systemTime;
 	GetLocalTime(&systemTime);
 
-	return PrintFormat(
+	return PrintF(
 		L"%4d-%02d-%02d-%02d-%02d-%02d",
 		static_cast<int32_t>(systemTime.wYear),
 		static_cast<int32_t>(systemTime.wMonth),
@@ -142,11 +142,11 @@ bool CreateMinidumpFile(const std::wstring& path, EXCEPTION_POINTERS* exceptionP
 LONG WINAPI DetectApplicationCrash(EXCEPTION_POINTERS* exceptionPtr)
 {
 	std::wstring systemTime = GetCurrentSystemTimeAsString();
-	std::wstring minidumpPath = PrintFormat(L"%sWindows-%s-Minidump.dmp", crashSavePath, systemTime.c_str());
+	std::wstring minidumpPath = PrintF(L"%sWindows-%s-Minidump.dmp", crashSavePath, systemTime.c_str());
 
 	if (!CreateMinidumpFile(minidumpPath, exceptionPtr))
 	{
-		std::wstring writeErrorPath = PrintFormat(L"%sWindows-%s-WriteError.txt", crashSavePath, systemTime.c_str());
+		std::wstring writeErrorPath = PrintF(L"%sWindows-%s-WriteError.txt", crashSavePath, systemTime.c_str());
 		WriteErrorMessage(writeErrorPath);
 	}
 
@@ -187,7 +187,7 @@ bool CrashModule::RegisterExceptionFilter()
 			strncat_s(crashErrorMessageBuffer, "\nfailed to get execute file name", MAX_BUFFER_SIZE);
 		}
 
-		std::wstring writeErrorPath = PrintFormat(L"%sWindows-%s-WriteError.txt", crashSavePath, systemTime.c_str());
+		std::wstring writeErrorPath = PrintF(L"%sWindows-%s-WriteError.txt", crashSavePath, systemTime.c_str());
 		WriteErrorMessage(writeErrorPath);
 
 		return false;
@@ -197,13 +197,13 @@ bool CrashModule::RegisterExceptionFilter()
 	{
 		strncpy_s(crashErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to remove execute file name", MAX_BUFFER_SIZE);
 
-		std::wstring writeErrorPath = PrintFormat(L"%sWindows-%s-WriteError.txt", crashSavePath, systemTime.c_str());
+		std::wstring writeErrorPath = PrintF(L"%sWindows-%s-WriteError.txt", crashSavePath, systemTime.c_str());
 		WriteErrorMessage(writeErrorPath);
 
 		return false;
 	}
 
-	std::wstring savePath = PrintFormat(L"%s\\Crash\\", exePath);
+	std::wstring savePath = PrintF(L"%s\\Crash\\", exePath);
 
 	if (!PathFileExistsW(savePath.c_str()) && !CreateDirectoryW(savePath.c_str(), nullptr))
 	{
@@ -227,7 +227,7 @@ bool CrashModule::RegisterExceptionFilter()
 			strncat_s(crashErrorMessageBuffer, "\nfailed to create crash directory", MAX_BUFFER_SIZE);
 		}
 
-		std::wstring writeErrorPath = PrintFormat(L"%sWindows-%s-WriteError.txt", crashSavePath, systemTime.c_str());
+		std::wstring writeErrorPath = PrintF(L"%sWindows-%s-WriteError.txt", crashSavePath, systemTime.c_str());
 		WriteErrorMessage(writeErrorPath);
 
 		return false;
