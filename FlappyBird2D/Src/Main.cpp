@@ -25,7 +25,7 @@ int32_t WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 	RenderManager::Get().Startup();
 	ResourceManager::Get().Startup();
 
-	RenderManager::Get().SetDepthMode(true);
+	RenderManager::Get().SetDepthMode(false);
 	RenderManager::Get().SetAlphaBlendMode(true);
 	RenderManager::Get().SetMultisampleMode(true);
 
