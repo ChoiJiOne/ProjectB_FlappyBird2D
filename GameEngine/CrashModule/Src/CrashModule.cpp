@@ -24,6 +24,22 @@ std::wstring PrintF(const wchar_t* format, ...)
 	return std::wstring(buffer, size);
 }
 
+bool RecordErrorMessage()
+{
+	uint32_t size = FormatMessageA
+	(
+		FORMAT_MESSAGE_FROM_SYSTEM,
+		nullptr,
+		static_cast<DWORD>(GetLastError()),
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+		crashErrorMessageBuffer,
+		MAX_BUFFER_SIZE,
+		nullptr
+	);
+
+	return (size != 0);
+}
+
 std::wstring GetCurrentSystemTimeAsString()
 {
 	SYSTEMTIME systemTime;
