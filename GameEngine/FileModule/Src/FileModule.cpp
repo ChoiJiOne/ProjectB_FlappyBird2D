@@ -5,6 +5,22 @@
 const uint32_t MAX_BUFFER_SIZE = 1024;
 char fileErrorMessageBuffer[MAX_BUFFER_SIZE];
 
+bool RecordErrorMessage()
+{
+	uint32_t size = FormatMessageA
+	(
+		FORMAT_MESSAGE_FROM_SYSTEM,
+		nullptr,
+		static_cast<DWORD>(GetLastError()),
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+		fileErrorMessageBuffer,
+		MAX_BUFFER_SIZE,
+		nullptr
+	);
+
+	return (size != 0);
+}
+
 const char* FileModule::GetErrorMessage()
 {
 	return &fileErrorMessageBuffer[0];
