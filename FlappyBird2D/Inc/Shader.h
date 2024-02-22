@@ -290,6 +290,16 @@ protected:
 	uint32_t CreateAndCompileShader(const EType& type, const std::string& source);
 
 
+	/**
+	 * @brief 버텍스로 부터 다이나믹 버텍스 버퍼를 씁니다.
+	 *
+	 * @param vertexBufferID 쓰기를 수행할 버텍스 버퍼의 ID입니다.
+	 * @param vertexPtr 쓰기를 수행할 버텍스 버퍼의 포인터입니다.
+	 * @param bufferByteSize 버텍스 버퍼의 바이트 크기입니다.
+	 */
+	void WriteDynamicVertexBuffer(uint32_t vertexBufferID, const void* vertexPtr, uint32_t bufferByteSize);
+
+
 protected:
 	/**
 	 * @brief 셰이더 프로그램의 아이디입니다.

@@ -308,3 +308,18 @@ uint32_t Shader::CreateAndCompileShader(const EType& type, const std::string& so
 
 	return shaderID;
 }
+
+void Shader::WriteDynamicVertexBuffer(uint32_t vertexBufferID, const void* vertexPtr, uint32_t bufferByteSize)
+{
+	CHECK(vertexPtr != nullptr);
+
+	GL_FAILED(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID));
+	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+	CHECK(bufferPtr != nullptr);
+
+	std::memcpy(bufferPtr, vertexPtr, bufferByteSize);
+	GLboolean bSuccssed = glUnmapBuffer(GL_ARRAY_BUFFER);
+	ASSERT(bSuccssed, "failed to unmap the entire data store of a specified buffer object into the client's address space...");
+
+	GL_FAILED(glBindBuffer(GL_ARRAY_BUFFER, 0));
+}
