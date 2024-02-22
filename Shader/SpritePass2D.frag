@@ -26,40 +26,10 @@ uniform vec4 outlineRGBA;
 
 void main()
 {
-	vec3 fragRGB = vec3(0.0f);
+	vec4 fragColor = vec4(0.0f);
 
-	if(!bIsActiveOutline)
+	if(bIsActiveOutline)
 	{
-		fragRGB = texture(spriteMap, inTexCoords).rgb;
-		fragRGB = pow(fragRGB, vec3(1.0f / gamma));
-
-		float alpha = texture(spriteMap, inTexCoords).a;
-		alpha *= transparent;
-		
-		outFragColor = vec4(fragRGB, alpha);
-
-	}
-	else
-	{
-//		vec2 size = 1.0f / textureSize(spriteMap, 0);
-//		float outline = 0.0f;
-//		for(int index = 0; index < offsets.length(); ++index)
-//		{
-//			outline += texture(spriteMap, inTexCoords + size * offsets[index]).a;
-//		}
-//
-//		outline = min(outline, 1.0f);
-//
-//		fragRGB = texture(spriteMap, inTexCoords).rgb;
-//		float alpha = texture(spriteMap, inTexCoords).a;
-//
-//		fragRGB = mix(fragRGB, outlineRGBA.rgb, outline - alpha);
-//		fragRGB = pow(fragRGB, vec3(1.0f / gamma));
-//
-//		alpha *= (transparent * outlineRGBA.a);
-//
-//		outFragColor = vec4(fragRGB, alpha);
-
 		vec2 size = 1.0f / textureSize(spriteMap, 0);
 		float outline = 0.0f;
 		for(int index = 0; index < offsets.length(); ++index)
@@ -69,7 +39,16 @@ void main()
 
 		outline = min(outline, 1.0f);
 		
-		vec4 colorRGBA = texture(spriteMap, inTexCoords);
-		outFragColor = mix(colorRGBA, outlineRGBA, outline - colorRGBA.a);
+		fragColor = texture(spriteMap, inTexCoords);
+		fragColor = mix(fragColor, outlineRGBA, outline - fragColor.a);
 	}
+	else
+	{
+		fragColor = texture(spriteMap, inTexCoords);
+	}
+	
+	vec3 fragRGB = pow(fragColor.rgb, vec3(1.0f / gamma));
+	float alpha = fragColor.a * transparent;
+
+	outFragColor = vec4(fragRGB, alpha);
 }
