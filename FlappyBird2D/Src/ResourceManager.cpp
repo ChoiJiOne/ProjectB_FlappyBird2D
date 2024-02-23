@@ -22,7 +22,7 @@ void ResourceManager::Shutdown()
 
 	for (auto& cache : cache_)
 	{
-		if (cache)
+		if (cache && cache->IsInitialized())
 		{
 			cache->Release();
 			cache.reset();
