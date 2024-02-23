@@ -15,7 +15,7 @@ TTFont::~TTFont()
 	}
 }
 
-void TTFont::Initialize(const std::wstring& path, int32_t beginCodePoint, int32_t endCodePoint, float fontSize)
+void TTFont::Initialize(const std::string& path, int32_t beginCodePoint, int32_t endCodePoint, float fontSize)
 {
 	CHECK(!bIsInitialized_);
 

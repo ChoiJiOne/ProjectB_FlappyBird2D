@@ -67,7 +67,7 @@ public:
 	 * - 글리프 텍스처 아틀라스 내에서 시작과 끝의 코드 포인트를 포함합니다.
 	 * - 트루 타입 폰트 파일의 확장자는 .ttf 만 지원합니다.
 	 */
-	void Initialize(const std::wstring& path, int32_t beginCodePoint, int32_t endCodePoint, float fontSize);
+	void Initialize(const std::string& path, int32_t beginCodePoint, int32_t endCodePoint, float fontSize);
 
 
 	/**
