@@ -152,6 +152,66 @@ void GeometryPass2D::DrawWireframeRectangle2D(const Mat4x4f& ortho, const Vec2f&
 	DrawGeometry2D(transform, ortho, EDrawType::LineStrip, 5);
 }
 
+void GeometryPass2D::DrawRoundRectangle2D(const Mat4x4f& ortho, const Vec2f& center, float width, float height, float side, float rotate, const Vec4f& color)
+{
+	static const int32_t MAX_SLICE_SIZE = 7;
+
+	float halfWidth = width * 0.5f;
+	float halfHeight = height * 0.5f;
+	side = MathModule::Min<float>(side, MathModule::Min<float>(halfWidth, halfHeight));
+
+	uint32_t vertexCount = 0;
+	vertices_[vertexCount++].position = center;
+
+	auto computeSpline = [&](const Vec2f& startPosition, const Vec2f& endPosition, const Vec2f& controlPosition)
+	{
+		for (int32_t slice = 0; slice <= MAX_SLICE_SIZE; ++slice)
+		{
+			float t = static_cast<float>(slice) / static_cast<float>(MAX_SLICE_SIZE);
+			Vec2f p = startPosition * (1.0f - t) + controlPosition * t;
+			Vec2f q = controlPosition * (1.0f - t) + endPosition * t;
+			Vec2f r = p * (1.0f - t) + q * t;
+			vertices_[vertexCount++].position = r;
+		}
+	};
+
+	Vec2f control, start, end;
+	
+	control = Vec2f(center.x - halfWidth, center.y - halfHeight);
+	start = Vec2f(control.x + side, control.y);
+	end = Vec2f(control.x, control.y + side);
+	computeSpline(start, end, control);
+
+	control = Vec2f(center.x - halfWidth, center.y + halfHeight);
+	start = Vec2f(control.x, control.y - side);
+	end = Vec2f(control.x + side, control.y);
+	computeSpline(start, end, control);
+
+	control = Vec2f(center.x + halfWidth, center.y + halfHeight);
+	start = Vec2f(control.x - side, control.y);
+	end = Vec2f(control.x, control.y - side);
+	computeSpline(start, end, control);
+
+	control = Vec2f(center.x + halfWidth, center.y - halfHeight);
+	start = Vec2f(control.x, control.y + side);
+	end = Vec2f(control.x - side, control.y);
+	computeSpline(start, end, control);
+
+	control = Vec2f(center.x - halfWidth, center.y - halfHeight);
+	vertices_[vertexCount++].position = Vec2f(control.x + side, control.y);
+
+	for (int32_t index = 0; index < vertexCount; ++index)
+	{
+		vertices_[index].color = color;
+	}
+
+	Mat4x4f transform = MathModule::CreateTranslation(Vec3f(-center.x, -center.y, 0.0f))
+		* MathModule::CreateRotateZ(rotate)
+		* MathModule::CreateTranslation(Vec3f(+center.x, +center.y, 0.0f));
+
+	DrawGeometry2D(transform, ortho, EDrawType::TriangleFan, vertexCount);
+}
+
 void GeometryPass2D::DrawCircle2D(const Mat4x4f& ortho, const Vec2f& center, float radius, const Vec4f& color, int32_t sliceCount)
 {
 	CHECK(radius >= 0.0f);
