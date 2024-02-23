@@ -457,6 +457,18 @@ public:
 	void RenderText2D(const RUID& fontID, const std::wstring& text, const Vec2f& position, const Vec4f& color, bool bIsCenter = true);
 
 
+	/**
+	 * @brief 글자마다 색이 다른 2D 텍스트를 바인딩된 프레임 버퍼에 그립니다.
+	 * 
+	 * @param fontID 폰트 리소스 아이디입니다.
+	 * @param text 렌더링할 텍스트입니다.
+	 * @param position 텍스트의 좌표입니다.
+	 * @param colors 각 글자의 색상 목록입니다.
+	 * @param bIsCenter 텍스트 좌표가 텍스트의 중심인지 확인하는 옵션입니다.
+	 */
+	void RenderText2D(const RUID& fontID, const std::wstring& text, const Vec2f& position, const std::vector<Vec4f>& colors, bool bIsCenter = true);
+
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저에 디폴트 생성자와 빈 가상 소멸자를 삽입합니다.
