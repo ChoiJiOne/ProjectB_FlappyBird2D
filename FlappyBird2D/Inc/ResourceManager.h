@@ -1,9 +1,8 @@
 #pragma once
 
+#include <array>
 #include <cstdint>
-#include <string>
 #include <memory>
-#include <unordered_map>
 
 #include "IManager.h"
 #include "IResource.h"
@@ -51,24 +50,21 @@ public:
 
 	/**
 	 * @brief 빈 리소스를 생성합니다.
+	 * 
+	 * @param args 리소스의 생성자에 전달한 인자들입니다.
 	 *
-	 * @note
-	 * - 리소스 매니저는 초기화를 수행하지 않으므로, 반환하는 포인터 변수를 이용해서 초기화를 따로 수행해야 합니다.
-	 * - 리소스의 시그니처 값은 중복을 허용하지 않습니다.
-	 *
-	 * @param signature 매니저 내부에서 리소스들을 구분할 시그니처 값입니다.
-	 *
-	 * @return 생성된 리소스의 포인터를 반환합니다.
+	 * @return 생성된 리소스의 ID를 반환합니다.
 	 */
-	template <typename TResource>
-	TResource* CreateResource(const std::string& signature)
+	template <typename TResource, typename... Args>
+	RUID Create(Args&&... args)
 	{
-		ASSERT(!IsValidKey(signature), "already exist resource signature %s key", signature.c_str());
+		CHECK(0 <= cacheSize_ && cacheSize_ < MAX_RESOURCE_SIZE);
 
-		std::unique_ptr<TResource> resource = std::make_unique<TResource>();
-		resourceCache_.insert({ signature, std::move(resource) });
+		RUID resourceID = cacheSize_++;
 
-		return reinterpret_cast<TResource*>(resourceCache_.at(signature).get());
+		cache_[resourceID] = std::make_unique<TResource>(args...);
+
+		return resourceID;
 	}
 
 
@@ -80,14 +76,14 @@ public:
 	 * @return 시그니처에 대응하는 리소스의 포인터를 얻습니다. 시그니처 값에 대응하는 리소스가 없으면 널 포인터를 반환합니다.
 	 */
 	template <typename TResource>
-	TResource* GetResource(const std::string& signature)
+	TResource* GetResource(const RUID& resourceID)
 	{
-		if (!IsValidKey(signature))
-		{
-			return nullptr;
-		}
+		CHECK(0 <= resourceID && resourceID < cacheSize_);
 
-		return reinterpret_cast<TResource*>(resourceCache_.at(signature).get());
+		TResource* resource = reinterpret_cast<TResource*>(cache_[resourceID].get());
+		CHECK(resource != nullptr);
+
+		return resource;
 	}
 
 
@@ -96,7 +92,7 @@ public:
 	 *
 	 * @param signature 삭제할 리소스의 시그니처 값입니다.
 	 */
-	void DestroyResource(const std::string& signature);
+	void Destroy(const RUID& resourceID);
 
 
 private:
@@ -105,20 +101,22 @@ private:
 	 */
 	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(ResourceManager);
 
+	
+private:
+	/**
+	 * @brief 리소스 매니저가 관리하는 최대 리소스 수입니다.
+	 */
+	static const uint32_t MAX_RESOURCE_SIZE = 1000;
+
 
 	/**
-	 * @brief 키 값이 유효한지 확인합니다.
-	 *
-	 * @param key 유효한지 확인할 키 값입니다.
-	 *
-	 * @return 키 값에 대응하는 리소스가 존재하면 true, 그렇지 않으면 false를 반환합니다.
+	 * @brief 리소스 캐시의 크기입니다.
 	 */
-	bool IsValidKey(const std::string& key);
+	uint32_t cacheSize_ = 0;
 
 
-private:
 	/**
 	 * @brief 리소스 매니저 내의 리소스 캐시입니다.
 	 */
-	std::unordered_map<std::string, std::unique_ptr<IResource>> resourceCache_;
+	std::array<std::unique_ptr<IResource>, MAX_RESOURCE_SIZE> cache_;
 };

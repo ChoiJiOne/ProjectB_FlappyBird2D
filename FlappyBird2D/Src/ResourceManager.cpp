@@ -11,7 +11,7 @@ void ResourceManager::Startup()
 {
 	CHECK(!bIsStartup_);
 	
-	resourceCache_ = std::unordered_map<std::string, std::unique_ptr<IResource>>();
+	cache_ = std::array<std::unique_ptr<IResource>, MAX_RESOURCE_SIZE>();
 
 	bIsStartup_ = true;
 }
@@ -20,30 +20,25 @@ void ResourceManager::Shutdown()
 {
 	CHECK(bIsStartup_);
 
-	for (auto& resource : resourceCache_)
+	for (auto& cache : cache_)
 	{
-		resource.second->Release();
-		resource.second.reset();
+		if (cache)
+		{
+			cache->Release();
+			cache.reset();
+		}
 	}
 
 	bIsStartup_ = false;
 }
 
-void ResourceManager::DestroyResource(const std::string& signature)
+void ResourceManager::Destroy(const RUID& resourceID)
 {
-	if (IsValidKey(signature))
+	CHECK(0 <= resourceID && resourceID < cacheSize_);
+
+	if (cache_[resourceID] && cache_[resourceID]->IsInitialized())
 	{
-		IResource* resource = resourceCache_.at(signature).get();
-		if (resource && resource->IsInitialized())
-		{
-			resource->Release();
-		}
-
-		resourceCache_.erase(signature);
+		cache_[resourceID]->Release();
+		cache_[resourceID].reset();
 	}
-}
-
-bool ResourceManager::IsValidKey(const std::string& key)
-{
-	return resourceCache_.find(key) != resourceCache_.end();
 }
