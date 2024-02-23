@@ -257,6 +257,19 @@ public:
 
 
 	/**
+	 * @brief 바인딩된 프레임 버퍼에 모서리가 둥근 2D 사각형을 그립니다.
+	 * 
+	 * @param center 직사각형의 중심 좌표입니다.
+	 * @param width 직사각형의 가로 크기입니다.
+	 * @param heigt 직사각형의 세로 크기입니다.
+	 * @param side 사각형의 둥근 부분의 크기입니다.
+	 * @param rotate 직사각형의 라디안 회전 각도입니다.
+	 * @param color 직사각형의 색상입니다.
+	 */
+	void RenderRoundRectangle2D(const Vec2f& center, float width, float height, float side, float rotate, const Vec4f& color);
+
+
+	/**
 	 * @brief 바인딩된 프레임 버퍼에 2D 원을 그립니다.
 	 * 
 	 * @param center 원의 중심 좌표입니다.
