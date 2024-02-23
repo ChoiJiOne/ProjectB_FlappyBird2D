@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <vector>
 
 #include "Shader.h"
 #include "Vertex2D.h"
@@ -68,6 +69,19 @@ public:
 	void DrawText2D(const Mat4x4f& ortho, const TTFont* font, const std::wstring& text, const Vec2f& position, const EAlignment& alignment, const Vec4f& color);
 
 
+	/**
+	 * @brief 글자마다 여러 색인 다른 2D 텍스트를 화면에 그립니다.
+	 * 
+	 * @param ortho 직교 투영 행렬입니다.
+	 * @param font 폰트 리소스입니다.
+	 * @param text 렌더링할 텍스트입니다.
+	 * @param position 텍스트의 좌표입니다.
+	 * @param alignment 텍스트의 좌표 기준입니다.
+	 * @param colors 각 글자의 색상 목록입니다.
+	 */
+	void DrawText2D(const Mat4x4f& ortho, const TTFont* font, const std::wstring& text, const Vec2f& position, const EAlignment& alignment, const std::vector<Vec4f>& colors);
+
+	
 private:
 	/**
 	 * @brief 텍스트에 맞게 버텍스 버퍼를 업데이트합니다.
@@ -80,6 +94,19 @@ private:
 	 * @return 텍스트에 맞는 버텍스의 수를 반환합니다.
 	 */
 	uint32_t UpdateGlyphVertexBuffer(const TTFont* font, const std::wstring& text, const Vec2f& startPosition, const Vec4f& color);
+
+
+	/**
+	 * @brief 텍스트에 맞게 버텍스 버퍼를 업데이트합니다.
+	 *
+	 * @param font 폰트 리소스입니다.
+	 * @param text 렌더링할 텍스트입니다.
+	 * @param startPosition 텍스트 영역의 왼쪽 상단 좌표입니다.
+	 * @param colors 각 글자의 색상 목록입니다.
+	 *
+	 * @return 텍스트에 맞는 버텍스의 수를 반환합니다.
+	 */
+	uint32_t UpdateGlyphVertexBuffer(const TTFont* font, const std::wstring& text, const Vec2f& startPosition, const std::vector<Vec4f>& colors);
 
 
 private:
