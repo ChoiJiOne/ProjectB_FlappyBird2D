@@ -15,10 +15,23 @@ class Shader : public IResource
 {
 public:
 	/**
-	 * @brief 셰이더의 디폴트 생성자입니다.
+	 * @brief 셰이더 파일을 읽어 셰이더 프로그램을 생성합니다.
+	 *
+	 * @param vsPath 버텍스 셰이더(Vertex Shader)의 경로입니다.
+	 * @param fsPath 프레그먼트 셰이더(Fragment Shader)의 경로입니다.
 	 */
-	Shader() = default;
+	explicit Shader(const std::string& vsPath, const std::string& fsPath);
 
+
+	/**
+	 * @brief 셰이더 파일을 읽어 셰이더 프로그램을 생성합니다.
+	 *
+	 * @param vsPath 버텍스 셰이더(Vertex Shader)의 경로입니다.
+	 * @param gsFile 지오메트리 셰이더의 확장자(.geom)를 포함한 경로입니다.
+	 * @param fsPath 프레그먼트 셰이더(Fragment Shader)의 경로입니다.
+	 */
+	explicit Shader(const std::string& vsPath, const std::string& gsPath, const std::string& fsPath);
+	
 
 	/**
 	 * @brief 셰이더의 가상 소멸자입니다.
@@ -30,25 +43,6 @@ public:
 	 * @brief 셰이더의 복사 생성자와 대입 연산자를 명시적으로 삭제합니다.
 	 */
 	DISALLOW_COPY_AND_ASSIGN(Shader);
-
-
-	/**
-	 * @brief 셰이더 파일을 읽어 셰이더 프로그램을 생성합니다.
-	 *
-	 * @param vsPath 버텍스 셰이더(Vertex Shader)의 경로입니다.
-	 * @param fsPath 프레그먼트 셰이더(Fragment Shader)의 경로입니다.
-	 */
-	virtual void Initialize(const std::string& vsPath, const std::string& fsPath) final;
-
-
-	/**
-	 * @brief 셰이더 파일을 읽어 셰이더 프로그램을 생성합니다.
-	 *
-	 * @param vsPath 버텍스 셰이더(Vertex Shader)의 경로입니다.
-	 * @param gsFile 지오메트리 셰이더의 확장자(.geom)를 포함한 경로입니다.
-	 * @param fsPath 프레그먼트 셰이더(Fragment Shader)의 경로입니다.
-	 */
-	virtual void Initialize(const std::string& vsPath, const std::string& gsPath, const std::string& fsPath) final;
 
 
 	/**

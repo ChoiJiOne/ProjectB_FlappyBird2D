@@ -10,19 +10,8 @@
 #include "Assertion.h"
 #include "Shader.h"
 
-
-Shader::~Shader()
+Shader::Shader(const std::string& vsPath, const std::string& fsPath)
 {
-	if (bIsInitialized_)
-	{
-		Release();
-	}
-}
-
-void Shader::Initialize(const std::string& vsPath, const std::string& fsPath)
-{
-	CHECK(!bIsInitialized_);
-
 	uniformLocationCache_ = std::map<std::string, uint32_t>();
 
 	std::string vsSource = ReadShaderFile(vsPath);
@@ -57,10 +46,8 @@ void Shader::Initialize(const std::string& vsPath, const std::string& fsPath)
 	bIsInitialized_ = true;
 }
 
-void Shader::Initialize(const std::string& vsPath, const std::string& gsPath, const std::string& fsPath)
+Shader::Shader(const std::string& vsPath, const std::string& gsPath, const std::string& fsPath)
 {
-	CHECK(!bIsInitialized_);
-
 	std::string vsSource = ReadShaderFile(vsPath);
 	std::string gsSource = ReadShaderFile(gsPath);
 	std::string fsSource = ReadShaderFile(fsPath);
@@ -97,6 +84,14 @@ void Shader::Initialize(const std::string& vsPath, const std::string& gsPath, co
 	GL_FAILED(glDeleteShader(fsID));
 
 	bIsInitialized_ = true;
+}
+
+Shader::~Shader()
+{
+	if (bIsInitialized_)
+	{
+		Release();
+	}
 }
 
 void Shader::Release()
