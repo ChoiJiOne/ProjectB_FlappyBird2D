@@ -111,16 +111,4 @@ private:
 	 * @brief 정점 버퍼 목록의 오브젝트입니다.
 	 */
 	uint32_t vertexArrayObject_ = 0;
-
-
-	/**
-	 * @brief 스크린 직교 투영 행렬을 나타내는 유니폼 변수의 위치입니다.
-	 */
-	int32_t orthoLocation_ = -1;
-
-
-	/**
-	 * @brief 글리프의 색상을 나타내는 유니폼 변수의 위치입니다.
-	 */
-	int32_t glyphColorLocation_ = -1;
 };
