@@ -1,8 +1,15 @@
 #pragma once
 
-#include "MathModule.h"
+#include <string>
+#include <map>
+
+#include "Mat4x4.h"
+#include "Vec2.h"
+#include "Vec3.h"
+#include "Vec4.h"
 
 #include "IManager.h"
+#include "IResource.h"
 
 
 /**
@@ -125,11 +132,190 @@ public:
 	void SetMultisampleMode(bool bIsEnable);
 
 
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 점들을 그립니다.
+	 * 
+	 * @param positions 2D 점들입니다.
+	 * @param color 점들의 색상입니다.
+	 * @param pointSize 점의 크기입니다. 기본 값은 1.0f입니다.
+	 *
+	 * @note 2D 점들의 개수는 MAX_VERTEX_SIZE(10000)의 크기를 넘을 수 없습니다.
+	 */
+	void RenderPoints2D(const std::vector<Vec2f>& positions, const Vec4f& color, float pointSize = 1.0f);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 점들을 연결한 2D 선을 그립니다.
+	 * 
+	 * @param positions 2D 점들입니다.
+	 * @param color 점들의 색상입니다.
+	 *
+	 * @note 2D 점들의 개수는 MAX_VERTEX_SIZE(10000)의 크기를 넘을 수 없습니다.
+	 */
+	void RenderConnectPoints2D(const std::vector<Vec2f>& positions, const Vec4f& color);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 선을 그립니다.
+	 * 
+	 * @param fromPosition 선의 시작점입니다.
+	 * @param toPosition 선의 끝점입니다.
+	 * @param color 선의 색상입니다.
+	 */
+	void RenderLine2D(const Vec2f& fromPosition, const Vec2f& toPosition, const Vec4f& color);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 선을 그립니다.
+	 * 
+	 * @param fromPosition 선의 시작점입니다.
+	 * @param fromColor 선의 시작점 색상입니다.
+	 * @param toPosition 선의 끝점입니다.
+	 * @param toColor 선의 끝점 색상입니다.
+	 */
+	void RenderLine2D(const Vec2f& fromPosition, const Vec4f& fromColor, const Vec2f& toPosition, const Vec4f& toColor);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 삼각형을 그립니다.
+	 * 
+	 * @param fromPosition 삼각형 시작 점입니다.
+	 * @param byPosition 삼각형 중간 점입니다.
+	 * @param toPosition 삼각형 끝 점입니다.
+	 * @param color 삼각형의 색상입니다.
+	 */
+	void RenderTriangle2D(const Vec2f& fromPosition, const Vec2f& byPosition, const Vec2f& toPosition, const Vec4f& color);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 삼각형을 그립니다.
+	 * 
+	 * @param fromPosition 삼각형 시작 점입니다.
+	 * @param fromColor 삼각형 시작 점의 색상입니다.
+	 * @param byPosition 삼각형 중간 점입니다.
+	 * @param byColor 삼각형 중간 점의 색상입니다.
+	 * @param toPosition 삼각형 끝 점입니다.
+	 * @param toColor 삼각형 끝 점의 색상입니다.
+	 */
+	void RenderTriangle2D(
+		const Vec2f& fromPosition, const Vec4f& fromColor,
+		const Vec2f& byPosition, const Vec4f& byColor,
+		const Vec2f& toPosition, const Vec4f& toColor
+	);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 와이어 프레임 삼각형을 그립니다.
+	 * 
+	 * @param fromPosition 삼각형 시작 점입니다.
+	 * @param byPosition 삼각형 중간 점입니다.
+	 * @param toPosition 삼각형 끝 점입니다.
+	 * @param color 삼각형의 색상입니다.
+	 */
+	void RenderWireframeTriangle2D(const Vec2f& fromPosition, const Vec2f& byPosition, const Vec2f& toPosition, const Vec4f& color);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 와이어 프레임 삼각형을 그립니다.
+	 * 
+	 * @param fromPosition 삼각형 시작 점입니다.
+	 * @param fromColor 삼각형 시작 점의 색상입니다.
+	 * @param byPosition 삼각형 중간 점입니다.
+	 * @param byColor 삼각형 중간 점의 색상입니다.
+	 * @param toPosition 삼각형 끝 점입니다.
+	 * @param toColor 삼각형 끝 점의 색상입니다.
+	 */
+	void RenderWireframeTriangle2D(
+		const Vec2f& fromPosition, const Vec4f& fromColor,
+		const Vec2f& byPosition, const Vec4f& byColor,
+		const Vec2f& toPosition, const Vec4f& toColor
+	);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 직사각형을 그립니다.
+	 * 
+	 * @param center 직사각형의 중심 좌표입니다.
+	 * @param width 직사각형의 가로 크기입니다.
+	 * @param heigt 직사각형의 세로 크기입니다.
+	 * @param rotate 직사각형의 라디안 회전 각도입니다.
+	 * @param color 직사각형의 색상입니다.
+	 */
+	void RenderRectangle2D(const Vec2f& center, float width, float height, float rotate, const Vec4f& color);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 와이어 프레임 직사각형을 그립니다.
+	 * 
+	 * @param center 직사각형의 중심 좌표입니다.
+	 * @param width 직사각형의 가로 크기입니다.
+	 * @param heigt 직사각형의 세로 크기입니다.
+	 * @param rotate 직사각형의 라디안 회전 각도입니다.
+	 * @param color 직사각형의 색상입니다.
+	 */
+	void RenderWireframeRectangle2D(const Vec2f& center, float width, float height, float rotate, const Vec4f& color);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 원을 그립니다.
+	 * 
+	 * @param center 원의 중심 좌표입니다.
+	 * @param radius 원의 반지름 길이입니다.
+	 * @param color 원의 색상입니다.
+	 * @param sliceCount 원의 둘레 절단 횟수입니다. 기본 값은 300입니다.
+	 */
+	void RenderCircle2D(const Vec2f& center, float radius, const Vec4f& color, int32_t sliceCount = 300);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 와이어 프레임 원을 그립니다.
+	 * 
+	 * @param center 원의 중심 좌표입니다.
+	 * @param radius 원의 반지름 길이입니다.
+	 * @param color 원의 색상입니다.
+	 * @param sliceCount 원 둘레의 절단 횟수입니다. 기본 값은 300입니다.
+	 */
+	void RenderWireframeCircle2D(const Vec2f& center, float radius, const Vec4f& color, int32_t sliceCount = 300);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 타원을 그립니다.
+	 * 
+	 * @param center 타원의 중심 좌표입니다.
+	 * @param xAxis 타원의 x축 길이입니다. 만약, 이 길이가 y축 길이보다 크다면 장축이 되고, 그렇지 않으면 단축이 됩니다.
+	 * @param yAxis 타원의 y축 길이입니다. 만약, 이 길이가 x축 길이보다 크다면 장축이 되고, 그렇지 않으면 단축이 됩니다.
+	 * @param color 타원의 색상입니다.
+	 * @param sliceCount 타원 둘레의 절단 횟수입니다. 기본 값은 300입니다.
+	 */
+	void RenderEllipse2D(const Vec2f& center, float xAxis, float yAxis, const Vec4f& color, int32_t sliceCount = 300);
+
+
+	/**
+	 * @brief 바인딩된 프레임 버퍼에 2D 와이어 프레임 타원을 그립니다.
+	 * 
+	 * @param center 타원의 중심 좌표입니다.
+	 * @param xAxis 타원의 x축 길이입니다. 만약, 이 길이가 y축 길이보다 크다면 장축이 되고, 그렇지 않으면 단축이 됩니다.
+	 * @param yAxis 타원의 y축 길이입니다. 만약, 이 길이가 x축 길이보다 크다면 장축이 되고, 그렇지 않으면 단축이 됩니다.
+	 * @param color 타원의 색상입니다.
+	 * @param sliceCount 타원 둘레의 절단 횟수입니다. 기본 값은 300입니다.
+	 */
+	void RenderWireframeEllipse2D(const Vec2f& center, float xAxis, float yAxis, const Vec4f& color, int32_t sliceCount = 300);
+
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저에 디폴트 생성자와 빈 가상 소멸자를 삽입합니다.
 	 */
 	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(RenderManager);
+
+
+	/**
+	 * @brief 렌더 타겟 윈도우의 가로 세로 크기를 얻습니다.
+	 * 
+	 * @param outWidth 렌더 타겟 윈도우의 가로 크기입니다.
+	 * @param outHeight 렌더 타겟 윈도우의 세로 크기입니다.
+	 */
+	void GetRenderTargetWindowSize(int32_t& outWidth, int32_t& outHeight);
 
 
 private:
@@ -143,4 +329,16 @@ private:
 	 * @brief OpenGL 컨텍스트입니다.
 	 */
 	void* context_ = nullptr;
+
+
+	/**
+	 * @brief 스크린 투영 행렬입니다.
+	 */
+	Mat4x4f screenOrtho_;
+
+
+	/**
+	 * @brief 렌더 매니저가 렌더링 시 사용할 셰이더입니다.
+	 */
+	std::map<std::string, RUID> shaderCache_;
 };

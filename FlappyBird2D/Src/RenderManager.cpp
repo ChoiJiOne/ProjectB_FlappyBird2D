@@ -3,9 +3,18 @@
 #include <SDL.h>
 #include <glad/glad.h>
 
+#include "MathModule.h"
+
 #include "Assertion.h"
+#include "GeometryPass2D.h"
+#include "GlyphPass2D.h"
+#include "IResource.h"
 #include "RenderManager.h"
+#include "ResourceManager.h"
 #include "SDLManager.h"
+#include "SpritePass2D.h"
+#include "Texture2D.h"
+#include "TTFont.h"
 
 RenderManager& RenderManager::Get()
 {
@@ -28,6 +37,11 @@ void RenderManager::Startup()
 
 	CHECK(gladLoadGLLoader((GLADloadproc)(SDL_GL_GetProcAddress)));
 
+	shaderCache_ = std::map<std::string, RUID>();
+	shaderCache_.insert({ "GeometryPass2D", ResourceManager::Get().Create<GeometryPass2D>() });
+	shaderCache_.insert({ "SpritePass2D",   ResourceManager::Get().Create<SpritePass2D>()   });
+	shaderCache_.insert({ "GlyphPass2D",    ResourceManager::Get().Create<GlyphPass2D>()    });
+
 	bIsStartup_ = true;
 }
 
@@ -47,6 +61,11 @@ void RenderManager::Shutdown()
 
 void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
 {
+	int32_t width = 0;
+	int32_t height = 0;
+	GetRenderTargetWindowSize(width, height);
+	screenOrtho_ = MathModule::CreateOrtho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
+
 	glClearColor(red, green, blue, alpha);
 	glClearDepth(depth);
 	glClearStencil(stencil);
@@ -68,9 +87,8 @@ void RenderManager::SetWindowViewport()
 {
 	int32_t width = 0;
 	int32_t height = 0;
-	SDL_Window* window = reinterpret_cast<SDL_Window*>(renderTargetWindow_);
+	GetRenderTargetWindowSize(width, height);
 
-	SDL_GetWindowSize(window, &width, &height);
 	SetViewport(0, 0, width, height);
 }
 
@@ -126,4 +144,94 @@ void RenderManager::SetMultisampleMode(bool bIsEnable)
 	{
 		GL_FAILED(glDisable(GL_MULTISAMPLE));
 	}
+}
+
+void RenderManager::RenderPoints2D(const std::vector<Vec2f>& positions, const Vec4f& color, float pointSize)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawPoints2D(screenOrtho_, positions, color, pointSize);
+}
+
+void RenderManager::RenderConnectPoints2D(const std::vector<Vec2f>& positions, const Vec4f& color)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawConnectPoints2D(screenOrtho_, positions, color);
+}
+
+void RenderManager::RenderLine2D(const Vec2f& fromPosition, const Vec2f& toPosition, const Vec4f& color)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawLine2D(screenOrtho_, fromPosition, toPosition, color);
+}
+
+void RenderManager::RenderLine2D(const Vec2f& fromPosition, const Vec4f& fromColor, const Vec2f& toPosition, const Vec4f& toColor)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawLine2D(screenOrtho_, fromPosition, fromColor, toPosition, toColor);
+}
+
+void RenderManager::RenderTriangle2D(const Vec2f& fromPosition, const Vec2f& byPosition, const Vec2f& toPosition, const Vec4f& color)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawTriangle2D(screenOrtho_, fromPosition, byPosition, toPosition, color);
+}
+
+void RenderManager::RenderTriangle2D(const Vec2f& fromPosition, const Vec4f& fromColor, const Vec2f& byPosition, const Vec4f& byColor, const Vec2f& toPosition, const Vec4f& toColor)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawTriangle2D(screenOrtho_, fromPosition, fromColor, byPosition, byColor, toPosition, toColor);
+}
+
+void RenderManager::RenderWireframeTriangle2D(const Vec2f& fromPosition, const Vec2f& byPosition, const Vec2f& toPosition, const Vec4f& color)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawWireframeTriangle2D(screenOrtho_, fromPosition, byPosition, toPosition, color);
+}
+
+void RenderManager::RenderWireframeTriangle2D(const Vec2f& fromPosition, const Vec4f& fromColor, const Vec2f& byPosition, const Vec4f& byColor, const Vec2f& toPosition, const Vec4f& toColor)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawWireframeTriangle2D(screenOrtho_, fromPosition, fromColor, byPosition, byColor, toPosition, toColor);
+}
+
+void RenderManager::RenderRectangle2D(const Vec2f& center, float width, float height, float rotate, const Vec4f& color)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawRectangle2D(screenOrtho_, center, width, height, rotate, color);
+}
+
+void RenderManager::RenderWireframeRectangle2D(const Vec2f& center, float width, float height, float rotate, const Vec4f& color)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawWireframeRectangle2D(screenOrtho_, center, width, height, rotate, color);
+}
+
+void RenderManager::RenderCircle2D(const Vec2f& center, float radius, const Vec4f& color, int32_t sliceCount)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawCircle2D(screenOrtho_, center, radius, color, sliceCount);
+}
+
+void RenderManager::RenderWireframeCircle2D(const Vec2f& center, float radius, const Vec4f& color, int32_t sliceCount)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawWireframeCircle2D(screenOrtho_, center, radius, color, sliceCount);
+}
+
+void RenderManager::RenderEllipse2D(const Vec2f& center, float xAxis, float yAxis, const Vec4f& color, int32_t sliceCount)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawEllipse2D(screenOrtho_, center, xAxis, yAxis, color, sliceCount);
+}
+
+void RenderManager::RenderWireframeEllipse2D(const Vec2f& center, float xAxis, float yAxis, const Vec4f& color, int32_t sliceCount)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawWireframeEllipse2D(screenOrtho_, center, xAxis, yAxis, color, sliceCount);
+}
+
+void RenderManager::GetRenderTargetWindowSize(int32_t& outWidth, int32_t& outHeight)
+{
+	SDL_Window* window = reinterpret_cast<SDL_Window*>(renderTargetWindow_);
+	SDL_GetWindowSize(window, &outWidth, &outHeight);
 }
