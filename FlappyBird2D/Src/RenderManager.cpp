@@ -230,6 +230,62 @@ void RenderManager::RenderWireframeEllipse2D(const Vec2f& center, float xAxis, f
 	pass->DrawWireframeEllipse2D(screenOrtho_, center, xAxis, yAxis, color, sliceCount);
 }
 
+void RenderManager::RenderSprite2D(const RUID& textureID, const Vec2f& center, float width, float height, float rotate, float transparent)
+{
+	SpritePass2D* pass = ResourceManager::Get().GetResource<SpritePass2D>(shaderCache_.at("SpritePass2D"));
+	Texture2D* texture = ResourceManager::Get().GetResource<Texture2D>(textureID);
+
+	pass->DrawSprite2D(screenOrtho_, texture, center, width, height, rotate, transparent);
+}
+
+void RenderManager::RenderSprite2D(const RUID& textureID, float transparent)
+{
+	SpritePass2D* pass = ResourceManager::Get().GetResource<SpritePass2D>(shaderCache_.at("SpritePass2D"));
+	Texture2D* texture = ResourceManager::Get().GetResource<Texture2D>(textureID);
+
+	pass->DrawSprite2D(texture, transparent);
+}
+
+void RenderManager::RenderHorizonScrollSprite2D(const RUID& textureID, float rate, float transparent)
+{
+	SpritePass2D* pass = ResourceManager::Get().GetResource<SpritePass2D>(shaderCache_.at("SpritePass2D"));
+	Texture2D* texture = ResourceManager::Get().GetResource<Texture2D>(textureID);
+
+	pass->DrawHorizonScrollSprite2D(texture, rate, transparent);
+}
+
+void RenderManager::RenderHorizonScrollSprite2D(const RUID& textureID, const Vec2f& center, float width, float height, float rotate, float rate, float transparent)
+{
+	SpritePass2D* pass = ResourceManager::Get().GetResource<SpritePass2D>(shaderCache_.at("SpritePass2D"));
+	Texture2D* texture = ResourceManager::Get().GetResource<Texture2D>(textureID);
+
+	pass->DrawHorizonScrollSprite2D(screenOrtho_, texture, center, width, height, rotate, rate, transparent);
+}
+
+void RenderManager::RenderVerticalScrollSprite2D(const RUID& textureID, float rate, float transparent)
+{
+	SpritePass2D* pass = ResourceManager::Get().GetResource<SpritePass2D>(shaderCache_.at("SpritePass2D"));
+	Texture2D* texture = ResourceManager::Get().GetResource<Texture2D>(textureID);
+
+	pass->DrawVerticalScrollSprite2D(texture, rate, transparent);
+}
+
+void RenderManager::RenderVerticalScrollSprite2D(const RUID& textureID, const Vec2f& center, float width, float height, float rotate, float rate, float transparent)
+{
+	SpritePass2D* pass = ResourceManager::Get().GetResource<SpritePass2D>(shaderCache_.at("SpritePass2D"));
+	Texture2D* texture = ResourceManager::Get().GetResource<Texture2D>(textureID);
+
+	pass->DrawVerticalScrollSprite2D(screenOrtho_, texture, center, width, height, rotate, rate, transparent);
+}
+
+void RenderManager::RenderOutlineSprite2D(const RUID& textureID, const Vec2f& center, float width, float height, float rotate, const Vec4f& outline, float transparent)
+{
+	SpritePass2D* pass = ResourceManager::Get().GetResource<SpritePass2D>(shaderCache_.at("SpritePass2D"));
+	Texture2D* texture = ResourceManager::Get().GetResource<Texture2D>(textureID);
+
+	pass->DrawOutlineSprite2D(screenOrtho_, texture, center, width, height, rotate, outline, transparent);
+}
+
 void RenderManager::GetRenderTargetWindowSize(int32_t& outWidth, int32_t& outHeight)
 {
 	SDL_Window* window = reinterpret_cast<SDL_Window*>(renderTargetWindow_);

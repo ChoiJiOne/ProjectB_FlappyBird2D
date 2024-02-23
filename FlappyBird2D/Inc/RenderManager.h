@@ -302,6 +302,147 @@ public:
 	void RenderWireframeEllipse2D(const Vec2f& center, float xAxis, float yAxis, const Vec4f& color, int32_t sliceCount = 300);
 
 
+	/**
+	 * @brief 2D 스프라이트를 바인딩된 프레임 버퍼에 그립니다.
+	 *
+	 * @param textureID 텍스처 리소스 아이디입니다.
+	 * @param center 텍스처의 중심 좌표입니다.
+	 * @param width 텍스처의 가로 크기입니다.
+	 * @param height 텍스처의 세로 크기입니다.
+	 * @param rotate 텍스처의 라디안 회전 각도입니다.
+	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
+	 */
+	void RenderSprite2D(const RUID& textureID, const Vec2f& center, float width, float height, float rotate, float transparent = 1.0f);
+
+
+	/**
+	 * @brief 2D 스프라이트를 바인딩된 프레임 버퍼에 그립니다.
+	 *
+	 * @note 2D 스프라이트를 윈도우 전체에 채워지도록 그립니다.
+	 *
+	 * @param textureID 텍스처 리소스 아이디입니다.
+	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
+	 */
+	void RenderSprite2D(const RUID& textureID, float transparent = 1.0f);
+
+
+	/**
+	 * @brief 가로로 스크롤된 2D 스프라이트를 그립니다.
+	 *
+	 * @note
+	 * - 2D 스프라이트를 윈도우 전체에 채워지도록 그립니다.
+	 * - 텍스처 분할 비율은 다음과 같습니다.
+	 * ┌────────────┬──────────────────┐
+	 * │            │                  │
+	 * │            │                  │
+	 * │            │                  │
+	 * │            │                  │
+	 * │ 1.0f - rate│       rate       │
+	 * │            │                  │
+	 * │            │                  │
+	 * │            │                  │
+	 * └────────────┴──────────────────┘
+	 *
+	 * @param textureID 텍스처 리소스 아이디 입니다.
+	 * @param rate 분할 비율입니다. 값의 범위는 0.0f ~ 1.0f 입니다.
+	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
+	 */
+	void RenderHorizonScrollSprite2D(const RUID& textureID, float rate, float transparent = 1.0f);
+
+
+	/**
+	 * @brief 가로로 스크롤된 2D 스프라이트를 그립니다.
+	 *
+	 * @note
+	 * - 텍스처 분할 비율은 다음과 같습니다.
+	 * ┌────────────┬──────────────────┐
+	 * │            │                  │
+	 * │            │                  │
+	 * │            │                  │
+	 * │            │                  │
+	 * │ 1.0f - rate│       rate       │
+	 * │            │                  │
+	 * │            │                  │
+	 * │            │                  │
+	 * └────────────┴──────────────────┘
+	 * 
+	 * @param textureID 텍스처 리소스 아이디 입니다.
+	 * @param center 텍스처의 중심 좌표입니다.
+	 * @param width 텍스처의 가로 크기입니다.
+	 * @param height 텍스처의 세로 크기입니다.
+	 * @param rotate 텍스처의 회전 각도입니다. 단위는 라디안입니다.
+	 * @param rate 분할 비율입니다. 값의 범위는 0.0f ~ 1.0f 입니다.
+	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
+	 */
+	void RenderHorizonScrollSprite2D(const RUID& textureID, const Vec2f& center, float width, float height, float rotate, float rate, float transparent = 1.0f);
+
+
+	/**
+	 * @brief 세로로 스크롤된 2D 스프라이트를 그립니다.
+	 *
+	 * @note
+	 * - 2D 스프라이트를 윈도우 전체에 채워지도록 그립니다.
+	 * - 텍스처 분할 비율은 다음과 같습니다.
+	 * ┌─────────────────────────────┐
+	 * │                             │
+	 * │                             │
+	 * │              rate           │
+	 * │                             │
+	 * ├─────────────────────────────┤
+	 * │                             │
+	 * │          1.0f - rate        │
+	 * │                             │
+	 * └─────────────────────────────┘
+	 *
+	 * @param textureID 텍스처 리소스 아이디 입니다.
+	 * @param rate 분할 비율입니다. 값의 범위는 0.0f ~ 1.0f 입니다.
+	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
+	 */
+	void RenderVerticalScrollSprite2D(const RUID& textureID, float rate, float transparent = 1.0f);
+
+
+	/**
+	 * @brief 세로로 스크롤된 2D 스프라이트를 그립니다.
+	 *
+	 * @note
+	 * - 텍스처 분할 비율은 다음과 같습니다.
+	 * ┌─────────────────────────────┐
+	 * │                             │
+	 * │                             │
+	 * │              rate           │
+	 * │                             │
+	 * ├─────────────────────────────┤
+	 * │                             │
+	 * │          1.0f - rate        │
+	 * │                             │
+	 * └─────────────────────────────┘
+	 * 
+	 * @param textureID 텍스처 리소스 아이디 입니다.
+	 * @param center 텍스처의 중심 좌표입니다.
+	 * @param width 텍스처의 가로 크기입니다.
+	 * @param height 텍스처의 세로 크기입니다.
+	 * @param rotate 텍스처의 회전 각도입니다. 단위는 라디안입니다.
+	 * @param rate 분할 비율입니다. 값의 범위는 0.0f ~ 1.0f 입니다.
+	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
+	 */
+	void RenderVerticalScrollSprite2D(const RUID& textureID, const Vec2f& center, float width, float height, float rotate, float rate, float transparent = 1.0f);
+
+
+	/**
+	 * @brief 2D 스프라이트의 외곽선을 바인딩된 프레임 버퍼에 그립니다.
+	 *
+
+	 * @param textureID 텍스처 리소스 아이디 입니다.
+	 * @param center 텍스처의 중심 좌표입니다.
+	 * @param width 텍스처의 가로 크기입니다.
+	 * @param height 텍스처의 세로 크기입니다.
+	 * @param rotate 텍스처의 라디안 회전 각도입니다.
+	 * @param outline 텍스처 외곽선 색상입니다.
+	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f 입니다.
+	 */
+	void RenderOutlineSprite2D(const RUID& textureID, const Vec2f& center, float width, float height, float rotate, const Vec4f& outline, float transparent = 1.0f);
+
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저에 디폴트 생성자와 빈 가상 소멸자를 삽입합니다.
