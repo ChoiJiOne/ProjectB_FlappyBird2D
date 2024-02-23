@@ -26,32 +26,16 @@ int32_t WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 	CHECK(CrashModule::RegisterExceptionFilter());
 
 	SDLManager::Get().Startup();
-	RenderManager::Get().Startup();
 	ResourceManager::Get().Startup();
+	RenderManager::Get().Startup();
 
 	RenderManager::Get().SetDepthMode(false);
 	RenderManager::Get().SetAlphaBlendMode(true);
 	RenderManager::Get().SetMultisampleMode(true);
 
-	TTFont* font = ResourceManager::Get().CreateResource<TTFont>("Font");
-	font->Initialize("Resource/Font/Flappy_Font.ttf", 32, 127, 64.0f);
+	RUID backgroundID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/Background_Day.png");
 
-	Texture2D* background = ResourceManager::Get().CreateResource<Texture2D>("Background");
-	background->Initialize("Resource/Texture/Background_Day.png");
-
-	Texture2D* land = ResourceManager::Get().CreateResource<Texture2D>("Land");
-	land->Initialize("Resource/Texture/Land.png");
-
-	GeometryPass2D* geometryPass = ResourceManager::Get().CreateResource<GeometryPass2D>("GeometryPass2D");
-	geometryPass->Initialize();
-
-	SpritePass2D* spritePass = ResourceManager::Get().CreateResource<SpritePass2D>("SpritePass2D");
-	spritePass->Initialize();
-
-	GlyphPass2D* glyphPass = ResourceManager::Get().CreateResource<GlyphPass2D>("GlyphPass2D");
-	glyphPass->Initialize();
-
-	Mat4x4f ortho = MathModule::CreateOrtho(0.0f, 600.0f, 800.0f, 0.0f, -1.0f, 1.0f);
+	RUID fontID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 32, 127, 64.0f);
 
 	SDL_Event e;
 	bool bIsDone = false;
@@ -67,27 +51,19 @@ int32_t WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 			}
 		}
 
+		static float time = 0.0f;
+		time += 0.001f;
+		if (time >= 1.0f)
+		{
+			time -= 1.0f;
+		}
+
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
-		spritePass->DrawSprite2D(background);
-		spritePass->DrawSprite2D(ortho, land, Vec2f(300.0f, 750.0f), 600.0f, 100.0f, 0.0f);
-
-		for (float x = 0.0f; x <= 600; x += 10.0f)
-		{
-			geometryPass->DrawLine2D(ortho, Vec2f(x, 0.0f), Vec2f(x, 800.0f), Vec4f(0.0f, 0.0f, 0.0f, 1.0f));
-		}
-
-		for (float y = 0.0f; y <= 800; y += 10.0f)
-		{
-			geometryPass->DrawLine2D(ortho, Vec2f(0.0f, y), Vec2f(600.0f, y), Vec4f(0.0f, 0.0f, 0.0f, 1.0f));
-		}
-
-		glyphPass->DrawText2D(ortho, font, L"01. This is Flappy Bird", Vec2f(200.0f, 100.0f), GlyphPass2D::EAlignment::LEFT, Vec4f(1.0f, 0.0f, 1.0f, 1.0f));
-		glyphPass->DrawText2D(ortho, font, L"02. This is Flappy Bird", Vec2f(200.0f, 200.0f), GlyphPass2D::EAlignment::LEFT, Vec4f(1.0f, 0.0f, 1.0f, 1.0f));
-		glyphPass->DrawText2D(ortho, font, L"03. asdokokowef",         Vec2f(200.0f, 300.0f), GlyphPass2D::EAlignment::LEFT, Vec4f(1.0f, 0.0f, 1.0f, 1.0f));
-		glyphPass->DrawText2D(ortho, font, L"04. ?????????????",       Vec2f(200.0f, 400.0f), GlyphPass2D::EAlignment::LEFT, Vec4f(1.0f, 0.0f, 1.0f, 1.0f));
-		glyphPass->DrawText2D(ortho, font, L"05. !!!!!!!!!",           Vec2f(200.0f, 500.0f), GlyphPass2D::EAlignment::LEFT, Vec4f(1.0f, 0.0f, 1.0f, 1.0f));
-		
+		RenderManager::Get().RenderHorizonScrollSprite2D(backgroundID, time);
+		RenderManager::Get().RenderText2D(fontID, L"Hello, World!", Vec2f(310.0f, 410.0f), Vec4f(0.5f, 0.5f, 0.5f, 0.7f));
+		RenderManager::Get().RenderText2D(fontID, L"Hello, World!", Vec2f(300.0f, 400.0f), Vec4f(1.0f, 0.0f, 1.0f, 1.0f));
+				
 		RenderManager::Get().EndFrame();
 	}
 
