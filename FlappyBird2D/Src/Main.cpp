@@ -61,9 +61,8 @@ int32_t WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
 		RenderManager::Get().RenderHorizonScrollSprite2D(backgroundID, time);
-		RenderManager::Get().RenderText2D(fontID, L"Hello, World!", Vec2f(310.0f, 410.0f), Vec4f(0.5f, 0.5f, 0.5f, 0.7f));
-		RenderManager::Get().RenderText2D(fontID, L"Hello, World!", Vec2f(300.0f, 400.0f), Vec4f(1.0f, 0.0f, 1.0f, 1.0f));
-				
+		RenderManager::Get().RenderRoundRectangle2D(Vec2f(300.0f, 600.0f), 300.0f, 100.0f, 30.0f, 0.0f, Vec4f(1.0f, 0.0f, 0.0f, 0.5f));
+		
 		RenderManager::Get().EndFrame();
 	}
 
