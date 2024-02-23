@@ -30,11 +30,9 @@ public:
 
 public:
 	/**
-	 * @brief 2D 텍스트를 렌더링하는 셰이더의 디폴트 생성자입니다.
-	 *
-	 * @note 생성자 이외의 메서드에서 적절한 초기화를 수행해야 합니다.
+	 * @brief 2D 텍스트를 렌더링하는 셰이더의 생성자입니다.
 	 */
-	GlyphPass2D() = default;
+	explicit GlyphPass2D();
 
 
 	/**
@@ -50,13 +48,7 @@ public:
 	 */
 	DISALLOW_COPY_AND_ASSIGN(GlyphPass2D);
 
-
-	/**
-	 * @brief 2D 텍스트를 렌더링하는 셰이더의 소스 파일을 컴파일하고 셰이더 프로그램을 생성합니다.
-	 */
-	void Initialize();
-
-
+	
 	/**
 	 * @brief 셰이더의 내부 리소스를 할당 해제합니다.
 	 */

@@ -5,23 +5,8 @@
 #include "Assertion.h"
 #include "GeometryPass2D.h"
 
-GeometryPass2D::~GeometryPass2D()
+GeometryPass2D::GeometryPass2D() : Shader("Shader/GeometryPass2D.vert", "Shader/GeometryPass2D.frag")
 {
-	if (bIsInitialized_)
-	{
-		Release();
-	}
-}
-
-void GeometryPass2D::Initialize()
-{
-	CHECK(!bIsInitialized_);
-
-	std::string vsPath = "Shader/GeometryPass2D.vert";
-	std::string fsPath = "Shader/GeometryPass2D.frag";
-
-	Shader::Initialize(vsPath, fsPath);
-
 	GL_FAILED(glGenVertexArrays(1, &vertexArrayObject_));
 	GL_FAILED(glGenBuffers(1, &vertexBufferObject_));
 
@@ -36,6 +21,14 @@ void GeometryPass2D::Initialize()
 	GL_FAILED(glEnableVertexAttribArray(1));
 
 	GL_FAILED(glBindVertexArray(0));
+}
+
+GeometryPass2D::~GeometryPass2D()
+{
+	if (bIsInitialized_)
+	{
+		Release();
+	}
 }
 
 void GeometryPass2D::Release()

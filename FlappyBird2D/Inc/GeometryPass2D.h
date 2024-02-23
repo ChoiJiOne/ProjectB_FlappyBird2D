@@ -19,11 +19,9 @@ class GeometryPass2D : public Shader
 {
 public:
 	/**
-	 * @brief 2D 기본 도형을 렌더링하는 셰이더의 디폴트 생성자입니다.
-	 *
-	 * @note 생성자 이외의 메서드에서 적절한 초기화를 수행해야 합니다.
+	 * @brief 2D 기본 도형을 렌더링하는 셰이더의 생성자입니다.
 	 */
-	GeometryPass2D() = default;
+	explicit GeometryPass2D();
 
 
 	/**
@@ -38,12 +36,6 @@ public:
 	 * @brief 2D 기본 도형을 렌더링하는 셰이더의 복사 생성자와 대입 연산자를 명시적으로 삭제합니다.
 	 */
 	DISALLOW_COPY_AND_ASSIGN(GeometryPass2D);
-
-
-	/**
-	 * @brief 2D 기본 도형을 렌더링하는 셰이더를 초기화합니다.
-	 */
-	void Initialize();
 
 
 	/**

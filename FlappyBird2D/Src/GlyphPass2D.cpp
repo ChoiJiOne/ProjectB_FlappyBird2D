@@ -4,23 +4,8 @@
 #include "GlyphPass2D.h"
 #include "TTFont.h"
 
-GlyphPass2D::~GlyphPass2D()
+GlyphPass2D::GlyphPass2D() : Shader("Shader/GlyphPass2D.vert", "Shader/GlyphPass2D.frag")
 {
-	if (bIsInitialized_)
-	{
-		Release();
-	}
-}
-
-void GlyphPass2D::Initialize()
-{
-	CHECK(!bIsInitialized_);
-
-	std::string vsPath = "Shader/GlyphPass2D.vert";
-	std::string fsPath = "Shader/GlyphPass2D.frag";
-
-	Shader::Initialize(vsPath, fsPath);
-
 	GL_FAILED(glGenVertexArrays(1, &vertexArrayObject_));
 	GL_FAILED(glGenBuffers(1, &vertexBufferObject_));
 
@@ -38,6 +23,14 @@ void GlyphPass2D::Initialize()
 	GL_FAILED(glEnableVertexAttribArray(2));
 
 	GL_FAILED(glBindVertexArray(0));
+}
+
+GlyphPass2D::~GlyphPass2D()
+{
+	if (bIsInitialized_)
+	{
+		Release();
+	}
 }
 
 void GlyphPass2D::Release()

@@ -8,23 +8,8 @@
 
 #include <glad/glad.h>
 
-SpritePass2D::~SpritePass2D()
+SpritePass2D::SpritePass2D() : Shader("Shader/SpritePass2D.vert", "Shader/SpritePass2D.frag")
 {
-	if (bIsInitialized_)
-	{
-		Release();
-	}
-}
-
-void SpritePass2D::Initialize()
-{
-	CHECK(!bIsInitialized_);
-
-	std::string vsPath = "Shader/SpritePass2D.vert";
-	std::string fsPath = "Shader/SpritePass2D.frag";
-
-	Shader::Initialize(vsPath, fsPath);
-
 	GL_FAILED(glGenVertexArrays(1, &vertexArrayObject_));
 	GL_FAILED(glGenBuffers(1, &vertexBufferObject_));
 
@@ -39,6 +24,14 @@ void SpritePass2D::Initialize()
 	GL_FAILED(glEnableVertexAttribArray(1));
 
 	GL_FAILED(glBindVertexArray(0));
+}
+
+SpritePass2D::~SpritePass2D()
+{
+	if (bIsInitialized_)
+	{
+		Release();
+	}
 }
 
 void SpritePass2D::Release()
