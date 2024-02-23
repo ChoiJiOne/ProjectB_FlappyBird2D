@@ -12,11 +12,11 @@ class Texture2D : public IResource
 {
 public:
 	/**
-	 * @brief 텍스처의 디폴트 생성자입니다.
+	 * @brief 이미지 파일을 읽고 텍스처 리소스를 생성합니다.
 	 *
-	 * @note 생성자 이외의 메서드에서 적절한 초기화를 수행해야 합니다.
+	 * @param path 이미지 파일의 경로입니다.
 	 */
-	Texture2D() = default;
+	explicit Texture2D(const std::string& path);
 
 
 	/**
@@ -32,15 +32,7 @@ public:
 	 */
 	DISALLOW_COPY_AND_ASSIGN(Texture2D);
 
-
-	/**
-	 * @brief 이미지 파일을 읽고 텍스처 리소스를 생성합니다.
-	 *
-	 * @param path 이미지 파일의 경로입니다.
-	 */
-	void Initialize(const std::string& path);
-
-
+	
 	/**
 	 * @brief 텍스처의 내부 리소스를 할당 해제합니다.
 	 */

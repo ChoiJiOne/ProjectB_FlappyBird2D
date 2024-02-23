@@ -11,18 +11,8 @@
 #define INTERNAL_FORMAT_RGB  3
 #define INTERNAL_FORMAT_RGBA 4
 
-Texture2D::~Texture2D()
+Texture2D::Texture2D(const std::string& path)
 {
-	if (bIsInitialized_)
-	{
-		Release();
-	}
-}
-
-void Texture2D::Initialize(const std::string& path)
-{
-	CHECK(!bIsInitialized_);
-
 	int32_t width;
 	int32_t height;
 	int32_t channels;
@@ -49,7 +39,7 @@ void Texture2D::Initialize(const std::string& path)
 		break;
 
 	default:
-		ASSERT(false, "undefined format");
+		ASSERT(false, "undefined texture resource format");
 		break;
 	}
 
@@ -62,8 +52,16 @@ void Texture2D::Initialize(const std::string& path)
 	GL_FAILED(glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, buffer.data()));
 	GL_FAILED(glGenerateMipmap(GL_TEXTURE_2D));
 	GL_FAILED(glBindTexture(GL_TEXTURE_2D, 0));
-	
+
 	bIsInitialized_ = true;
+}
+
+Texture2D::~Texture2D()
+{
+	if (bIsInitialized_)
+	{
+		Release();
+	}
 }
 
 void Texture2D::Release()
