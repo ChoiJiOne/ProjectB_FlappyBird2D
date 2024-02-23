@@ -61,7 +61,7 @@ public:
 	 * @param ortho 직교 투영 행렬입니다.
 	 * @param font 폰트 리소스입니다.
 	 * @param text 렌더링할 텍스트입니다.
-	 * @param center 텍스트의 좌표입니다.
+	 * @param position 텍스트의 좌표입니다.
 	 * @param alignment 텍스트의 좌표 기준입니다.
 	 * @param color 텍스트의 RGBA 색상입니다.
 	 */
