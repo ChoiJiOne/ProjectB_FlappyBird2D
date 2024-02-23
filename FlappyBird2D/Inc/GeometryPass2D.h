@@ -199,6 +199,20 @@ public:
 
 
 	/**
+	 * @brief 화면에 모서리가 둥근 2D 와이어 프레임 사각형을 그립니다.
+	 *
+	 * @param ortho 직교 투영 행렬입니다.
+	 * @param center 직사각형의 중심 좌표입니다.
+	 * @param width 직사각형의 가로 크기입니다.
+	 * @param heigt 직사각형의 세로 크기입니다.
+	 * @param side 사각형의 둥근 부분의 크기입니다.
+	 * @param rotate 직사각형의 라디안 회전 각도입니다.
+	 * @param color 직사각형의 색상입니다.
+	 */
+	void DrawWireframeRoundRectangle2D(const Mat4x4f& ortho, const Vec2f& center, float width, float height, float side, float rotate, const Vec4f& color);
+
+
+	/**
 	 * @brief 화면에 2D 원을 그립니다.
 	 *
 	 * @param ortho 직교 투영 행렬입니다.
@@ -279,6 +293,12 @@ private:
 	 * @brief 도형 정점 목록의 최대 크기입니다.
 	 */
 	static const int32_t MAX_VERTEX_SIZE = 10000;
+
+
+	/**
+	 * @brief 곡선 계산 시 최대 분할 횟수입니다.
+	 */
+	static const int32_t MAX_SLICE_SIZE = 7;
 	
 
 	/**
