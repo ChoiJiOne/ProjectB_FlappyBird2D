@@ -18,6 +18,18 @@ class GlyphPass2D : public Shader
 {
 public:
 	/**
+	 * @brief 텍스트의 좌표 기준입니다.
+	 */
+	enum class EAlignment
+	{
+		NONE   = 0x00,
+		LEFT   = 0x01,
+		CENTER = 0x02,
+	};
+
+
+public:
+	/**
 	 * @brief 2D 텍스트를 렌더링하는 셰이더의 디폴트 생성자입니다.
 	 *
 	 * @note 생성자 이외의 메서드에서 적절한 초기화를 수행해야 합니다.
@@ -50,17 +62,18 @@ public:
 	 */
 	virtual void Release() override;
 
-
+	
 	/**
 	 * @brief 2D 텍스트를 화면에 그립니다.
 	 *
 	 * @param ortho 직교 투영 행렬입니다.
 	 * @param font 폰트 리소스입니다.
 	 * @param text 렌더링할 텍스트입니다.
-	 * @param center 텍스트의 중심 좌표입니다.
+	 * @param center 텍스트의 좌표입니다.
+	 * @param alignment 텍스트의 좌표 기준입니다.
 	 * @param color 텍스트의 RGBA 색상입니다.
 	 */
-	void DrawText2D(const Mat4x4f& ortho, const TTFont* font, const std::wstring& text, const Vec2f& center, const Vec4f& color);
+	void DrawText2D(const Mat4x4f& ortho, const TTFont* font, const std::wstring& text, const Vec2f& position, const EAlignment& alignment, const Vec4f& color);
 
 
 private:
@@ -69,12 +82,12 @@ private:
 	 *
 	 * @param font 폰트 리소스입니다.
 	 * @param text 렌더링할 텍스트입니다.
-	 * @param center 텍스트의 중심 좌표입니다.
+	 * @param startPosition 텍스트 영역의 왼쪽 상단 좌표입니다.
 	 * @param color 텍스트의 색상입니다.
 	 *
 	 * @return 텍스트에 맞는 버텍스의 수를 반환합니다.
 	 */
-	uint32_t UpdateGlyphVertexBuffer(const TTFont* font, const std::wstring& text, const Vec2f& center, const Vec4f& color);
+	uint32_t UpdateGlyphVertexBuffer(const TTFont* font, const std::wstring& text, const Vec2f& startPosition, const Vec4f& color);
 
 
 private:
