@@ -212,6 +212,12 @@ void RenderManager::RenderRoundRectangle2D(const Vec2f& center, float width, flo
 	pass->DrawRoundRectangle2D(screenOrtho_, center, width, height, side, rotate, color);
 }
 
+void RenderManager::RenderWireframeRoundRectangle2D(const Vec2f& center, float width, float height, float side, float rotate, const Vec4f& color)
+{
+	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
+	pass->DrawWireframeRoundRectangle2D(screenOrtho_, center, width, height, side, rotate, color);
+}
+
 void RenderManager::RenderCircle2D(const Vec2f& center, float radius, const Vec4f& color, int32_t sliceCount)
 {
 	GeometryPass2D* pass = ResourceManager::Get().GetResource<GeometryPass2D>(shaderCache_.at("GeometryPass2D"));
