@@ -7,21 +7,10 @@
 #include "Assertion.h"
 #include "TTFont.h"
 
-TTFont::~TTFont()
+TTFont::TTFont(const std::string& path, int32_t beginCodePoint, int32_t endCodePoint, float fontSize)
+	: beginCodePoint_(beginCodePoint)
+	, endCodePoint_(endCodePoint)
 {
-	if (bIsInitialized_)
-	{
-		Release();
-	}
-}
-
-void TTFont::Initialize(const std::string& path, int32_t beginCodePoint, int32_t endCodePoint, float fontSize)
-{
-	CHECK(!bIsInitialized_);
-
-	beginCodePoint_ = beginCodePoint;
-	endCodePoint_ = endCodePoint;
-
 	std::vector<uint8_t> buffer;
 	CHECK(FileModule::ReadBufferFromFile(path, buffer));
 
@@ -33,6 +22,14 @@ void TTFont::Initialize(const std::string& path, int32_t beginCodePoint, int32_t
 	glyphAtlasID_ = CreateGlyphAtlasFromBitmap(glyphAtlasBitmap, glyphAtlasSize_);
 
 	bIsInitialized_ = true;
+}
+
+TTFont::~TTFont()
+{
+	if (bIsInitialized_)
+	{
+		Release();
+	}
 }
 
 void TTFont::Release()

@@ -34,11 +34,18 @@ class TTFont : public IResource
 {
 public:
 	/**
-	 * @brief 트루 타입 폰트의 기본 생성자입니다.
+	 * @brief 트루 타입 폰트 파일을 로딩하고 글리프 아틀라스를 생성합니다.
 	 *
-	 * @note 초기화를 수행하기 위해서는 반드시 적절한 초기화 메서드를 호출해야 합니다.
+	 * @param path 트루 타입 폰트 파일의 경로입니다.
+	 * @param beginCodePoint 글리프 텍스처 아틀라스의 코드 포인트 시작점입니다.
+	 * @param endCodePoint 글리프 텍스처 아틀라스의 코드 포인트 끝점입니다.
+	 * @param fontSize 폰트의 크기입니다.
+	 *
+	 * @note
+	 * - 글리프 텍스처 아틀라스 내에서 시작과 끝의 코드 포인트를 포함합니다.
+	 * - 트루 타입 폰트 파일의 확장자는 .ttf 만 지원합니다.
 	 */
-	TTFont() = default;
+	explicit TTFont(const std::string& path, int32_t beginCodePoint, int32_t endCodePoint, float fontSize);
 
 
 	/**
@@ -53,21 +60,6 @@ public:
 	 * @brief 트루 타입 폰트 클래스의 복사 생성자와 대입 연산자를 명시적으로 삭제합니다.
 	 */
 	DISALLOW_COPY_AND_ASSIGN(TTFont);
-
-
-	/**
-	 * @brief 트루 타입 폰트 파일을 로딩하고 글리프 아틀라스를 생성합니다.
-	 *
-	 * @param path 트루 타입 폰트 파일의 경로입니다.
-	 * @param beginCodePoint 글리프 텍스처 아틀라스의 코드 포인트 시작점입니다.
-	 * @param endCodePoint 글리프 텍스처 아틀라스의 코드 포인트 끝점입니다.
-	 * @param fontSize 폰트의 크기입니다.
-	 *
-	 * @note
-	 * - 글리프 텍스처 아틀라스 내에서 시작과 끝의 코드 포인트를 포함합니다.
-	 * - 트루 타입 폰트 파일의 확장자는 .ttf 만 지원합니다.
-	 */
-	void Initialize(const std::string& path, int32_t beginCodePoint, int32_t endCodePoint, float fontSize);
 
 
 	/**
