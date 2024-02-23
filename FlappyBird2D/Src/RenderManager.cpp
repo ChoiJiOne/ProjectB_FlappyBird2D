@@ -286,6 +286,16 @@ void RenderManager::RenderOutlineSprite2D(const RUID& textureID, const Vec2f& ce
 	pass->DrawOutlineSprite2D(screenOrtho_, texture, center, width, height, rotate, outline, transparent);
 }
 
+void RenderManager::RenderText2D(const RUID& fontID, const std::wstring& text, const Vec2f& position, const Vec4f& color, bool bIsCenter)
+{
+	GlyphPass2D* pass = ResourceManager::Get().GetResource<GlyphPass2D>(shaderCache_.at("GlyphPass2D"));
+	TTFont* font = ResourceManager::Get().GetResource<TTFont>(fontID);
+
+	GlyphPass2D::EAlignment alignment = bIsCenter ? GlyphPass2D::EAlignment::CENTER : GlyphPass2D::EAlignment::LEFT;
+
+	pass->DrawText2D(screenOrtho_, font, text, position, alignment, color);
+}
+
 void RenderManager::GetRenderTargetWindowSize(int32_t& outWidth, int32_t& outHeight)
 {
 	SDL_Window* window = reinterpret_cast<SDL_Window*>(renderTargetWindow_);

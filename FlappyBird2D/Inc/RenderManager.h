@@ -443,6 +443,20 @@ public:
 	void RenderOutlineSprite2D(const RUID& textureID, const Vec2f& center, float width, float height, float rotate, const Vec4f& outline, float transparent = 1.0f);
 
 
+	/**
+	 * @brief 2D 텍스트를 바인딩된 프레임 버퍼에 그립니다.
+	 * 
+	 * @param fontID 폰트 리소스 아이디입니다.
+	 * @param text 렌더링할 텍스트입니다.
+	 * @param center 텍스트의 좌표입니다.
+	 * @param color 텍스트의 RGBA 색상입니다.
+	 * @param bIsCenter 텍스트 좌표가 텍스트의 중심인지 확인하는 옵션입니다.
+	 * 
+	 * @note 중심으로 설정하지 않으면 왼쪽 상단을 기준으로 합니다.
+	 */
+	void RenderText2D(const RUID& fontID, const std::wstring& text, const Vec2f& position, const Vec4f& color, bool bIsCenter = true);
+
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저에 디폴트 생성자와 빈 가상 소멸자를 삽입합니다.
