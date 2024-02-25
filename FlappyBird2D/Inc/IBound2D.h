@@ -125,6 +125,44 @@ public:
 
 protected:
 	/**
+	 * @brief 서로 다른 2D 영역이 충돌하는지 검사합니다.
+	 * 
+	 * @param bound0 두 2D 영역이 충돌하는지 검사할 영역입니다.
+	 * @param bound1 두 2D 영역이 충돌하는지 검사할 또 다른 영역입니다.
+	 */
+	bool IsIntersect(const IBound2D* bound0, const IBound2D* bound1) const;
+
+
+private:
+	/**
+	 * @brief Box와 Box가 충돌하는지 검사합니다.
+	 * 
+	 * @param bound0 충돌 여부를 검출할 Box 영역입니다.
+	 * @param bound1 충돌 여부를 검출할 또 다른 Box 영역입니다.
+	 */
+	bool IntersectBoxToBox(const IBound2D* bound0, const IBound2D* bound1) const;
+
+
+	/**
+	 * @brief Box와 Circle이 충돌하는지 검사합니다.
+	 *
+	 * @param bound0 충돌 여부를 검출할 Box 영역입니다.
+	 * @param bound1 충돌 여부를 검출할 또 다른 Circle 영역입니다.
+	 */
+	bool IntersectBoxToCircle(const IBound2D* bound0, const IBound2D* bound1) const;
+
+
+	/**
+	 * @brief Circle와 Circle이 충돌하는지 검사합니다.
+	 *
+	 * @param bound0 충돌 여부를 검출할 Circle 영역입니다.
+	 * @param bound1 충돌 여부를 검출할 또 다른 Circle 영역입니다.
+	 */
+	bool IntersectCircleToCircle(const IBound2D* bound0, const IBound2D* bound1) const;
+
+
+protected:
+	/**
 	 * @brief 경계 영역의 종류입니다.
 	 */
 	EType type_ = EType::None;
