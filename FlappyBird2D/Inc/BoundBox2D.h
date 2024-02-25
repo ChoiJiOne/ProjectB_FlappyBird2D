@@ -65,6 +65,12 @@ public:
 
 
 	/**
+	 * @brief 2D 축 정렬 경계 영역의 가상 소멸자입니다.
+	 */
+	virtual ~BoundBox2D() {}
+
+
+	/**
 	 * @brief 2D 축 정렬 경계 영역의 대입 연산자입니다.
 	 * 
 	 * @param instance 대입 연산을 수행할 인스턴스입니다.
