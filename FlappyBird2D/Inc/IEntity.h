@@ -20,7 +20,7 @@ public:
 	/**
 	 * @brief 엔티티 인터페이스의 가상 소멸자입니다.
 	 */
-	virtual ~IEntity();
+	virtual ~IEntity() {}
 
 
 	/**
