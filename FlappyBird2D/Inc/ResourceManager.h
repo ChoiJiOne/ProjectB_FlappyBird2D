@@ -49,7 +49,7 @@ public:
 
 
 	/**
-	 * @brief 빈 리소스를 생성합니다.
+	 * @brief 리소스를 생성합니다.
 	 * 
 	 * @param args 리소스의 생성자에 전달한 인자들입니다.
 	 *
@@ -71,9 +71,9 @@ public:
 	/**
 	 * @brief 리소스 매니저가 관리하는 리소스를 얻습니다.
 	 *
-	 * @param signature 매니저 내부에서 리소스들을 구분할 시그니처 값입니다.
+	 * @param resourceID 리소스 ID입니다.
 	 *
-	 * @return 시그니처에 대응하는 리소스의 포인터를 얻습니다. 시그니처 값에 대응하는 리소스가 없으면 널 포인터를 반환합니다.
+	 * @return 리소스의 포인터를 얻습니다.
 	 */
 	template <typename TResource>
 	TResource* GetResource(const RUID& resourceID)
@@ -90,7 +90,7 @@ public:
 	/**
 	 * @brief 리소스 매니저가 관리하는 리소스를 삭제합니다.
 	 *
-	 * @param signature 삭제할 리소스의 시그니처 값입니다.
+	 * @param resourceID 삭제할 리소스 ID입니다.
 	 */
 	void Destroy(const RUID& resourceID);
 
