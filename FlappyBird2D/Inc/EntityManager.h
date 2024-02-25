@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <vector>
 #include <cstdint>
 #include <memory>
 
@@ -94,6 +95,23 @@ public:
 	 */
 	void Destroy(const EUID& entityID);
 
+
+	/**
+	 * @brief 엔티티를 일괄 업데이트합니다.
+	 * 
+	 * @param entityIDs 일괄 업데이트할 엔티티 ID 목록입니다.
+	 * @param deltaSeconds 초단위 델타 시간값입니다.
+	 */
+	void UpdateBatch(const std::vector<EUID>& entityIDs, float deltaSeconds);
+
+
+	/**
+	 * @brief 엔티티를 일괄 렌더링합니다.
+	 * 
+	 * @param entityIDs 일괄 렌더링할 엔티티 ID 목록입니다.
+	 */
+	void RenderBatch(const std::vector<EUID>& entityIDs);
+	
 
 private:
 	/**
