@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "Macro.h"
 
 
@@ -67,3 +69,9 @@ protected:
 	 */
 	bool bIsInitialized_ = false;
 };
+
+
+/**
+ * @brief 엔티티의 고유 아이디(Entity Unique Identity)입니다.
+ */
+using EUID = uint32_t;
