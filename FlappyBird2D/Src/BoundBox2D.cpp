@@ -46,27 +46,7 @@ void BoundBox2D::SetCenter(const Vec2f& center)
 
 bool BoundBox2D::Intersect(const IBound2D* bound) const
 {
-	bool bIsIntersect = false;
-	EType type = bound->GetType();
-	
-	switch (type)
-	{
-	case IBound2D::EType::Box:
-		break;
-
-	case IBound2D::EType::Circle:
-		break;
-
-	case IBound2D::EType::None:
-		bIsIntersect = false;
-		break;
-
-	default:
-		ASSERT(false, "undefined bound type");
-		break;
-	}
-
-	return bIsIntersect;
+	return IBound2D::IsIntersect(this, bound);
 }
 
 void BoundBox2D::ComputeBoundBoxProperties(const Vec2f& center, const float& width, const float& height, Vec2f& outMinPosition, Vec2f& outMaxPosition) const
