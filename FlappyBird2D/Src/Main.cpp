@@ -11,6 +11,8 @@
 #include "MathModule.h"
 
 #include "Assertion.h"
+#include "BoundBox2D.h"
+#include "BoundCircle2D.h"
 #include "GeometryPass2D.h"
 #include "GlyphPass2D.h"
 #include "RenderManager.h"
@@ -37,6 +39,13 @@ int32_t WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 
 	RUID fontID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 32, 127, 64.0f);
 
+	Vec4f color = Vec4f(0.0f, 0.0f, 1.0f, 1.0f);
+
+	BoundBox2D box0(Vec2f(300.0f, 400.0f), 200.0f, 100.0f);
+	BoundBox2D box1(Vec2f(300.0f, 400.0f), 200.0f, 100.0f);
+	BoundCircle2D circle0(Vec2f(300.0f, 400.0f), 100.0f);
+	BoundCircle2D circle1(Vec2f(300.0f, 400.0f), 100.0f);
+	
 	SDL_Event e;
 	bool bIsDone = false;
 	while (!bIsDone)
@@ -51,18 +60,49 @@ int32_t WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 			}
 		}
 
-		static float time = 0.0f;
-		time += 0.001f;
-		if (time >= 1.0f)
+		int32_t x = 0 , y = 0;
+		SDL_GetMouseState(&x, &y);
+		box0.SetCenter(Vec2f(static_cast<int32_t>(x), static_cast<int32_t>(y)));
+		if (box0.Intersect(&circle0))
 		{
-			time -= 1.0f;
+			color = Vec4f(1.0f, 0.0f, 0.0f, 1.0f);
 		}
+		else
+		{
+			color = Vec4f(0.0f, 0.0f, 1.0f, 1.0f);
+		}
+
+		//circle0.SetCenter(Vec2f(static_cast<int32_t>(x), static_cast<int32_t>(y)));
+
+		//if (circle0.Intersect(&circle1))
+		//{
+		//	color = Vec4f(1.0f, 0.0f, 0.0f, 1.0f);
+		//}
+		//else
+		//{
+		//	color = Vec4f(0.0f, 0.0f, 1.0f, 1.0f);
+		//}
+
+		//box0.SetCenter(Vec2f(static_cast<int32_t>(x), static_cast<int32_t>(y)));
+
+		//if (box0.Intersect(&box1))
+		//{
+		//	color = Vec4f(1.0f, 0.0f, 0.0f, 1.0f);
+		//}
+		//else
+		//{
+		//	color = Vec4f(0.0f, 0.0f, 1.0f, 1.0f);
+		//}
 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
-		RenderManager::Get().RenderHorizonScrollSprite2D(backgroundID, time);
-		RenderManager::Get().RenderRoundRectangle2D(Vec2f(300.0f, 600.0f), 300.0f, 100.0f, 30.0f, 0.0f, Vec4f(1.0f, 0.0f, 0.0f, 0.5f));
-		
+		RenderManager::Get().RenderSprite2D(backgroundID);
+
+		RenderManager::Get().RenderRectangle2D(box0.GetCenter(), box0.GetWidth(), box0.GetHeight(), 0.0f, color);
+		//RenderManager::Get().RenderRectangle2D(box1.GetCenter(), box1.GetWidth(), box1.GetHeight(), 0.0f, color);
+		RenderManager::Get().RenderCircle2D(circle0.GetCenter(), circle0.GetRadius(), color);
+		//RenderManager::Get().RenderCircle2D(circle1.GetCenter(), circle1.GetRadius(), color);
+
 		RenderManager::Get().EndFrame();
 	}
 
