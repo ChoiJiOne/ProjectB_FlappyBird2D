@@ -6,6 +6,18 @@
 
 
 /**
+ * @brief 엔티티의 고유 아이디(Entity Unique Identity)입니다.
+ */
+using EUID = int32_t;
+
+
+/**
+ * @brief 엔티티 매니저 클래스의 전방 선언입니다.
+ */
+class EntityManager;
+
+
+/**
  * @brief 엔티티 인터페이스입니다.
  */
 class IEntity
@@ -76,10 +88,16 @@ public:
 	 * 
 	 * @return 엔티티의 ID 값을 반환합니다.
 	 */
-	EUID GetID() const { return id_; }
+	const EUID& GetID() const { return id_; }
 
 
 private:
+	/**
+	 * @brief 엔티티 매니저가 엔티티 인터페이스에 접근할 수 있도록 선언합니다.
+	 */
+	friend EntityManager;
+
+
 	/**
 	 * @brief 엔티티의 ID 값을 설정합니다.
 	 * 
@@ -108,9 +126,3 @@ protected:
 	 */
 	bool bIsActive_ = false;
 };
-
-
-/**
- * @brief 엔티티의 고유 아이디(Entity Unique Identity)입니다.
- */
-using EUID = int32_t;
