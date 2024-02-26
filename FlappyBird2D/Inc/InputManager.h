@@ -294,6 +294,35 @@ enum class EVirtualKey : int32_t
 
 
 /**
+ * @brief 윈도우 이벤트 키 값입니다.
+ *
+ * @note https://wiki.libsdl.org/SDL_WindowEventID
+ */
+enum class EWindowEvent : int32_t
+{
+	NONE            = 0x00,
+	SHOWN           = 0x01,
+	HIDDEN          = 0x02,
+	EXPOSED         = 0x03,
+	MOVED           = 0x04,
+	RESIZED         = 0x05,
+	SIZE_CHANGED    = 0x06,
+	MINIMIZED       = 0x07,
+	MAXIMIZED       = 0x08,
+	RESTORED        = 0x09,
+	ENTER           = 0x0A,
+	LEAVE           = 0x0B,
+	FOCUS_GAINED    = 0x0C,
+	FOCUS_LOST      = 0x0D,
+	CLOSE           = 0x0E,
+	TAKE_FOCUS      = 0x0F,
+	HIT_TEST        = 0x10,
+	ICCPROF_CHANGED = 0x11,
+	DISPLAY_CHANGED = 0x12
+};
+
+
+/**
  * @brief 입력 처리를 수행하는 매니저입니다.
  * 
  * @note 이 클래스는 싱글턴입니다.
