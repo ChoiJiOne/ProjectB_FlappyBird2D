@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 #include "IManager.h"
 
 
@@ -363,12 +365,6 @@ public:
 	virtual void Shutdown() override;
 
 
-	/**
-	 * @brief 입력 상태를 업데이트합니다.
-	 */
-	void Tick();
-
-
 private:
 	/**
 	 * @brief 입력 처리를 수행하는 매니저에 디폴트 생성자와 빈 가상 소멸자를 삽입합니다.
@@ -377,8 +373,13 @@ private:
 
 
 	/**
-	 * @brief 
+	 * @brief 키보드의 키 값 상태입니다.
 	 */
+	struct KeyboardState
+	{
+		static const int32_t BUFFER_SIZE = 512;        // 키보드의 키 값 상태를 저장하는 버퍼의 크기입니다.
+		std::array<uint8_t, BUFFER_SIZE> keybordState; // 키보드의 키 값 상태를 저장하는 버퍼입니다.
+	};
 
 
 private:
