@@ -71,6 +71,25 @@ public:
 	bool IsActive() const { return bIsActive_; }
 
 
+	/**
+	 * @brief 엔티티의 ID 값을 얻습니다.
+	 * 
+	 * @return 엔티티의 ID 값을 반환합니다.
+	 */
+	EUID GetID() const { return id_; }
+
+
+private:
+	/**
+	 * @brief 엔티티의 ID 값을 설정합니다.
+	 * 
+	 * @param id 설정할 엔티티의 ID 값입니다.
+	 * 
+	 * @note 이 기능은 EntityManager에서만 사용하는 기능입니다.
+	 */
+	void SetID(const EUID& id) { id_ = id; }
+
+
 protected:
 	/**
 	 * @brief 엔티티가 초기화되었는지 확인합니다.
@@ -82,6 +101,12 @@ protected:
 	 * @brief 엔티티가 활성화 되었는지 확인합니다.
 	 */
 	bool bIsActive_ = false;
+
+
+	/**
+	 * @brief 엔티티의 ID 값입니다.
+	 */
+	EUID id_ = -1;
 };
 
 
