@@ -63,6 +63,7 @@ public:
 		RUID resourceID = cacheSize_++;
 
 		cache_[resourceID] = std::make_unique<TResource>(args...);
+		cache_[resourceID]->SetID(resourceID);
 
 		return resourceID;
 	}
