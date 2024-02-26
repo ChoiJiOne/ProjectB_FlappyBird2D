@@ -90,6 +90,12 @@ private:
 	void SetID(const EUID& id) { id_ = id; }
 
 
+	/**
+	 * @brief 엔티티의 ID 값입니다.
+	 */
+	EUID id_ = -1;
+
+
 protected:
 	/**
 	 * @brief 엔티티가 초기화되었는지 확인합니다.
@@ -101,12 +107,6 @@ protected:
 	 * @brief 엔티티가 활성화 되었는지 확인합니다.
 	 */
 	bool bIsActive_ = false;
-
-
-	/**
-	 * @brief 엔티티의 ID 값입니다.
-	 */
-	EUID id_ = -1;
 };
 
 
