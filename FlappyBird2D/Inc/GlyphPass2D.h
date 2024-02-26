@@ -23,9 +23,9 @@ public:
 	 */
 	enum class EAlignment
 	{
-		NONE   = 0x00,
-		LEFT   = 0x01,
-		CENTER = 0x02,
+		None   = 0x00,
+		Left   = 0x01,
+		Center = 0x02,
 	};
 
 

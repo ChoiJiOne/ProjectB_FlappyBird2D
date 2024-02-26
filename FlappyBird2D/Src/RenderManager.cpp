@@ -303,7 +303,7 @@ void RenderManager::RenderText2D(const RUID& fontID, const std::wstring& text, c
 	GlyphPass2D* pass = ResourceManager::Get().GetResource<GlyphPass2D>(shaderCache_.at("GlyphPass2D"));
 	TTFont* font = ResourceManager::Get().GetResource<TTFont>(fontID);
 
-	GlyphPass2D::EAlignment alignment = bIsCenter ? GlyphPass2D::EAlignment::CENTER : GlyphPass2D::EAlignment::LEFT;
+	GlyphPass2D::EAlignment alignment = bIsCenter ? GlyphPass2D::EAlignment::Center : GlyphPass2D::EAlignment::Left;
 
 	pass->DrawText2D(screenOrtho_, font, text, position, alignment, color);
 }
@@ -313,7 +313,7 @@ void RenderManager::RenderText2D(const RUID& fontID, const std::wstring& text, c
 	GlyphPass2D* pass = ResourceManager::Get().GetResource<GlyphPass2D>(shaderCache_.at("GlyphPass2D"));
 	TTFont* font = ResourceManager::Get().GetResource<TTFont>(fontID);
 
-	GlyphPass2D::EAlignment alignment = bIsCenter ? GlyphPass2D::EAlignment::CENTER : GlyphPass2D::EAlignment::LEFT;
+	GlyphPass2D::EAlignment alignment = bIsCenter ? GlyphPass2D::EAlignment::Center : GlyphPass2D::EAlignment::Left;
 
 	pass->DrawText2D(screenOrtho_, font, text, position, alignment, colors);
 }

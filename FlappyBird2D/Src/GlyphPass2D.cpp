@@ -47,7 +47,7 @@ void GlyphPass2D::DrawText2D(const Mat4x4f& ortho, const TTFont* font, const std
 {
 	CHECK(text.length() <= MAX_STRING_LEN);
 	CHECK(font != nullptr);
-	CHECK(alignment != EAlignment::NONE);
+	CHECK(alignment != EAlignment::None);
 
 	float width = 0.0f;
 	float height = 0.0f;
@@ -56,11 +56,11 @@ void GlyphPass2D::DrawText2D(const Mat4x4f& ortho, const TTFont* font, const std
 	Vec2f startPosition = position;
 	switch (alignment)
 	{
-	case EAlignment::LEFT:
+	case EAlignment::Left:
 		startPosition.y += height;
 		break;
 
-	case EAlignment::CENTER:
+	case EAlignment::Center:
 		startPosition = position - Vec2f(width, -height) * 0.5f;
 		break;
 
@@ -93,7 +93,7 @@ void GlyphPass2D::DrawText2D(const Mat4x4f& ortho, const TTFont* font, const std
 {
 	CHECK(text.length() <= MAX_STRING_LEN);
 	CHECK(font != nullptr);
-	CHECK(alignment != EAlignment::NONE);
+	CHECK(alignment != EAlignment::None);
 
 	float width = 0.0f;
 	float height = 0.0f;
@@ -102,11 +102,11 @@ void GlyphPass2D::DrawText2D(const Mat4x4f& ortho, const TTFont* font, const std
 	Vec2f startPosition = position;
 	switch (alignment)
 	{
-	case EAlignment::LEFT:
+	case EAlignment::Left:
 		startPosition.y += height;
 		break;
 
-	case EAlignment::CENTER:
+	case EAlignment::Center:
 		startPosition = position - Vec2f(width, -height) * 0.5f;
 		break;
 
