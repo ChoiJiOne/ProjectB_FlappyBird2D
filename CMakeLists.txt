@@ -17,12 +17,12 @@ add_subdirectory(ThirdParty/glad)
 add_subdirectory(ThirdParty/miniaudio)
 add_subdirectory(ThirdParty/stb)
 
-add_subdirectory(GameEngine/CrashModule)
-add_subdirectory(GameEngine/FileModule)
-add_subdirectory(GameEngine/MathModule)
+add_subdirectory(Module/CrashModule)
+add_subdirectory(Module/FileModule)
+add_subdirectory(Module/MathModule)
 
 set_target_properties(glad miniaudio SDL2 SDL2main sdl_headers_copy stb PROPERTIES FOLDER "ThirdParty")
-set_target_properties(CrashModule FileModule MathModule PROPERTIES FOLDER "GameEngine")
+set_target_properties(CrashModule FileModule MathModule PROPERTIES FOLDER "Module")
 
 set(WINDOW_TITLE "${PROJECT_NAME}")
 set(WINDOW_POS_UNDEFINED 0)
