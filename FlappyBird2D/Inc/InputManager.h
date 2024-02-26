@@ -2,6 +2,8 @@
 
 #include <array>
 
+#include "Vec2.h"
+
 #include "IManager.h"
 
 
@@ -379,6 +381,17 @@ private:
 	{
 		static const int32_t BUFFER_SIZE = 512;        // 키보드의 키 값 상태를 저장하는 버퍼의 크기입니다.
 		std::array<uint8_t, BUFFER_SIZE> keybordState; // 키보드의 키 값 상태를 저장하는 버퍼입니다.
+	};
+
+
+	/**
+	 * @brief 마우스의 상태입니다.
+	 */
+	struct MouseState
+	{
+		EMouseButton mouse; // 마우스 버튼의 종류입니다.
+		uint32_t state;     // 마우스 버튼의 상태입니다.
+		Vec2i position;     // 마우스 버튼의 위치입니다.
 	};
 
 
