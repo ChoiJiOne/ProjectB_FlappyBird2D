@@ -11,8 +11,6 @@ void EntityManager::Startup()
 {
 	CHECK(!bIsStartup_);
 
-	cache_ = std::array<std::unique_ptr<IEntity>, MAX_RESOURCE_SIZE>();
-
 	bIsStartup_ = true;
 }
 

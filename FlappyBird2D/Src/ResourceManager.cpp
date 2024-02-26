@@ -11,8 +11,6 @@ void ResourceManager::Startup()
 {
 	CHECK(!bIsStartup_);
 	
-	cache_ = std::array<std::unique_ptr<IResource>, MAX_RESOURCE_SIZE>();
-
 	bIsStartup_ = true;
 }
 
