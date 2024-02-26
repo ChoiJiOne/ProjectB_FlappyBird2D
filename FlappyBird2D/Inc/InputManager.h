@@ -2,7 +2,6 @@
 
 #include <array>
 #include <functional>
-#include <unordered_map>
 
 #include "Vec2.h"
 
@@ -301,6 +300,12 @@ enum class EVirtualKey : int32_t
 
 
 /**
+ * @brief 입력 처리 이벤트의 키 값입니다.
+ */
+using WINDOW_EVENT_UID = int32_t;
+
+
+/**
  * @brief 윈도우 이벤트 키 값입니다.
  *
  * @note https://wiki.libsdl.org/SDL_WindowEventID
@@ -369,6 +374,97 @@ public:
 	virtual void Shutdown() override;
 
 
+	/**
+	 * @brief 입력 상태를 업데이트하고, 윈도우 이벤트 액션을 실행합니다.
+	 */
+	void Tick();
+
+
+	/**
+	 * @brief 가상 키의 입력 상태를 확인합니다.
+	 *
+	 * @param keyCode 입력 상태를 확인할 키의 코드값입니다.
+	 *
+	 * @return 키의 입력 상태를 반환합니다.
+	 */
+	EPressState GetVKeyPressState(const EVirtualKey& keyCode) const;
+
+
+	/**
+	 * @brief 마우스의 입력 상태를 확인합니다.
+	 *
+	 * @param mouseButton 입력 상태를 확인할 마우스 버튼입니다.
+	 *
+	 * @return 마우스의 입력 상태를 반환합니다.
+	 */
+	EPressState GetMousePressState(const EMouseButton& mouseButton) const;
+
+
+	/**
+	 * @brief 마우스의 이전 위치를 얻습니다.
+	 *
+	 * @return 마우스의 이전 위치값을 반환합니다.
+	 */
+	Vec2i GetPrevMousePosition() { return prevMouseState_.position; }
+
+
+	/**
+	 * @brief 마우스의 이전 위치를 얻습니다.
+	 *
+	 * @return 마우스의 이전 위치값을 반환합니다.
+	 */
+	const Vec2i& GetPrevMousePosition() const { return prevMouseState_.position; }
+
+
+	/**
+	 * @brief 마우스의 현재 위치를 얻습니다.
+	 *
+	 * @return 마우스의 현재 위치값을 반환합니다.
+	 */
+	Vec2i GetCurrMousePosition() { return currMouseState_.position; }
+
+
+	/**
+	 * @brief 마우스의 현재 위치를 얻습니다.
+	 *
+	 * @return 마우스의 현재 위치값을 반환합니다.
+	 */
+	const Vec2i& GetCurrMousePosition() const { return currMouseState_.position; }
+
+
+	/**
+	 * @brief 윈도우 이벤트 액션을 추가합니다.
+	 * 
+	 * @param windowEvent 동작할 액션에 대응하는 윈도우 이벤트입니다.
+	 * @param eventAction 이벤트 액션에 대응하는 액션입니다.
+	 * @param bIsActive 윈도우 이벤트 액션 활성화 여부입니다. 기본 값은 true입니다.
+	 *
+	 * @return 윈도우 이벤트의 ID 값을 반환합니다.
+	 */
+	WINDOW_EVENT_UID AddWindowEventAction(const EWindowEvent& windowEvent, const std::function<void()>& eventAction, bool bIsActive = true);
+
+
+	/**
+	 * @brief 윈도우 이벤트 액션을 삭제합니다.
+	 *
+	 * @param windowEventID 윈도우 이벤트 액션의 ID 값입니다.
+	 *
+	 * @note 시그니처에 대응하는 윈도우 이벤트가 존재하지 않으면 아무 동작도 수행하지 않습니다.
+	 */
+	void DeleteWindowEventAction(const WINDOW_EVENT_UID& windowEventID);
+
+
+	/**
+	 * @brief 윈도우 이벤트 액션의 활성화 여부를 설정합니다.
+	 *
+	 * @param windowEventID 윈도우 이벤트 액션의 ID 값입니다.
+	 * @param bIsActive 윈도우 이벤트의 활성화 여부입니다.
+	 *
+	 * @note 시그니처에 대응하는 윈도우 이벤트가 존재하지 않으면 아무 동작도 수행하지 않습니다.
+	 */
+	void SetActiveWindowEventAction(const WINDOW_EVENT_UID& windowEventID, bool bIsActive);
+
+
 private:
 	/**
 	 * @brief 입력 처리를 수행하는 매니저에 디폴트 생성자와 빈 가상 소멸자를 삽입합니다.
@@ -391,9 +487,8 @@ private:
 	 */
 	struct MouseState
 	{
-		EMouseButton mouse; // 마우스 버튼의 종류입니다.
-		uint32_t state;     // 마우스 버튼의 상태입니다.
-		Vec2i position;     // 마우스 버튼의 위치입니다.
+		uint32_t state; // 마우스 버튼의 상태입니다.
+		Vec2i position; // 마우스 버튼의 위치입니다.
 	};
 
 
@@ -408,6 +503,67 @@ private:
 	};
 
 
-private:
+	/**
+	 * @brief 특정 키가 눌렸는지 확인합니다.
+	 *
+	 * @param keyboardState 검사를 수행할 키보드 상태입니다.
+	 * @param keyCode 눌렸는지 확인할 키의 코드값입니다.
+	 *
+	 * @return 키가 눌렸다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsPressKey(const KeyboardState& keyboardState, const EVirtualKey& keyCode) const;
 
+
+	/**
+	 * @brief 특정 마우스 버튼이 눌렸는지 확인합니다.
+	 * 
+	 * @param mouseState 검사를 수행할 마우스 상태입니다.
+	 * @param mouseButton 눌렸는지 확인할 마우스 버튼입니다.
+	 * 
+	 * @return 마우스 버튼이 눌렸다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsPressMouse(const MouseState& mouseState, const EMouseButton& mouseButton) const;
+
+
+private:
+	/**
+	 * @brief 입력 처리 매니저의 업데이트 이전 키보드 입력 상태입니다.
+	 */
+	KeyboardState prevKeyboardState_;
+
+
+	/**
+	 * @brief 입력 처리 매니저의 업데이트 이후 키보드 입력 상태입니다.
+	 */
+	KeyboardState currKeyboardState_;
+
+
+	/**
+	 * @brief 입력 처리 매니저의 업데이트 이전의 마우스 상태입니다.
+	 */
+	MouseState prevMouseState_;
+
+
+	/**
+	 * @brief 입력 처리 매니저의 업데이트 이후의 마우스 상태입니다.
+	 */
+	MouseState currMouseState_;
+
+
+	/**
+	 * @brief 입력 처리 매니저의 이벤트 액션 배열의 크기입니다.
+	 */
+	uint32_t windowEventActionSize_ = 0;
+
+
+	/**
+	 * @brief 입력 처리 매니저의 이벤트 액션 배열의 최대 크기입니다.
+	 */
+	static const uint32_t MAX_EVENT_ACTION_SIZE = 100;
+
+
+	/**
+	 * @brief 입력 처리 매니저의 이벤트 액션 배열입니다.
+	 */
+	std::array<WindowEventAction, MAX_EVENT_ACTION_SIZE> windowEventActions_;
 };
