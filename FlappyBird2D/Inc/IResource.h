@@ -4,6 +4,18 @@
 
 
 /**
+ * @brief 리소스의 고유 아이디(Resource Unique Identity)입니다.
+ */
+using RUID = int32_t;
+
+
+/**
+ * @brief 리소스 매니저 클래스의 전방 선언입니다.
+ */
+class ResourceManager;
+
+
+/**
  * @brief 게임 내의 리소스 인터페이스입니다.
  *
  * @note
@@ -50,15 +62,40 @@ public:
 	bool IsInitialized() const { return bIsInitialized_; }
 
 
+	/**
+	 * @brief 리소스의 ID 값을 얻습니다.
+	 * 
+	 * @return 리소스의 ID 값을 반환합니다.
+	 */
+	const RUID& GetID() const { return id_; }
+
+
+private:
+	/**
+	 * @brief 리소스 매니저에서 리소스 인터페이스에 접근할 수 있도록 선언합니다.
+	 */
+	friend ResourceManager;
+
+
+	/**
+	 * @brief 리소스의 ID 값을 설정합니다.
+	 * 
+	 * @param id 설정할 리소스의 ID 값입니다.
+	 * 
+	 * @note 이 기능은 ResourceManager에서만 사용하는 기능입니다.
+	 */
+	void SetID(const RUID& id) { id_ = id; }
+
+	
+	/**
+	 * @brief 리소스의 ID 값입니다.
+	 */
+	RUID id_ = -1;
+
+
 protected:
 	/**
 	 * @brief 리소스가 초기화되었는지 확인합니다.
 	 */
 	bool bIsInitialized_ = false;
 };
-
-
-/**
- * @brief 리소스의 고유 아이디(Resource Unique Identity)입니다.
- */
-using RUID = int32_t;
