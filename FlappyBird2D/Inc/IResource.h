@@ -61,4 +61,4 @@ protected:
 /**
  * @brief 리소스의 고유 아이디(Resource Unique Identity)입니다.
  */
-using RUID = uint32_t;
+using RUID = int32_t;
