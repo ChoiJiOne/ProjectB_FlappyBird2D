@@ -30,8 +30,9 @@ enum class EPressState : int32_t
  */
 enum class EMouseButton : int32_t
 {
-	Left  = 0x0,
-	Right = 0x1,
+	Left   = (1 << ((1) - 1)),
+	Middle = (1 << ((2) - 1)),
+	Right  = (1 << ((3) - 1)),
 };
 
 
@@ -362,11 +363,22 @@ public:
 	virtual void Shutdown() override;
 
 
+	/**
+	 * @brief 입력 상태를 업데이트합니다.
+	 */
+	void Tick();
+
+
 private:
 	/**
 	 * @brief 입력 처리를 수행하는 매니저에 디폴트 생성자와 빈 가상 소멸자를 삽입합니다.
 	 */
 	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(InputManager);
+
+
+	/**
+	 * @brief 
+	 */
 
 
 private:
