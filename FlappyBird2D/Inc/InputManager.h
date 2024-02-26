@@ -26,6 +26,16 @@ enum class EPressState : int32_t
 
 
 /**
+ * @brief 마우스의 버튼의 종류입니다.
+ */
+enum class EMouseButton : int32_t
+{
+	Left  = 0x0,
+	Right = 0x1,
+};
+
+
+/**
  * @brief 입력 처리를 수행하는 매니저입니다.
  * 
  * @note 이 클래스는 싱글턴입니다.
