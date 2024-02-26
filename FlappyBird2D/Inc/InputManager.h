@@ -1,6 +1,8 @@
 #pragma once
 
 #include <array>
+#include <functional>
+#include <unordered_map>
 
 #include "Vec2.h"
 
@@ -392,6 +394,17 @@ private:
 		EMouseButton mouse; // 마우스 버튼의 종류입니다.
 		uint32_t state;     // 마우스 버튼의 상태입니다.
 		Vec2i position;     // 마우스 버튼의 위치입니다.
+	};
+
+
+	/**
+	 * @brief 윈도우 이벤트에 대응하는 액션입니다.
+	 */
+	struct WindowEventAction
+	{
+		bool				  bIsActive;         // 윈도우 이벤트의 활성화 여부입니다.
+		EWindowEvent		  windowEvent;       // 윈도우 이벤트입니다.
+		std::function<void()> windowEventAction; // 윈도우 이벤트에 대응하는 액션입니다.
 	};
 
 
