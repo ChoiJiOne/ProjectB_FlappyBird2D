@@ -64,6 +64,7 @@ public:
 		EUID entityID = cacheSize_++;
 
 		cache_[entityID] = std::make_unique<TEntity>(args...);
+		cache_[entityID]->SetID(entityID);
 
 		return entityID;
 	}
@@ -87,7 +88,7 @@ public:
 		return entity;
 	}
 
-
+	
 	/**
 	 * @brief 엔티티를 매니저가 관리하는 엔티티를를 삭제합니다.
 	 *
