@@ -82,6 +82,14 @@ public:
 	void SetCurrentBackgroundID(const EBackground& background);
 
 
+	/**
+	 * @brief 현재 게임 난이도를 설정합니다.
+	 * 
+	 * @param level 설정할 게임 난이도입니다.
+	 */
+	void SetCurrentLevel(const ELevel& level);
+
+
 private:
 	/**
 	 * @brief 전체 설정을 관리하는 매니저에 디폴트 생성자와 빈 가상 소멸자를 삽입합니다.
@@ -106,4 +114,10 @@ private:
 	 * @brief 밤 배경 리소스의 ID 값입니다.
 	 */
 	RUID nightBackgroundID_ = -1;
+
+
+	/**
+	 * @brief 현재 게임 난이도입니다.
+	 */
+	ELevel currentLevel_ = ELevel::Easy;
 };

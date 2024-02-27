@@ -39,3 +39,8 @@ void ConfigManager::SetCurrentBackgroundID(const EBackground& background)
 		currentBackgroundID_ = nightBackgroundID_;
 	}
 }
+
+void ConfigManager::SetCurrentLevel(const ELevel& level)
+{
+	currentLevel_ = level;
+}
