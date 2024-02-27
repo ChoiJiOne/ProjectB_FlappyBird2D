@@ -22,6 +22,17 @@ public:
 	};
 
 
+	/**
+	 * @brief 게임의 레벨입니다.
+	 */
+	enum class ELevel : int32_t
+	{
+		Easy   = 0x00,
+		Normal = 0x01,
+		Hard   = 0x02,
+	};
+
+
 public:
 	/**
 	 * @brief 전체 설정을 관리하는 매니저의 복사 생성자와 대입 연산자를 명시적으로 삭제합니다.
