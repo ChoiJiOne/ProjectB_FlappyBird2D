@@ -33,6 +33,17 @@ public:
 	};
 
 
+	/**
+	 * @brief 새 종류입니다.
+	 */
+	enum class EBird : int32_t
+	{
+		Blue   = 0x01,
+		Red    = 0x02,
+		Yellow = 0x03,
+	};
+
+
 public:
 	/**
 	 * @brief 전체 설정을 관리하는 매니저의 복사 생성자와 대입 연산자를 명시적으로 삭제합니다.
@@ -71,7 +82,7 @@ public:
 	 * 
 	 * @return 현재 배경 리소스의 ID 값을 반환합니다.
 	 */
-	RUID GetCurrentBackgroundID() { return currentBackgroundID_; }
+	RUID GetCurrentBackgroundID() const { return currentBackgroundID_; }
 
 
 	/**
@@ -83,11 +94,35 @@ public:
 
 
 	/**
+	 * @brief 현재 게임 난이도를 얻습니다.
+	 * 
+	 * @return 현재 게임 난이도를 반환합니다.
+	 */
+	ELevel GetCurrentLevel() const { return currentLevel_; }
+
+
+	/**
 	 * @brief 현재 게임 난이도를 설정합니다.
 	 * 
 	 * @param level 설정할 게임 난이도입니다.
 	 */
 	void SetCurrentLevel(const ELevel& level);
+
+
+	/**
+	 * @brief 현재 새를 얻습니다.
+	 * 
+	 * @return 현재 새를 반환합니다.
+	 */
+	EBird GetCurrentBird() const { return currentBird_; }
+
+
+	/**
+	 * @brief 현재 새를 설정합니다.
+	 * 
+	 * @param brid 설정할 새입니다.
+	 */
+	void SetCurrentBird(const EBird& bird);
 
 
 private:
@@ -120,4 +155,10 @@ private:
 	 * @brief 현재 게임 난이도입니다.
 	 */
 	ELevel currentLevel_ = ELevel::Easy;
+
+
+	/**
+	 * @brief 현재 새 종류입니다.
+	 */
+	EBird currentBird_ = EBird::Yellow;
 };

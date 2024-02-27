@@ -44,3 +44,8 @@ void ConfigManager::SetCurrentLevel(const ELevel& level)
 {
 	currentLevel_ = level;
 }
+
+void ConfigManager::SetCurrentBird(const EBird& bird)
+{
+	currentBird_ = bird;
+}
