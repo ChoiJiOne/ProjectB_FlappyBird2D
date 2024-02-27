@@ -12,10 +12,8 @@ class Background : public IEntity
 public:
 	/**
 	 * @brief 백그라운드 엔티티의 생성자입니다.
-	 * 
-	 * @param textureID 백그라운드 텍스처의 ID입니다.
 	 */
-	Background(const RUID& textureID);
+	Background();
 
 
 	/**
@@ -54,5 +52,5 @@ private:
 	/**
 	 * @brief 백그라운드 텍스처 리소스의 ID입니다.
 	 */
-	RUID textureID_ = 0;
+	RUID textureID_ = -1;
 };

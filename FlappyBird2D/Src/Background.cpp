@@ -1,9 +1,9 @@
 #include "Assertion.h"
 #include "Background.h"
+#include "ConfigManager.h"
 #include "RenderManager.h"
 
-Background::Background(const RUID& textureID)
-	: textureID_(textureID)
+Background::Background()
 {
 	bIsInitialized_ = true;
 	bIsActive_ = true;
@@ -19,6 +19,7 @@ Background::~Background()
 
 void Background::Tick(float deltaSeconds)
 {
+	textureID_ = ConfigManager::Get().GetCurrentBackgroundID();
 }
 
 void Background::Render()
