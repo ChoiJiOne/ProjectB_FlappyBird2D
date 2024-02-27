@@ -23,6 +23,7 @@
 #include "GlyphPass2D.h"
 #include "InputManager.h"
 #include "Panel.h"
+#include "MainTitle.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "SDLManager.h"
@@ -52,30 +53,17 @@ int32_t WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 
 	InputManager::Get().AddWindowEventAction(EWindowEvent::CLOSE, [&]() {bIsDone = true; }, true);
 
-	RUID fontID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
+	RUID font90ID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 90.0f);
+	RUID font64ID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 64.0f);
+	RUID font32ID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
 	
-	std::vector<EUID> entites = {
+	std::vector<EUID> entites = 
+	{
 		EntityManager::Get().Create<Background>(),
-		//EntityManager::Get().Create<Button>("Resource/Button/Start.json", fontID, EMouseButton::Left, [&]() { SDL_Log("CLICK START!"); }),
-		//EntityManager::Get().Create<Button>("Resource/Button/Setting.json", fontID, EMouseButton::Left, [&]() { SDL_Log("CLICK SETTING!"); }),
-		//EntityManager::Get().Create<Button>("Resource/Button/Quit.json", fontID, EMouseButton::Left, [&]() { SDL_Log("CLICK QUIT!"); }),
-		EntityManager::Get().Create<Panel>("Resource/Panel/Background.json", fontID),
-		EntityManager::Get().Create<Panel>("Resource/Panel/Level.json", fontID),
-		EntityManager::Get().Create<Button>("Resource/Button/Day.json", fontID, EMouseButton::Left, [&]() { 
-			ConfigManager::Get().SetCurrentBackgroundID(ConfigManager::EBackground::Day); 
-		}),
-		EntityManager::Get().Create<Button>("Resource/Button/Night.json", fontID, EMouseButton::Left, [&]() { 
-			ConfigManager::Get().SetCurrentBackgroundID(ConfigManager::EBackground::Night);
-		}),
-		EntityManager::Get().Create<Button>("Resource/Button/Easy.json", fontID, EMouseButton::Left, [&]() {
-			ConfigManager::Get().SetCurrentLevel(ConfigManager::ELevel::Easy);
-		}),
-		EntityManager::Get().Create<Button>("Resource/Button/Normal.json", fontID, EMouseButton::Left, [&]() {
-			ConfigManager::Get().SetCurrentLevel(ConfigManager::ELevel::Normal);
-		}),
-		EntityManager::Get().Create<Button>("Resource/Button/Hard.json", fontID, EMouseButton::Left, [&]() {
-			ConfigManager::Get().SetCurrentLevel(ConfigManager::ELevel::Hard);
-		}),
+		EntityManager::Get().Create<MainTitle>(font90ID),
+		EntityManager::Get().Create<Button>("Resource/Button/Start.json", font32ID, EMouseButton::Left, [&]() { SDL_Log("CLICK START!"); }),
+		EntityManager::Get().Create<Button>("Resource/Button/Setting.json", font32ID, EMouseButton::Left, [&]() { SDL_Log("CLICK SETTING!"); }),
+		EntityManager::Get().Create<Button>("Resource/Button/Quit.json", font32ID, EMouseButton::Left, [&]() { bIsDone = true; }),
 	};
 
 	GameTimer timer;
