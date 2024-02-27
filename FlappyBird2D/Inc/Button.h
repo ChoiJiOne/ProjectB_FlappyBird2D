@@ -39,7 +39,6 @@ public:
 		float side;
 		Vec2f center;
 		std::wstring text;
-		RUID fontID;
 		Vec4f outlineColor;
 		Vec4f textColor;
 		Vec4f disableColor;
@@ -52,12 +51,24 @@ public:
 public:
 	/**
 	 * @brief 마우스 버튼의 생성자입니다.
-	 * 
-	 * @param layout 마우스 버튼의 레이아웃입니다.
+	 *
+	 * @param path 마우스 버튼의 레이아웃 리소스 경로입니다.
+	 * @param fontID 마우스 버튼의 폰트 리소스 ID입니다.
 	 * @param mouseButton 마우스 버튼의 종류입니다.
 	 * @param clickEvent 마우스 버튼 클릭 시 실행할 이벤트입니다.
 	 */
-	explicit Button(const Layout& layout, const EMouseButton& mouseButton, const std::function<void()>& clickEvent);
+	explicit Button(const std::string& path, const RUID& fontID, const EMouseButton& mouseButton, const std::function<void()>& clickEvent);
+
+
+	/**
+	 * @brief 마우스 버튼의 생성자입니다.
+	 * 
+	 * @param layout 마우스 버튼의 레이아웃입니다.
+	 * @param fontID 마우스 버튼의 폰트 리소스 ID입니다.
+	 * @param mouseButton 마우스 버튼의 종류입니다.
+	 * @param clickEvent 마우스 버튼 클릭 시 실행할 이벤트입니다.
+	 */
+	explicit Button(const Layout& layout, const RUID& fontID, const EMouseButton& mouseButton, const std::function<void()>& clickEvent);
 
 
 	/**
@@ -117,6 +128,12 @@ protected:
 	 * @brief 마우스 버튼의 레이아웃입니다.
 	 */
 	Layout layout_;
+
+
+	/**
+	 * @brief 마우스 버튼에 표시할 텍스트의 폰트 리소스 ID입니다.
+	 */
+	RUID fontID_ = -1;
 
 
 	/**
