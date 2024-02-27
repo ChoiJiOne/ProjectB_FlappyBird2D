@@ -13,6 +13,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 add_subdirectory(ThirdParty/SDL)
+add_subdirectory(ThirdParty/jsoncpp)
 add_subdirectory(ThirdParty/glad)
 add_subdirectory(ThirdParty/miniaudio)
 add_subdirectory(ThirdParty/stb)
@@ -21,7 +22,7 @@ add_subdirectory(Module/CrashModule)
 add_subdirectory(Module/FileModule)
 add_subdirectory(Module/MathModule)
 
-set_target_properties(glad miniaudio SDL2 SDL2main sdl_headers_copy stb PROPERTIES FOLDER "ThirdParty")
+set_target_properties(glad jsoncpp miniaudio SDL2 SDL2main sdl_headers_copy stb PROPERTIES FOLDER "ThirdParty")
 set_target_properties(CrashModule FileModule MathModule PROPERTIES FOLDER "Module")
 
 set(WINDOW_TITLE "${PROJECT_NAME}")
@@ -78,6 +79,7 @@ target_link_libraries(
     ${PROJECT_NAME} 
     PUBLIC 
     glad
+    jsoncpp
     miniaudio
     SDL2
     stb 
