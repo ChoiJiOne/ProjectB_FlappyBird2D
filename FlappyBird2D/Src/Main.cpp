@@ -57,13 +57,54 @@ int32_t WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 	RUID font64ID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 64.0f);
 	RUID font32ID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
 	
+	//std::vector<EUID> entites = 
+	//{
+	//	EntityManager::Get().Create<Background>(),
+	//	EntityManager::Get().Create<MainTitle>(font90ID),
+	//	EntityManager::Get().Create<Button>("Resource/Button/Start.json", font32ID, EMouseButton::Left, [&]() { SDL_Log("CLICK START!"); }),
+	//	EntityManager::Get().Create<Button>("Resource/Button/Setting.json", font32ID, EMouseButton::Left, [&]() { SDL_Log("CLICK SETTING!"); }),
+	//	EntityManager::Get().Create<Button>("Resource/Button/Quit.json", font32ID, EMouseButton::Left, [&]() { bIsDone = true; }),
+	//};
+
+
 	std::vector<EUID> entites = 
 	{
 		EntityManager::Get().Create<Background>(),
-		EntityManager::Get().Create<MainTitle>(font90ID),
-		EntityManager::Get().Create<Button>("Resource/Button/Start.json", font32ID, EMouseButton::Left, [&]() { SDL_Log("CLICK START!"); }),
-		EntityManager::Get().Create<Button>("Resource/Button/Setting.json", font32ID, EMouseButton::Left, [&]() { SDL_Log("CLICK SETTING!"); }),
-		EntityManager::Get().Create<Button>("Resource/Button/Quit.json", font32ID, EMouseButton::Left, [&]() { bIsDone = true; }),
+		EntityManager::Get().Create<Panel>("Resource/Panel/Setting.json", font64ID),
+		EntityManager::Get().Create<Panel>("Resource/Panel/Background.json", font32ID),
+		EntityManager::Get().Create<Panel>("Resource/Panel/Level.json", font32ID),
+		EntityManager::Get().Create<Panel>("Resource/Panel/Bird.json", font32ID),
+
+		EntityManager::Get().Create<Button>("Resource/Button/Day.json", font32ID, EMouseButton::Left, [&]() {
+			ConfigManager::Get().SetCurrentBackgroundID(ConfigManager::EBackground::Day);
+		}),
+		EntityManager::Get().Create<Button>("Resource/Button/Night.json", font32ID, EMouseButton::Left, [&]() {
+			ConfigManager::Get().SetCurrentBackgroundID(ConfigManager::EBackground::Night);
+		}),
+
+		EntityManager::Get().Create<Button>("Resource/Button/Easy.json", font32ID, EMouseButton::Left, [&]() {
+			ConfigManager::Get().SetCurrentLevel(ConfigManager::ELevel::Easy);
+		}),
+		EntityManager::Get().Create<Button>("Resource/Button/Normal.json", font32ID, EMouseButton::Left, [&]() {
+			ConfigManager::Get().SetCurrentLevel(ConfigManager::ELevel::Normal);
+		}),
+		EntityManager::Get().Create<Button>("Resource/Button/Hard.json", font32ID, EMouseButton::Left, [&]() {
+			ConfigManager::Get().SetCurrentLevel(ConfigManager::ELevel::Hard);
+		}),
+
+		EntityManager::Get().Create<Button>("Resource/Button/Blue.json", font32ID, EMouseButton::Left, [&]() {
+			ConfigManager::Get().SetCurrentBird(ConfigManager::EBird::Blue);
+		}),
+		EntityManager::Get().Create<Button>("Resource/Button/Red.json", font32ID, EMouseButton::Left, [&]() {
+			ConfigManager::Get().SetCurrentBird(ConfigManager::EBird::Red);
+		}),
+		EntityManager::Get().Create<Button>("Resource/Button/Yellow.json", font32ID, EMouseButton::Left, [&]() {
+			ConfigManager::Get().SetCurrentBird(ConfigManager::EBird::Yellow);
+		}),
+		
+		EntityManager::Get().Create<Button>("Resource/Button/Back.json", font32ID, EMouseButton::Left, [&]() {
+			SDL_Log("CLICK BACK!");
+		}),
 	};
 
 	GameTimer timer;
