@@ -66,7 +66,6 @@ int32_t WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 	//	EntityManager::Get().Create<Button>("Resource/Button/Quit.json", font32ID, EMouseButton::Left, [&]() { bIsDone = true; }),
 	//};
 
-
 	std::vector<EUID> entites = 
 	{
 		EntityManager::Get().Create<Background>(),

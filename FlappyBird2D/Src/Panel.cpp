@@ -41,7 +41,6 @@ Panel::Panel(const std::string& path, const RUID& fontID)
 	layout_.textColor = Vec4f(root["textColor"][0].asFloat(), root["textColor"][1].asFloat(), root["textColor"][2].asFloat(), root["textColor"][3].asFloat());
 	
 	bIsInitialized_ = true;
-	bIsActive_ = true;
 }
 
 Panel::Panel(const Layout& layout, const RUID& fontID)
@@ -49,7 +48,6 @@ Panel::Panel(const Layout& layout, const RUID& fontID)
 	, fontID_(fontID)
 {
 	bIsInitialized_ = true;
-	bIsActive_ = true;
 }
 
 Panel::~Panel()
@@ -78,7 +76,6 @@ void Panel::Release()
 {
 	if (bIsInitialized_)
 	{
-		bIsActive_ = false;
 		bIsInitialized_ = false;
 	}
 }

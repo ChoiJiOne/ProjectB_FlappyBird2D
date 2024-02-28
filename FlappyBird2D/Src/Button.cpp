@@ -50,7 +50,6 @@ Button::Button(const std::string& path, const RUID& fontID, const EMouseButton& 
 	layout_.releaseColor = Vec4f(root["releaseColor"][0].asFloat(), root["releaseColor"][1].asFloat(), root["releaseColor"][2].asFloat(), root["releaseColor"][3].asFloat());
 	
 	bIsInitialized_ = true;
-	bIsActive_ = true;
 }
 
 Button::Button(const Layout& layout, const RUID& fontID, const EMouseButton& mouseButton, const std::function<void()>& clickEvent)
@@ -60,7 +59,6 @@ Button::Button(const Layout& layout, const RUID& fontID, const EMouseButton& mou
 	, clickEvent_(clickEvent)
 {
 	bIsInitialized_ = true;
-	bIsActive_ = true;
 }
 
 Button::~Button()
@@ -115,7 +113,6 @@ void Button::Release()
 {
 	if (bIsInitialized_)
 	{
-		bIsActive_ = false;
 		bIsInitialized_ = false;
 	}
 }

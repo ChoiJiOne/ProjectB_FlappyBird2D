@@ -91,7 +91,6 @@ void MainTitle::Release()
 {
 	if (bIsInitialized_)
 	{
-		bIsActive_ = false;
 		bIsInitialized_ = false;
 	}
 }

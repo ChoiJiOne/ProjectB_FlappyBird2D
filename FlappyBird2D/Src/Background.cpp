@@ -6,7 +6,6 @@
 Background::Background()
 {
 	bIsInitialized_ = true;
-	bIsActive_ = true;
 }
 
 Background::~Background()
@@ -31,7 +30,6 @@ void Background::Release()
 {
 	if (bIsInitialized_)
 	{
-		bIsActive_ = false;
 		bIsInitialized_ = false;
 	}
 }

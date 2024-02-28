@@ -47,7 +47,7 @@ void EntityManager::UpdateBatch(const std::vector<EUID>& entityIDs, float deltaS
 	{
 		CHECK(0 <= entityID && entityID < cacheSize_);
 
-		if (cache_[entityID]->IsActive())
+		if (cache_[entityID]->IsInitialized())
 		{
 			cache_[entityID]->Tick(deltaSeconds);
 		}
@@ -60,7 +60,7 @@ void EntityManager::RenderBatch(const std::vector<EUID>& entityIDs)
 	{
 		CHECK(0 <= entityID && entityID < cacheSize_);
 
-		if (cache_[entityID]->IsActive())
+		if (cache_[entityID]->IsInitialized())
 		{
 			cache_[entityID]->Render();
 		}

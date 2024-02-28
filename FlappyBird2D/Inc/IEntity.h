@@ -76,14 +76,6 @@ public:
 
 
 	/**
-	 * @brief 엔티티가 활성화 되었는지 확인합니다.
-	 * 
-	 * @return 엔티티가 활성화 되었다면 true, 그렇지 않으면 false를 반환합니다.
-	 */
-	bool IsActive() const { return bIsActive_; }
-
-
-	/**
 	 * @brief 엔티티의 ID 값을 얻습니다.
 	 * 
 	 * @return 엔티티의 ID 값을 반환합니다.
@@ -119,10 +111,4 @@ protected:
 	 * @brief 엔티티가 초기화되었는지 확인합니다.
 	 */
 	bool bIsInitialized_ = false;
-
-
-	/**
-	 * @brief 엔티티가 활성화 되었는지 확인합니다.
-	 */
-	bool bIsActive_ = false;
 };
