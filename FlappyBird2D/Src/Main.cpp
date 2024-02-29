@@ -12,28 +12,15 @@
 
 #include "Assertion.h"
 #include "AudioManager.h"
-#include "Background.h"
-#include "BoundBox2D.h"
-#include "BoundCircle2D.h"
-#include "Button.h"
 #include "ConfigManager.h"
 #include "EntityManager.h"
 #include "GameTimer.h"
-#include "GeometryPass2D.h"
-#include "GlyphPass2D.h"
 #include "InputManager.h"
-#include "Panel.h"
-#include "MainTitle.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "SDLManager.h"
 #include "SettingScene.h"
-#include "Shader.h"
-#include "SpritePass2D.h"
 #include "StartScene.h"
-#include "StringUtils.h"
-#include "Texture2D.h"
-#include "TTFont.h"
 
 bool bIsDone = false;
 
