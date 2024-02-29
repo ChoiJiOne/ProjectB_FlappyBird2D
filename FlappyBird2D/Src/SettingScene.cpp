@@ -6,6 +6,7 @@
 #include "Panel.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
+#include "StatusViewer.h"
 #include "SettingScene.h"
 #include "TTFont.h"
 
@@ -27,76 +28,78 @@ void SettingScene::Enter()
 	static RUID font32ID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
 	static RUID font64ID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 64.0f);
 
-	static RUID background = EntityManager::Get().Create<Background>();
+	static EUID background = EntityManager::Get().Create<Background>();
 
-	static RUID settingPanel = EntityManager::Get().Create<Panel>("Resource/Panel/Setting.json", font64ID);
-	static RUID backgroundPanel = EntityManager::Get().Create<Panel>("Resource/Panel/Background.json", font32ID);
-	static RUID levelPanel = EntityManager::Get().Create<Panel>("Resource/Panel/Level.json", font32ID);
-	static RUID birdPanel = EntityManager::Get().Create<Panel>("Resource/Panel/Bird.json", font32ID);
+	static EUID settingPanel = EntityManager::Get().Create<Panel>("Resource/Panel/Setting.json", font64ID);
+	static EUID backgroundPanel = EntityManager::Get().Create<Panel>("Resource/Panel/Background.json", font32ID);
+	static EUID levelPanel = EntityManager::Get().Create<Panel>("Resource/Panel/Level.json", font32ID);
+	static EUID birdPanel = EntityManager::Get().Create<Panel>("Resource/Panel/Bird.json", font32ID);
 
-	static RUID dayButton = EntityManager::Get().Create<Button>("Resource/Button/Day.json", font32ID, EMouseButton::Left, 
+	static EUID dayButton = EntityManager::Get().Create<Button>("Resource/Button/Day.json", font32ID, EMouseButton::Left, 
 		[&]() 
 		{
 			ConfigManager::Get().SetCurrentBackgroundID(ConfigManager::EBackground::Day);
 		}
 	);
 
-	static RUID nightButton = EntityManager::Get().Create<Button>("Resource/Button/Night.json", font32ID, EMouseButton::Left,
+	static EUID nightButton = EntityManager::Get().Create<Button>("Resource/Button/Night.json", font32ID, EMouseButton::Left,
 		[&]()
 		{
 			ConfigManager::Get().SetCurrentBackgroundID(ConfigManager::EBackground::Night);
 		}
 	);
 
-	static RUID easyButton = EntityManager::Get().Create<Button>("Resource/Button/Easy.json", font32ID, EMouseButton::Left,
+	static EUID easyButton = EntityManager::Get().Create<Button>("Resource/Button/Easy.json", font32ID, EMouseButton::Left,
 		[&]()
 		{
 			ConfigManager::Get().SetCurrentLevel(ConfigManager::ELevel::Easy);
 		}
 	);
 
-	static RUID normalButton = EntityManager::Get().Create<Button>("Resource/Button/Normal.json", font32ID, EMouseButton::Left,
+	static EUID normalButton = EntityManager::Get().Create<Button>("Resource/Button/Normal.json", font32ID, EMouseButton::Left,
 		[&]()
 		{
 			ConfigManager::Get().SetCurrentLevel(ConfigManager::ELevel::Normal);
 		}
 	);
 
-	static RUID hardButton = EntityManager::Get().Create<Button>("Resource/Button/Hard.json", font32ID, EMouseButton::Left,
+	static EUID hardButton = EntityManager::Get().Create<Button>("Resource/Button/Hard.json", font32ID, EMouseButton::Left,
 		[&]()
 		{
 			ConfigManager::Get().SetCurrentLevel(ConfigManager::ELevel::Hard);
 		}
 	);
 
-	static RUID blueButton = EntityManager::Get().Create<Button>("Resource/Button/Blue.json", font32ID, EMouseButton::Left, 
+	static EUID blueButton = EntityManager::Get().Create<Button>("Resource/Button/Blue.json", font32ID, EMouseButton::Left, 
 		[&]() 
 		{
 			ConfigManager::Get().SetCurrentBird(ConfigManager::EBird::Blue);
 		}
 	);
 
-	static RUID redButton = EntityManager::Get().Create<Button>("Resource/Button/Red.json", font32ID, EMouseButton::Left, 
+	static EUID redButton = EntityManager::Get().Create<Button>("Resource/Button/Red.json", font32ID, EMouseButton::Left, 
 		[&]() 
 		{
 			ConfigManager::Get().SetCurrentBird(ConfigManager::EBird::Red);
 		}
 	);
 
-	static RUID yellowButton = EntityManager::Get().Create<Button>("Resource/Button/Yellow.json", font32ID, EMouseButton::Left, 
+	static EUID yellowButton = EntityManager::Get().Create<Button>("Resource/Button/Yellow.json", font32ID, EMouseButton::Left, 
 		[&]() 
 		{
 			ConfigManager::Get().SetCurrentBird(ConfigManager::EBird::Yellow);
 		}
 	);
 
-	static RUID backButton = EntityManager::Get().Create<Button>("Resource/Button/Back.json", font32ID, EMouseButton::Left, 
+	static EUID backButton = EntityManager::Get().Create<Button>("Resource/Button/Back.json", font32ID, EMouseButton::Left, 
 		[&]() 
 		{
 			link_ = startScene_;
 			bDetectSwitch_ = true;
 		}
 	);
+
+	static EUID statusViewer = EntityManager::Get().Create<StatusViewer>(font32ID);
 
 	entities_ =
 	{
@@ -114,6 +117,7 @@ void SettingScene::Enter()
 		redButton,
 		yellowButton,
 		backButton,
+		statusViewer,
 	};
 
 	bIsEnter_ = true;
