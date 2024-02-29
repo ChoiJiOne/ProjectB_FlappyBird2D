@@ -24,7 +24,7 @@ void PlayScene::Enter()
 {
 	CHECK(!bIsEnter_);
 
-	static RUID background = EntityManager::Get().Create<Background>();
+	static EUID background = EntityManager::Get().Create<Background>();
 
 	entities_ = { background, };
 
