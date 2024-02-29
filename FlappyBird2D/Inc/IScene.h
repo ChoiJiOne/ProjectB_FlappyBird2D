@@ -63,6 +63,14 @@ public:
 	virtual void SetLink(IScene* link) { link_ = link; }
 
 
+	/**
+	 * @brief 씬 전환이 감지되었는지 확인합니다.
+	 * 
+	 * @return 씬 전환이 감지되었다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsDetectSwitch() const { return bDetectSwitch_; }
+
+
 protected:
 	/**
 	 * @brief 씬에 진입했는지 확인합니다.
