@@ -16,6 +16,7 @@
 #include "EntityManager.h"
 #include "GameTimer.h"
 #include "InputManager.h"
+#include "PlayScene.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "SDLManager.h"
@@ -46,11 +47,15 @@ int32_t WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 
 	StartScene startScene;
 	SettingScene settingScene;
+	PlayScene playScene;
 
 	startScene.SetQuitLoopEvent(quitLoopEvent);
 	startScene.SetSettingScene(&settingScene);
+	startScene.SetPlayScene(&playScene);
 
 	settingScene.SetStartScene(&startScene);
+
+	playScene.SetStartScene(&startScene);
 
 	IScene* currentScene = &startScene;
 	currentScene->Enter();
