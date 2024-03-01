@@ -496,20 +496,20 @@ public:
 	void RenderText2D(const RUID& fontID, const std::wstring& text, const Vec2f& position, const std::vector<Vec4f>& colors, bool bIsCenter = true);
 
 
+	/**
+	 * @brief 렌더 타겟 윈도우의 가로 세로 크기를 얻습니다.
+	 *
+	 * @param outWidth 렌더 타겟 윈도우의 가로 크기입니다.
+	 * @param outHeight 렌더 타겟 윈도우의 세로 크기입니다.
+	 */
+	void GetRenderTargetWindowSize(int32_t& outWidth, int32_t& outHeight);
+
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저에 디폴트 생성자와 빈 가상 소멸자를 삽입합니다.
 	 */
 	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(RenderManager);
-
-
-	/**
-	 * @brief 렌더 타겟 윈도우의 가로 세로 크기를 얻습니다.
-	 * 
-	 * @param outWidth 렌더 타겟 윈도우의 가로 크기입니다.
-	 * @param outHeight 렌더 타겟 윈도우의 세로 크기입니다.
-	 */
-	void GetRenderTargetWindowSize(int32_t& outWidth, int32_t& outHeight);
 
 
 private:
