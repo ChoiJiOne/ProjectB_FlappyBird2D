@@ -5,6 +5,7 @@
 
 #include "IEntity.h"
 #include "IScene.h"
+#include "Pipe.h"
 
 
 /**
@@ -70,4 +71,16 @@ private:
 	 * @brief 엔티티 목록입니다.
 	 */
 	std::vector<EUID> entities_;
+
+
+	/**
+	 * @brief 파이프 목록입니다.
+	 */
+	std::vector<Pipe*> pipes_;
+
+
+	/**
+	 * @brief 파이프 간의 간격입니다.
+	 */
+	float pipeGap_ = 300.0f;
 };
