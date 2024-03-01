@@ -101,6 +101,12 @@ public:
 
 
 	/**
+	 * @brief 다른 파이프와의 간격을 얻습니다.
+	 */
+	float GetGapPipe(const Pipe* pipe);
+
+
+	/**
 	 * @brief 파이프의 시작 위치를 설정합니다.
 	 * 
 	 * @param startLocation 설정할 파이프의 시작 위치입니다.

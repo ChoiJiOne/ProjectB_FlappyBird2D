@@ -81,3 +81,9 @@ void Pipe::ResetLocation()
 	topBound_ = BoundBox2D(Vec2f(startLocation_.x, y - 0.5f * (gap + pipeH)), pipeW, pipeH);
 	bottomBound_ = BoundBox2D(Vec2f(startLocation_.x, y + 0.5f * (gap + pipeH)), pipeW, pipeH);
 }
+
+float Pipe::GetGapPipe(const Pipe* pipe)
+{
+	float d = topBound_.GetCenter().x - pipe->topBound_.GetCenter().x;
+	return d >= 0.0f ? d : -d;
+}
