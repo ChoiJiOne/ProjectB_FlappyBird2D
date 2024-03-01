@@ -18,7 +18,6 @@ public:
 	{
 		Wait   = 0x00, // 대기 상태입니다.
 		Active = 0x01, // 움직이고 있는 상태입니다.
-		Done   = 0x02, // 종료 상태입니다.
 	};
 
 
@@ -147,13 +146,7 @@ private:
 	 */
 	RUID textureID_ = -1;
 
-
-	/**
-	 * @brief 파이프 간 간격입니다.
-	 */
-	static float gap_;
-
-
+	
 	/**
 	 * @brief 파이프의 시작 위치입니다.
 	 */

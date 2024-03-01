@@ -6,7 +6,11 @@
 #include "ResourceManager.h"
 #include "Texture2D.h"
 
-float Pipe::gap_ = 150.0f;
+static float pipeW = 80.0f;
+static float pipeH = 600.0f;
+static float maxHeight = 640.0f;
+float gap = 150.0f;
+
 Vec2f Pipe::startLocation_;
 Vec2f Pipe::endLocation_;
 
@@ -15,18 +19,14 @@ Pipe::Pipe(float speed)
 	, speed_(speed)
 	, status_(EStatus::Wait)
 {
-	static float pipeW = 80.0f;
-	static float pipeH = 600.0f;
-	static float maxHeight = 640.0f;
+	float y = MathModule::GenerateRandomFloat(gap, maxHeight - gap);
 
-	float y = MathModule::GenerateRandomFloat(gap_, maxHeight - gap_);
-
-	topBound_ = BoundBox2D(Vec2f(startLocation_.x, y - 0.5f * (gap_ + pipeH)), pipeW, pipeH);
-	bottomBound_ = BoundBox2D(Vec2f(startLocation_.x, y + 0.5f * (gap_ + pipeH)), pipeW, pipeH);
+	topBound_ = BoundBox2D(Vec2f(startLocation_.x, y - 0.5f * (gap + pipeH)), pipeW, pipeH);
+	bottomBound_ = BoundBox2D(Vec2f(startLocation_.x, y + 0.5f * (gap + pipeH)), pipeW, pipeH);
 
 	static RUID textureID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/Pipe.png");
 	textureID_ = textureID;
-
+	
 	bIsInitialized_ = true;
 }
 
@@ -40,7 +40,12 @@ Pipe::~Pipe()
 
 void Pipe::Tick(float deltaSeconds)
 {
-	if (bCanMove_)
+	if (!bCanMove_)
+	{
+		return;
+	}
+
+	if (status_ == EStatus::Active)
 	{
 		Vec2f topCenter = topBound_.GetCenter();
 		topCenter.x -= speed_ * deltaSeconds;
@@ -52,7 +57,11 @@ void Pipe::Tick(float deltaSeconds)
 
 		if (topCenter.x <= endLocation_.x || bottomCenter.x <= endLocation_.x)
 		{
-			status_ = EStatus::Done;
+			float y = MathModule::GenerateRandomFloat(gap, maxHeight - gap);
+
+			topBound_ = BoundBox2D(Vec2f(startLocation_.x, y - 0.5f * (gap + pipeH)), pipeW, pipeH);
+			bottomBound_ = BoundBox2D(Vec2f(startLocation_.x, y + 0.5f * (gap + pipeH)), pipeW, pipeH);
+			status_ = EStatus::Wait;
 		}
 	}
 }
