@@ -1,5 +1,6 @@
 #include "Assertion.h"
 #include "Background.h"
+#include "Bird.h"
 #include "Button.h"
 #include "ConfigManager.h"
 #include "EntityManager.h"
@@ -20,25 +21,28 @@ void PlayScene::Tick(float deltaSeconds)
 
 	RenderManager::Get().EndFrame();
 
-	for (auto& pipe : pipes_)
+	if (bird_->GetStatus() == Bird::EStatus::Fly)
 	{
-		if (pipe->GetStatus() == Pipe::EStatus::Active)
+		for (auto& pipe : pipes_)
 		{
-			continue;
-		}
-
-		bool bActive = true;
-		for (auto& other : pipes_)
-		{
-			if (other->GetStatus() == Pipe::EStatus::Active && other->GetGapPipe(pipe) <= pipeGap_)
+			if (pipe->GetStatus() == Pipe::EStatus::Active)
 			{
-				bActive = false;
+				continue;
 			}
-		}
 
-		if (bActive)
-		{
-			pipe->SetStatus(Pipe::EStatus::Active);
+			bool bActive = true;
+			for (auto& other : pipes_)
+			{
+				if (other->GetStatus() == Pipe::EStatus::Active && other->GetGapPipe(pipe) <= pipeGap_)
+				{
+					bActive = false;
+				}
+			}
+
+			if (bActive)
+			{
+				pipe->SetStatus(Pipe::EStatus::Active);
+			}
 		}
 	}
 }
@@ -57,8 +61,12 @@ void PlayScene::Enter()
 	Pipe::SetStartLocation(Vec2f(static_cast<float>(w) + gap, static_cast<float>(h) * 0.4f));
 	Pipe::SetEndLocation(Vec2f(-gap, static_cast<float>(h) * 0.4f));
 
+	Bird::SetStartLocation(Vec2f(static_cast<float>(w) * 0.3f, static_cast<float>(h) * 0.4f));
+
 	EUID background = EntityManager::Get().Create<Background>(50.0f);
 	EUID land = EntityManager::Get().Create<Land>(gameSpeed);
+
+	bird_ = EntityManager::Get().GetEntity<Bird>(EntityManager::Get().Create<Bird>());
 
 	pipes_ =
 	{
@@ -76,6 +84,7 @@ void PlayScene::Enter()
 		pipes_[2]->GetID(),
 		pipes_[3]->GetID(),
 		land, 
+		bird_->GetID(),
 	};
 
 	bIsEnter_ = true;

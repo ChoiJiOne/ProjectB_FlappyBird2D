@@ -3,6 +3,7 @@
 #include <functional>
 #include <vector>
 
+#include "Bird.h"
 #include "IEntity.h"
 #include "IScene.h"
 #include "Pipe.h"
@@ -71,6 +72,12 @@ private:
 	 * @brief 엔티티 목록입니다.
 	 */
 	std::vector<EUID> entityIDs_;
+
+
+	/**
+	 * @brief 플레이어가 조종하는 새 엔티티입니다.
+	 */
+	Bird* bird_ = nullptr;
 
 
 	/**
