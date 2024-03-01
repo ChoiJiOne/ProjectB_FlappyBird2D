@@ -12,11 +12,11 @@
 
 void PlayScene::Tick(float deltaSeconds)
 {
-	EntityManager::Get().UpdateBatch(entities_, deltaSeconds);
+	EntityManager::Get().UpdateBatch(entityIDs_, deltaSeconds);
 
 	RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
-	EntityManager::Get().RenderBatch(entities_);
+	EntityManager::Get().RenderBatch(entityIDs_);
 
 	RenderManager::Get().EndFrame();
 
@@ -66,17 +66,15 @@ void PlayScene::Enter()
 		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().Create<Pipe>(gameSpeed)),
 		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().Create<Pipe>(gameSpeed)),
 		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().Create<Pipe>(gameSpeed)),
-		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().Create<Pipe>(gameSpeed)),
 	};
 		
-	entities_ = 
+	entityIDs_ = 
 	{ 
 		background, 
 		pipes_[0]->GetID(),
 		pipes_[1]->GetID(),
 		pipes_[2]->GetID(),
 		pipes_[3]->GetID(),
-		pipes_[4]->GetID(),
 		land, 
 	};
 
@@ -87,7 +85,7 @@ void PlayScene::Exit()
 {
 	CHECK(bIsEnter_);
 
-	for (const auto& id : entities_)
+	for (const auto& id : entityIDs_)
 	{
 		EntityManager::Get().Destroy(id);
 	}

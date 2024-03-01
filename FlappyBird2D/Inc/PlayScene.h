@@ -70,7 +70,7 @@ private:
 	/**
 	 * @brief 엔티티 목록입니다.
 	 */
-	std::vector<EUID> entities_;
+	std::vector<EUID> entityIDs_;
 
 
 	/**
