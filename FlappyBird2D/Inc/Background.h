@@ -13,7 +13,15 @@ public:
 	/**
 	 * @brief 백그라운드 엔티티의 생성자입니다.
 	 */
-	Background();
+	explicit Background();
+
+
+	/**
+	 * @brief 백그라운드 엔티티의 생성자입니다.
+	 * 
+	 * @param scrollSpeed 백그라운드의 스크롤 속도입니다.
+	 */
+	explicit Background(float scrollSpeed);
 
 
 	/**
@@ -49,6 +57,32 @@ public:
 
 
 private:
+	/**
+	 * @brief 백그라운드가 움직일 수 있는지 확인합니다.
+	 */
+	bool bCanMove_ = false;
+
+
+	/**
+	 * @brief 백그라운드의 스크롤 위치입니다.
+	 */
+	float scrollX_ = 0.0f;
+
+
+	/**
+	 * @brief 백그라운드의 최대 스크롤 위치입니다.
+	 */
+	float maxScrollX_ = 0.0f;
+
+
+	/**
+	 * @brief 백그라운드의 스크롤 속도입니다.
+	 * 
+	 * @note 속도의 단위는 픽셀/초 입니다.
+	 */
+	float scrollSpeed_ = 0.0f;
+
+
 	/**
 	 * @brief 백그라운드 텍스처 리소스의 ID입니다.
 	 */
