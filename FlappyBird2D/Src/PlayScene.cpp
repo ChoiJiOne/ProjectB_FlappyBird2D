@@ -87,6 +87,11 @@ void PlayScene::Exit()
 {
 	CHECK(bIsEnter_);
 
+	for (const auto& id : entities_)
+	{
+		EntityManager::Get().Destroy(id);
+	}
+
 	bDetectSwitch_ = false;
 	bIsEnter_ = false;
 }
