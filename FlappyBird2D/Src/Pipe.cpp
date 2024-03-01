@@ -6,7 +6,7 @@
 #include "ResourceManager.h"
 #include "Texture2D.h"
 
-float Pipe::gap_ = 250.0f;
+float Pipe::gap_ = 150.0f;
 Vec2f Pipe::startLocation_;
 Vec2f Pipe::endLocation_;
 
@@ -15,8 +15,14 @@ Pipe::Pipe(float speed)
 	, speed_(speed)
 	, status_(EStatus::Wait)
 {
-	topBound_ = BoundBox2D(Vec2f(startLocation_.x, startLocation_.y - gap_), 80.0f, 400.0f);
-	bottomBound_ = BoundBox2D(Vec2f(startLocation_.x, startLocation_.y + gap_), 80.0f, 400.0f);
+	static float pipeW = 80.0f;
+	static float pipeH = 600.0f;
+	static float maxHeight = 640.0f;
+
+	float y = MathModule::GenerateRandomFloat(gap_, maxHeight - gap_);
+
+	topBound_ = BoundBox2D(Vec2f(startLocation_.x, y - 0.5f * (gap_ + pipeH)), pipeW, pipeH);
+	bottomBound_ = BoundBox2D(Vec2f(startLocation_.x, y + 0.5f * (gap_ + pipeH)), pipeW, pipeH);
 
 	static RUID textureID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/Pipe.png");
 	textureID_ = textureID;
