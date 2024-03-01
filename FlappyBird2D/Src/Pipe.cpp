@@ -19,10 +19,7 @@ Pipe::Pipe(float speed)
 	, speed_(speed)
 	, status_(EStatus::Wait)
 {
-	float y = MathModule::GenerateRandomFloat(gap, maxHeight - gap);
-
-	topBound_ = BoundBox2D(Vec2f(startLocation_.x, y - 0.5f * (gap + pipeH)), pipeW, pipeH);
-	bottomBound_ = BoundBox2D(Vec2f(startLocation_.x, y + 0.5f * (gap + pipeH)), pipeW, pipeH);
+	ResetLocation();
 
 	static RUID textureID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/Pipe.png");
 	textureID_ = textureID;
@@ -57,10 +54,7 @@ void Pipe::Tick(float deltaSeconds)
 
 		if (topCenter.x <= endLocation_.x || bottomCenter.x <= endLocation_.x)
 		{
-			float y = MathModule::GenerateRandomFloat(gap, maxHeight - gap);
-
-			topBound_ = BoundBox2D(Vec2f(startLocation_.x, y - 0.5f * (gap + pipeH)), pipeW, pipeH);
-			bottomBound_ = BoundBox2D(Vec2f(startLocation_.x, y + 0.5f * (gap + pipeH)), pipeW, pipeH);
+			ResetLocation();
 			status_ = EStatus::Wait;
 		}
 	}
@@ -78,4 +72,12 @@ void Pipe::Release()
 	{
 		bIsInitialized_ = false;
 	}
+}
+
+void Pipe::ResetLocation()
+{
+	float y = MathModule::GenerateRandomFloat(gap, maxHeight - gap);
+
+	topBound_ = BoundBox2D(Vec2f(startLocation_.x, y - 0.5f * (gap + pipeH)), pipeW, pipeH);
+	bottomBound_ = BoundBox2D(Vec2f(startLocation_.x, y + 0.5f * (gap + pipeH)), pipeW, pipeH);
 }

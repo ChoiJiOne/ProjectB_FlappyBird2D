@@ -95,6 +95,12 @@ public:
 
 
 	/**
+	 * @brief 파이프의 위치를 재설정합니다.
+	 */
+	void ResetLocation();
+
+
+	/**
 	 * @brief 파이프의 시작 위치를 설정합니다.
 	 * 
 	 * @param startLocation 설정할 파이프의 시작 위치입니다.
@@ -108,7 +114,7 @@ public:
 	 * @param endLocation 설정할 파이프의 끝 위치입니다.
 	 */
 	static void SetEndLocation(const Vec2f& endLocation) { endLocation_ = endLocation; }
-
+	
 
 private:
 	/**
