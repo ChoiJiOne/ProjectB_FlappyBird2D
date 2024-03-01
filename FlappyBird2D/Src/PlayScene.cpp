@@ -3,6 +3,7 @@
 #include "Button.h"
 #include "ConfigManager.h"
 #include "EntityManager.h"
+#include "Land.h"
 #include "Panel.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
@@ -24,9 +25,10 @@ void PlayScene::Enter()
 {
 	CHECK(!bIsEnter_);
 
-	static EUID background = EntityManager::Get().Create<Background>();
+	static EUID background = EntityManager::Get().Create<Background>(50.0f);
+	static EUID land = EntityManager::Get().Create<Land>(200.0f);
 
-	entities_ = { background, };
+	entities_ = { background, land };
 
 	bIsEnter_ = true;
 }
