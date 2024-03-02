@@ -3,9 +3,6 @@
 #include <windows.h>
 #include <vector>
 
-#include <glad/glad.h>
-#include <SDL.h>
-
 #include "CrashModule.h"
 #include "FileModule.h"
 #include "MathModule.h"
