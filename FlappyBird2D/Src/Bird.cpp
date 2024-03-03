@@ -63,19 +63,7 @@ Bird::Bird()
 		};
 		break;
 	}
-
-	static RUID infoID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/GameInfo.png");
-	infoID_ = infoID;
-	infoLocation_ = Vec2f(300.0f, 400.0f);
-	infoWidth_ = 150.0f;
-	infoHeight_ = 140.0f;
-
-	static RUID getReadyID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/GetReady.png");
-	getReadyID_ = getReadyID;
-	getReadyLocation_ = Vec2f(300.0f, 200.0f);
-	getReadyWidth_ = 350.0f;
-	getReadyHeight_ = 100.0f;
-
+	
 	bIsInitialized_ = true;
 }
 
@@ -116,12 +104,6 @@ void Bird::Tick(float deltaSeconds)
 
 void Bird::Render()
 {
-	if (status_ == EStatus::Ready)
-	{
-		RenderManager::Get().RenderSprite2D(getReadyID_, getReadyLocation_, getReadyWidth_, getReadyHeight_, 0.0f);
-		RenderManager::Get().RenderSprite2D(infoID_, infoLocation_, infoWidth_, infoHeight_, 0.0f);
-	}
-	
 	RenderManager::Get().RenderSprite2D(textureIDs_[index_], bound_.GetCenter(), width_, height_, rotate_);
 }
 

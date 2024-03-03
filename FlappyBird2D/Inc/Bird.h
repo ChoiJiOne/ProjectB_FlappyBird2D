@@ -138,55 +138,7 @@ private:
 	 * @brief 새의 텍스처입니다.
 	 */
 	std::array<RUID, 4> textureIDs_;
-
-
-	/**
-	 * @brief 게임 플레이 정보를 표시할 텍스처입니다.
-	 */
-	RUID infoID_ = -1;
-
-
-	/**
-	 * @brief 게임 플레이 정보를 표시할 텍스처의 위치입니다.
-	 */
-	Vec2f infoLocation_;
-
-
-	/**
-	 * @brief 게임 플레이 정보를 표시할 텍스처의 가로 크기입니다.
-	 */
-	float infoWidth_ = 0.0f;
-
-
-	/**
-	 * @brief 게임 플레이 정보를 표시할 텍스처의 세로 크기입니다.
-	 */
-	float infoHeight_ = 0.0f;
-
-
-	/**
-	 * @brief Get Ready 텍스처입니다.
-	 */
-	RUID getReadyID_ = -1;
-
-
-	/**
-	 * @brief Get Ready 텍스처의 위치입니다.
-	 */
-	Vec2f getReadyLocation_;
-
-
-	/**
-	 * @brief Get Ready 텍스처의 가로 크기입니다.
-	 */
-	float getReadyWidth_ = 0.0f;
-
-
-	/**
-	 * @brief Get Ready 텍스처의 세로 크기입니다.
-	 */
-	float getReadyHeight_ = 0.0f;
-
+	
 
 	/**
 	 * @brief 새의 시작 위치입니다.
