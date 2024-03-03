@@ -1,9 +1,9 @@
 #pragma once
 
+#include <map>
 #include <functional>
 #include <vector>
 
-#include "Bird.h"
 #include "IEntity.h"
 #include "IScene.h"
 
@@ -53,28 +53,64 @@ public:
 
 
 	/**
-	 * @brief 시작 씬을 연결합니다.
-	 *
-	 * @param startScene 설정할 시작 씬의 포인터입니다.
+	 * @brief 게임 난이도에 따른 속도를 설정합니다.
+	 * 
+	 * @param gameSpeed 설정할 게임 속도입니다.
 	 */
-	void SetStartScene(IScene* startScene) { startScene_ = startScene; }
+	void SetGameSpeed(float gameSpeed) { gameSpeed_ = gameSpeed; }
+
+
+	/**
+	 * @brief 백그라운드 엔티티의 ID 값을 설정합니다.
+	 * 
+	 * @param id 설정할 백그라운드 엔티티의 ID 값입니다.
+	 */
+	void SetBackgroundID(const EUID& id) { backgroundID_ = id; }
+
+
+	/**
+	 * @brief 바닥 엔티티의 ID 값을 설정합니다.
+	 *
+	 * @param id 설정할 바닥 엔티티의 ID 값입니다.
+	 */
+	void SetLandID(const EUID& id) { landID_ = id; }
+
+
+	/**
+	 * @brief 새 엔티티의 ID 값을 설정합니다.
+	 * 
+	 * @param id 설정할 새 엔티티의 ID 값입니다.
+	 */
+	void SetBirdID(const EUID& id) { birdID_ = id; }
 
 
 private:
 	/**
-	 * @brief 플레이 씬 입니다.
+	 * @brief 게임 난이도에 따른 속도입니다.
 	 */
-	IScene* startScene_ = nullptr;
+	float gameSpeed_ = 0.0f;
+
+
+	/**
+	 * @brief 백그라운드 엔티티의 ID 값입니다.
+	 */
+	EUID backgroundID_ = -1;
+
+
+	/**
+	 * @brief 바닥 엔티티의 ID 값입니다.
+	 */
+	EUID landID_ = -1;
+
+
+	/**
+	 * @brief 새 엔티티의 ID 값입니다.
+	 */
+	EUID birdID_ = -1;
 
 
 	/**
 	 * @brief 엔티티 목록입니다.
 	 */
 	std::vector<EUID> entityIDs_;
-
-
-	/**
-	 * @brief 플레이어가 조종하는 새 엔티티입니다.
-	 */
-	Bird* bird_ = nullptr;
 };
