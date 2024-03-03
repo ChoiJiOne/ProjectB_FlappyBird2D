@@ -19,6 +19,11 @@ PipeController::~PipeController()
 
 void PipeController::Tick(float deltaSeconds)
 {
+	if (status_ == EStatus::Wait)
+	{
+		return;
+	}
+
 	for (Pipe* pipe : pipes_)
 	{
 		if (pipe->GetStatus() == Pipe::EStatus::Active)

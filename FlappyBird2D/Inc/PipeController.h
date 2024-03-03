@@ -15,6 +15,17 @@ class PipeController : public IEntity
 {
 public:
 	/**
+	 * @brief 파이프를 제어하는 컨트롤러의 상태입니다.
+	 */
+	enum class EStatus : int32_t
+	{
+		Wait   = 0x00,
+		Active = 0x01,
+	};
+
+
+public:
+	/**
 	 * @brief 파이프를 제어하는 컨트롤러 엔티티의 생성자입니다.
 	 *
 	 */
@@ -55,7 +66,21 @@ public:
 	virtual void Release() override;
 
 
+	/**
+	 * @brief 파이프 컨트롤러의 상태를 설정합니다.
+	 * 
+	 * @param status 설정할 파이프 컨트롤러의 상태입니다.
+	 */
+	void SetStatus(const EStatus& status) { status_ = status; }
+
+
 private:
+	/**
+	 * @brief 파이프 컨트롤러의 상태입니다.
+	 */
+	EStatus status_ = EStatus::Wait;
+
+
 	/**
 	 * @brief 파이프 컨트롤러가 제어하는 파이프 목록입니다.
 	 */
