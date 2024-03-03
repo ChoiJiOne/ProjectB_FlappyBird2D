@@ -14,7 +14,9 @@ Bird::Bird()
 {
 	width_ = 60.0f;
 	height_ = 40.0f;
-	speed_ = 150.0f;
+	maxSpeed_ = 500.0f;
+	currentSpeed_ = 0.0f;
+	dampingSpeed_ = 30.0f;
 
 	rotate_ = 0.0f;
 	minRotate_ = -MathModule::Pi / 6.0f; // 육십분법 각 = 30도
@@ -22,7 +24,7 @@ Bird::Bird()
 
 	bound_ = BoundCircle2D(startLocation_, height_ * 0.5f);
 
-	maxAnimationTime_ = 0.1f;
+	maxAnimationTime_ = 0.05f;
 
 	static RUID blueDown = ResourceManager::Get().Create<Texture2D>("Resource/Texture/BlueBird_Down.png");
 	static RUID blueMid = ResourceManager::Get().Create<Texture2D>("Resource/Texture/BlueBird_Mid.png");
@@ -85,11 +87,7 @@ void Bird::Tick(float deltaSeconds)
 {
 	animationTime_ += deltaSeconds;
 
-	if (animationTime_ >= maxAnimationTime_)
-	{
-		index_ = (index_ + 1) % textureIDs_.size();
-		animationTime_ -= maxAnimationTime_;
-	}
+	Vec2f center;
 
 	switch (status_)
 	{
@@ -97,14 +95,36 @@ void Bird::Tick(float deltaSeconds)
 		if (InputManager::Get().GetMousePressState(EMouseButton::Left) == EPressState::Pressed)
 		{
 			status_ = EStatus::Fly;
+			currentSpeed_ = maxSpeed_;
+			rotate_ = minRotate_;
 		}
 		break;
 
 	case EStatus::Fly:
+		currentSpeed_ -= (4.0f * maxSpeed_ * deltaSeconds);
+
+		rotate_ += 2.0f * deltaSeconds;
+		rotate_ = MathModule::Clamp<float>(rotate_, minRotate_, maxRotate_);
+
+		center = bound_.GetCenter();
+		center.y -= (currentSpeed_ * deltaSeconds);
+		bound_.SetCenter(center);
+
+		if (currentSpeed_ <= 0.0f && InputManager::Get().GetMousePressState(EMouseButton::Left) == EPressState::Pressed)
+		{
+			currentSpeed_ = maxSpeed_;
+			rotate_ = minRotate_;
+		}
 		break;
 
 	case EStatus::Dead:
 		break;
+	}
+
+	if (status_ != EStatus::Dead && animationTime_ >= maxAnimationTime_)
+	{
+		index_ = (index_ + 1) % textureIDs_.size();
+		animationTime_ -= maxAnimationTime_;
 	}
 }
 

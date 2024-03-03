@@ -118,9 +118,21 @@ private:
 
 
 	/**
-	 * @brief 새의 속도입니다.
+	 * @brief 새의 최대 속도입니다.
 	 */
-	float speed_ = 0.0f;
+	float maxSpeed_ = 0.0f;
+
+
+	/**
+	 * @brief 새의 현재 속도입니다.
+	 */
+	float currentSpeed_ = 0.0f;
+
+
+	/**
+	 * @brief 새의 감속 속도입니다.
+	 */
+	float dampingSpeed_ = 0.0f;
 
 
 	/**
