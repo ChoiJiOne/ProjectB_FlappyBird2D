@@ -20,7 +20,8 @@ public:
 	{
 		Ready = 0x00,
 		Fly   = 0x01,
-		Dead  = 0x02,
+		Fall  = 0x02,
+		Dead  = 0x03,
 	};
 
 
@@ -96,6 +97,18 @@ private:
 	 * @brief 새의 세로 크기입니다.
 	 */
 	float height_ = 0.0f;
+
+
+	/**
+	 * @brief 새의 최소 회전 각도입니다.
+	 */
+	float minRotate_ = 0.0f;
+
+
+	/**
+	 * @brief 새의 최대 회전 각도입니다.
+	 */
+	float maxRotate_ = 0.0f;
 
 
 	/**

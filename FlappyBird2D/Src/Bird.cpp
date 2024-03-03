@@ -1,3 +1,5 @@
+#include "MathModule.h"
+
 #include "Assertion.h"
 #include "Bird.h"
 #include "ConfigManager.h"
@@ -13,6 +15,10 @@ Bird::Bird()
 	width_ = 60.0f;
 	height_ = 40.0f;
 	speed_ = 150.0f;
+
+	rotate_ = 0.0f;
+	minRotate_ = -MathModule::Pi / 6.0f; // 육십분법 각 = 30도
+	maxRotate_ = MathModule::PiDiv2; // 육십분법 각 = 90도
 
 	bound_ = BoundCircle2D(startLocation_, height_ * 0.5f);
 
