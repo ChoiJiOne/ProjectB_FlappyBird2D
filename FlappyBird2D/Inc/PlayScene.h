@@ -86,6 +86,12 @@ public:
 
 private:
 	/**
+	 * @brief 카운트 다운입니다.
+	 */
+	float countDown_ = 3.0f;
+
+
+	/**
 	 * @brief 게임 난이도에 따른 속도입니다.
 	 */
 	float gameSpeed_ = 0.0f;
@@ -107,6 +113,12 @@ private:
 	 * @brief 새 엔티티의 ID 값입니다.
 	 */
 	EUID birdID_ = -1;
+
+
+	/**
+	 * @brief 파이프 컨트롤러 엔티티의 ID 값입니다.
+	 */
+	EUID pipeController_ = -1;
 
 
 	/**
