@@ -20,7 +20,6 @@ ReadyViewer::ReadyViewer()
 	getReadyWidth_ = 350.0f;
 	getReadyHeight_ = 100.0f;
 
-	bIsVisible_ = true;
 	bIsInitialized_ = true;
 }
 
