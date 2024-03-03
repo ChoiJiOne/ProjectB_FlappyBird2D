@@ -60,11 +60,11 @@ public:
 
 
 	/**
-	 * @brief 플레이 씬을 연결합니다.
+	 * @brief 준비 씬을 연결합니다.
 	 * 
-	 * @param playScene 설정할 플레이 씬의 포인터입니다.
+	 * @param readyScene 설정할 준비 씬의 포인터입니다.
 	 */
-	void SetPlayScene(IScene* playScene) { playScene_ = playScene; }
+	void SetReadyScene(IScene* readyScene) { readyScene_ = readyScene; }
 
 
 	/**
@@ -83,9 +83,9 @@ private:
 
 
 	/**
-	 * @brief 플레이 씬 입니다.
+	 * @brief 준비 씬 입니다.
 	 */
-	IScene* playScene_ = nullptr;
+	IScene* readyScene_ = nullptr;
 
 
 	/**

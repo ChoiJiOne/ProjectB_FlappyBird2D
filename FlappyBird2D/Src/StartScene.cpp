@@ -25,7 +25,7 @@ void StartScene::Enter()
 
 	static auto startEvent = [&]()
 	{
-		link_ = playScene_;
+		link_ = readyScene_;
 		bDetectSwitch_ = true;
 	};
 
