@@ -13,9 +13,7 @@ void StartScene::Tick(float deltaSeconds)
 	EntityManager::Get().UpdateBatch(entities_, deltaSeconds);
 
 	RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
-
 	EntityManager::Get().RenderBatch(entities_);
-
 	RenderManager::Get().EndFrame();
 }
 
