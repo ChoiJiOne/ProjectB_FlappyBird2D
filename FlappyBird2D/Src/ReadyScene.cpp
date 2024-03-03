@@ -22,15 +22,8 @@ void ReadyScene::Tick(float deltaSeconds)
 	Bird* bird = EntityManager::Get().GetEntity<Bird>(birdID_);
 	if (bird->GetStatus() == Bird::EStatus::Fly)
 	{
-		ReadyViewer* readyViewer = EntityManager::Get().GetEntity<ReadyViewer>(readyViewer_);
-		readyViewer->SetVisible(false);
-
-		countDown_ -= deltaSeconds;
-		if (countDown_ <= 0.0f)
-		{
-			bDetectSwitch_ = true;
-			link_ = playScene_;
-		}
+		bDetectSwitch_ = true;
+		link_ = playScene_;
 	}
 }
 
@@ -38,8 +31,6 @@ void ReadyScene::Enter()
 {
 	CHECK(!bIsEnter_);
 	
-	countDown_ = 3.0f;
-
 	ConfigManager::ELevel level = ConfigManager::Get().GetCurrentLevel();
 	switch (level)
 	{

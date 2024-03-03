@@ -78,12 +78,6 @@ private:
 
 
 	/**
-	 * @brief 씬 전환을 위한 카운트 다운입니다.
-	 */
-	float countDown_ = 3.0f;
-
-
-	/**
 	 * @brief 백그라운드 엔티티의 ID 값입니다.
 	 */
 	EUID backgroundID_ = -1;
