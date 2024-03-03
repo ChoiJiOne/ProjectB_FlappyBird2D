@@ -18,12 +18,28 @@ void ReadyScene::Tick(float deltaSeconds)
 	RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 	EntityManager::Get().RenderBatch(entityIDs_);
 	RenderManager::Get().EndFrame();
+
+	Bird* bird = EntityManager::Get().GetEntity<Bird>(birdID_);
+	if (bird->GetStatus() == Bird::EStatus::Fly)
+	{
+		ReadyViewer* readyViewer = EntityManager::Get().GetEntity<ReadyViewer>(readyViewer_);
+		readyViewer->SetVisible(false);
+
+		countDown_ -= deltaSeconds;
+		if (countDown_ <= 0.0f)
+		{
+			bDetectSwitch_ = true;
+			link_ = playScene_;
+		}
+	}
 }
 
 void ReadyScene::Enter()
 {
 	CHECK(!bIsEnter_);
 	
+	countDown_ = 3.0f;
+
 	ConfigManager::ELevel level = ConfigManager::Get().GetCurrentLevel();
 	switch (level)
 	{
@@ -53,14 +69,14 @@ void ReadyScene::Enter()
 	backgroundID_ = EntityManager::Get().Create<Background>(backgroundScrollSpeed_);
 	landID_ = EntityManager::Get().Create<Land>(gameSpeed_);
 	birdID_ = EntityManager::Get().Create<Bird>();
-	EUID readyViewer = EntityManager::Get().Create<ReadyViewer>();
+	readyViewer_ = EntityManager::Get().Create<ReadyViewer>();
 
 	entityIDs_ =
 	{
 		backgroundID_,
 		landID_,
 		birdID_,
-		readyViewer,
+		readyViewer_,
 	};
 
 	bIsEnter_ = true;

@@ -78,6 +78,12 @@ private:
 
 
 	/**
+	 * @brief 씬 전환을 위한 카운트 다운입니다.
+	 */
+	float countDown_ = 3.0f;
+
+
+	/**
 	 * @brief 백그라운드 엔티티의 ID 값입니다.
 	 */
 	EUID backgroundID_ = -1;
@@ -93,6 +99,12 @@ private:
 	 * @brief 새 엔티티의 ID 값입니다.
 	 */
 	EUID birdID_ = -1;
+
+
+	/**
+	 * @brief 준비(Ready) 상태를 표시하는 엔티티의 ID 값입니다.
+	 */
+	EUID readyViewer_ = -1;
 
 
 	/**
