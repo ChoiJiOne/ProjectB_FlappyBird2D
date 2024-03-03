@@ -3,7 +3,9 @@
 #include "Bird.h"
 #include "ConfigManager.h"
 #include "EntityManager.h"
+#include "PlayScene.h"
 #include "Land.h"
+#include "ReadyViewer.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "ReadyScene.h"
@@ -42,13 +44,23 @@ void ReadyScene::Enter()
 		break;
 	}
 
-	EUID background = EntityManager::Get().Create<Background>(backgroundScrollSpeed_);
-	EUID land = EntityManager::Get().Create<Land>(gameSpeed_);
+	int32_t w = 0;
+	int32_t h = 0;
+
+	RenderManager::Get().GetRenderTargetWindowSize(w, h);
+	Bird::SetStartLocation(Vec2f(static_cast<float>(w) * 0.3f, static_cast<float>(h) * 0.4f));
+
+	backgroundID_ = EntityManager::Get().Create<Background>(backgroundScrollSpeed_);
+	landID_ = EntityManager::Get().Create<Land>(gameSpeed_);
+	birdID_ = EntityManager::Get().Create<Bird>();
+	EUID readyViewer = EntityManager::Get().Create<ReadyViewer>();
 
 	entityIDs_ =
 	{
-		background,
-		land,
+		backgroundID_,
+		landID_,
+		birdID_,
+		readyViewer,
 	};
 
 	bIsEnter_ = true;
@@ -57,6 +69,12 @@ void ReadyScene::Enter()
 void ReadyScene::Exit()
 {
 	CHECK(bIsEnter_);
+
+	PlayScene* playScene = reinterpret_cast<PlayScene*>(playScene_);
+	playScene->SetGameSpeed(gameSpeed_);
+	playScene->SetBackgroundID(backgroundID_);
+	playScene->SetLandID(landID_);
+	playScene->SetBirdID(birdID_);
 
 	bDetectSwitch_ = false;
 	bIsEnter_ = false;

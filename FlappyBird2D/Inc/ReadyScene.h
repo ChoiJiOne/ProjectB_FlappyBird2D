@@ -12,8 +12,6 @@
 class ReadyScene : public IScene
 {
 public:
-
-public:
 	/**
 	 * @brief 준비(Ready) 씬의 디폴트 생성자입니다.
 	 */
@@ -77,6 +75,24 @@ private:
 	 * @brief 게임 난이도에 따른 속도입니다.
 	 */
 	float gameSpeed_ = 0.0f;
+
+
+	/**
+	 * @brief 백그라운드 엔티티의 ID 값입니다.
+	 */
+	EUID backgroundID_ = -1;
+
+
+	/**
+	 * @brief 바닥 엔티티의 ID 값입니다.
+	 */
+	EUID landID_ = -1;
+
+
+	/**
+	 * @brief 새 엔티티의 ID 값입니다.
+	 */
+	EUID birdID_ = -1;
 
 
 	/**
