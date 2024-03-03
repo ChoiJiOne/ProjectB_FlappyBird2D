@@ -46,6 +46,7 @@ public:
 		RenderManager::Get().SetDepthMode(false);
 		RenderManager::Get().SetAlphaBlendMode(true);
 		RenderManager::Get().SetMultisampleMode(true);
+		RenderManager::Get().SetVsyncMode(false);
 	}
 
 
