@@ -62,8 +62,11 @@ void Pipe::Tick(float deltaSeconds)
 
 void Pipe::Render()
 {
-	RenderManager::Get().RenderSprite2D(textureID_, topBound_.GetCenter(), topBound_.GetWidth(), topBound_.GetHeight(), MathModule::Pi);
-	RenderManager::Get().RenderSprite2D(textureID_, bottomBound_.GetCenter(), bottomBound_.GetWidth(), bottomBound_.GetHeight(), 0.0f);
+	if (status_ == EStatus::Active)
+	{
+		RenderManager::Get().RenderSprite2D(textureID_, topBound_.GetCenter(), topBound_.GetWidth(), topBound_.GetHeight(), MathModule::Pi);
+		RenderManager::Get().RenderSprite2D(textureID_, bottomBound_.GetCenter(), bottomBound_.GetWidth(), bottomBound_.GetHeight(), 0.0f);
+	}
 }
 
 void Pipe::Release()
