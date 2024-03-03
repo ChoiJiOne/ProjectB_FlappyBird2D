@@ -14,6 +14,7 @@
 #include "GameTimer.h"
 #include "InputManager.h"
 #include "PlayScene.h"
+#include "ReadyScene.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "SDLManager.h"
@@ -82,18 +83,21 @@ public:
 
 		startScene_ = std::make_unique<StartScene>();
 		settingScene_ = std::make_unique<SettingScene>();
+		readyScene_ = std::make_unique<ReadyScene>();
 		playScene_ = std::make_unique<PlayScene>();
 		
 		StartScene* startScene = reinterpret_cast<StartScene*>(startScene_.get());
 		startScene->SetQuitLoopEvent(quitLoopEvent_);
 		startScene->SetSettingScene(settingScene_.get());
-		startScene->SetPlayScene(playScene_.get());
+		startScene->SetReadyScene(readyScene_.get());
 
 		SettingScene* settingScene = reinterpret_cast<SettingScene*>(settingScene_.get());
 		settingScene->SetStartScene(startScene);
 
+		ReadyScene* readyScene = reinterpret_cast<ReadyScene*>(readyScene_.get());
+		readyScene->SetPlayScene(playScene_.get());
+
 		PlayScene* playScene = reinterpret_cast<PlayScene*>(playScene_.get());
-		playScene->SetStartScene(startScene);
 
 		currentScene_ = startScene;
 	}
@@ -161,6 +165,12 @@ private:
 	 * @brief 세팅 씬입니다.
 	 */
 	std::unique_ptr<IScene> settingScene_ = nullptr;
+
+
+	/**
+	 * @brief 준비 씬입니다.
+	 */
+	std::unique_ptr<IScene> readyScene_ = nullptr;
 
 
 	/**
