@@ -1,6 +1,7 @@
 #include "Assertion.h"
 #include "Bird.h"
 #include "ConfigManager.h"
+#include "InputManager.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "Texture2D.h"
@@ -65,6 +66,15 @@ Bird::Bird()
 
 	static RUID infoID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/GameInfo.png");
 	infoID_ = infoID;
+	infoLocation_ = Vec2f(300.0f, 400.0f);
+	infoWidth_ = 150.0f;
+	infoHeight_ = 140.0f;
+
+	static RUID getReadyID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/GetReady.png");
+	getReadyID_ = getReadyID;
+	getReadyLocation_ = Vec2f(300.0f, 200.0f);
+	getReadyWidth_ = 350.0f;
+	getReadyHeight_ = 100.0f;
 
 	bIsInitialized_ = true;
 }
@@ -86,12 +96,33 @@ void Bird::Tick(float deltaSeconds)
 		index_ = (index_ + 1) % textureIDs_.size();
 		animationTime_ -= maxAnimationTime_;
 	}
+
+	switch (status_)
+	{
+	case EStatus::Ready:
+		if (InputManager::Get().GetMousePressState(EMouseButton::Left) == EPressState::Pressed)
+		{
+			status_ = EStatus::Fly;
+		}
+		break;
+
+	case EStatus::Fly:
+		break;
+
+	case EStatus::Dead:
+		break;
+	}
 }
 
 void Bird::Render()
 {
-	RenderManager::Get().RenderSprite2D(textureIDs_[index_], bound_.GetCenter(), width_, height_, 0.0f);
-	RenderManager::Get().RenderWireframeCircle2D(bound_.GetCenter(), bound_.GetRadius(), Vec4f(1.0f, 0.0f, 0.0f, 1.0f));
+	if (status_ == EStatus::Ready)
+	{
+		RenderManager::Get().RenderSprite2D(getReadyID_, getReadyLocation_, getReadyWidth_, getReadyHeight_, 0.0f);
+		RenderManager::Get().RenderSprite2D(infoID_, infoLocation_, infoWidth_, infoHeight_, 0.0f);
+	}
+	
+	RenderManager::Get().RenderSprite2D(textureIDs_[index_], bound_.GetCenter(), width_, height_, rotate_);
 }
 
 void Bird::Release()
