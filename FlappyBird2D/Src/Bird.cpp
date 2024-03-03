@@ -103,8 +103,11 @@ void Bird::Tick(float deltaSeconds)
 	case EStatus::Fly:
 		currentSpeed_ -= (4.0f * maxSpeed_ * deltaSeconds);
 
-		rotate_ += 2.0f * deltaSeconds;
-		rotate_ = MathModule::Clamp<float>(rotate_, minRotate_, maxRotate_);
+		if (currentSpeed_ <= 0.0f)
+		{
+			rotate_ += 2.0f * deltaSeconds;
+			rotate_ = MathModule::Clamp<float>(rotate_, minRotate_, maxRotate_);
+		}
 
 		center = bound_.GetCenter();
 		center.y -= (currentSpeed_ * deltaSeconds);
