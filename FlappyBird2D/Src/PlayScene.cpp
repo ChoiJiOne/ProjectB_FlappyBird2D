@@ -6,6 +6,8 @@
 #include "EntityManager.h"
 #include "Land.h"
 #include "Panel.h"
+#include "Pipe.h"
+#include "PipeController.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "PlayScene.h"
@@ -23,27 +25,7 @@ void PlayScene::Tick(float deltaSeconds)
 
 	if (bird_->GetStatus() == Bird::EStatus::Fly)
 	{
-		for (auto& pipe : pipes_)
-		{
-			if (pipe->GetStatus() == Pipe::EStatus::Active)
-			{
-				continue;
-			}
-
-			bool bActive = true;
-			for (auto& other : pipes_)
-			{
-				if (other->GetStatus() == Pipe::EStatus::Active && other->GetGapPipe(pipe) <= pipeGap_)
-				{
-					bActive = false;
-				}
-			}
-
-			if (bActive)
-			{
-				pipe->SetStatus(Pipe::EStatus::Active);
-			}
-		}
+		
 	}
 }
 
@@ -68,7 +50,7 @@ void PlayScene::Enter()
 
 	bird_ = EntityManager::Get().GetEntity<Bird>(EntityManager::Get().Create<Bird>());
 
-	pipes_ =
+	std::vector<Pipe*> pipes =
 	{
 		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().Create<Pipe>(gameSpeed)),
 		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().Create<Pipe>(gameSpeed)),
@@ -79,10 +61,11 @@ void PlayScene::Enter()
 	entityIDs_ = 
 	{ 
 		background, 
-		pipes_[0]->GetID(),
-		pipes_[1]->GetID(),
-		pipes_[2]->GetID(),
-		pipes_[3]->GetID(),
+		pipes[0]->GetID(),
+		pipes[1]->GetID(),
+		pipes[2]->GetID(),
+		pipes[3]->GetID(),
+		EntityManager::Get().Create<PipeController>(pipes, 300.0f),
 		land, 
 		bird_->GetID(),
 	};

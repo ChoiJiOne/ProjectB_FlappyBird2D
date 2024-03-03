@@ -6,7 +6,6 @@
 #include "Bird.h"
 #include "IEntity.h"
 #include "IScene.h"
-#include "Pipe.h"
 
 
 /**
@@ -78,16 +77,4 @@ private:
 	 * @brief 플레이어가 조종하는 새 엔티티입니다.
 	 */
 	Bird* bird_ = nullptr;
-
-
-	/**
-	 * @brief 파이프 목록입니다.
-	 */
-	std::vector<Pipe*> pipes_;
-
-
-	/**
-	 * @brief 파이프 간의 간격입니다.
-	 */
-	float pipeGap_ = 300.0f;
 };
