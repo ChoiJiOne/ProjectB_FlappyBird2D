@@ -39,11 +39,8 @@ void ReadyViewer::Tick(float deltaSeconds)
 
 void ReadyViewer::Render()
 {
-	if (bIsVisible_)
-	{
-		RenderManager::Get().RenderSprite2D(getReadyID_, getReadyLocation_ + Vec2f(0.0f, 20.0f * MathModule::Sin(accumulateTime_ * 2.0f)), getReadyWidth_, getReadyHeight_, 0.0f);
-		RenderManager::Get().RenderSprite2D(infoID_, infoLocation_, infoWidth_, infoHeight_, 0.0f);
-	}
+	RenderManager::Get().RenderSprite2D(getReadyID_, getReadyLocation_ + Vec2f(0.0f, 20.0f * MathModule::Sin(accumulateTime_ * 2.0f)), getReadyWidth_, getReadyHeight_, 0.0f);
+	RenderManager::Get().RenderSprite2D(infoID_, infoLocation_, infoWidth_, infoHeight_, 0.0f);
 }
 
 void ReadyViewer::Release()

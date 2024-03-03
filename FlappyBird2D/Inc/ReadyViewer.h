@@ -48,23 +48,9 @@ public:
 	 * @brief 준비(Ready) 상태를 표시하는 엔티티 내의 리소스를 할당 해제합니다.
 	 */
 	virtual void Release() override;
-
-
-	/**
-	 * @brief 준비(Ready) 상태를 화면에 표시할 지 여부를 설정합니다.
-	 * 
-	 * @param bIsVisible 준비(Ready) 상태를 화면에 표시하면 true, 그렇지 않으면 false입니다.
-	 */
-	void SetVisible(bool bIsVisible) { bIsVisible_ = bIsVisible; }
-
+	
 
 private:
-	/**
-	 * @brief 준비(Ready) 상태를 화면에 표시할 지 여부입니다.
-	 */
-	bool bIsVisible_ = true;
-
-
 	/**
 	 * @brief 게임 플레이 정보를 표시할 텍스처입니다.
 	 */
