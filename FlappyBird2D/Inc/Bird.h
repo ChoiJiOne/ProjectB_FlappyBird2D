@@ -21,6 +21,7 @@ public:
 		Ready = 0x00,
 		Fly   = 0x01,
 		Dead  = 0x02,
+		Done  = 0x03,
 	};
 
 
@@ -85,6 +86,14 @@ public:
 	 * @param landID 설정할 바닥 ID입니다.
 	 */
 	void SetLandID(const EUID& landID) { landID_ = landID; }
+
+
+	/**
+	 * @brief 백그라운드 ID를 설정합니다.
+	 * 
+	 * @param backgroundID 설정할 백그라운드 ID입니다.
+	 */
+	void SetBackgroundID(const EUID& backgroundID) { backgroundID_ = backgroundID; }
 
 
 	/**
@@ -229,6 +238,12 @@ private:
 	 * @brief 바닥의 ID 입니다.
 	 */
 	EUID landID_ = -1;
+
+
+	/**
+	 * @brief 백그라운드의 ID입니다.
+	 */
+	EUID backgroundID_ = -1;
 	
 
 	/**

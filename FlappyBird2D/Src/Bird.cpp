@@ -1,6 +1,7 @@
 #include "MathModule.h"
 
 #include "Assertion.h"
+#include "Background.h"
 #include "Bird.h"
 #include "ConfigManager.h"
 #include "EntityManager.h"
@@ -204,4 +205,10 @@ void Bird::TickDeadStatus(float deltaSeconds)
 	Vec2f center = bound_.GetCenter();
 	center.y -= (currentSpeed_ * deltaSeconds);
 	bound_.SetCenter(center);
+	
+	Background* background = EntityManager::Get().GetEntity<Background>(backgroundID_);
+	if (!bound_.Intersect(background->GetBound()))
+	{
+		status_ = EStatus::Done;
+	}
 }
