@@ -42,7 +42,14 @@ void StartScene::Enter()
 	static EUID settingButton = EntityManager::Get().Create<Button>("Resource/Button/Setting.json", font32ID, EMouseButton::Left, settingEvent);
 	static EUID quitButton = EntityManager::Get().Create<Button>("Resource/Button/Quit.json", font32ID, EMouseButton::Left, quitLoopEvent_);
 
-	entities_ = { background, mainTitle, startButton, settingButton, quitButton, };
+	entities_ = 
+	{ 
+		background, 
+		mainTitle, 
+		startButton, 
+		settingButton, 
+		quitButton, 
+	};
 
 	bIsEnter_ = true;
 }
