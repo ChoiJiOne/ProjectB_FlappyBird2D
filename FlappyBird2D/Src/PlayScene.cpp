@@ -20,7 +20,9 @@ void PlayScene::Tick(float deltaSeconds)
 	EntityManager::Get().RenderBatch(entityIDs_);
 	RenderManager::Get().EndFrame();
 
-	if (countDown_ >= 0.0f)
+	Bird* bird = EntityManager::Get().GetEntity<Bird>(birdID_);
+	Bird::EStatus status = bird->GetStatus();
+	if (countDown_ >= 0.0f && status == Bird::EStatus::Fly)
 	{
 		countDown_ -= deltaSeconds;
 		
@@ -31,7 +33,6 @@ void PlayScene::Tick(float deltaSeconds)
 		}
 	}
 
-	Bird* bird = EntityManager::Get().GetEntity<Bird>(birdID_);
 	if (bird->GetStatus() == Bird::EStatus::Done)
 	{
 		bDetectSwitch_ = true;
