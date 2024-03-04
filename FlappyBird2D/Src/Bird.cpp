@@ -153,6 +153,7 @@ void Bird::TickFlyStatus(float deltaSeconds)
 
 	Vec2f center = bound_.GetCenter();
 	center.y -= (currentSpeed_ * deltaSeconds);
+	center.y = MathModule::Clamp<float>(center.y, 0.0f, 800.0f);
 	bound_.SetCenter(center);
 
 	if (currentSpeed_ <= 0.0f && InputManager::Get().GetMousePressState(EMouseButton::Left) == EPressState::Pressed)
