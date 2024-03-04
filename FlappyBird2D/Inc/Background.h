@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BoundBox2D.h"
 #include "IEntity.h"
 #include "IResource.h"
 
@@ -72,6 +73,14 @@ public:
 	void SetCanMove(bool bCanMove) { bCanMove_ = bCanMove; }
 
 
+	/**
+	 * @brief 백그라운드의 경계 영역을 얻습니다.
+	 * 
+	 * @return 백그라운드의 경계 영역 포인터를 반환합니다.
+	 */
+	const IBound2D* GetBound() const { return &bound_; }
+
+
 private:
 	/**
 	 * @brief 백그라운드가 움직일 수 있는지 확인합니다.
@@ -103,4 +112,10 @@ private:
 	 * @brief 백그라운드 텍스처 리소스의 ID입니다.
 	 */
 	RUID textureID_ = -1;
+
+
+	/**
+	 * @brief 백그라운드의 경계 영역입니다.
+	 */
+	BoundBox2D bound_;
 };

@@ -4,8 +4,15 @@
 #include "RenderManager.h"
 
 Background::Background()
+	: bCanMove_(false)
+	, scrollSpeed_(0.0f)
 {
-	bCanMove_ = false;
+	int32_t w = 0;
+	int32_t h = 0;
+	RenderManager::Get().GetRenderTargetWindowSize(w, h);
+
+	bound_ = BoundBox2D(Vec2f(static_cast<float>(w) * 0.5f, static_cast<float>(h) * 0.5f), static_cast<float>(w), static_cast<float>(h));
+
 	bIsInitialized_ = true;
 }
 
@@ -18,6 +25,8 @@ Background::Background(float scrollSpeed)
 	RenderManager::Get().GetRenderTargetWindowSize(w, h);
 
 	maxScrollX_ = static_cast<float>(w);
+
+	bound_ = BoundBox2D(Vec2f(static_cast<float>(w) * 0.5f, static_cast<float>(h) * 0.5f), static_cast<float>(w), static_cast<float>(h));
 
 	bIsInitialized_ = true;
 }
