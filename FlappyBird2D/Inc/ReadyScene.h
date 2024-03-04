@@ -51,9 +51,9 @@ public:
 
 
 	/**
-	 * @brief 시작 씬을 연결합니다.
+	 * @brief 플레이 씬을 연결합니다.
 	 *
-	 * @param startScene 설정할 시작 씬의 포인터입니다.
+	 * @param playScene 설정할 플레이 씬의 포인터입니다.
 	 */
 	void SetPlayScene(IScene* playScene) { playScene_ = playScene; }
 
