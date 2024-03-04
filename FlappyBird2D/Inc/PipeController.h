@@ -74,6 +74,14 @@ public:
 	void SetStatus(const EStatus& status) { status_ = status; }
 
 
+	/**
+	 * @brief 파이프 컨트롤러가 제어하는 파이프 목록을 얻습니다.
+	 * 
+	 * @return 파이프 컨트롤러가 제어하는 파이프의 목록을 반환합니다.
+	 */
+	const std::vector<Pipe*>& GetPipes() const { return pipes_; }
+
+
 private:
 	/**
 	 * @brief 파이프 컨트롤러의 상태입니다.
