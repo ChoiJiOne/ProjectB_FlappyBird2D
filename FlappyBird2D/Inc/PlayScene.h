@@ -1,8 +1,11 @@
 #pragma once
 
+#include <map>
 #include <vector>
+#include <functional>
 
 #include "IEntity.h"
+#include "InputManager.h"
 #include "IScene.h"
 
 
@@ -98,6 +101,12 @@ private:
 
 
 	/**
+	 * @brief 게임이 중지되었는지 확인합니다.
+	 */
+	bool bIsPause_ = false;
+
+
+	/**
 	 * @brief 카운트 다운입니다.
 	 */
 	float countDown_ = 3.0f;
@@ -140,7 +149,19 @@ private:
 
 
 	/**
+	 * @brief 중지 상태를 표시할 엔티티의 ID 값입니다.
+	 */
+	EUID pauseViewerID_ = -1;
+
+
+	/**
 	 * @brief 엔티티 목록입니다.
 	 */
 	std::vector<EUID> entityIDs_;
+
+
+	/**
+	 * @brief 플레이 씬 내의 이벤트입니다.
+	 */
+	std::map<EWindowEvent, WINDOW_EVENT_UID> sceneEvents_;
 };

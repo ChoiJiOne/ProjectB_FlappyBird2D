@@ -3,7 +3,9 @@
 #include "Bird.h"
 #include "ConfigManager.h"
 #include "EntityManager.h"
+#include "InputManager.h"
 #include "Land.h"
+#include "PauseViewer.h"
 #include "Pipe.h"
 #include "PipeController.h"
 #include "RenderManager.h"
@@ -11,13 +13,25 @@
 #include "RankScene.h"
 #include "PlayScene.h"
 #include "ScoreViewer.h"
+#include "TTFont.h"
 
 void PlayScene::Tick(float deltaSeconds)
 {
-	EntityManager::Get().UpdateBatch(entityIDs_, deltaSeconds);
+	if (bIsPause_)
+	{
+		EntityManager::Get().UpdateBatch(pauseViewerID_, deltaSeconds);
+	}
+	else
+	{
+		EntityManager::Get().UpdateBatch(entityIDs_, deltaSeconds);
+	}
 
 	RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 	EntityManager::Get().RenderBatch(entityIDs_);
+	if (bIsPause_)
+	{
+		EntityManager::Get().RenderBatch(pauseViewerID_);
+	}
 	RenderManager::Get().EndFrame();
 
 	Bird* bird = EntityManager::Get().GetEntity<Bird>(birdID_);
@@ -45,7 +59,31 @@ void PlayScene::Enter()
 	CHECK(!bIsEnter_);
 
 	countDown_ = 3.0f;
-	
+	bIsPause_ = false;
+
+	if (sceneEvents_.empty())
+	{
+		auto pauseEvent = [&]()
+		{
+			bIsPause_ = true;
+		};
+
+		sceneEvents_ =
+		{
+			{ EWindowEvent::HIDDEN,     InputManager::Get().AddWindowEventAction(EWindowEvent::HIDDEN,     pauseEvent, true) },
+			{ EWindowEvent::MOVED,      InputManager::Get().AddWindowEventAction(EWindowEvent::MOVED,      pauseEvent, true) },
+			{ EWindowEvent::MINIMIZED,  InputManager::Get().AddWindowEventAction(EWindowEvent::MINIMIZED,  pauseEvent, true) },
+			{ EWindowEvent::FOCUS_LOST, InputManager::Get().AddWindowEventAction(EWindowEvent::FOCUS_LOST, pauseEvent, true) },
+		};
+	}
+	else
+	{
+		for (const auto& sceneEvent : sceneEvents_)
+		{
+			InputManager::Get().SetActiveWindowEventAction(sceneEvent.second, true);
+		}
+	}
+
 	int32_t w = 0;
 	int32_t h = 0;
 	float gap = 50.0f;
@@ -64,6 +102,9 @@ void PlayScene::Enter()
 
 	pipeController_ = EntityManager::Get().Create<PipeController>(pipes, 300.0f);
 	scoreViewerID_ = EntityManager::Get().Create<ScoreViewer>();
+
+	static RUID fontID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
+	pauseViewerID_ = EntityManager::Get().Create<PauseViewer>(fontID);
 
 	entityIDs_ =
 	{
@@ -85,7 +126,10 @@ void PlayScene::Enter()
 
 	ScoreViewer* scoreViewer = EntityManager::Get().GetEntity<ScoreViewer>(scoreViewerID_);
 	scoreViewer->SetBirdID(birdID_);
-	
+
+	PauseViewer* pasueViewer = EntityManager::Get().GetEntity<PauseViewer>(pauseViewerID_);
+	pasueViewer->SetContinueEvent([&]() { bIsPause_ = false; });
+
 	bIsEnter_ = true;
 }
 
@@ -100,6 +144,11 @@ void PlayScene::Exit()
 	rankScene->SetBackgroundID(backgroundID_);
 	rankScene->SetLandID(landID_);
 	rankScene->SetPipeController(pipeController_);
+
+	for (const auto& sceneEvent : sceneEvents_)
+	{
+		InputManager::Get().SetActiveWindowEventAction(sceneEvent.second, false);
+	}
 
 	bDetectSwitch_ = false;
 	bIsEnter_ = false;
