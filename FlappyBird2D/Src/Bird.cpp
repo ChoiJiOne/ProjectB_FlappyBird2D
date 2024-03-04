@@ -164,6 +164,8 @@ void Bird::TickFlyStatus(float deltaSeconds)
 	{
 		if (pipe->GetStatus() == Pipe::EStatus::Active && (bound_.Intersect(pipe->GetTopBound()) || bound_.Intersect(pipe->GetBottomBound())))
 		{
+			currentSpeed_ = maxSpeed_;
+			rotate_ = minRotate_;
 			status_ = EStatus::Dead;
 		}
 	}
@@ -171,6 +173,8 @@ void Bird::TickFlyStatus(float deltaSeconds)
 	Land* land = EntityManager::Get().GetEntity<Land>(landID_);
 	if (bound_.Intersect(land->GetBound()))
 	{
+		currentSpeed_ = maxSpeed_;
+		rotate_ = minRotate_;
 		status_ = EStatus::Dead;
 	}
 
@@ -183,4 +187,9 @@ void Bird::TickFlyStatus(float deltaSeconds)
 
 void Bird::TickDeadStatus(float deltaSeconds)
 {
+	currentSpeed_ -= (4.0f * maxSpeed_ * deltaSeconds);
+
+	Vec2f center = bound_.GetCenter();
+	center.y -= (currentSpeed_ * deltaSeconds);
+	bound_.SetCenter(center);
 }
