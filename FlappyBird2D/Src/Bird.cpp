@@ -191,6 +191,15 @@ void Bird::TickFlyStatus(float deltaSeconds)
 		status_ = EStatus::Dead;
 	}
 
+	if (status_ == EStatus::Dead)
+	{
+		Background* background = EntityManager::Get().GetEntity<Background>(backgroundID_);
+		background->SetCanMove(false);
+
+		land->SetCanMove(false);
+		pipeController->SetStatus(PipeController::EStatus::Wait);
+	}
+
 	if (animationTime_ >= maxAnimationTime_)
 	{
 		index_ = (index_ + 1) % textureIDs_.size();
