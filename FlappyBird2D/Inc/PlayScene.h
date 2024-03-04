@@ -122,6 +122,12 @@ private:
 
 
 	/**
+	 * @brief 스코어 뷰어 엔티티의 ID 값입니다.
+	 */
+	EUID scoreViewerID_ = -1;
+
+
+	/**
 	 * @brief 엔티티 목록입니다.
 	 */
 	std::vector<EUID> entityIDs_;

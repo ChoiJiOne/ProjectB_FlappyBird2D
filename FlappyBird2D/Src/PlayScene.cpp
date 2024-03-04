@@ -11,6 +11,7 @@
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "PlayScene.h"
+#include "ScoreViewer.h"
 #include "TTFont.h"
 
 void PlayScene::Tick(float deltaSeconds)
@@ -69,6 +70,7 @@ void PlayScene::Enter()
 	};
 
 	pipeController_ = EntityManager::Get().Create<PipeController>(pipes, 300.0f);
+	scoreViewerID_ = EntityManager::Get().Create<ScoreViewer>();
 
 	entityIDs_ =
 	{
@@ -80,11 +82,15 @@ void PlayScene::Enter()
 		pipeController_,
 		landID_,
 		birdID_,
+		scoreViewerID_,
 	};
 
 	Bird* bird = EntityManager::Get().GetEntity<Bird>(birdID_);
 	bird->SetPipeControllerID(pipeController_);
 	bird->SetLandID(landID_);
+
+	ScoreViewer* scoreViewer = EntityManager::Get().GetEntity<ScoreViewer>(scoreViewerID_);
+	scoreViewer->SetBirdID(birdID_);
 	
 	bIsEnter_ = true;
 }
