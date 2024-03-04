@@ -1,18 +1,15 @@
 #include "Assertion.h"
 #include "Background.h"
 #include "Bird.h"
-#include "Button.h"
 #include "ConfigManager.h"
 #include "EntityManager.h"
 #include "Land.h"
-#include "Panel.h"
 #include "Pipe.h"
 #include "PipeController.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "PlayScene.h"
 #include "ScoreViewer.h"
-#include "TTFont.h"
 
 void PlayScene::Tick(float deltaSeconds)
 {
