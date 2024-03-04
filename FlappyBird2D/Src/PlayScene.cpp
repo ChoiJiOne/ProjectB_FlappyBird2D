@@ -68,6 +68,10 @@ void PlayScene::Enter()
 		landID_,
 		birdID_,
 	};
+
+	Bird* bird = EntityManager::Get().GetEntity<Bird>(birdID_);
+	bird->SetPipeControllerID(pipeController_);
+	bird->SetLandID(landID_);
 	
 	bIsEnter_ = true;
 }
