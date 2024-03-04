@@ -10,6 +10,8 @@ Background::Background()
 	int32_t w = 0;
 	int32_t h = 0;
 	RenderManager::Get().GetRenderTargetWindowSize(w, h);
+	
+	maxScrollX_ = static_cast<float>(w);
 
 	bound_ = BoundBox2D(Vec2f(static_cast<float>(w) * 0.5f, static_cast<float>(h) * 0.5f), static_cast<float>(w), static_cast<float>(h));
 
@@ -56,15 +58,8 @@ void Background::Tick(float deltaSeconds)
 
 void Background::Render()
 {
-	if (bCanMove_)
-	{
-		float rate = scrollX_ / maxScrollX_;
-		RenderManager::Get().RenderHorizonScrollSprite2D(textureID_, rate);
-	}
-	else
-	{
-		RenderManager::Get().RenderSprite2D(textureID_);
-	}
+	float rate = scrollX_ / maxScrollX_;
+	RenderManager::Get().RenderHorizonScrollSprite2D(textureID_, rate);
 }
 
 void Background::Release()
