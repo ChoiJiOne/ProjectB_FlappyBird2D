@@ -110,15 +110,15 @@ private:
 
 
 	/**
-	 * @brief 새 엔티티의 ID 값입니다.
-	 */
-	EUID birdID_ = -1;
-
-
-	/**
 	 * @brief 파이프 컨트롤러 엔티티의 ID 값입니다.
 	 */
 	EUID pipeController_ = -1;
+
+
+	/**
+	 * @brief 새 엔티티의 ID 값입니다.
+	 */
+	EUID birdID_ = -1;
 
 
 	/**

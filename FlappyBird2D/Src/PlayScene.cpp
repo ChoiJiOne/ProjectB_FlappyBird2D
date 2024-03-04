@@ -31,6 +31,19 @@ void PlayScene::Tick(float deltaSeconds)
 			pipeController->SetStatus(PipeController::EStatus::Active);
 		}
 	}
+
+	Bird* bird = EntityManager::Get().GetEntity<Bird>(birdID_);
+	if (bird->GetStatus() == Bird::EStatus::Dead)
+	{
+		Background* background = EntityManager::Get().GetEntity<Background>(backgroundID_);
+		background->SetCanMove(false);
+
+		Land* land = EntityManager::Get().GetEntity<Land>(landID_);
+		land->SetCanMove(false);
+
+		PipeController* pipeController = EntityManager::Get().GetEntity<PipeController>(pipeController_);
+		pipeController->SetStatus(PipeController::EStatus::Wait);
+	}
 }
 
 void PlayScene::Enter()
