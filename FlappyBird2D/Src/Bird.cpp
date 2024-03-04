@@ -3,7 +3,11 @@
 #include "Assertion.h"
 #include "Bird.h"
 #include "ConfigManager.h"
+#include "EntityManager.h"
 #include "InputManager.h"
+#include "Land.h"
+#include "Pipe.h"
+#include "PipeController.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "Texture2D.h"
@@ -85,49 +89,19 @@ Bird::~Bird()
 
 void Bird::Tick(float deltaSeconds)
 {
-	animationTime_ += deltaSeconds;
-
-	Vec2f center;
-
 	switch (status_)
 	{
 	case EStatus::Ready:
-		if (InputManager::Get().GetMousePressState(EMouseButton::Left) == EPressState::Pressed)
-		{
-			status_ = EStatus::Fly;
-			currentSpeed_ = maxSpeed_;
-			rotate_ = minRotate_;
-		}
+		TickReadyStatus(deltaSeconds);
 		break;
 
 	case EStatus::Fly:
-		currentSpeed_ -= (4.0f * maxSpeed_ * deltaSeconds);
-
-		if (currentSpeed_ <= 0.0f)
-		{
-			rotate_ += 2.0f * deltaSeconds;
-			rotate_ = MathModule::Clamp<float>(rotate_, minRotate_, maxRotate_);
-		}
-
-		center = bound_.GetCenter();
-		center.y -= (currentSpeed_ * deltaSeconds);
-		bound_.SetCenter(center);
-
-		if (currentSpeed_ <= 0.0f && InputManager::Get().GetMousePressState(EMouseButton::Left) == EPressState::Pressed)
-		{
-			currentSpeed_ = maxSpeed_;
-			rotate_ = minRotate_;
-		}
+		TickFlyStatus(deltaSeconds);
 		break;
 
 	case EStatus::Dead:
+		TickDeadStatus(deltaSeconds);
 		break;
-	}
-
-	if (status_ != EStatus::Dead && animationTime_ >= maxAnimationTime_)
-	{
-		index_ = (index_ + 1) % textureIDs_.size();
-		animationTime_ -= maxAnimationTime_;
 	}
 }
 
@@ -142,4 +116,55 @@ void Bird::Release()
 	{
 		bIsInitialized_ = false;
 	}
+}
+
+void Bird::TickReadyStatus(float deltaSeconds)
+{
+	animationTime_ += deltaSeconds;
+
+	if (InputManager::Get().GetMousePressState(EMouseButton::Left) == EPressState::Pressed)
+	{
+		status_ = EStatus::Fly;
+		currentSpeed_ = maxSpeed_;
+		rotate_ = minRotate_;
+	}
+
+	if (animationTime_ >= maxAnimationTime_)
+	{
+		index_ = (index_ + 1) % textureIDs_.size();
+		animationTime_ -= maxAnimationTime_;
+	}
+}
+
+void Bird::TickFlyStatus(float deltaSeconds)
+{
+	animationTime_ += deltaSeconds;
+
+	currentSpeed_ -= (4.0f * maxSpeed_ * deltaSeconds);
+
+	if (currentSpeed_ <= 0.0f)
+	{
+		rotate_ += 2.0f * deltaSeconds;
+		rotate_ = MathModule::Clamp<float>(rotate_, minRotate_, maxRotate_);
+	}
+
+	Vec2f center = bound_.GetCenter();
+	center.y -= (currentSpeed_ * deltaSeconds);
+	bound_.SetCenter(center);
+
+	if (currentSpeed_ <= 0.0f && InputManager::Get().GetMousePressState(EMouseButton::Left) == EPressState::Pressed)
+	{
+		currentSpeed_ = maxSpeed_;
+		rotate_ = minRotate_;
+	}
+
+	if (animationTime_ >= maxAnimationTime_)
+	{
+		index_ = (index_ + 1) % textureIDs_.size();
+		animationTime_ -= maxAnimationTime_;
+	}
+}
+
+void Bird::TickDeadStatus(float deltaSeconds)
+{
 }

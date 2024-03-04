@@ -20,8 +20,7 @@ public:
 	{
 		Ready = 0x00,
 		Fly   = 0x01,
-		Fall  = 0x02,
-		Dead  = 0x03,
+		Dead  = 0x02,
 	};
 
 
@@ -73,11 +72,52 @@ public:
 
 
 	/**
+	 * @brief 파이프 컨트롤러 ID를 설정합니다.
+	 * 
+	 * @param pipeControllerID 설정할 파이프 컨트롤러 ID입니다.
+	 */
+	void SetPipeControllerID(const EUID& pipeControllerID) { pipeControllerID_ = pipeControllerID; }
+
+
+	/**
+	 * @brief 바닥 ID를 설정합니다.
+	 * 
+	 * @param landID 설정할 바닥 ID입니다.
+	 */
+	void SetLandID(const EUID& landID) { landID_ = landID; }
+
+
+	/**
 	 * @brief 새의 시작 위치를 설정합니다.
 	 * 
 	 * @param startLocation 설정할 시작 위치입니다.
 	 */
 	static void SetStartLocation(const Vec2f& startLocation) { startLocation_ = startLocation; }
+
+
+private:
+	/**
+	 * @brief 새의 Ready 상태를 업데이트합니다.
+	 * 
+	 * @param deltaSeconds 델타 시간 값입니다.
+	 */
+	void TickReadyStatus(float deltaSeconds);
+
+
+	/**
+	 * @brief 새의 Fly 상태를 업데이트합니다.
+	 * 
+	 * @param deltaSeconds 델타 시간 값입니다.
+	 */
+	void TickFlyStatus(float deltaSeconds);
+
+
+	/**
+	 * @brief 새의 Dead 상태를 업데이트합니다.
+	 * 
+	 * @param deltaSeconds 델타 시간 값입니다.
+	 */
+	void TickDeadStatus(float deltaSeconds);
 
 
 private:
@@ -163,6 +203,18 @@ private:
 	 * @brief 새의 텍스처입니다.
 	 */
 	std::array<RUID, 4> textureIDs_;
+
+
+	/**
+	 * @brief 파이프 컨트롤러의 ID입니다.
+	 */
+	EUID pipeControllerID_ = -1;
+
+
+	/**
+	 * @brief 바닥의 ID 입니다.
+	 */
+	EUID landID_ = -1;
 	
 
 	/**
