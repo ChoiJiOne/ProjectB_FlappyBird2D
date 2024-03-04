@@ -10,13 +10,13 @@ MainTitle::MainTitle(const RUID& fontID) : Panel("Resource/Panel/MainTitle.json"
 {
 	colors_ = 
 	{
-		Vec4f(0.0f, 0.0f, 0.0f, 1.0f),
-		Vec4f(1.0f, 0.0f, 0.0f, 1.0f),
-		Vec4f(0.0f, 1.0f, 0.0f, 1.0f),
-		Vec4f(0.0f, 0.0f, 1.0f, 1.0f),
-		Vec4f(0.0f, 1.0f, 1.0f, 1.0f),
-		Vec4f(1.0f, 0.2f, 1.0f, 1.0f),
-		Vec4f(1.0f, 1.0f, 0.0f, 1.0f),
+		Vec4f(0.5f, 0.5f, 0.5f, 1.0f),
+		Vec4f(1.0f, 0.5f, 0.5f, 1.0f),
+		Vec4f(0.5f, 1.0f, 0.5f, 1.0f),
+		Vec4f(0.5f, 0.5f, 1.0f, 1.0f),
+		Vec4f(0.5f, 1.0f, 1.0f, 1.0f),
+		Vec4f(1.0f, 0.5f, 1.0f, 1.0f),
+		Vec4f(1.0f, 1.0f, 0.5f, 1.0f),
 		Vec4f(1.0f, 1.0f, 1.0f, 1.0f),
 	};
 
