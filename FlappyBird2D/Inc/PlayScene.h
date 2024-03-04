@@ -1,7 +1,5 @@
 #pragma once
 
-#include <map>
-#include <functional>
 #include <vector>
 
 #include "IEntity.h"
