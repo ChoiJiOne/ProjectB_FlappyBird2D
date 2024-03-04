@@ -45,15 +45,8 @@ void Land::Tick(float deltaSeconds)
 
 void Land::Render()
 {
-	if (bCanMove_)
-	{
-		float rate = scrollX_ / maxScrollX_;
-		RenderManager::Get().RenderHorizonScrollSprite2D(textureID_, bound_.GetCenter(), bound_.GetWidth(), bound_.GetHeight(), 0.0f, rate);
-	}
-	else
-	{
-		RenderManager::Get().RenderSprite2D(textureID_, bound_.GetCenter(), bound_.GetWidth(), bound_.GetHeight(), 0.0f);
-	}
+	float rate = scrollX_ / maxScrollX_;
+	RenderManager::Get().RenderHorizonScrollSprite2D(textureID_, bound_.GetCenter(), bound_.GetWidth(), bound_.GetHeight(), 0.0f, rate);
 }
 
 void Land::Release()
