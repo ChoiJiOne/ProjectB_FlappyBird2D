@@ -15,6 +15,7 @@
 #include "InputManager.h"
 #include "PlayScene.h"
 #include "ReadyScene.h"
+#include "RankScene.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "SDLManager.h"
@@ -86,6 +87,7 @@ public:
 		settingScene_ = std::make_unique<SettingScene>();
 		readyScene_ = std::make_unique<ReadyScene>();
 		playScene_ = std::make_unique<PlayScene>();
+		rankScene_ = std::make_unique<RankScene>();
 		
 		StartScene* startScene = reinterpret_cast<StartScene*>(startScene_.get());
 		startScene->SetQuitLoopEvent(quitLoopEvent_);
@@ -99,6 +101,10 @@ public:
 		readyScene->SetPlayScene(playScene_.get());
 
 		PlayScene* playScene = reinterpret_cast<PlayScene*>(playScene_.get());
+		playScene->SetRankScene(rankScene_.get());
+
+		RankScene* rankScene = reinterpret_cast<RankScene*>(rankScene_.get());
+		rankScene->SetStartScene(startScene);
 
 		currentScene_ = startScene;
 	}
@@ -178,6 +184,12 @@ private:
 	 * @brief «√∑π¿Ã æ¿¿‘¥œ¥Ÿ.
 	 */
 	std::unique_ptr<IScene> playScene_ = nullptr;
+
+
+	/**
+	 * @brief ∑©≈∑ æ¿¿‘¥œ¥Ÿ.
+	 */
+	std::unique_ptr<IScene> rankScene_ = nullptr;
 
 
 	/**
