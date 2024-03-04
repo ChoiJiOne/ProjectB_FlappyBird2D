@@ -123,6 +123,20 @@ public:
 
 
 	/**
+	 * @brief 파이프의 점수 처리를 위한 스코어 경계 영역을 파괴합니다.
+	 */
+	void DestroyScoreBound() { bIsDestroy_ = true; }
+
+
+	/**
+	 * @brief 파이프의 점수 처리를 위한 경계 영역을 얻습니다.
+	 * 
+	 * @return 파이프의 점수 처리를 위한 경계 영역의 포인터를 반환합니다.
+	 */
+	const IBound2D* GetScoreBound() const;
+	
+
+	/**
 	 * @brief 파이프의 시작 위치를 설정합니다.
 	 * 
 	 * @param startLocation 설정할 파이프의 시작 위치입니다.
@@ -143,6 +157,12 @@ private:
 	 * @brief 파이프가 움직일 수 있는지 확인합니다.
 	 */
 	bool bCanMove_ = false;
+
+
+	/**
+	 * @brief 스코어 보드가 파괴되었는지 확인합니다.
+	 */
+	bool bIsDestroy_ = false;
 
 
 	/**
@@ -167,6 +187,12 @@ private:
 	 * @brief 하단 파이프의 경계 영역입니다.
 	 */
 	BoundBox2D bottomBound_;
+
+
+	/**
+	 * @brief 파이프의 점수 처리를 위한 경계 영역입니다.
+	 */
+	BoundBox2D scoreBound_;
 
 
 	/**

@@ -52,6 +52,13 @@ void Pipe::Tick(float deltaSeconds)
 		bottomCenter.x -= speed_ * deltaSeconds;
 		bottomBound_.SetCenter(bottomCenter);
 
+		if (!bIsDestroy_)
+		{
+			Vec2f scoreCenter = scoreBound_.GetCenter();
+			scoreCenter.x -= speed_ * deltaSeconds;
+			scoreBound_.SetCenter(scoreCenter);
+		}
+
 		if (topCenter.x <= endLocation_.x || bottomCenter.x <= endLocation_.x)
 		{
 			ResetLocation();
@@ -83,10 +90,20 @@ void Pipe::ResetLocation()
 
 	topBound_ = BoundBox2D(Vec2f(startLocation_.x, y - 0.5f * (gap + pipeH)), pipeW, pipeH);
 	bottomBound_ = BoundBox2D(Vec2f(startLocation_.x, y + 0.5f * (gap + pipeH)), pipeW, pipeH);
+	scoreBound_ = BoundBox2D(Vec2f(startLocation_.x, 400.0f), 2.0f, 800.0f);
+
+	bIsDestroy_ = false;
 }
 
 float Pipe::GetGapPipe(const Pipe* pipe)
 {
 	float d = topBound_.GetCenter().x - pipe->topBound_.GetCenter().x;
 	return d >= 0.0f ? d : -d;
+}
+
+const IBound2D* Pipe::GetScoreBound() const
+{
+	if (bIsDestroy_) return nullptr;
+
+	return &scoreBound_;
 }
