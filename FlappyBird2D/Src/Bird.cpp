@@ -158,6 +158,27 @@ void Bird::TickFlyStatus(float deltaSeconds)
 		rotate_ = minRotate_;
 	}
 
+	PipeController* pipeController = EntityManager::Get().GetEntity<PipeController>(pipeControllerID_);
+	Land* land = EntityManager::Get().GetEntity<Land>(landID_);
+
+	const std::vector<Pipe*>& pipes = pipeController->GetPipes();
+	for (const Pipe* pipe : pipes)
+	{
+		if (pipe->GetStatus() == Pipe::EStatus::Active && (bound_.Intersect(pipe->GetTopBound()) || bound_.Intersect(pipe->GetBottomBound())))
+		{
+			status_ = EStatus::Dead;
+			pipeController->SetStatus(PipeController::EStatus::Wait);
+			land->SetCanMove(false);
+		}
+	}
+
+	if (bound_.Intersect(land->GetBound()))
+	{
+		status_ = EStatus::Dead;
+		pipeController->SetStatus(PipeController::EStatus::Wait);
+		land->SetCanMove(false);
+	}
+
 	if (animationTime_ >= maxAnimationTime_)
 	{
 		index_ = (index_ + 1) % textureIDs_.size();
