@@ -82,7 +82,21 @@ public:
 	void SetBirdID(const EUID& id) { birdID_ = id; }
 
 
+	/**
+	 * @brief 랭킹 씬을 연결합니다.
+	 * 
+	 * @param rankScene 설정할 랭킹 씬의 포인터입니다.
+	 */
+	void SetRankScene(IScene* rankScene) { rankScene_ = rankScene; }
+
+
 private:
+	/**
+	 * @brief 랭킹 씬입니다.
+	 */
+	IScene* rankScene_ = nullptr;
+
+
 	/**
 	 * @brief 카운트 다운입니다.
 	 */

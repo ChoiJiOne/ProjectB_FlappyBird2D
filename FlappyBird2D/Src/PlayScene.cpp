@@ -8,6 +8,7 @@
 #include "PipeController.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
+#include "RankScene.h"
 #include "PlayScene.h"
 #include "ScoreViewer.h"
 
@@ -33,7 +34,8 @@ void PlayScene::Tick(float deltaSeconds)
 	Bird* bird = EntityManager::Get().GetEntity<Bird>(birdID_);
 	if (bird->GetStatus() == Bird::EStatus::Done)
 	{
-		// TODO
+		bDetectSwitch_ = true;
+		link_ = rankScene_;
 	}
 }
 
@@ -92,6 +94,11 @@ void PlayScene::Exit()
 
 	EntityManager::Get().Destroy(birdID_);
 	EntityManager::Get().Destroy(scoreViewerID_);
+
+	RankScene* rankScene = reinterpret_cast<RankScene*>(rankScene_);
+	rankScene->SetBackgroundID(backgroundID_);
+	rankScene->SetLandID(landID_);
+	rankScene->SetPipeController(pipeController_);
 
 	bDetectSwitch_ = false;
 	bIsEnter_ = false;
