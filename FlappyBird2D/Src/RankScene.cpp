@@ -25,6 +25,17 @@ void RankScene::Enter()
 {
 	CHECK(!bIsEnter_);
 
+	static auto resetEvent = [&]()
+	{
+		link_ = startScene_;
+		bDetectSwitch_ = true;
+	};
+
+	static RUID font32ID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
+
+	static EUID resetButton = EntityManager::Get().Create<Button>("Resource/Button/Reset.json", font32ID, EMouseButton::Left, resetEvent);
+	static EUID quitButton = EntityManager::Get().Create<Button>("Resource/Button/Quit.json", font32ID, EMouseButton::Left, quitLoopEvent_);
+
 	std::vector<Pipe*> pipes = EntityManager::Get().GetEntity<PipeController>(pipeController_)->GetPipes();
 
 	entityIDs_ = 
@@ -36,6 +47,8 @@ void RankScene::Enter()
 		pipes[3]->GetID(),
 		pipeController_,
 		landID_,
+		resetButton,
+		quitButton,
 	};
 
 	bIsEnter_ = true;
@@ -45,10 +58,16 @@ void RankScene::Exit()
 {
 	CHECK(bIsEnter_);
 
-	for (const auto& entityID : entityIDs_)
+	std::vector<Pipe*> pipes = EntityManager::Get().GetEntity<PipeController>(pipeController_)->GetPipes();
+	for (Pipe* pipe : pipes)
 	{
-		EntityManager::Get().Destroy(entityID);
+		EntityManager::Get().Destroy(pipe->GetID());
 	}
+
+	EntityManager::Get().Destroy(backgroundID_);
+	EntityManager::Get().Destroy(pipeController_);
+	EntityManager::Get().Destroy(landID_);
+	EntityManager::Get().Destroy(backgroundID_);
 
 	bDetectSwitch_ = false;
 	bIsEnter_ = false;

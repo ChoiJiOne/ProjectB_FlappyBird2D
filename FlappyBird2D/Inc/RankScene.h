@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <vector>
 
 #include "IEntity.h"
@@ -82,7 +83,21 @@ public:
 	void SetStartScene(IScene* startScene) { startScene_ = startScene; }
 
 
+	/**
+	 * @brief 루프 종료 이벤트를 설정합니다.
+	 *
+	 * @param quitLoopEvent 설정할 루프 종료 이벤트입니다.
+	 */
+	void SetQuitLoopEvent(const std::function<void()>& quitLoopEvent) { quitLoopEvent_ = quitLoopEvent; }
+
+
 private:
+	/**
+	 * @brief 루프 종료 이벤트입니다.
+	 */
+	std::function<void()> quitLoopEvent_;
+	
+
 	/**
 	 * @brief 시작 씬 입니다.
 	 */
