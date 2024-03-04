@@ -104,6 +104,7 @@ public:
 		playScene->SetRankScene(rankScene_.get());
 
 		RankScene* rankScene = reinterpret_cast<RankScene*>(rankScene_.get());
+		rankScene->SetQuitLoopEvent(quitLoopEvent_);
 		rankScene->SetStartScene(startScene);
 
 		currentScene_ = startScene;
