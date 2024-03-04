@@ -34,16 +34,9 @@ void PlayScene::Tick(float deltaSeconds)
 	}
 
 	Bird* bird = EntityManager::Get().GetEntity<Bird>(birdID_);
-	if (bird->GetStatus() == Bird::EStatus::Dead)
+	if (bird->GetStatus() == Bird::EStatus::Done)
 	{
-		Background* background = EntityManager::Get().GetEntity<Background>(backgroundID_);
-		background->SetCanMove(false);
-
-		Land* land = EntityManager::Get().GetEntity<Land>(landID_);
-		land->SetCanMove(false);
-
-		PipeController* pipeController = EntityManager::Get().GetEntity<PipeController>(pipeController_);
-		pipeController->SetStatus(PipeController::EStatus::Wait);
+		// TODO
 	}
 }
 
@@ -88,6 +81,7 @@ void PlayScene::Enter()
 	Bird* bird = EntityManager::Get().GetEntity<Bird>(birdID_);
 	bird->SetPipeControllerID(pipeController_);
 	bird->SetLandID(landID_);
+	bird->SetBackgroundID(backgroundID_);
 
 	ScoreViewer* scoreViewer = EntityManager::Get().GetEntity<ScoreViewer>(scoreViewerID_);
 	scoreViewer->SetBirdID(birdID_);
