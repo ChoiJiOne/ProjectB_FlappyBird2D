@@ -107,6 +107,22 @@ public:
 
 
 	/**
+	 * @brief 파이프의 상단 경계 영역을 얻습니다.
+	 * 
+	 * @return 파이프의 상단 경계 영역 포인터를 반환합니다.
+	 */
+	BoundBox2D* GetTopBound() { return &topBound_; }
+
+
+	/**
+	 * @brief 파이프의 하단 경계 영역을 얻습니다.
+	 * 
+	 * @return 파이프의 하단 경계 영역 포인터를 반환합니다.
+	 */
+	BoundBox2D* GetBottomBound() { return &bottomBound_; }
+
+
+	/**
 	 * @brief 파이프의 시작 위치를 설정합니다.
 	 * 
 	 * @param startLocation 설정할 파이프의 시작 위치입니다.
