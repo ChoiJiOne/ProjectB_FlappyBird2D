@@ -88,6 +88,14 @@ public:
 
 
 	/**
+	 * @brief 새의 스코어를 얻습니다.
+	 * 
+	 * @return 새의 스코어를 반환합니다.
+	 */
+	int32_t GetScore() const { return score_; }
+
+
+	/**
 	 * @brief 새의 시작 위치를 설정합니다.
 	 * 
 	 * @param startLocation 설정할 시작 위치입니다.
@@ -203,6 +211,12 @@ private:
 	 * @brief 새의 텍스처입니다.
 	 */
 	std::array<RUID, 4> textureIDs_;
+
+
+	/**
+	 * @brief 새의 스코어입니다.
+	 */
+	int32_t score_ = 0;
 
 
 	/**

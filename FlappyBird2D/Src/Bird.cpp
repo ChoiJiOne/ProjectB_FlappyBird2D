@@ -75,6 +75,8 @@ Bird::Bird()
 		};
 		break;
 	}
+
+	score_ = 0;
 	
 	bIsInitialized_ = true;
 }
@@ -160,13 +162,23 @@ void Bird::TickFlyStatus(float deltaSeconds)
 
 	PipeController* pipeController = EntityManager::Get().GetEntity<PipeController>(pipeControllerID_);
 	const std::vector<Pipe*>& pipes = pipeController->GetPipes();
-	for (const Pipe* pipe : pipes)
+	for (Pipe* pipe : pipes)
 	{
-		if (pipe->GetStatus() == Pipe::EStatus::Active && (bound_.Intersect(pipe->GetTopBound()) || bound_.Intersect(pipe->GetBottomBound())))
+		if (pipe->GetStatus() == Pipe::EStatus::Active)
 		{
-			currentSpeed_ = maxSpeed_;
-			rotate_ = minRotate_;
-			status_ = EStatus::Dead;
+			if (bound_.Intersect(pipe->GetTopBound()) || bound_.Intersect(pipe->GetBottomBound()))
+			{
+				currentSpeed_ = maxSpeed_;
+				rotate_ = minRotate_;
+				status_ = EStatus::Dead;
+			}
+
+			const IBound2D* scoreBound = pipe->GetScoreBound();
+			if (scoreBound && bound_.Intersect(pipe->GetScoreBound()))
+			{
+				score_++;
+				pipe->DestroyScoreBound();
+			}
 		}
 	}
 
