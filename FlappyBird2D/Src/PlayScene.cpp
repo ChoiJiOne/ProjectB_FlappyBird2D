@@ -93,11 +93,9 @@ void PlayScene::Exit()
 {
 	CHECK(bIsEnter_);
 
-	for (const auto& id : entityIDs_)
-	{
-		EntityManager::Get().Destroy(id);
-	}
-	
+	EntityManager::Get().Destroy(birdID_);
+	EntityManager::Get().Destroy(scoreViewerID_);
+
 	bDetectSwitch_ = false;
 	bIsEnter_ = false;
 }
