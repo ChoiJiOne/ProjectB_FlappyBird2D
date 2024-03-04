@@ -111,7 +111,7 @@ public:
 	 * 
 	 * @return 파이프의 상단 경계 영역 포인터를 반환합니다.
 	 */
-	BoundBox2D* GetTopBound() { return &topBound_; }
+	const BoundBox2D* GetTopBound() const { return &topBound_; }
 
 
 	/**
@@ -119,7 +119,7 @@ public:
 	 * 
 	 * @return 파이프의 하단 경계 영역 포인터를 반환합니다.
 	 */
-	BoundBox2D* GetBottomBound() { return &bottomBound_; }
+	const BoundBox2D* GetBottomBound() const { return &bottomBound_; }
 
 
 	/**
