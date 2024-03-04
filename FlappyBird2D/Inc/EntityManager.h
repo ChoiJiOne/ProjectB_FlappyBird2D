@@ -98,12 +98,29 @@ public:
 
 
 	/**
+	 * @brief 엔티티를 업데이트합니다.
+	 * 
+	 * @param entityID 업데이트할 엔티티 ID 입니다.
+	 * @param deltaSeconds 초단위 델타 시간값입니다.
+	 */
+	void UpdateBatch(const EUID& entityID, float deltaSeconds);
+
+
+	/**
 	 * @brief 엔티티를 일괄 업데이트합니다.
 	 * 
 	 * @param entityIDs 일괄 업데이트할 엔티티 ID 목록입니다.
 	 * @param deltaSeconds 초단위 델타 시간값입니다.
 	 */
 	void UpdateBatch(const std::vector<EUID>& entityIDs, float deltaSeconds);
+
+
+	/**
+	 * @brief 엔티티를 렌더링합니다.
+	 *
+	 * @param entityID 렌더링할 엔티티 ID 입니다.
+	 */
+	void RenderBatch(const EUID& entityID);
 
 
 	/**

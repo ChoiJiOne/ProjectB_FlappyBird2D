@@ -41,6 +41,16 @@ void EntityManager::Destroy(const EUID& entityID)
 	}
 }
 
+void EntityManager::UpdateBatch(const EUID& entityID, float deltaSeconds)
+{
+	CHECK(0 <= entityID && entityID < cacheSize_);
+
+	if (cache_[entityID]->IsInitialized())
+	{
+		cache_[entityID]->Tick(deltaSeconds);
+	}
+}
+
 void EntityManager::UpdateBatch(const std::vector<EUID>& entityIDs, float deltaSeconds)
 {
 	for (const EUID& entityID : entityIDs)
@@ -51,6 +61,16 @@ void EntityManager::UpdateBatch(const std::vector<EUID>& entityIDs, float deltaS
 		{
 			cache_[entityID]->Tick(deltaSeconds);
 		}
+	}
+}
+
+void EntityManager::RenderBatch(const EUID& entityID)
+{
+	CHECK(0 <= entityID && entityID < cacheSize_);
+
+	if (cache_[entityID]->IsInitialized())
+	{
+		cache_[entityID]->Render();
 	}
 }
 
