@@ -71,7 +71,7 @@ public:
 	 * 
 	 * @param status 설정할 파이프 컨트롤러의 상태입니다.
 	 */
-	void SetStatus(const EStatus& status) { status_ = status; }
+	void SetStatus(const EStatus& status);
 
 
 	/**
