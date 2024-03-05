@@ -6,8 +6,6 @@ layout(location = 0) out vec4 outFragColor;
 
 layout(binding = 0) uniform sampler2D spriteMap;
 
-const float gamma = 2.2f;
-
 const vec2 offsets[8] = 
 {
 	vec2(-1.0f, -1.0f),
@@ -47,7 +45,7 @@ void main()
 		fragColor = texture(spriteMap, inTexCoords);
 	}
 	
-	vec3 fragRGB = pow(fragColor.rgb, vec3(1.0f / gamma));
+	vec3 fragRGB = fragColor.rgb;
 	float alpha = fragColor.a * transparent;
 
 	outFragColor = vec4(fragRGB, alpha);
