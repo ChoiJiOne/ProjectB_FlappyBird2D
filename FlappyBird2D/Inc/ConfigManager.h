@@ -1,5 +1,7 @@
 #pragma once
 
+#include <map>
+
 #include "IManager.h"
 #include "IResource.h"
 
@@ -125,6 +127,22 @@ public:
 	void SetCurrentBird(const EBird& bird);
 
 
+	/**
+	 * @brief 점수를 등록합니다.
+	 * 
+	 * @param score 등록할 점수입니다.
+	 */
+	void RecordScore(int32_t score);
+
+
+	/**
+	 * @brief 현재 레벨의 최근 점수를 얻습니다.
+	 * 
+	 * @return 현재 레벨의 최근 점수를 반환합니다.
+	 */
+	int32_t GetRecentScore();
+
+
 private:
 	/**
 	 * @brief 전체 설정을 관리하는 매니저에 디폴트 생성자와 빈 가상 소멸자를 삽입합니다.
@@ -161,4 +179,10 @@ private:
 	 * @brief 현재 새 종류입니다.
 	 */
 	EBird currentBird_ = EBird::Yellow;
+
+
+	/**
+	 * @brief 최근 기록된 레벨에 따른 스코어입니다.
+	 */
+	std::map<ELevel, int32_t> recentScore_;
 };

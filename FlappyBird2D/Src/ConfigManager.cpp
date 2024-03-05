@@ -18,6 +18,13 @@ void ConfigManager::Startup()
 
 	currentBackgroundID_ = dayBackgroundID_;
 
+	recentScore_ = 
+	{
+		{ ELevel::Easy,   -1 },
+		{ ELevel::Normal, -1 },
+		{ ELevel::Hard,   -1 },
+	};
+
 	bIsStartup_ = true;
 }
 
@@ -48,4 +55,14 @@ void ConfigManager::SetCurrentLevel(const ELevel& level)
 void ConfigManager::SetCurrentBird(const EBird& bird)
 {
 	currentBird_ = bird;
+}
+
+void ConfigManager::RecordScore(int32_t score)
+{
+	recentScore_[currentLevel_] = score;
+}
+
+int32_t ConfigManager::GetRecentScore()
+{
+	return recentScore_[currentLevel_];
 }
