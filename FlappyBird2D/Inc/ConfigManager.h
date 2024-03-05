@@ -143,6 +143,22 @@ public:
 	int32_t GetRecentScore();
 
 
+	/**
+	 * @brief 현재 레벨의 최고 점수를 얻습니다.
+	 * 
+	 * @return 현재 레벨의 최고 점수를 반환합니다.
+	 */
+	int32_t GetBestScore();
+
+
+	/**
+	 * @brief 최고 기록이 갱신되었는지 확인합니다.
+	 * 
+	 * @return 최고 기록이 갱신되었다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsUpdateBestScore() { return bIsUpdateBestScore_; }
+
+
 private:
 	/**
 	 * @brief 전체 설정을 관리하는 매니저에 디폴트 생성자와 빈 가상 소멸자를 삽입합니다.
@@ -182,7 +198,19 @@ private:
 
 
 	/**
+	 * @brief 최고 기록이 갱신되었는지 확인합니다.
+	 */
+	bool bIsUpdateBestScore_ = false;
+
+
+	/**
 	 * @brief 최근 기록된 레벨에 따른 스코어입니다.
 	 */
 	std::map<ELevel, int32_t> recentScore_;
+
+
+	/**
+	 * @brief 레벨에 따른 최고 스코어입니다.
+	 */
+	std::map<ELevel, int32_t> bestScore_;
 };

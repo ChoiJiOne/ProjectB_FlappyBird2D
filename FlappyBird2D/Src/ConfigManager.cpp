@@ -18,7 +18,16 @@ void ConfigManager::Startup()
 
 	currentBackgroundID_ = dayBackgroundID_;
 
+	bIsUpdateBestScore_ = false;
+
 	recentScore_ = 
+	{
+		{ ELevel::Easy,   -1 },
+		{ ELevel::Normal, -1 },
+		{ ELevel::Hard,   -1 },
+	};
+
+	bestScore_ =
 	{
 		{ ELevel::Easy,   -1 },
 		{ ELevel::Normal, -1 },
@@ -59,10 +68,25 @@ void ConfigManager::SetCurrentBird(const EBird& bird)
 
 void ConfigManager::RecordScore(int32_t score)
 {
+	if (score > bestScore_[currentLevel_])
+	{
+		bIsUpdateBestScore_ = true;
+		bestScore_[currentLevel_] = score;
+	}
+	else
+	{
+		bIsUpdateBestScore_ = false;
+	}
+
 	recentScore_[currentLevel_] = score;
 }
 
 int32_t ConfigManager::GetRecentScore()
 {
 	return recentScore_[currentLevel_];
+}
+
+int32_t ConfigManager::GetBestScore()
+{
+	return bestScore_[currentLevel_];
 }
