@@ -199,6 +199,8 @@ void Bird::TickFlyStatus(float deltaSeconds)
 
 		land->SetCanMove(false);
 		pipeController->SetStatus(PipeController::EStatus::Wait);
+
+		ConfigManager::Get().RecordScore(score_);
 	}
 
 	if (animationTime_ >= maxAnimationTime_)
