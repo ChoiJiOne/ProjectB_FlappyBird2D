@@ -9,6 +9,7 @@
 #include "PipeController.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
+#include "RankViewer.h"
 #include "RankScene.h"
 #include "TTFont.h"
 
@@ -35,6 +36,7 @@ void RankScene::Enter()
 
 	static EUID resetButton = EntityManager::Get().Create<Button>("Resource/Button/Reset.json", font32ID, EMouseButton::Left, resetEvent);
 	static EUID quitButton = EntityManager::Get().Create<Button>("Resource/Button/Quit.json", font32ID, EMouseButton::Left, quitLoopEvent_);
+	static EUID rankViewer = EntityManager::Get().Create<RankViewer>(font32ID);
 
 	std::vector<Pipe*> pipes = EntityManager::Get().GetEntity<PipeController>(pipeController_)->GetPipes();
 
@@ -47,6 +49,7 @@ void RankScene::Enter()
 		pipes[3]->GetID(),
 		pipeController_,
 		landID_,
+		rankViewer,
 		resetButton,
 		quitButton,
 	};
