@@ -244,6 +244,30 @@ private:
 	 * @brief 백그라운드의 ID입니다.
 	 */
 	EUID backgroundID_ = -1;
+
+
+	/**
+	 * @brief 새가 날개짓을 했을 때 출력할 사운드 리소스 ID입니다.
+	 */
+	RUID wingSoundID_ = -1;
+
+
+	/**
+	 * @brief 새가 파이프를 통과했을 때 출력할 사운드 리소스 ID입니다.
+	 */
+	RUID pointSoundID_ = -1;
+
+
+	/**
+	 * @brief 새가 파이프나 바닥과 부딪혔을 때 출력할 사운드 리소스입니다.
+	 */
+	RUID hitSoundID_ = -1;
+
+
+	/**
+	 * @brief 새가 죽었을 때 출력할 사운드 리소스입니다.
+	 */
+	RUID dieSoundID_ = -1;
 	
 
 	/**

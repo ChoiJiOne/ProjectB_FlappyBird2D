@@ -1,6 +1,7 @@
 #include "MathModule.h"
 
 #include "Assertion.h"
+#include "AudioManager.h"
 #include "Background.h"
 #include "Bird.h"
 #include "ConfigManager.h"
@@ -11,6 +12,7 @@
 #include "PipeController.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
+#include "Sound.h"
 #include "Texture2D.h"
 
 Vec2f Bird::startLocation_;
@@ -78,6 +80,16 @@ Bird::Bird()
 	}
 
 	score_ = 0;
+
+	static RUID wingSoundID = ResourceManager::Get().Create<Sound>("Resource/Sound/wing.wav");
+	static RUID pointSoundID = ResourceManager::Get().Create<Sound>("Resource/Sound/point.wav");
+	static RUID hitSoundID = ResourceManager::Get().Create<Sound>("Resource/Sound/hit.wav");
+	static RUID dieSoundID = ResourceManager::Get().Create<Sound>("Resource/Sound/die.wav");
+
+	wingSoundID_ = wingSoundID;
+	pointSoundID_ = pointSoundID;
+	hitSoundID_ = hitSoundID;
+	dieSoundID_ = dieSoundID;
 	
 	bIsInitialized_ = true;
 }
@@ -158,6 +170,11 @@ void Bird::TickFlyStatus(float deltaSeconds)
 
 	if (currentSpeed_ <= 0.0f && InputManager::Get().GetMousePressState(EMouseButton::Left) == EPressState::Pressed)
 	{
+		Sound* wingSound = ResourceManager::Get().GetResource<Sound>(wingSoundID_);
+		wingSound->SetLooping(false);
+		wingSound->Reset();
+		wingSound->Play();
+
 		currentSpeed_ = maxSpeed_;
 		rotate_ = minRotate_;
 	}
