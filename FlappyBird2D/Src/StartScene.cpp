@@ -28,6 +28,7 @@ void StartScene::Enter()
 	static auto startEvent = [&]()
 	{
 		Sound* sound = ResourceManager::Get().GetResource<Sound>(clickSound);
+		sound->Reset();
 		sound->SetLooping(false);
 		sound->Play();
 
