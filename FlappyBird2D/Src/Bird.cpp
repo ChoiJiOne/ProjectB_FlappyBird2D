@@ -139,6 +139,11 @@ void Bird::TickReadyStatus(float deltaSeconds)
 
 	if (InputManager::Get().GetMousePressState(EMouseButton::Left) == EPressState::Pressed)
 	{
+		Sound* wingSound = ResourceManager::Get().GetResource<Sound>(wingSoundID_);
+		wingSound->SetLooping(false);
+		wingSound->Reset();
+		wingSound->Play();
+
 		status_ = EStatus::Fly;
 		currentSpeed_ = maxSpeed_;
 		rotate_ = minRotate_;
@@ -195,6 +200,11 @@ void Bird::TickFlyStatus(float deltaSeconds)
 			const IBound2D* scoreBound = pipe->GetScoreBound();
 			if (scoreBound && bound_.Intersect(pipe->GetScoreBound()))
 			{
+				Sound* pointSound = ResourceManager::Get().GetResource<Sound>(pointSoundID_);
+				pointSound->SetLooping(false);
+				pointSound->Reset();
+				pointSound->Play();
+
 				score_++;
 				pipe->DestroyScoreBound();
 			}
@@ -211,6 +221,11 @@ void Bird::TickFlyStatus(float deltaSeconds)
 
 	if (status_ == EStatus::Dead)
 	{
+		Sound* hitSound = ResourceManager::Get().GetResource<Sound>(hitSoundID_);
+		hitSound->SetLooping(false);
+		hitSound->Reset();
+		hitSound->Play();
+		
 		Background* background = EntityManager::Get().GetEntity<Background>(backgroundID_);
 		background->SetCanMove(false);
 
@@ -229,6 +244,11 @@ void Bird::TickFlyStatus(float deltaSeconds)
 
 void Bird::TickDeadStatus(float deltaSeconds)
 {
+	Sound* dieSound = ResourceManager::Get().GetResource<Sound>(dieSoundID_);
+	dieSound->SetLooping(false);
+	dieSound->Reset();
+	dieSound->Play();
+
 	currentSpeed_ -= (4.0f * maxSpeed_ * deltaSeconds);
 
 	Vec2f center = bound_.GetCenter();
