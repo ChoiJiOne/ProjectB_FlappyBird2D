@@ -13,20 +13,12 @@ set(CRASH_MODULE_SOURCE "${CRASH_MODULE_PATH}/Src")
 file(GLOB_RECURSE CRASH_MODULE_INCLUDE_FILE "${CRASH_MODULE_INCLUDE}/*")
 file(GLOB_RECURSE CRASH_MODULE_SOURCE_FILE "${CRASH_MODULE_SOURCE}/*")
 
-add_library(
-    ${PROJECT_NAME} 
-    STATIC 
-    ${CRASH_MODULE_INCLUDE_FILE} 
-    ${CRASH_MODULE_SOURCE_FILE}
-)
+add_library(${PROJECT_NAME} STATIC ${CRASH_MODULE_INCLUDE_FILE} ${CRASH_MODULE_SOURCE_FILE})
 
 target_include_directories(${PROJECT_NAME}  PUBLIC ${CRASH_MODULE_INCLUDE})
-target_link_libraries(
-    ${PROJECT_NAME}     
-    Dbghelp.lib 
-    Pathcch.lib
-    Shlwapi.lib
-)
+target_link_libraries(${PROJECT_NAME} Dbghelp.lib Pathcch.lib Shlwapi.lib)
+
+set_property(TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 source_group(Inc FILES ${CRASH_MODULE_INCLUDE_FILE})
 source_group(Src FILES ${CRASH_MODULE_SOURCE_FILE})
