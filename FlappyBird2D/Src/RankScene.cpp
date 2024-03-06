@@ -1,4 +1,5 @@
 #include "Assertion.h"
+#include "AudioManager.h"
 #include "Background.h"
 #include "Button.h"
 #include "ConfigManager.h"
@@ -11,6 +12,7 @@
 #include "ResourceManager.h"
 #include "RankViewer.h"
 #include "RankScene.h"
+#include "Sound.h"
 #include "TTFont.h"
 
 void RankScene::Tick(float deltaSeconds)
@@ -26,8 +28,15 @@ void RankScene::Enter()
 {
 	CHECK(!bIsEnter_);
 
+	static RUID clickSound = ResourceManager::Get().Create<Sound>("Resource/Sound/swoosh.wav");
+
 	static auto resetEvent = [&]()
 	{
+		Sound* sound = ResourceManager::Get().GetResource<Sound>(clickSound);
+		sound->Reset();
+		sound->SetLooping(false);
+		sound->Play();
+
 		link_ = startScene_;
 		bDetectSwitch_ = true;
 	};
