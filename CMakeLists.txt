@@ -121,7 +121,13 @@ set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}/Resource/Icon/favicon.ico")
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Shader DESTINATION .)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Resource DESTINATION .)
-install(TARGETS SDL2 DESTINATION .)
+install(FILES 
+    "$<$<CONFIG:Debug>:${CMAKE_BINARY_DIR}/Debug/SDL2d.dll>"
+    "$<$<CONFIG:Release>:${CMAKE_BINARY_DIR}/Release/SDL2.dll>"
+    "$<$<CONFIG:RelWithDebInfo>:${CMAKE_BINARY_DIR}/RelWithDebInfo/SDL2.dll>"
+    "$<$<CONFIG:MinSizeRel>:${CMAKE_BINARY_DIR}/MinSizeRel/SDL2.dll>"
+    DESTINATION .
+)
 install(TARGETS ${PROJECT_NAME} DESTINATION .)
 
 set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
