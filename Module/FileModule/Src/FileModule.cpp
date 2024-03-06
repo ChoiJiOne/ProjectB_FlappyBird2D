@@ -181,6 +181,36 @@ bool FileModule::WriteBufferToFile(const std::wstring& path, const std::vector<u
 	return true;
 }
 
+bool FileModule::MakeDirectory(const std::string& path)
+{
+	if (!CreateDirectoryA(path.c_str(), nullptr))
+	{
+		if (!RecordFileModuleErrorMessage())
+		{
+			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to make directory", MAX_BUFFER_SIZE);
+		}
+
+		return false;
+	}
+
+	return true;
+}
+
+bool FileModule::MakeDirectory(const std::wstring& path)
+{
+	if (!CreateDirectoryW(path.c_str(), nullptr))
+	{
+		if (!RecordFileModuleErrorMessage())
+		{
+			strncpy_s(fileErrorMessageBuffer, MAX_BUFFER_SIZE, "failed to make directory", MAX_BUFFER_SIZE);
+		}
+
+		return false;
+	}
+
+	return true;
+}
+
 bool FileModule::IsValidPath(const std::string& path)
 {
 	return PathFileExistsA(path.c_str());
