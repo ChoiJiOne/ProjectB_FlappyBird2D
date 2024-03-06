@@ -1,4 +1,5 @@
 #include "Assertion.h"
+#include "AudioManager.h"
 #include "Background.h"
 #include "Button.h"
 #include "EntityManager.h"
@@ -6,6 +7,7 @@
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "StartScene.h"
+#include "Sound.h"
 #include "TTFont.h"
 
 void StartScene::Tick(float deltaSeconds)
@@ -21,8 +23,14 @@ void StartScene::Enter()
 {
 	CHECK(!bIsEnter_);
 
+	static RUID clickSound = ResourceManager::Get().Create<Sound>("Resource/Sound/swoosh.wav");
+
 	static auto startEvent = [&]()
 	{
+		Sound* sound = ResourceManager::Get().GetResource<Sound>(clickSound);
+		sound->SetLooping(false);
+		sound->Play();
+
 		link_ = readyScene_;
 		bDetectSwitch_ = true;
 	};
