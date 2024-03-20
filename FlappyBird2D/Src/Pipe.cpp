@@ -9,7 +9,9 @@
 static float pipeW = 80.0f;
 static float pipeH = 600.0f;
 static float maxHeight = 640.0f;
-float gap = 150.0f;
+static float gap = 150.0f;
+static float minYPosition = 200.0f;
+static float maxYPosition = 440.0f;
 
 Vec2f Pipe::startLocation_;
 Vec2f Pipe::endLocation_;
@@ -86,7 +88,7 @@ void Pipe::Release()
 
 void Pipe::ResetLocation()
 {
-	float y = MathModule::GenerateRandomFloat(gap, maxHeight - gap);
+	float y = MathModule::GenerateRandomFloat(minYPosition, maxYPosition);
 
 	topBound_ = BoundBox2D(Vec2f(startLocation_.x, y - 0.5f * (gap + pipeH)), pipeW, pipeH);
 	bottomBound_ = BoundBox2D(Vec2f(startLocation_.x, y + 0.5f * (gap + pipeH)), pipeW, pipeH);
