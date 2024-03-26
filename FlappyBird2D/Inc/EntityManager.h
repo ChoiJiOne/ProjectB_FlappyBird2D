@@ -57,14 +57,14 @@ public:
 	 * @return 생성된 엔티티의 ID를 반환합니다.
 	 */
 	template <typename TEntity, typename... Args>
-	EUID Create(Args&&... args)
+	EUID CreateID(Args&&... args)
 	{
 		CHECK(0 <= cacheSize_ && cacheSize_ < MAX_RESOURCE_SIZE);
 
 		EUID entityID = -1;
 		for (int32_t index = 0; index < cacheSize_; ++index)
 		{
-			if (!cache_[entityID])
+			if (!cache_[index])
 			{
 				entityID = static_cast<EUID>(index);
 			}
