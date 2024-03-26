@@ -94,17 +94,20 @@ void PlayScene::Enter()
 
 	std::vector<Pipe*> pipes =
 	{
-		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().CreateID<Pipe>(gameSpeed_)),
-		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().CreateID<Pipe>(gameSpeed_)),
-		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().CreateID<Pipe>(gameSpeed_)),
-		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().CreateID<Pipe>(gameSpeed_)),
+		EntityManager::Get().CreateEntity<Pipe>(gameSpeed_),
+		EntityManager::Get().CreateEntity<Pipe>(gameSpeed_),
+		EntityManager::Get().CreateEntity<Pipe>(gameSpeed_),
+		EntityManager::Get().CreateEntity<Pipe>(gameSpeed_),
 	};
 
-	pipeController_ = EntityManager::Get().CreateID<PipeController>(pipes, 300.0f);
-	scoreViewerID_ = EntityManager::Get().CreateID<ScoreViewer>();
+	static RUID fontID = ResourceManager::Get().GetGlobalResource("Font32");
 
-	static RUID fontID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
-	pauseViewerID_ = EntityManager::Get().CreateID<PauseViewer>(fontID);
+	pipeController_ = EntityManager::Get().CreateID<PipeController>(pipes, 300.0f);
+	ScoreViewer* scoreViewer = EntityManager::Get().CreateEntity<ScoreViewer>();
+	PauseViewer* pasueViewer = EntityManager::Get().CreateEntity<PauseViewer>(fontID);
+
+	scoreViewerID_ = scoreViewer->GetID();
+	pauseViewerID_ = pasueViewer->GetID();
 
 	entityIDs_ =
 	{
@@ -124,10 +127,7 @@ void PlayScene::Enter()
 	bird->SetLandID(landID_);
 	bird->SetBackgroundID(backgroundID_);
 
-	ScoreViewer* scoreViewer = EntityManager::Get().GetEntity<ScoreViewer>(scoreViewerID_);
 	scoreViewer->SetBirdID(birdID_);
-
-	PauseViewer* pasueViewer = EntityManager::Get().GetEntity<PauseViewer>(pauseViewerID_);
 	pasueViewer->SetContinueEvent([&]() { bIsPause_ = false; });
 
 	bIsEnter_ = true;

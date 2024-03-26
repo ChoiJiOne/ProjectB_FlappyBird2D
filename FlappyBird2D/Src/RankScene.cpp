@@ -28,24 +28,23 @@ void RankScene::Enter()
 {
 	CHECK(!bIsEnter_);
 
-	static RUID clickSound = ResourceManager::Get().CreateID<Sound>("Resource/Sound/swoosh.wav");
+	static Sound* clickSound = ResourceManager::Get().GetResource<Sound>(ResourceManager::Get().GetGlobalResource("ClickSound"));
 
 	static auto resetEvent = [&]()
 	{
-		Sound* sound = ResourceManager::Get().GetResource<Sound>(clickSound);
-		sound->Reset();
-		sound->SetLooping(false);
-		sound->Play();
+		clickSound->Reset();
+		clickSound->SetLooping(false);
+		clickSound->Play();
 
 		link_ = startScene_;
 		bDetectSwitch_ = true;
 	};
 
-	static RUID font32ID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
-
-	static EUID resetButton = EntityManager::Get().CreateID<Button>("Resource/Button/Reset.json", font32ID, EMouseButton::Left, resetEvent);
-	static EUID quitButton = EntityManager::Get().CreateID<Button>("Resource/Button/Quit.json", font32ID, EMouseButton::Left, quitLoopEvent_);
-	static EUID rankViewer = EntityManager::Get().CreateID<RankViewer>(font32ID);
+	RUID fontID = ResourceManager::Get().GetGlobalResource("Font32");
+	
+	static EUID resetButton = EntityManager::Get().CreateID<Button>("Resource/Button/Reset.json", fontID, EMouseButton::Left, resetEvent);
+	static EUID quitButton = EntityManager::Get().CreateID<Button>("Resource/Button/Quit.json", fontID, EMouseButton::Left, quitLoopEvent_);
+	static EUID rankViewer = EntityManager::Get().CreateID<RankViewer>(fontID);
 
 	std::vector<Pipe*> pipes = EntityManager::Get().GetEntity<PipeController>(pipeController_)->GetPipes();
 

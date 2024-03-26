@@ -22,15 +22,14 @@ void StartScene::Tick(float deltaSeconds)
 void StartScene::Enter()
 {
 	CHECK(!bIsEnter_);
-
-	static RUID clickSound = ResourceManager::Get().CreateID<Sound>("Resource/Sound/swoosh.wav");
-
+	
+	static Sound* clickSound = ResourceManager::Get().GetResource<Sound>(ResourceManager::Get().GetGlobalResource("ClickSound"));
+	
 	static auto startEvent = [&]()
 	{
-		Sound* sound = ResourceManager::Get().GetResource<Sound>(clickSound);
-		sound->Reset();
-		sound->SetLooping(false);
-		sound->Play();
+		clickSound->Reset();
+		clickSound->SetLooping(false);
+		clickSound->Play();
 
 		link_ = readyScene_;
 		bDetectSwitch_ = true;
@@ -42,8 +41,8 @@ void StartScene::Enter()
 		bDetectSwitch_ = true;
 	};
 
-	static RUID font90ID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 90.0f);
-	static RUID font32ID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
+	RUID font32ID = ResourceManager::Get().GetGlobalResource("Font32");
+	RUID font90ID = ResourceManager::Get().GetGlobalResource("Font90");
 
 	static EUID background = EntityManager::Get().CreateID<Background>();
 	static EUID mainTitle = EntityManager::Get().CreateID<MainTitle>(font90ID);
