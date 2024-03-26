@@ -84,6 +84,40 @@ public:
 
 
 	/**
+	 * @brief 엔티티를 생성합니다.
+	 *
+	 * @param args 엔티티의 생성자에 전달한 인자들입니다.
+	 *
+	 * @return 생성된 엔티티의 ID를 반환합니다.
+	 */
+	template <typename TEntity, typename... Args>
+	TEntity* CreateEntity(Args&&... args)
+	{
+		CHECK(0 <= cacheSize_ && cacheSize_ < MAX_RESOURCE_SIZE);
+
+		EUID entityID = -1;
+		for (int32_t index = 0; index < cacheSize_; ++index)
+		{
+			if (!cache_[index])
+			{
+				entityID = static_cast<EUID>(index);
+				break;
+			}
+		}
+
+		if (entityID == -1)
+		{
+			entityID = cacheSize_++;
+		}
+
+		cache_[entityID] = std::make_unique<TEntity>(args...);
+		cache_[entityID]->SetID(entityID);
+
+		return reinterpret_cast<TEntity*>(cache_[entityID].get());
+	}
+
+
+	/**
 	 * @brief 엔티티 매니저가 관리하는 엔티티를 얻습니다.
 	 *
 	 * @param entityID 엔티티 ID입니다.
