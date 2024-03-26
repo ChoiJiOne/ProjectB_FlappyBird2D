@@ -66,6 +66,7 @@ public:
 			if (!cache_[index])
 			{
 				resourceID = static_cast<RUID>(index);
+				break;
 			}
 		}
 
@@ -99,6 +100,7 @@ public:
 			if (!cache_[index])
 			{
 				resourceID = static_cast<RUID>(index);
+				break;
 			}
 		}
 
