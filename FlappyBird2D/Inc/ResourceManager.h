@@ -3,6 +3,7 @@
 #include <array>
 #include <cstdint>
 #include <memory>
+#include <map>
 
 #include "IManager.h"
 #include "IResource.h"
@@ -143,11 +144,50 @@ public:
 	void Destroy(const RUID& resourceID);
 
 
+	/**
+	 * @brief 전역 리소스를 등록합니다.
+	 * 
+	 * @param signature 전역 리소스의 시그니처 값입니다.
+	 * @param resourceID 전역 리소스의 ID입니다.
+	 * 
+	 * @note 시그니처 키 값이 이미 존재하면 크래시가 발생합니다.
+	 */
+	void RegisterGlobalResource(const std::string& signature, const RUID& resourceID);
+
+
+	/**
+	 * @brief 시그니처 값에 대응하는 전역 리소스를 얻습니다.
+	 * 
+	 * @param signature 전역 리소스의 시그니처 값입니다.
+	 * 
+	 * @return 시그니처 값에 대응하는 전역 리소스의 ID를 반환합니다.
+	 */
+	RUID GetGlobalResource(const std::string& signature);
+
+
+	/**
+	 * @brief 전역 리소스의 등록을 해제합니다.
+	 * 
+	 * @param signature 등록 해제할 전역 리소스의 시그니처 값입니다.
+	 */
+	void UnregisterGlobalResource(const std::string& signature);
+
+
 private:
 	/**
 	 * @brief 리소스 관리를 수행하는 매니저에 디폴트 생성자와 빈 가상 소멸자를 삽입합니다.
 	 */
 	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(ResourceManager);
+
+
+	/**
+	 * @brief 시그니처 값이 존재하는지 확인합니다.
+	 * 
+	 * @param signature 존재하는지 확인할 시그니처입니다.
+	 * 
+	 * @return 시그니처 값이 존재한다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsAlreadyExistSignature(const std::string& signature) const;
 
 	
 private:
@@ -167,4 +207,10 @@ private:
 	 * @brief 리소스 매니저 내의 리소스 캐시입니다.
 	 */
 	std::array<std::unique_ptr<IResource>, MAX_RESOURCE_SIZE> cache_;
+
+
+	/**
+	 * @brief 글로벌 리소스입니다.
+	 */
+	std::map<std::string, RUID> globalResources_;
 };

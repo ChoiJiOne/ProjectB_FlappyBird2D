@@ -40,3 +40,28 @@ void ResourceManager::Destroy(const RUID& resourceID)
 		cache_[resourceID].reset();
 	}
 }
+
+void ResourceManager::RegisterGlobalResource(const std::string& signature, const RUID& resourceID)
+{
+	CHECK(!IsAlreadyExistSignature(signature));
+	globalResources_.insert({ signature, resourceID });
+}
+
+RUID ResourceManager::GetGlobalResource(const std::string& signature)
+{
+	CHECK(IsAlreadyExistSignature(signature));
+	return globalResources_.at(signature);
+}
+
+void ResourceManager::UnregisterGlobalResource(const std::string& signature)
+{
+	if (IsAlreadyExistSignature(signature))
+	{
+		globalResources_.erase(signature);
+	}
+}
+
+bool ResourceManager::IsAlreadyExistSignature(const std::string& signature) const
+{
+	return globalResources_.find(signature) != globalResources_.end();
+}
