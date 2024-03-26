@@ -57,10 +57,10 @@ void ReadyScene::Enter()
 	RenderManager::Get().GetRenderTargetWindowSize(w, h);
 	Bird::SetStartLocation(Vec2f(static_cast<float>(w) * 0.3f, static_cast<float>(h) * 0.4f));
 
-	backgroundID_ = EntityManager::Get().Create<Background>(backgroundScrollSpeed_);
-	landID_ = EntityManager::Get().Create<Land>(gameSpeed_);
-	birdID_ = EntityManager::Get().Create<Bird>();
-	readyViewer_ = EntityManager::Get().Create<ReadyViewer>();
+	backgroundID_ = EntityManager::Get().CreateID<Background>(backgroundScrollSpeed_);
+	landID_ = EntityManager::Get().CreateID<Land>(gameSpeed_);
+	birdID_ = EntityManager::Get().CreateID<Bird>();
+	readyViewer_ = EntityManager::Get().CreateID<ReadyViewer>();
 
 	entityIDs_ =
 	{

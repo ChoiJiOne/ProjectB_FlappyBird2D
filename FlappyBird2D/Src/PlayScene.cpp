@@ -94,17 +94,17 @@ void PlayScene::Enter()
 
 	std::vector<Pipe*> pipes =
 	{
-		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().Create<Pipe>(gameSpeed_)),
-		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().Create<Pipe>(gameSpeed_)),
-		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().Create<Pipe>(gameSpeed_)),
-		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().Create<Pipe>(gameSpeed_)),
+		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().CreateID<Pipe>(gameSpeed_)),
+		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().CreateID<Pipe>(gameSpeed_)),
+		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().CreateID<Pipe>(gameSpeed_)),
+		EntityManager::Get().GetEntity<Pipe>(EntityManager::Get().CreateID<Pipe>(gameSpeed_)),
 	};
 
-	pipeController_ = EntityManager::Get().Create<PipeController>(pipes, 300.0f);
-	scoreViewerID_ = EntityManager::Get().Create<ScoreViewer>();
+	pipeController_ = EntityManager::Get().CreateID<PipeController>(pipes, 300.0f);
+	scoreViewerID_ = EntityManager::Get().CreateID<ScoreViewer>();
 
 	static RUID fontID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
-	pauseViewerID_ = EntityManager::Get().Create<PauseViewer>(fontID);
+	pauseViewerID_ = EntityManager::Get().CreateID<PauseViewer>(fontID);
 
 	entityIDs_ =
 	{

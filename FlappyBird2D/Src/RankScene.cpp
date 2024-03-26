@@ -43,9 +43,9 @@ void RankScene::Enter()
 
 	static RUID font32ID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
 
-	static EUID resetButton = EntityManager::Get().Create<Button>("Resource/Button/Reset.json", font32ID, EMouseButton::Left, resetEvent);
-	static EUID quitButton = EntityManager::Get().Create<Button>("Resource/Button/Quit.json", font32ID, EMouseButton::Left, quitLoopEvent_);
-	static EUID rankViewer = EntityManager::Get().Create<RankViewer>(font32ID);
+	static EUID resetButton = EntityManager::Get().CreateID<Button>("Resource/Button/Reset.json", font32ID, EMouseButton::Left, resetEvent);
+	static EUID quitButton = EntityManager::Get().CreateID<Button>("Resource/Button/Quit.json", font32ID, EMouseButton::Left, quitLoopEvent_);
+	static EUID rankViewer = EntityManager::Get().CreateID<RankViewer>(font32ID);
 
 	std::vector<Pipe*> pipes = EntityManager::Get().GetEntity<PipeController>(pipeController_)->GetPipes();
 
