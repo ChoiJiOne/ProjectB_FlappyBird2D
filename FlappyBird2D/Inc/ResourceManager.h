@@ -56,11 +56,23 @@ public:
 	 * @return 생성된 리소스의 ID를 반환합니다.
 	 */
 	template <typename TResource, typename... Args>
-	RUID Create(Args&&... args)
+	RUID CreateID(Args&&... args)
 	{
 		CHECK(0 <= cacheSize_ && cacheSize_ < MAX_RESOURCE_SIZE);
 
-		RUID resourceID = cacheSize_++;
+		RUID resourceID = -1;
+		for (int32_t index = 0; index < cacheSize_; ++index)
+		{
+			if (!cache_[index])
+			{
+				resourceID = static_cast<RUID>(index);
+			}
+		}
+
+		if (resourceID == -1)
+		{
+			resourceID = cacheSize_++;
+		}
 
 		cache_[resourceID] = std::make_unique<TResource>(args...);
 		cache_[resourceID]->SetID(resourceID);
