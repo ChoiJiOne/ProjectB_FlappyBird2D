@@ -103,7 +103,7 @@ void PlayScene::Enter()
 	pipeController_ = EntityManager::Get().Create<PipeController>(pipes, 300.0f);
 	scoreViewerID_ = EntityManager::Get().Create<ScoreViewer>();
 
-	static RUID fontID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
+	static RUID fontID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
 	pauseViewerID_ = EntityManager::Get().Create<PauseViewer>(fontID);
 
 	entityIDs_ =

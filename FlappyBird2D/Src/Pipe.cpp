@@ -23,7 +23,7 @@ Pipe::Pipe(float speed)
 {
 	ResetLocation();
 
-	static RUID textureID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/Pipe.png");
+	static RUID textureID = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/Pipe.png");
 	textureID_ = textureID;
 	
 	bIsInitialized_ = true;

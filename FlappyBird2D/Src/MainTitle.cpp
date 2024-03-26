@@ -26,9 +26,9 @@ MainTitle::MainTitle(const RUID& fontID) : Panel("Resource/Panel/MainTitle.json"
 	birdWidth_ = 60.0f;
 	birdHeight_ = 40.0f;
 
-	RUID birdDown = ResourceManager::Get().Create<Texture2D>("Resource/Texture/YellowBird_Down.png");
-	RUID birdMid = ResourceManager::Get().Create<Texture2D>("Resource/Texture/YellowBird_Mid.png");
-	RUID birdUp = ResourceManager::Get().Create<Texture2D>("Resource/Texture/YellowBird_Up.png");
+	RUID birdDown = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/YellowBird_Down.png");
+	RUID birdMid = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/YellowBird_Mid.png");
+	RUID birdUp = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/YellowBird_Up.png");
 
 	birds_ = 
 	{

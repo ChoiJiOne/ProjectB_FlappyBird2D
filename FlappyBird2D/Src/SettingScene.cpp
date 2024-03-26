@@ -25,8 +25,8 @@ void SettingScene::Enter()
 {
 	CHECK(!bIsEnter_);
 
-	static RUID font32ID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
-	static RUID font64ID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 64.0f);
+	static RUID font32ID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
+	static RUID font64ID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 64.0f);
 
 	static EUID background = EntityManager::Get().Create<Background>();
 

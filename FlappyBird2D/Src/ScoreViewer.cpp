@@ -8,16 +8,16 @@
 
 ScoreViewer::ScoreViewer()
 {
-	static RUID number0 = ResourceManager::Get().Create<Texture2D>("Resource/Texture/0.png");
-	static RUID number1 = ResourceManager::Get().Create<Texture2D>("Resource/Texture/1.png");
-	static RUID number2 = ResourceManager::Get().Create<Texture2D>("Resource/Texture/2.png");
-	static RUID number3 = ResourceManager::Get().Create<Texture2D>("Resource/Texture/3.png");
-	static RUID number4 = ResourceManager::Get().Create<Texture2D>("Resource/Texture/4.png");
-	static RUID number5 = ResourceManager::Get().Create<Texture2D>("Resource/Texture/5.png");
-	static RUID number6 = ResourceManager::Get().Create<Texture2D>("Resource/Texture/6.png");
-	static RUID number7 = ResourceManager::Get().Create<Texture2D>("Resource/Texture/7.png");
-	static RUID number8 = ResourceManager::Get().Create<Texture2D>("Resource/Texture/8.png");
-	static RUID number9 = ResourceManager::Get().Create<Texture2D>("Resource/Texture/9.png");
+	static RUID number0 = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/0.png");
+	static RUID number1 = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/1.png");
+	static RUID number2 = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/2.png");
+	static RUID number3 = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/3.png");
+	static RUID number4 = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/4.png");
+	static RUID number5 = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/5.png");
+	static RUID number6 = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/6.png");
+	static RUID number7 = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/7.png");
+	static RUID number8 = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/8.png");
+	static RUID number9 = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/9.png");
 
 	numberIDs_ =
 	{

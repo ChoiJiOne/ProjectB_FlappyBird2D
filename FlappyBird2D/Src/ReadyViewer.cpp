@@ -8,13 +8,13 @@
 
 ReadyViewer::ReadyViewer()
 {
-	static RUID infoID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/GameInfo.png");
+	static RUID infoID = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/GameInfo.png");
 	infoID_ = infoID;
 	infoLocation_ = Vec2f(300.0f, 400.0f);
 	infoWidth_ = 150.0f;
 	infoHeight_ = 140.0f;
 
-	static RUID getReadyID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/GetReady.png");
+	static RUID getReadyID = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/GetReady.png");
 	getReadyID_ = getReadyID;
 	getReadyLocation_ = Vec2f(300.0f, 200.0f);
 	getReadyWidth_ = 350.0f;

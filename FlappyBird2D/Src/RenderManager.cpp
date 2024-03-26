@@ -38,9 +38,9 @@ void RenderManager::Startup()
 	CHECK(gladLoadGLLoader((GLADloadproc)(SDL_GL_GetProcAddress)));
 
 	shaderCache_ = std::map<std::string, RUID>();
-	shaderCache_.insert({ "GeometryPass2D", ResourceManager::Get().Create<GeometryPass2D>() });
-	shaderCache_.insert({ "SpritePass2D",   ResourceManager::Get().Create<SpritePass2D>()   });
-	shaderCache_.insert({ "GlyphPass2D",    ResourceManager::Get().Create<GlyphPass2D>()    });
+	shaderCache_.insert({ "GeometryPass2D", ResourceManager::Get().CreateID<GeometryPass2D>() });
+	shaderCache_.insert({ "SpritePass2D",   ResourceManager::Get().CreateID<SpritePass2D>()   });
+	shaderCache_.insert({ "GlyphPass2D",    ResourceManager::Get().CreateID<GlyphPass2D>()    });
 
 	bIsStartup_ = true;
 }

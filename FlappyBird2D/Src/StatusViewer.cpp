@@ -17,9 +17,9 @@ StatusViewer::StatusViewer(const RUID& fontID)
 
 	birdIDs_ =
 	{
-		{ ConfigManager::EBird::Blue,   ResourceManager::Get().Create<Texture2D>("Resource/Texture/BlueBird_Mid.png")   },
-		{ ConfigManager::EBird::Red,    ResourceManager::Get().Create<Texture2D>("Resource/Texture/RedBird_Mid.png")    },
-		{ ConfigManager::EBird::Yellow, ResourceManager::Get().Create<Texture2D>("Resource/Texture/YellowBird_Mid.png") },
+		{ ConfigManager::EBird::Blue,   ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/BlueBird_Mid.png")   },
+		{ ConfigManager::EBird::Red,    ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/RedBird_Mid.png")    },
+		{ ConfigManager::EBird::Yellow, ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/YellowBird_Mid.png") },
 	};
 	
 	bIsInitialized_ = true;

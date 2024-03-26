@@ -11,7 +11,7 @@
 RankViewer::RankViewer(const RUID& fontID)
 	: fontID_(fontID)
 {
-	static RUID gameOverID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/GameOver.png");
+	static RUID gameOverID = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/GameOver.png");
 	gameOverID_ = gameOverID;
 
 	gameOverLocation_ = Vec2f(300.0f, 150.0f);

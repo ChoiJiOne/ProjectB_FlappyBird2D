@@ -16,7 +16,7 @@ Land::Land(float scrollSpeed)
 
 	maxScrollX_ = static_cast<float>(bound_.GetWidth());
 
-	static RUID textureID = ResourceManager::Get().Create<Texture2D>("Resource/Texture/Land.png");
+	static RUID textureID = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/Land.png");
 	textureID_ = textureID;
 
 	bIsInitialized_ = true;

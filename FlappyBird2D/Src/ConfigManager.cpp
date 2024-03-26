@@ -28,8 +28,8 @@ void ConfigManager::Startup()
 {
 	CHECK(!bIsStartup_);
 
-	dayBackgroundID_ = ResourceManager::Get().Create<Texture2D>("Resource/Texture/Background_Day.png");
-	nightBackgroundID_ = ResourceManager::Get().Create<Texture2D>("Resource/Texture/Background_Night.png");
+	dayBackgroundID_ = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/Background_Day.png");
+	nightBackgroundID_ = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/Background_Night.png");
 
 	currentBackgroundID_ = dayBackgroundID_;
 

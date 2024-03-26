@@ -33,17 +33,17 @@ Bird::Bird()
 
 	maxAnimationTime_ = 0.05f;
 
-	static RUID blueDown = ResourceManager::Get().Create<Texture2D>("Resource/Texture/BlueBird_Down.png");
-	static RUID blueMid = ResourceManager::Get().Create<Texture2D>("Resource/Texture/BlueBird_Mid.png");
-	static RUID blueUp = ResourceManager::Get().Create<Texture2D>("Resource/Texture/BlueBird_Up.png");
+	static RUID blueDown = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/BlueBird_Down.png");
+	static RUID blueMid = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/BlueBird_Mid.png");
+	static RUID blueUp = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/BlueBird_Up.png");
 
-	static RUID redDown = ResourceManager::Get().Create<Texture2D>("Resource/Texture/RedBird_Down.png");
-	static RUID redMid = ResourceManager::Get().Create<Texture2D>("Resource/Texture/RedBird_Mid.png");
-	static RUID redUp = ResourceManager::Get().Create<Texture2D>("Resource/Texture/RedBird_Up.png");
+	static RUID redDown = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/RedBird_Down.png");
+	static RUID redMid = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/RedBird_Mid.png");
+	static RUID redUp = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/RedBird_Up.png");
 
-	static RUID yellowDown = ResourceManager::Get().Create<Texture2D>("Resource/Texture/YellowBird_Down.png");
-	static RUID yellowMid = ResourceManager::Get().Create<Texture2D>("Resource/Texture/YellowBird_Mid.png");
-	static RUID yellowUp = ResourceManager::Get().Create<Texture2D>("Resource/Texture/YellowBird_Up.png");
+	static RUID yellowDown = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/YellowBird_Down.png");
+	static RUID yellowMid = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/YellowBird_Mid.png");
+	static RUID yellowUp = ResourceManager::Get().CreateID<Texture2D>("Resource/Texture/YellowBird_Up.png");
 	
 	ConfigManager::EBird bird = ConfigManager::Get().GetCurrentBird();
 	switch (bird)
@@ -81,10 +81,10 @@ Bird::Bird()
 
 	score_ = 0;
 
-	static RUID wingSoundID = ResourceManager::Get().Create<Sound>("Resource/Sound/wing.wav");
-	static RUID pointSoundID = ResourceManager::Get().Create<Sound>("Resource/Sound/point.wav");
-	static RUID hitSoundID = ResourceManager::Get().Create<Sound>("Resource/Sound/hit.wav");
-	static RUID dieSoundID = ResourceManager::Get().Create<Sound>("Resource/Sound/die.wav");
+	static RUID wingSoundID = ResourceManager::Get().CreateID<Sound>("Resource/Sound/wing.wav");
+	static RUID pointSoundID = ResourceManager::Get().CreateID<Sound>("Resource/Sound/point.wav");
+	static RUID hitSoundID = ResourceManager::Get().CreateID<Sound>("Resource/Sound/hit.wav");
+	static RUID dieSoundID = ResourceManager::Get().CreateID<Sound>("Resource/Sound/die.wav");
 
 	wingSoundID_ = wingSoundID;
 	pointSoundID_ = pointSoundID;

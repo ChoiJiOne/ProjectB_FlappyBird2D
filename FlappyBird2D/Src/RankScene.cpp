@@ -28,7 +28,7 @@ void RankScene::Enter()
 {
 	CHECK(!bIsEnter_);
 
-	static RUID clickSound = ResourceManager::Get().Create<Sound>("Resource/Sound/swoosh.wav");
+	static RUID clickSound = ResourceManager::Get().CreateID<Sound>("Resource/Sound/swoosh.wav");
 
 	static auto resetEvent = [&]()
 	{
@@ -41,7 +41,7 @@ void RankScene::Enter()
 		bDetectSwitch_ = true;
 	};
 
-	static RUID font32ID = ResourceManager::Get().Create<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
+	static RUID font32ID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
 
 	static EUID resetButton = EntityManager::Get().Create<Button>("Resource/Button/Reset.json", font32ID, EMouseButton::Left, resetEvent);
 	static EUID quitButton = EntityManager::Get().Create<Button>("Resource/Button/Quit.json", font32ID, EMouseButton::Left, quitLoopEvent_);
