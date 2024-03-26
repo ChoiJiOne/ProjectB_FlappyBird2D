@@ -11,6 +11,7 @@
 #include "AudioManager.h"
 #include "ConfigManager.h"
 #include "EntityManager.h"
+#include "TTFont.h"
 #include "GameTimer.h"
 #include "InputManager.h"
 #include "PlayScene.h"
@@ -18,6 +19,7 @@
 #include "RankScene.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
+#include "Sound.h"
 #include "SDLManager.h"
 #include "SettingScene.h"
 #include "StartScene.h"
@@ -82,6 +84,17 @@ public:
 		quitLoopEvent_ = [&]() { bIsDone_ = true; };
 
 		InputManager::Get().AddWindowEventAction(EWindowEvent::CLOSE, quitLoopEvent_, true);
+
+		RUID font32ID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 32.0f);
+		RUID font64ID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 64.0f);
+		RUID font90ID = ResourceManager::Get().CreateID<TTFont>("Resource/Font/Flappy_Font.ttf", 0x00, 127, 90.0f);
+
+		RUID clickSound = ResourceManager::Get().CreateID<Sound>("Resource/Sound/swoosh.wav");
+		
+		ResourceManager::Get().RegisterGlobalResource("Font32", font32ID);
+		ResourceManager::Get().RegisterGlobalResource("Font64", font64ID);
+		ResourceManager::Get().RegisterGlobalResource("Font90", font90ID);
+		ResourceManager::Get().RegisterGlobalResource("ClickSound", clickSound);
 
 		startScene_ = std::make_unique<StartScene>();
 		settingScene_ = std::make_unique<SettingScene>();
