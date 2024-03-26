@@ -82,6 +82,39 @@ public:
 
 
 	/**
+	 * @brief 리소스를 생성합니다.
+	 *
+	 * @param args 리소스의 생성자에 전달한 인자들입니다.
+	 *
+	 * @return 생성된 리소스의 포인터를 반환합니다.
+	 */
+	template <typename TResource, typename... Args>
+	TResource* CreateResource(Args&&... args)
+	{
+		CHECK(0 <= cacheSize_ && cacheSize_ < MAX_RESOURCE_SIZE);
+
+		RUID resourceID = -1;
+		for (int32_t index = 0; index < cacheSize_; ++index)
+		{
+			if (!cache_[index])
+			{
+				resourceID = static_cast<RUID>(index);
+			}
+		}
+
+		if (resourceID == -1)
+		{
+			resourceID = cacheSize_++;
+		}
+
+		cache_[resourceID] = std::make_unique<TResource>(args...);
+		cache_[resourceID]->SetID(resourceID);
+
+		return reinterpret_cast<TResource*>(cache_[resourceID].get());
+	}
+
+
+	/**
 	 * @brief 리소스 매니저가 관리하는 리소스를 얻습니다.
 	 *
 	 * @param resourceID 리소스 ID입니다.
