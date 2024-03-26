@@ -61,7 +61,19 @@ public:
 	{
 		CHECK(0 <= cacheSize_ && cacheSize_ < MAX_RESOURCE_SIZE);
 
-		EUID entityID = cacheSize_++;
+		EUID entityID = -1;
+		for (int32_t index = 0; index < cacheSize_; ++index)
+		{
+			if (!cache_[entityID])
+			{
+				entityID = static_cast<EUID>(index);
+			}
+		}
+
+		if (entityID == -1)
+		{
+			entityID = cacheSize_++;
+		}
 
 		cache_[entityID] = std::make_unique<TEntity>(args...);
 		cache_[entityID]->SetID(entityID);
