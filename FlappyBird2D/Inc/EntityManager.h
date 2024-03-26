@@ -67,6 +67,7 @@ public:
 			if (!cache_[index])
 			{
 				entityID = static_cast<EUID>(index);
+				break;
 			}
 		}
 
