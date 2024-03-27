@@ -1,10 +1,10 @@
-# ProjectB - FlappyBird2D
-- 2D 플래피 버드(FlappyBird2D) 게임 구현 프로젝트입니다.
+# ProjectB - FlappyBird2D (v0.0)
+- 2D 플래피 버드(FlappyBird2D) 게임 구현 프로젝트의 v0.0입니다.
 <br><br>
 
 
 ## Table of Contents
-- [ProjectB - FlappyBird2D](#projectb---flappybird2d)
+- [ProjectB - FlappyBird2D (v0.0)](#projectb---flappybird2d-v00)
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
   - [How to get repository clone?](#how-to-get-repository-clone)
@@ -140,7 +140,7 @@ Package_MinSizeRel.bat
 
 ## How to Play Game?
 
-이 프로젝트의 게임을 플레이 하기 위해서는 [여기](https://github.com/ChoiJiOne/ProjectB_FlappyBird2D/releases/tag/release)에서 `FlappyBird2D-win64.exe`를 다운로드 받은 후에 해당 파일을 실행해서 설치를 진행합니다. 그 다음 설치한 폴더에 있는 `FlappyBird2D.exe`를 실행하면 게임을 실행할 수 있습니다. 게임을 시작하면 마우스 우클릭으로 버튼과 점프를 수행할 수 있습니다.
+이 프로젝트의 게임을 플레이 하기 위해서는 [여기](https://github.com/ChoiJiOne/ProjectB_FlappyBird2D/releases/tag/v0.0)에서 `FlappyBird2D-win64.exe`를 다운로드 받은 후에 해당 파일을 실행해서 설치를 진행합니다. 그 다음 설치한 폴더에 있는 `FlappyBird2D.exe`를 실행하면 게임을 실행할 수 있습니다. 게임을 시작하면 마우스 우클릭으로 버튼과 점프를 수행할 수 있습니다.
 <br><br>
 
 
